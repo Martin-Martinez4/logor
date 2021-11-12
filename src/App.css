@@ -1,0 +1,44 @@
+
+/* Setup color scheme and spacing */
+:root{
+
+  /* Blacks and Greys */
+  --UIBlack: rgba(0, 34, 51, 1);
+  --UIGrey: rgba(0, 34, 51, .75);
+  --UIGrey1: rgba(0, 34, 51, .50);
+  --UIGrey2: rgba(0, 34, 51, .25);
+  --UIGrey3: rgba(0, 34, 51, 0.1);
+
+  /* White */
+  --UIWhite:  rgba(255,255,255,1);
+
+  /* Reds */
+  --Red: rgba(164, 53, 31, 1);
+  --Red1: rgba(164, 53, 31, 0.9);
+  --Red2: rgba(164, 53, 31, 0.8);
+
+  /* Primary Colors */
+  --Primary: #338877;
+  --Primary1: rgba(51, 136, 119, 0.75);
+  --Primary2: rgba(51, 136, 119, 0.5);;
+  --Primary3: rgba(51, 136, 119, 0.25);
+ 
+
+  /* Secondary Colors */
+  --Secondary: #336F88;
+  --Secondary1:rgba(51, 111, 136, 0.75);
+  --Secondary2:rgba(51, 111, 136, 0.50);
+  --Secondary3: rgba(51, 111, 136, 0.25);
+
+  /* Tertiary Colors */
+  --Tertiary: rgba(51, 136, 77, 1);
+  --Tertiary1: rgba(51, 136, 77, 0.75);
+  --Tertiary2: rgba(51, 136, 77, 0.50);
+  --Tertiary3: rgba(51, 136, 77, 0.25);
+
+}
+
+.App {
+  text-align: center;
+}
+

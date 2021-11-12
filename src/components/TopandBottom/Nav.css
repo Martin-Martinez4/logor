@@ -1,0 +1,22 @@
+
+
+.topBar{
+
+    background-color: #002233;
+    width: 100vw;
+    height: 80px;
+    border: 1px solid black;
+    grid-area: header;
+    display: flex;
+}
+
+.bottomBar{
+    
+    background-color: #002233;
+    width: 100vw;
+    height: 64px;
+    border: 1px solid black;
+    grid-area: footer;
+    display: flex;
+
+}

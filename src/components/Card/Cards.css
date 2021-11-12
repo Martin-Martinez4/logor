@@ -1,0 +1,11 @@
+
+.card{
+
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.sideCard{
+
+    box-shadow: 2px 2px 2px #888888;
+}
