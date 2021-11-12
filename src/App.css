@@ -38,7 +38,13 @@
 
 }
 
+body, html { 
+  overflow-x: hidden; 
+  overflow-y: hidden;
+}
+
 .App {
   text-align: center;
+  
 }
 

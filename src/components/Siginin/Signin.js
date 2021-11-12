@@ -22,13 +22,12 @@ const Signin = () => {
                     </fieldset>
                     <div className="">
                     <input 
-                        onClick={}
                         className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" 
                         value="sign in" 
                     />
                     </div>
                     <div className="lh-copy mt3">
-                    <a onClick={} href="#0" className="f6 link dim black db">Register Here</a>
+                    <a href="#0" className="f6 link dim black db">Register Here</a>
                    
                     </div>
                 </div>

@@ -1,7 +1,14 @@
 import './App.css';
 import ContentArea from './components/ContentArea/ContentArea';
-import Post from './components/Posts/Post';
-import SideCard from './components/SideCards/SideCard';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useRoutes,
+  Link
+} from "react-router-dom";
+import Homepage from './components/Pages/Home';
+import Landingpage from './components/Pages/Landingpage';
 import BottomBar from './components/TopandBottom/BottomBar';
 import TopBar from './components/TopandBottom/TopBar';
 // import Card from './components/Card/Card';
@@ -10,15 +17,11 @@ import TopBar from './components/TopandBottom/TopBar';
 function App() {
   return (
     <div className="App container">
-        <TopBar />
-        {/* <div className="content"style={{display:"flex"}}>
-          <SideCard side="leftSide" /> 
-          <Post /> 
-          <SideCard side="rightSide"  /> 
-
-        </div> */}
-        <ContentArea />
-        <BottomBar /> 
+      <Routes>
+        <Route path="/" element={<Landingpage />} />
+        <Route path="/home" element={<Homepage/>} />
+        {/* <Route path="*" element={<Homepage/>} /> */}
+      </ Routes>
 
     </div>
   );

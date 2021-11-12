@@ -2,6 +2,6 @@
 .contentArea{
     display: flex;
     justify-content: space-between;
-    margin: 10px;
+    margin: 1vh .5vw 1vh .5vw;
     
 }

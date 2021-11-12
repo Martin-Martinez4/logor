@@ -10,7 +10,7 @@ const Post = () => {
 
 
         return(
-            <Card cardStyle={{width:"64vw", height:"224px"}} classes="content">
+            <Card cardStyle={{width:"65vw", height:"224px"}} classes="content">
                 Title
 
             </Card>
