@@ -1,0 +1,17 @@
+
+.single_bar{
+
+    border-radius: 5px;
+}
+
+.single_bar > .bar{
+    
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: var(--Primary);
+    border-radius: 5px;
+
+}
+
+

@@ -5,34 +5,42 @@ const Signin = () => {
 
     return (
         
-        <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
-            <div className="pa4 black-80">
-                <div className="measure">
-                    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                    <legend className="f4 fw6 ph0 mh0">Sign In</legend>
-                    <div className="mt3">
-                        <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                        <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  id="email-address" />
-                    </div>
-                    <div className="mv3">
-                        <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                        <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password"  />
-                    </div>
-                  
-                    </fieldset>
-                    <div className="">
-                    <input 
-                        className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" 
-                        value="sign in" 
-                    />
-                    </div>
-                    <div className="lh-copy mt3">
-                    <a href="#0" className="f6 link dim black db">Register Here</a>
-                   
-                    </div>
+    <form className="signin flexColContainer">
+
+        <h1> Welcome!</h1>
+        <h2>Login!</h2>
+
+        <div className=" flexColContainer inner">
+            <div className="flexColContainer">
+
+                <label for="uname" className="upperleft">
+                    <h4 className="inputName">Username</h4>
+                
+                    <input type="text" placeholder="Enter Username" name="uname" required />
+                </label>
+                
+                <label for="psw" className="upperleft">
+                    <h4 className="inputName">Password</h4>
+                
+                    <input type="password" placeholder="Enter Password" name="psw" required />
+                </label>
+
+                <div>
+                    <button type="submit big button">Login</button>
+                </div>
+                <div>
+                    <label>
+                        <input type="checkbox" name="remember" />Remember Me?
+                    </label>
                 </div>
             </div>
-        </article>
+
+            <div className="flexColContainer" >
+                <span >Forgot your password?  <a href="#"> Reset your password.</a></span>
+                <span >Do not have an account? <a href="#">Register Here.</a></span>
+            </div>
+        </div>
+    </form>
 
     )
     

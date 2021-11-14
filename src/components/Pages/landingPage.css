@@ -1,0 +1,90 @@
+
+.landingPage{
+
+    height: 86vh;
+    width: 100vh;
+
+    display: flex;
+    
+}
+
+
+
+.landingImage{
+    width: 60vw;
+    height: auto;
+}
+
+.flexColContainer{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width:100%;
+    height: 90%;
+}
+
+.signin{
+    width: 40vw;
+    line-height: 10px;
+}
+
+.inner{
+    width: 50vw;
+    height: auto;
+    line-height: 3.5vh;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.upperLeft{
+
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    line-height: 3vh;
+}
+
+input{
+    
+    width: 16vw;
+    height: 3vh;
+    font-size: 1em;
+    border-radius: 10px ;
+    align-self: flex-start;
+    border: 2px solid var(--UIGrey1);
+}
+input:hover{
+    outline: none;
+    border: 2px solid var(--Primary);
+}
+input:focus{
+    outline: none;
+    border: 2px solid var(--Primary);
+    box-shadow: 2px 2px 5px var(--Primary3);
+}
+
+
+
+label > input[type=checkbox] {
+    margin-right: .5em;
+    display: inline-block;
+    width: auto;
+    height: auto;
+  }
+.inputName{
+
+    line-height: 10px;
+    margin-top: 1.5em;
+    margin-bottom: .25em;
+    margin-left: 0;
+    margin-right: 0;
+
+    font-weight: 500;
+}
+
+
+
+

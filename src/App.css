@@ -36,6 +36,16 @@
   --Tertiary2: rgba(51, 136, 77, 0.50);
   --Tertiary3: rgba(51, 136, 77, 0.25);
 
+  /* Header Sizes */
+  --HeaderH1: 2.5rem;
+  --HeaderH2: 2rem;
+  --HeaderH3: 1.5rem;
+  --HeaderH4: 1rem;
+  --HeaderH5: .5rem;
+  --HeaderH6: .25rem;
+
+  color: var(--UIBlack);
+
 }
 
 body, html { 
@@ -43,8 +53,27 @@ body, html {
   overflow-y: hidden;
 }
 
-.App {
+h1{
+  font-size: var(--HeaderH1);
+}
+h2{
+  font-size: var(--HeaderH2);
+}
+h3{
+  font-size: var(--HeaderH3);
+  margin: .5em;
+}
+h4{
+  font-size: var(--HeaderH4);
+  margin: .25em;
+}
+h5{
+  font-size: var(--HeaderH5);
+  margin: 1em;
+}
+
+/* .App {
   text-align: center;
   
-}
+} */
 

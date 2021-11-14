@@ -3,6 +3,7 @@
 
     border-radius: 10px;
     border: 1px solid black;
+    background-color: var(--UIWhite);
 }
 
 .sideCard{

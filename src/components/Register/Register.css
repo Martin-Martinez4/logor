@@ -1,0 +1,22 @@
+
+.register{
+    background-image:
+    linear-gradient(var(--Primary), var(--UIWhite)), url("../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplash.jpg");
+    height: 100vh; /* You must set a specified height */
+    width: 100vw; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-blend-mode: saturation;
+
+    z-index: 0;
+}
+
+.registeration_progress{
+
+    position: relative;
+    top: 8vh;
+    left: 7vw
+
+}
+
