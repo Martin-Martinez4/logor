@@ -1,11 +1,15 @@
 
-import React from "react";
+import React, {useState} from "react";
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
 
 import "./Register.css";
 
 const Register = () => {
+
+    const numberOfSteps = 10;
+
+    const [stepValue, setStepValue] = useState(5)
 
     return (
         
@@ -19,7 +23,7 @@ const Register = () => {
                     <span>Progress</span>
                     <span>Progress</span>
                 </div>
-                <ProgressBarSingle barStyle={{height:"1.5vh", width:"25vw"}}/>
+                <ProgressBarSingle barHeight={1.5} barWidth={25} numberOfSteps={numberOfSteps} stepValue={stepValue} />
           
             </span>
 
