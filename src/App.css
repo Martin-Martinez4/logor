@@ -72,8 +72,51 @@ h5{
   margin: 1em;
 }
 
-/* .App {
-  text-align: center;
+button.button{
+
+  width: 4vw;
+  height: 3vh;
+
+  margin: 4px;
+
+  border-radius: 5px;
+  border: 1px solid var(--UIGrey1);
+  /* background-color: var(--Red1); */
   
-} */
+  text-align: center;
+  text-decoration: none;
+  color:var(--UIWhite);
+
+  transition: all .2s ease-in-out;
+
+}
+
+button.button:hover{
+
+  /* background-color: var(--Red); */
+
+  transform: background-color 1000ms linear;
+  transform: scale(1.05);
+}
+
+button.button.back{
+
+  background-color: var(--Red1);
+
+}
+a.button.back:hover{
+
+  background-color: var(--Red); 
+
+}
+a.button.proceed{
+
+  background-color: var(--Primary1);
+
+}
+a.button.proceed:hover{
+
+  background-color: var(--Primary); 
+
+}
 
