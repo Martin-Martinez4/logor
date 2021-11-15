@@ -3,23 +3,25 @@ import React, {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
+import ProgressBarLabeling from "../ProgressBar/ProgressBarLabeling";
 
 import "./Register.css";
 
 const Register = () => {
 
     const numberOfSteps = 3;
+    const labelsArray = ["Login Information", "User Information", "Profile Picture"]
 
     const barHeight = 1.5;
     const barWidth = 25;
 
-    const barLabelStyle = { width:String(barWidth/numberOfSteps)+"vw", display:"block" }
+    // const barLabelStyle = { width:String(barWidth/numberOfSteps)+"vw", display:"block" }
 
     const [currentStep, setSurrentStepValue] = useState(1);
 
     const navigate = useNavigate();
 
-  const handleClick = () => {
+  const navigateHome = () => {
     navigate('/');
     }
 
@@ -32,11 +34,12 @@ const Register = () => {
         <Card cardStyle={{width:"40vw", height:"80vh"}}>
             <span className="progressBar registeration_progress">
                 {/* Make into a Component later */}
-                <div style={{display:"flex", textAlign:"center"}}>
+                {/* <div style={{display:"flex", textAlign:"center"}}>
                     <p className="bar label" style={barLabelStyle}>Progress</p>
                     <p className="bar label" style={barLabelStyle}>Progress</p>
                     <p className="bar label" style={barLabelStyle}>Progress</p>
-                </div>
+                </div> */}
+                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
                 <ProgressBarSingle barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} currentStep={currentStep} />
           
             </span>
@@ -72,10 +75,9 @@ const Register = () => {
                         <input type="password2" placeholder="Confirm Password" name="password2" required />
                     </label>
 
-                    <div className="flexRowContainer">
-                        {/* Need to add a on click that changes the progress bar and changes cancel to Back */}
-                        <button  onClick={handleClick} className="button back">Cancel</button>
-                        <button onClick={() => setSurrentStepValue((currentStep + 1)) } className="button">Next Step</button>
+                    <div className="flexRowContainer margin1">
+                        <button  onClick={navigateHome} className="button red">Cancel</button>
+                        <button onClick={() => setSurrentStepValue((currentStep + 1)) } className="button primary">Next Step</button>
                     </div>
                     
                 </div>
@@ -87,7 +89,7 @@ const Register = () => {
         : currentStep == 2 
         ?
         <div className="flexColContainer">
-            <h3>Login Information 2</h3>
+            <h3>User Information</h3>
 
             <div className="inner">
                 <div className="flexColContainer">
@@ -116,10 +118,9 @@ const Register = () => {
                         <input type="password" placeholder="Enter Password" name="psw" required />
                     </label>
 
-                    <div className="flexRowContainer">
-                        {/* Need to add a on click that changes the progress bar and changes cancel to Back */}
-                        <a href="/"><button type="submit big button">Cancel</button></a>
-                        <button onClick={() => setSurrentStepValue((currentStep + 1))} type="submit big button">Next Step</button>
+                    <div className="flexRowContainer margin1">
+                        <button  onClick={() => setSurrentStepValue((currentStep - 1)) } className="button red">Back</button>
+                        <button onClick={() => setSurrentStepValue((currentStep + 1)) } className="button primary">Next Step</button>
                     </div>
                     
                 </div>
@@ -130,7 +131,7 @@ const Register = () => {
         : currentStep == 3
         ?
         <div className="flexColContainer">
-            <h3>Login Information 2</h3>
+            <h3>Profile Picture</h3>
 
             <div className="inner">
                 <div className="flexColContainer">
@@ -159,10 +160,9 @@ const Register = () => {
                         <input type="password" placeholder="Enter Password" name="psw" required />
                     </label>
 
-                    <div>
-                        {/* Need to add a on click that changes the progress bar and changes cancel to Back */}
-                        <button type="submit big button">Cancel</button>
-                        <button onClick={() => setSurrentStepValue((currentStep + 1))} type="submit big button">Next Step</button>
+                    <div className="flexRowContainer margin1">
+                        <button  onClick={() => setSurrentStepValue((currentStep - 1)) } className="button red">Back</button>
+                        <button onClick={() => setSurrentStepValue((currentStep + 1)) } className="button primary">Submit</button>
                     </div>
                     
                 </div>

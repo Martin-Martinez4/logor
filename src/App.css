@@ -88,6 +88,7 @@ button.button{
   color:var(--UIWhite);
 
   transition: all .2s ease-in-out;
+  transition: scale .2s linear;
 
 }
 
@@ -99,24 +100,39 @@ button.button:hover{
   transform: scale(1.05);
 }
 
-button.button.back{
+button.button.red{
 
   background-color: var(--Red1);
 
 }
-a.button.back:hover{
+button.button.red:hover{
 
   background-color: var(--Red); 
 
 }
-a.button.proceed{
+button.button.primary{
 
   background-color: var(--Primary1);
 
 }
-a.button.proceed:hover{
+button.button.primary:hover{
 
   background-color: var(--Primary); 
 
+}
+
+.upperLeft{
+
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  line-height: 3vh;
+
+  margin-bottom: 2px;
+}
+
+.margin1{
+
+  margin: 1rem;
 }
 

@@ -9,7 +9,6 @@
 }
 
 
-
 .landingImage{
     width: 60vw;
     height: auto;
@@ -49,13 +48,6 @@
     flex-direction: column; */
 }
 
-.upperLeft{
-
-    align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    line-height: 3vh;
-}
 
 input{
     
@@ -65,6 +57,9 @@ input{
     border-radius: 10px ;
     align-self: flex-start;
     border: 2px solid var(--UIGrey1);
+
+    margin-top: .5rem;
+    margin-bottom: .5rem;
 }
 input:hover{
     outline: none;
@@ -84,6 +79,7 @@ label > input[type=checkbox] {
     width: auto;
     height: auto;
   }
+
 .inputName{
 
     line-height: 10px;
