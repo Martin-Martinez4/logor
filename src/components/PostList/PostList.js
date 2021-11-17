@@ -1,7 +1,6 @@
 
 import { React } from "react";
 
-import Card from "../Card/Card";
 import Post from "../Posts/Post";
 
 // width 904 height 224

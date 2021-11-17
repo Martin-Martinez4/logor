@@ -13,13 +13,13 @@ const Signin = () => {
         <div className=" flexColContainer inner">
             <div className="flexColContainer">
 
-                <label for="uname" className="upperleft">
+                <label htmlFor="uname" className="upperleft">
                     <h4 className="inputName">Username</h4>
                 
                     <input type="text" placeholder="Enter Username" name="uname" required />
                 </label>
                 
-                <label for="psw" className="upperleft">
+                <label htmlFor="psw" className="upperleft">
                     <h4 className="inputName">Password</h4>
                 
                     <input type="password" placeholder="Enter Password" name="psw" required />

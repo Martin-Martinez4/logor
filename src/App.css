@@ -2,6 +2,8 @@
 /* Setup color scheme and spacing */
 :root{
 
+  box-sizing: border-box;
+
   /* Blacks and Greys */
   --UIBlack: rgba(0, 34, 51, 1);
   --UIGrey: rgba(0, 34, 51, .75);
@@ -72,18 +74,34 @@ h5{
   margin: 1em;
 }
 
-button.button{
+button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
 
-  width: 4vw;
-  height: 3vh;
+  cursor: pointer;
+
+  width: 6vw;
+  height: auto;
 
   margin: 4px;
+  padding: 1px 6px;
+
+  font-family:'Arial, Helvetica, sans-serif';
+
+  box-sizing: border-box;
 
   border-radius: 5px;
   border: 1px solid var(--UIGrey1);
+  border-style: outset;
+  display: inline-block;
+  text-align: center;
+  line-height: 2.5rem;
   /* background-color: var(--Red1); */
+ 
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
   
   text-align: center;
+  font-size: 1rem;
   text-decoration: none;
   color:var(--UIWhite);
 
@@ -92,7 +110,17 @@ button.button{
 
 }
 
-button.button:hover{
+input[type=file]::file-selector-button{
+  
+  width: 5vw;
+  height: auto;
+  margin:0;
+  margin-right: 10px;
+  text-align:center;
+
+}
+
+button.button:hover, a.button:hover, input::-webkit-file-upload-button:hover{
 
   /* background-color: var(--Red); */
 
@@ -100,22 +128,25 @@ button.button:hover{
   transform: scale(1.05);
 }
 
-button.button.red{
+button.button.red, a.button.red{
 
   background-color: var(--Red1);
 
 }
-button.button.red:hover{
+
+button.button.red:hover, a.button.red:hover{
 
   background-color: var(--Red); 
 
 }
-button.button.primary{
+
+button.button.primary, a.button.primary, input[type=file]::file-selector-button{
 
   background-color: var(--Primary1);
 
 }
-button.button.primary:hover{
+
+button.button.primary:hover, a.button.primary:hover, input::-webkit-file-upload-button:hover{
 
   background-color: var(--Primary); 
 
@@ -135,4 +166,16 @@ button.button.primary:hover{
 
   margin: 1rem;
 }
+
+.file_input{
+
+  width: 30vw;
+  height: auto;
+
+  align-self: auto;
+
+}
+
+
+
 

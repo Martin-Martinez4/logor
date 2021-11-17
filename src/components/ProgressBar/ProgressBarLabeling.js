@@ -20,8 +20,6 @@ const ProgressBarLabeling = ({ numberOfSteps, barHeight, barWidth, labelsArray }
                 label = "";
             }
            
-            console.log(label)
-
             labels.push(<p className="bar label" key={"label"+i} style={barLabelStyle}>{label}</p>);
 
 

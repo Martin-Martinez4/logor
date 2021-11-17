@@ -20,3 +20,21 @@
 
 }
 
+.round{
+
+    border-radius: 100%;
+
+}
+
+.round.profileImage{
+    
+    border: 2px solid var(--UIBlack);
+
+    width: 5rem;
+    height: 5rem;
+
+    margin: .25rem;
+}
+
+
+

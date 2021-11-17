@@ -1,0 +1,43 @@
+
+--- Long Term 
+
+    -  Finish most of frontend
+    - implement Jest tests
+
+    - API, test with postman and JSON server
+    - PSQL to hold user and login information, user should have UID
+    - Redis database to implement sessions
+
+    - Edit user database to handle posts, lists, favorites
+        - idea posts post should have: 
+            a UID (pointer), 
+            timestamp (when the post was made), 
+            owner, 
+            text/content, 
+            number of favorites and who favorited,
+            refernce UID of posts in response 
+
+    - Figure out Neo4j for node based relationships between users
+    - K cluster for reccomendations? Sounds hard
+
+-- Short term
+
+    - Finish register and success pages
+
+        - Media queries for mobile view and low tier mobile internet connection (lower res image, etc)
+
+        - Make loading screen
+        - success page should redirect ot home page or possibly loading page after a few seconds
+    
+    - Try to convert code to typescript
+
+    - home page
+
+        - Post and Sidebar components need to be styled
+        - Make header (place for profile image, description, etc ) component
+        - Make createpost component
+
+        - Make logged in top bar
+        - Make post view component page (when you click a post, should show responses)
+        - Other User's profiles
+
