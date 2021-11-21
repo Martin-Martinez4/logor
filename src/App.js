@@ -7,6 +7,7 @@ import Homepage from './components/Pages/Home';
 import Landingpage from './components/Pages/Landingpage';
 import Register from './components/Register/Register';
 import SuccessPage from './components/SuccessPage/SuccessPage';
+import Test from './components/TestPage/TestPage';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<Homepage/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="/success" element={<SuccessPage/>} />
+        <Route path="/test" element={<Test/>} />
         {/* <Route path="*" element={<Homepage/>} /> */}
       </ Routes>
 

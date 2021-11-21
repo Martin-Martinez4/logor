@@ -27,7 +27,7 @@
         - Media queries for mobile view and low tier mobile internet connection (lower res image, etc)
 
             [X]- Remove justify center from jiro phone iphone4 (320 x 480)
-            []- Add event listener for screen resize in register,js
+            [X]- Add event listener for screen resize in register,js
             [X]- profile picture picker needs to be made more responsive (potrait mode on smaller screens needs work)
                 - Ipad mini landscape mode
 
