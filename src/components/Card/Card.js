@@ -2,11 +2,11 @@
 import React from "react";
 import "./Cards.css"
 
-const Card = ({ children, cardStyle, classes="" }) => {
+const Card = ({ children, classes="" }) => {
 
     return (
 
-        <div className={"card " + classes} style={cardStyle}>
+        <div className={"card " + classes} >
             {/* {console.log(childern)} */}
                 {children}
 

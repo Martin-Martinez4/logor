@@ -27,6 +27,7 @@ const Register = () => {
         gender:"",
         other:"",
         profileImage:Monkey1,
+        matches: window.matchMedia("(min-width: 768px)").matches,
 
     });
 
@@ -63,12 +64,26 @@ const Register = () => {
     useEffect(() => {
         // console.log("user profileImage: " + user.profileImage); 
     }, [user.profileImage]);
+    
 
     const numberOfSteps = 3;
     const labelsArray = ["Login Information", "User Information", "Profile Picture"]
+    let barWidth;
+
+    const mq = window.matchMedia("(max-width: 991.98px)");
+    const mq2 = window.matchMedia("(orientation:portrait)");
+
+    if(mq.matches || mq2.matches){
+
+        barWidth = 80;
+    }else{
+        
+        barWidth = 35;
+    }
 
     const barHeight = 1.5;
-    const barWidth = 25;
+    // const barWidth = 25;
+   
 
     // const barLabelStyle = { width:String(barWidth/numberOfSteps)+"vw", display:"block" }
 
@@ -89,21 +104,22 @@ const Register = () => {
     <form className="register flexColContainer" method="post">
 
 
-        <Card cardStyle={{width:"40vw", height:"80vh"}}>
-            <span className="progressBar registeration_progress">
-                {/* Make into a Component later */}
-                {/* <div style={{display:"flex", textAlign:"center"}}>
-                    <p className="bar label" style={barLabelStyle}>Progress</p>
-                    <p className="bar label" style={barLabelStyle}>Progress</p>
-                    <p className="bar label" style={barLabelStyle}>Progress</p>
-                </div> */}
+        <Card classes={"register_card flexColContainer"}>
+            {/* <div className="progressBar registeration_progress">
+                
                 <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
                 <ProgressBarSingle barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} currentStep={currentStep} />
           
-            </span>
+            </div> */}
         { currentStep === 1 
         ? 
         <div className="flexColContainer">
+            <div className="progressBar registeration_progress">
+                
+                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
+                <ProgressBarSingle barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} currentStep={currentStep} />
+          
+            </div>
             <h3>Login Information</h3>
 
             <div className="inner">
@@ -130,7 +146,7 @@ const Register = () => {
                     <label htmlFor="password2" className="upperleft">
                         <h4 className="inputName">Confirm Password</h4>
                     
-                        <input type="password2" placeholder="Confirm Password" name="password2" required />
+                        <input type="password2" placeholder="Confirm Password" name="password2" onChange={oninputChange} value={user.password2} required />
                     </label>
 
                     <div className="flexRowContainer margin1">
@@ -147,6 +163,12 @@ const Register = () => {
         : currentStep === 2 
         ?
         <div className="flexColContainer">
+            <div className="progressBar registeration_progress">
+                
+                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
+                <ProgressBarSingle barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} currentStep={currentStep} />
+          
+            </div>
             <h3>User Information</h3>
 
             <div className="inner">
@@ -173,7 +195,7 @@ const Register = () => {
                     <label htmlFor="other" className="upperleft">
                         <h4 className="inputName">Other</h4>
                     
-                        <input type="text" placeholder="Enter Other" name="other" required />
+                        <input type="text" placeholder="Enter Other" name="other" onChange={oninputChange} value={user.other} />
                     </label>
 
                     <div className="flexRowContainer margin1">
@@ -189,6 +211,12 @@ const Register = () => {
         : currentStep === 3
         ?
         <div className="flexColContainer">
+            <div className="progressBar registeration_progress">
+                
+                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
+                <ProgressBarSingle barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} currentStep={currentStep} />
+          
+            </div>
             <h3>Profile Picture</h3>
 
             <div className="inner">
@@ -207,7 +235,7 @@ const Register = () => {
                         />
                     </div>
 
-                    <div className="flexRowContainer">
+                    <div className="flexRowContainer profile_image_container">
                         <img onClick={ onPickImage } className="round profileImage" src={Monkey1} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" src={Monkey2} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" src={Monkey3} alt="Monkey" />

@@ -15,7 +15,12 @@ const Landingpage = () => {
 
             <TopBar />
             <div className="landingPage">
-                <img src={landingImage} alt="Green and Grey Cube Pattern" className="image landingImage"/>
+                {/* <img src={landingImage} alt="Green and Grey Cube Pattern" className="image landingImage"/> */}
+
+                <div className="signin_image_container">
+                    <img className="image landingImage" />
+                </div>
+
 
                 <Signin />
 

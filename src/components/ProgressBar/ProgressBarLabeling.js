@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import "./ProgressBarLabeling.css";
+import "./ProgressBar.css";
 
 const ProgressBarLabeling = ({ numberOfSteps, barHeight, barWidth, labelsArray }) => {
 

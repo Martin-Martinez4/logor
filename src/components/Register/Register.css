@@ -12,11 +12,19 @@
     z-index: 0;
 }
 
+@media (max-width: 991.98px) {
+
+    .register{
+
+        background-image:
+        linear-gradient(var(--Primary), var(--UIWhite)), url("../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplash__mobile2.jpg");
+    }
+}
+
+
 .registeration_progress{
 
-    position: relative;
-    top: 8vh;
-    left: 7vw
+    margin-top: 2rem;
 
 }
 
@@ -34,6 +42,21 @@
     height: 5rem;
 
     margin: .25rem;
+}
+
+.profile_image_container{
+
+    width: 85vw;
+    flex-wrap: wrap;
+}
+
+/* ipad Mini Landscape */
+@media only screen and (width:1024px) {
+    .profile_image_container{
+
+        width: 50vw;
+        flex-wrap: wrap;
+    }
 }
 
 

@@ -3,6 +3,7 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
 import Card from "../Card/Card";
+import "./SuccessPage.css"
 import checkMark from "../../assets/Round_Check.svg";
 
 // import "./Register.css";
@@ -24,13 +25,13 @@ const SuccessPage = () => {
     <form className="register flexColContainer">
 
 
-        <Card cardStyle={{width:"50vw", height:"96vh"}}>
+        <Card classes={"register_card"}>
            
         { registerSuccess === true 
         ? 
         <div className="flexColContainer">
             <h1>Success</h1>
-           <img style={{marginTop:"10vh"}} src={checkMark} alt="Round checkmark" />
+           <img className="success_image" src={checkMark} alt="Round checkmark" />
         </div>
          :
          <div className="flexColContainer">
