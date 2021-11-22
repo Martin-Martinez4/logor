@@ -3,7 +3,6 @@ import React, {useState, useEffect } from "react";
 import {useNavigate} from 'react-router-dom';
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
-import ProgressBarLabeling from "../ProgressBar/ProgressBarLabeling";
 
 import Monkey1 from "../../assets/Monkey_1.svg";
 import Monkey2 from "../../assets/Monkey_2.svg";
@@ -67,41 +66,24 @@ const Register = () => {
 
     const numberOfSteps = 3;
     const labelsArray = ["Login Information", "User Information", "Profile Picture"]
-// ----------------------------------------------------------
-
-    const mq = window.matchMedia("(max-width: 991.98px)");
-    const mq2 = window.matchMedia("(orientation:portrait)");
-
-    const [mQuery, setMQuery] = React.useState({
-        matches: window.innerWidth > 991.98 ? true : false,
-      });
-        useEffect(() => {
-          let mediaQuery = window.matchMedia("(min-width: 991.98px)");
-          mediaQuery.addListener(setMQuery);
-          // this is the cleanup function to remove the listener
-          return () => mediaQuery.removeListener(setMQuery);
-        }, []);
-
     
 
-
-        const barWidth1 = 80;
+    const barWidth1 = 80;
         
-       const  barWidth2 = 35;
+    const barWidth2 = 35;
 
     const barHeight = 1.5;
-    // const barWidth = 25;
 
     const [currentStep, setSurrentStepValue] = useState(1);
 
     const navigate = useNavigate();
 
-  const navigateHome = () => {
-    navigate('/');
-    }
-  const navigateSuccess = () => {
-    navigate('/success');
-    }
+    const navigateHome = () => {
+        navigate('/');
+        }
+    const navigateSuccess = () => {
+        navigate('/success');
+        }
 
 
     return (
@@ -110,31 +92,14 @@ const Register = () => {
 
 
         <Card classes={"register_card flexColContainer"}>
-            {/* <div className="progressBar registeration_progress">
-                
-                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                <ProgressBarSingle barHeight={barHeight} barWidth={barWidth} numberOfSteps={numberOfSteps} currentStep={currentStep} />
-          
-            </div> */}
+           
         { currentStep === 1 
         ? 
         <div className="flexColContainer">
             <div className="progressBar registeration_progress">
-            {mQuery && !mQuery.matches ? (
-                <>
-                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                <ProgressBarSingle barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} currentStep={currentStep} />
-                </>
-          
-                ):(
-                    
-                    <>
-                    <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                    <ProgressBarSingle barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} />
-                    </>
-              
-            )
-                }
+           
+
+            <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
                 
             </div>
             <h3>Login Information</h3>
@@ -182,21 +147,7 @@ const Register = () => {
         <div className="flexColContainer">
             <div className="progressBar registeration_progress">
                 
-            {mQuery && !mQuery.matches ? (
-                <>
-                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                <ProgressBarSingle barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} currentStep={currentStep} />
-                </>
-          
-                ):(
-                    
-                    <>
-                    <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                    <ProgressBarSingle barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} />
-                    </>
-              
-            )
-                }
+            <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
           
             </div>
             <h3>User Information</h3>
@@ -243,22 +194,8 @@ const Register = () => {
         <div className="flexColContainer">
             <div className="progressBar registeration_progress">
                 
-            {mQuery && !mQuery.matches ? (
-                <>
-                <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                <ProgressBarSingle barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} currentStep={currentStep} />
-                </>
-          
-                ):(
-                    
-                    <>
-                    <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                    <ProgressBarSingle barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} />
-                    </>
-              
-            )
-                }
-          
+            <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
+
             </div>
             <h3>Profile Picture</h3>
 

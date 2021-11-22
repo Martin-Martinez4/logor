@@ -22,9 +22,10 @@
 
 -- Short term
 
-    - Finish register and success pages
-
-        - Media queries for mobile view and low tier mobile internet connection (lower res image, etc)
+    []- Finish register and success pages
+        []- ipad pro can look better
+            []- Specific media queries for it
+        [X]- Media queries for mobile view and low tier mobile internet connection (lower res image, etc)
 
             [X]- Remove justify center from jiro phone iphone4 (320 x 480)
             [X]- Add event listener for screen resize in register,js
@@ -64,7 +65,7 @@
         [X]- success page needs to be responsive on smaller screens
             [X]- Smaller version of success SVG for width 350
             [X]- Ipd pro bigger text and SVG
-        []- success page should redirect ot home page or possibly loading page after a few seconds
+        [X]- success page should redirect ot home page or possibly loading page after a few seconds
     
     - Try to convert code to typescript
 

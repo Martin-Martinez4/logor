@@ -36,7 +36,7 @@ const Signin = () => {
             </div>
 
             <div className="flexColContainer" >
-                <span >Forgot your password?  <a href="#"> Reset your password.</a></span>
+                <span >Forgot your password?  <a href="/reset"> Reset your password.</a></span>
                 <span >Do not have an account? <a href="/register">Register Here.</a></span>
             </div>
         </div>
