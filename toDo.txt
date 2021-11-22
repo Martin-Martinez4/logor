@@ -25,18 +25,7 @@
     []- Finish register and success pages
         []- ipad pro can look better
             []- Specific media queries for it
-        [X]- Media queries for mobile view and low tier mobile internet connection (lower res image, etc)
-
-            [X]- Remove justify center from jiro phone iphone4 (320 x 480)
-            [X]- Add event listener for screen resize in register,js
-            [X]- profile picture picker needs to be made more responsive (potrait mode on smaller screens needs work)
-                - Ipad mini landscape mode
-
-            [X]- Smaller screens (768 width ipad)
-                - change input height to 1.75rem
-            
-            [X]- post card and sidecards need width and height
-            [X]-ipad pro 1024 X 1366
+            []-ipad pro 1024 X 1366
                 - potrait mode needs work (progress bar, input boxes, card sizes,  etc)
                 /* ----------- iPad Pro ----------- */
                     /* Portrait and Landscape */
@@ -62,6 +51,17 @@
                     and (-webkit-min-device-pixel-ratio: 1.5) {
 
                     }
+        [X]- Media queries for mobile view and low tier mobile internet connection (lower res image, etc)
+
+            [X]- Remove justify center from jiro phone iphone4 (320 x 480)
+            [X]- Add event listener for screen resize in register,js
+            [X]- profile picture picker needs to be made more responsive (potrait mode on smaller screens needs work)
+                - Ipad mini landscape mode
+
+            [X]- Smaller screens (768 width ipad)
+                - change input height to 1.75rem
+            
+            [X]- post card and sidecards need width and height
         [X]- success page needs to be responsive on smaller screens
             [X]- Smaller version of success SVG for width 350
             [X]- Ipd pro bigger text and SVG
