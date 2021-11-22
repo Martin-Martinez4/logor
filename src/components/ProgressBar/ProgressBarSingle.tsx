@@ -2,7 +2,7 @@
 // A progess indicator that is displayed as a single element
 //  The element is filled a segment at a time
 
-import React, { useEffect } from "react";
+import React, { useEffect, FC, ReactElement } from "react";
 import ProgressBarLabeling from "./ProgressBarLabeling";
 
 import "./ProgressBar.css";
@@ -13,8 +13,18 @@ import "./ProgressBar.css";
 // numberOfSteps is the number of steps that are being tracked
 // currentStep is the step that the component is currently on
 
+type BarProps = {
 
-const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, currentStep, labelsArray }) => {
+    barHeight: number,
+    barWidth1: number,
+    barWidth2: number,
+    numberOfSteps: number,
+    currentStep: number,
+    labelsArray: string[]
+}
+
+
+const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, currentStep, labelsArray }:BarProps) => {
 
     
     // Get precentage of steps completed
@@ -25,9 +35,9 @@ const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, cur
       });
         useEffect(() => {
           let mediaQuery = window.matchMedia("(min-width: 991.98px)");
-          mediaQuery.addListener(setMQuery);
+          mediaQuery.addEventListener('change',setMQuery);
           // this is the cleanup function to remove the listener
-          return () => mediaQuery.removeListener(setMQuery);
+          return () => mediaQuery.removeEventListener('change',setMQuery);
         }, []);
     
     return (
@@ -36,7 +46,7 @@ const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, cur
             {mQuery && !mQuery.matches ? (
                 <>
                     <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                    <div className="flexRowContainer single_bar" style={{width:barWidth1 + "vw", height:barHeight+"vh"}}>
+                    <div className="flexRowContainer single_bar" style={{width:barWidth1.toString() + "vw", height:barHeight.toString()+"vh"}}>
                     <div className="bar" style={{width: String(currentProgress) +"%"}}></div>
                     </div>
                 </>
@@ -45,7 +55,7 @@ const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, cur
                     
                     <>
                         <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                        <div className="flexRowContainer single_bar" style={{width:barWidth2 + "vw", height:barHeight+"vh"}}>
+                        <div className="flexRowContainer single_bar" style={{width:barWidth2.toString() + "vw", height:barHeight.toString()+"vh"}}>
                         <div className="bar" style={{width: String(currentProgress) +"%"}}></div>
                         </div>
                     </>

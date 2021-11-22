@@ -1,7 +1,7 @@
 
-import React from "react";
+import React, { ReactElement } from "react";
 
-const Signin = () => {
+const Signin = ():ReactElement => {
 
     return (
         
@@ -26,7 +26,7 @@ const Signin = () => {
                 </label>
 
                 <div>
-                    <button type="submit big button">Login</button>
+                    <button type="submit" className=" button primary">Login</button>
                 </div>
                 <div>
                     <label>

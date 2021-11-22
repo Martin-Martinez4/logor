@@ -1,7 +1,7 @@
 
-import React from "react";
+import React, {ReactElement} from "react";
 
-const LandingImage  = () => {
+const LandingImage  = ():ReactElement => {
 
     return(
 
