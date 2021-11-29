@@ -1,0 +1,53 @@
+
+.profile_header_background{
+
+    background-image: url("../../assets/unsplash_GBEHjsPQbEQ.png");
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    width: 100%;
+    height: 8rem;
+}
+
+.profile_header_image{
+
+    border-radius: 100%;
+
+
+    border: 2px solid var(--Tertiary1);
+
+    width: 7rem;
+    height: 7rem;
+
+    margin-top: 3rem;
+    margin-left: 1rem;
+}
+
+.profile_header_container{
+
+    margin: 2rem;
+    margin-top: 2.6rem;
+    margin-left: 3rem;
+}
+
+.profile_name, .profile_tag{
+
+    margin-top: 0;
+    margin-bottom: .2rem;;
+    margin-left: .25rem;
+
+}
+
+.profile_other{
+
+    display: flex;
+    gap: 2.5rem;
+    margin: .5rem;
+
+}
+
+.profile_description{
+    margin: .5rem;
+    margin-top: 1rem;
+}
+
+

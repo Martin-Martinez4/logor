@@ -18,6 +18,8 @@
 
         background-image:
         linear-gradient(var(--Primary), var(--UIWhite)), url("../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplash__mobile2.jpg");
+
+        justify-content: center;
     }
 }
 

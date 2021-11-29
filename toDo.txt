@@ -67,7 +67,7 @@
             [X]- Ipd pro bigger text and SVG
         [X]- success page should redirect ot home page or possibly loading page after a few seconds
     
-    - Try to convert code to typescript
+    [X]- Try to convert code to typescript
 
     - home page
         - Make loading screen

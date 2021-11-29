@@ -6,9 +6,10 @@
     background-color: var(--UIWhite);
 }
 
+
 .content{
     width:65vw;
-    height:25vh;
+    height: auto;;
 }
 
 .sideCard{
@@ -60,8 +61,8 @@ and (-webkit-min-device-pixel-ratio: 1.5) {
 
     .card.register_card{
     
-        width:97vw;
-        height:97vh;
+        width:75vw;
+        height:70vh;
     }
 }
 

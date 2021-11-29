@@ -61,7 +61,7 @@
 .inner{
     width: 50vw;
     height: auto;
-    line-height: 3.5vh;
+    /* line-height: 3.5vh; */
     /* display: flex;
     flex-direction: column; */
 }
@@ -80,7 +80,7 @@
 
 .signin{
     width: 40vw;
-    line-height: 10px;
+    /* line-height: 10px; */
 }
 
 @media screen and (max-width: 991.98px) {
@@ -95,13 +95,18 @@
 .inner{
     width: 50vw;
     height: auto;
-    line-height: 3.5vh;
+    gap:  10px;
+    margin-bottom: .5rem;
+    /* line-height: 3.5vh; */
     /* display: flex;
     flex-direction: column; */
 }
 
 @media screen and (max-width: 991.98px) {
 
+    .inner{
+        width: 80vw;
+    }
     
     .landingPage{
         height: 86vh;
@@ -119,14 +124,14 @@
 
     .signin{
         width: 100vw;
-        line-height: 10px;
+        /* line-height: 10px; */
     }
 
     .signin_image_container{
         width: 100vw;
         height: auto;
 
-        margin-bottom: 2rem
+        margin-bottom: .5rem
     }
 
   
@@ -144,26 +149,25 @@ and (-webkit-min-device-pixel-ratio: 1.5) {
         height: 86vh;
         width: 100vh;
         display: flex;
-        flex-direction: column;
         
     }
 
     .landingImage{
   
-      width: 100vw;
-      height: 8vh;
+      width: 40vw;
+      height: 86vh;
     }
 
     .signin{
-        width: 100vw;
-        line-height: 10px;
+        width: 60vw;
+        /* line-height: 10px; */
     }
 
     .signin_image_container{
-        width: 100vw;
+        width: 40vw;
         height: auto;
 
-        margin-bottom: 2rem
+        /* margin-bottom: 2rem */
     }
 }
 

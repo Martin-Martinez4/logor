@@ -2,7 +2,7 @@
 // A progess indicator that is displayed as a single element
 //  The element is filled a segment at a time
 
-import React, { useEffect, FC, ReactElement } from "react";
+import React, { useEffect, FC } from "react";
 import ProgressBarLabeling from "./ProgressBarLabeling";
 
 import "./ProgressBar.css";
@@ -24,7 +24,7 @@ type BarProps = {
 }
 
 
-const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, currentStep, labelsArray }:BarProps) => {
+const ProgressBarSingle: FC<BarProps> = ({ barHeight, barWidth1, barWidth2, numberOfSteps, currentStep, labelsArray }) => {
 
     
     // Get precentage of steps completed
@@ -47,7 +47,7 @@ const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, cur
                 <>
                     <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
                     <div className="flexRowContainer single_bar" style={{width:barWidth1.toString() + "vw", height:barHeight.toString()+"vh"}}>
-                    <div className="bar" style={{width: String(currentProgress) +"%"}}></div>
+                    <div className="bar" style={{width: currentProgress.toString() +"%"}}></div>
                     </div>
                 </>
           
@@ -56,7 +56,7 @@ const ProgressBarSingle = ({ barHeight, barWidth1, barWidth2, numberOfSteps, cur
                     <>
                         <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
                         <div className="flexRowContainer single_bar" style={{width:barWidth2.toString() + "vw", height:barHeight.toString()+"vh"}}>
-                        <div className="bar" style={{width: String(currentProgress) +"%"}}></div>
+                        <div className="bar" style={{width: currentProgress.toString() +"%"}}></div>
                         </div>
                     </>
               
