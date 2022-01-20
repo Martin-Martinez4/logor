@@ -5,5 +5,41 @@
     width:80vw;
 } */
 
+.post{
+    display: flex;
+    flex-direction: row;
+    border-color:rgb(195, 214, 231);
+    margin:0;
+    gap:0;
+}
+
+.post>.user_content{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: .5rem;
+    padding: 1.2rem 0rem 0rem 0rem;
+    margin: .5rem;
+   
+}
+.user_image{
+    align-items: flex-start;
+    padding: .5rem 0rem 0rem 0rem;
+    margin: .5rem;
+}
+
+.post_user_image{
+
+    width: 3.5rem;
+
+}
+
+.post_body_text{
+    /* padding: 0rem 3rem 0rem 5rem; */
+    margin-top: 0;
+
+
+}
+
 
 

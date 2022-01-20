@@ -8,9 +8,11 @@
 
 
 .content{
-    width:65vw;
+    width:64vw;
     height: auto;;
 }
+
+/* At ipad Pro (1024 X 1366) (1250 X H , 1250: problems start) change into horizontal */
 
 .sideCard{
 

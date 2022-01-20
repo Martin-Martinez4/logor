@@ -5,3 +5,35 @@
     margin: 1vh .5vw 1vh .5vw;
     
 }
+
+.leftSide{
+
+    padding: 2rem 0rem 0rem 0rem;
+}
+
+/* Think of different name */
+.side_icon{
+
+    display: flex;
+    padding: 0rem 0rem 0rem 1rem;
+    gap: 1rem;
+    margin-top: 1.75rem;
+    width: 100%;
+
+}
+
+/* Add hover effects */
+.sidebar_icon{
+    width: 2rem;
+    cursor: pointer;
+
+
+}
+
+.sidebar_text{
+    align-self: flex-end;
+    margin:0;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+

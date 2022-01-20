@@ -8,6 +8,11 @@
     height: 8rem;
 }
 
+.profile_header{
+    margin-bottom: 1rem;
+
+}
+
 .profile_header_image{
 
     border-radius: 100%;
@@ -27,6 +32,7 @@
     margin: 2rem;
     margin-top: 2.6rem;
     margin-left: 3rem;
+    
 }
 
 .profile_name, .profile_tag{

@@ -1,0 +1,23 @@
+
+/* Firefox scroll style */
+.scroll_div{
+    scrollbar-width: thin;
+    scrollbar-color: var(--Secondary3) var(--UIWhite);
+}
+
+/* Works on Chrome, Edge, and Safari */
+.scroll_div::-webkit-scrollbar {
+    width: .5rem;
+  }
+  
+  .scroll_div::-webkit-scrollbar-track {
+    background: var(--UIWhite);
+    width: .5rem;
+  }
+  
+  .scroll_div::-webkit-scrollbar-thumb {
+    background-color: var(--Secondary3);
+    /* border-radius: 20px; */
+    /* border: 3px solid var(--Secondary3); */
+  }
+

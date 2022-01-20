@@ -61,9 +61,7 @@
 .inner{
     width: 50vw;
     height: auto;
-    /* line-height: 3.5vh; */
-    /* display: flex;
-    flex-direction: column; */
+  
 }
 
 
@@ -80,7 +78,6 @@
 
 .signin{
     width: 40vw;
-    /* line-height: 10px; */
 }
 
 @media screen and (max-width: 991.98px) {
@@ -97,9 +94,7 @@
     height: auto;
     gap:  10px;
     margin-bottom: .5rem;
-    /* line-height: 3.5vh; */
-    /* display: flex;
-    flex-direction: column; */
+
 }
 
 @media screen and (max-width: 991.98px) {
@@ -120,18 +115,35 @@
   
       width: 100vw;
       height: 8vh;
+      display: none;
     }
 
     .signin{
         width: 100vw;
-        /* line-height: 10px; */
+        height: 80vh;
+        background: var(--UIWhite);
+
+       
     }
 
     .signin_image_container{
         width: 100vw;
-        height: auto;
+        height: 100vh;
 
-        margin-bottom: .5rem
+        margin-bottom: .5rem;
+
+        background-image:
+        linear-gradient(180deg, var(--Primary1), var(--UIWhite)), url("../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplash.jpg");
+        height: 100%; /* You must set a specified height */
+        width: 100vw; /* You must set a specified height */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+        background-blend-mode: saturation;
+
+        z-index: -1;
+        position: absolute;
+
     }
 
   
@@ -160,14 +172,12 @@ and (-webkit-min-device-pixel-ratio: 1.5) {
 
     .signin{
         width: 60vw;
-        /* line-height: 10px; */
     }
 
     .signin_image_container{
         width: 40vw;
         height: auto;
 
-        /* margin-bottom: 2rem */
     }
 }
 
