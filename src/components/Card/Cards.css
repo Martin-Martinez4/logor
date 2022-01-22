@@ -12,6 +12,13 @@
     height: auto;;
 }
 
+@media screen and (max-width: 1264px){
+    
+    .content{
+        width: 90vw;
+    }
+}
+
 /* At ipad Pro (1024 X 1366) (1250 X H , 1250: problems start) change into horizontal */
 
 .sideCard{
@@ -19,7 +26,7 @@
     box-shadow: 2px 2px 2px #888888;
     
     width:18vw;
-    min-height:540px;
+    min-height:440px;
 }
 
 .card.register_card{

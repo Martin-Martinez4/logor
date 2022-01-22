@@ -67,15 +67,27 @@
     display: none;
 }
 
-.sidebar_icon:hover~.sidebar_text{
-   
-    display: block;
+
+@media screen and (min-width: 1200px){
+
+    .sidebar_icon:hover~.sidebar_text{
+       
+        display: block;
+    }
 }
 
 
 @media screen and (max-width: 1570px){
     .rightSide{
         width: 22vw
+    }
+}
+
+@media screen and (max-width: 1264px){
+    
+    .rightSide{
+
+        display: none;
     }
 }
 

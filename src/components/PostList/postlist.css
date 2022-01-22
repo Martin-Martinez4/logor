@@ -5,4 +5,75 @@
     flex-direction: column;
 }
 
+.med_suggestion{
+
+    text-align: center;
+    display: none;
+    border-color: var(--Primary3);
+
+
+}
+
+@media screen and (max-width: 1264px){
+    
+    .med_suggestion{
+
+        display: block;
+    }
+}
+
+.med_suggestion>div{
+
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+.med_suggestion>.suggestions{
+
+    display: flex;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+}
+
+.med_suggestion>.features{
+
+    width: auto;
+
+    display: flex;
+    justify-content: center;
+    padding: .25rem;
+
+}
+
+.med_suggestion>.features>.miniProfile{
+
+    width: 42%;
+    margin: 1rem 0rem .5rem 2rem;
+
+}
+
+
+@media screen and (max-width: 750px){
+
+    .med_suggestion>.features{
+    
+        display: contents;
+      
+    
+    }
+}
+
+@media screen and (max-width: 240px){
+
+    .med_suggestion>.features>.miniProfile{
+
+        width: 100%;
+        margin: 0rem 1rem 0rem .5rem;
+
+    }
+}
+
 
