@@ -1,2 +1,8 @@
 
+.postlist_horizontal{
+    
+    display:flex;
+    flex-direction: column;
+}
+
 

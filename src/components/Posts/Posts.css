@@ -22,6 +22,10 @@
     margin: .5rem;
    
 }
+.post>.user_content>.user_info{
+    gap:  .5rem;
+   
+}
 .user_image{
     align-items: flex-start;
     padding: .5rem 0rem 0rem 0rem;

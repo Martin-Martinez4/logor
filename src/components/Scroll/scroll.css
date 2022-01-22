@@ -3,6 +3,9 @@
 .scroll_div{
     scrollbar-width: thin;
     scrollbar-color: var(--Secondary3) var(--UIWhite);
+    overflow-y:scroll;
+    border:1px  solid  var(--Primary3);
+    height:90vh;
 }
 
 /* Works on Chrome, Edge, and Safari */

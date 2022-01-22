@@ -6,10 +6,13 @@ import Scroll from "../Scroll/Scroll";
 import Post from "../Posts/Post";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 
+import "./postlist.css"
+
 const PostList: FC = () => {
 
         return(
-            <div style={{ display:"flex", flexDirection: "column" }}>
+            // style={{ display:"flex", flexDirection: "column" }}
+            <div className="postlist_horizontal" >
             <Scroll>
                 <ProfileHeader/>
 

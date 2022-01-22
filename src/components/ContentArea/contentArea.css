@@ -1,22 +1,51 @@
 
 .contentArea{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 1.5rem;
     margin: 1vh .5vw 1vh .5vw;
+
     
 }
 
 .leftSide{
-
-    padding: 2rem 0rem 0rem 0rem;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    height: fit-content;
+    width: 4vw;
+   
 }
 
-/* Think of different name */
+.rightSide > .header{
+    margin-top: 2rem;;
+    text-align: center;
+    color: var(--Secondary);
+
+}
+
+.rightSide_content{
+
+    margin-left: 1.5rem;
+    margin-top: .5rem;
+}
+
+
+
+.rightSide{
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+  
+}
+
+
 .side_icon{
 
     display: flex;
-    padding: 0rem 0rem 0rem 1rem;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 1.75rem;
     width: 100%;
 
@@ -26,14 +55,29 @@
 .sidebar_icon{
     width: 2rem;
     cursor: pointer;
-
-
 }
 
 .sidebar_text{
-    align-self: flex-end;
-    margin:0;
+    margin-top:1rem;
     font-size: 1.25rem;
+    color: var(--Primary);
+    background-color: var(--UIWhite);
+    opacity: .95;
     cursor: pointer;
+    display: none;
 }
+
+.sidebar_icon:hover~.sidebar_text{
+   
+    display: block;
+}
+
+
+@media screen and (max-width: 1570px){
+    .rightSide{
+        width: 22vw
+    }
+}
+
+
 

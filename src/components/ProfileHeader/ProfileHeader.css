@@ -46,14 +46,50 @@
 .profile_other{
 
     display: flex;
+    flex-wrap: wrap;
     gap: 2.5rem;
     margin: .5rem;
+    align-items: baseline;
+
+}
+
+.profile_other>p{
+
+    color: var(--Tertiary)
 
 }
 
 .profile_description{
     margin: .5rem;
     margin-top: 1rem;
+}
+
+.profile_icon{
+
+    width: .9rem;
+    margin-right: .5rem;
+
+}
+
+.location_icon{
+    
+    width: .75rem;
+}
+
+.link_icon{
+    width: 1rem;
+}
+
+@media screen and (max-width: 1600px){
+
+    .profile_other{
+
+        display: block;
+        gap: 1rem;
+        margin-top: 0rem;
+    
+    }
+    
 }
 
 

@@ -16,8 +16,8 @@ const Post: FC = () => {
                 </div>
                 <div className="post user_content">
                    <div className="post user_info">
-                        <strong>Name</strong>
-                        <em>@tagName</em>
+                        <strong>Nameeeeeeeeeeeeeeeee</strong>
+                        <em>@Nameeeeeeeeeeeeeeeee</em>
                         <b> | </b>
                         <em> Month Year</em>
                    </div>

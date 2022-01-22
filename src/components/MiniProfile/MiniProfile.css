@@ -1,0 +1,62 @@
+
+.miniProfile{
+
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px var(--Primary3);
+    width: 95%;
+    gap: .5rem;
+    
+}
+.miniProfile> .profilePicture{
+
+    width: 3rem;
+    margin-bottom: 2rem;
+    margin-top: .5rem;
+}
+
+.miniProfile> .profileName{
+
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    
+    margin: 0;
+    padding: 0;
+    font-size: .8rem;
+
+}
+.miniProfile> .profileName>p{
+
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+    
+}
+.miniProfile> .profileName>button{
+
+    height: 2rem;
+    width: 4rem;
+    padding: 0;
+    margin: 0;
+    margin-top: .5rem;
+    line-height: 1rem;
+    background-color: var(--Primary);
+    font-size: .75rem;
+
+    align-self: flex-start;
+    
+}
+
+.miniProfile> .button{
+
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+    margin: 0;
+    line-height: 1rem;
+    background-color: var(--Primary);
+    font-size: .75rem;
+
+}
+
