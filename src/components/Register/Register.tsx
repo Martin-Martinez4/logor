@@ -216,15 +216,18 @@ const Register:FC = () => {
 
                     <div className="flexColContainer">
                         <h4 className="inputName">Upload a picture or choose one from the circles below</h4>
-                    
-                        <input 
-                            type="file" 
-                            placeholder="Choose a Profile Image"
-                            accept=".png, .jpg, .jpeg" 
-                            id="photo" 
-                            className="file_input"
-                            onChange={handleImg}
-                        />
+
+                        <label className="uploadLabel">
+
+                            <input 
+                                type="file" 
+                                placeholder="Choose a Profile Image"
+                                accept=".png, .jpg, .jpeg" 
+                                id="photo" 
+                                className="file_input"
+                                onChange={handleImg}
+                            />
+                        </label>
                     </div>
 
                     <div className="flexRowContainer profile_image_container">

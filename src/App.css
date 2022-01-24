@@ -154,12 +154,28 @@ button.button, input[type=file]::file-selector-button, input::-webkit-file-uploa
 
 }
 
-@media (max-width: 991.98px) {
+@media screen and (max-width: 375px){
+
+  button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
+
+    width: 4rem;
+  }
+}
+
+@media (max-width: 991.98px) and (min-width: 375px){
 
   button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
 
     width: 20vw;
     height: 3rem;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 991.98px) {
+
+  button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
+
+    width: 8vw;
   }
 }
 
@@ -171,8 +187,8 @@ and (-webkit-min-device-pixel-ratio: 1.5) {
 
   button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
 
-    width: 8rem;
-    height: 4rem;
+    width: 6rem;
+    height: 3rem;
   }
 }
 
@@ -373,6 +389,11 @@ label > input[type=checkbox] {
 
 /* // Large devices (desktops, less than 1200px)
 @media (max-width: 1199.98px) { ... } */
+
+input[type="file"]::-webkit-file-upload-button{
+
+  width: fit-content;
+}
 
 
 

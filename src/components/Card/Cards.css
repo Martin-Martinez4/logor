@@ -12,11 +12,22 @@
     height: auto;;
 }
 
+
+
 @media screen and (max-width: 1264px){
     
     .content{
         width: 90vw;
     }
+}
+
+@media screen and (max-width: 769px) {
+
+    .content{
+        width: 94vw;
+
+    }
+    
 }
 
 /* At ipad Pro (1024 X 1366) (1250 X H , 1250: problems start) change into horizontal */

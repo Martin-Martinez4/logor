@@ -2,12 +2,72 @@
 
 .topBar{
 
-    background-color: #002233;
+    /* background-color: #002233; */
+    background-color: var(--UIBlack);
     width: 100vw;
-    height: 8vh;
+    height: 3.5rem;
     border: 1px solid black;
-    grid-area: header;
     display: flex;
+
+    align-items: center;
+}
+
+.topBar__search{
+
+    align-self: center;
+    width: 56vw;
+
+}
+
+.topBar__logo{
+
+    margin: .5rem 8vw .2rem 2rem;
+    width: auto;
+}
+
+@media screen and (max-width: 600px) and (min-width: 551px){
+
+    .topBar__logo{
+
+        width: 3.5rem;
+        margin: .5rem 8vw .2rem 1rem;
+
+    }
+
+    .topBar__search{
+
+        width: 64vw;
+
+    }
+}
+
+@media screen and (max-width: 550px) and (min-width: 281px){
+
+    .topBar__logo{
+
+        width: 3rem;
+        margin: .5rem 4vw .5rem .5rem;
+    }
+
+    .topBar__search{
+
+        width: 64vw;
+
+    }
+}
+
+@media screen and (max-width: 280px){
+
+    .topBar__logo{
+
+        margin: .5rem;
+        width: 2.5rem;
+    }
+
+    .topBar__search{
+        
+        width: 68vw
+    }
 }
 
 .bottomBar{

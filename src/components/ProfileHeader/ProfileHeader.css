@@ -9,7 +9,7 @@
 }
 
 .profile_header{
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 
 }
 
@@ -55,7 +55,7 @@
 
 .profile_other>p{
 
-    color: var(--Tertiary)
+    color: var(--UIGrey)
 
 }
 
@@ -71,6 +71,11 @@
 
 }
 
+.profile_tag{
+
+    font-weight: normal;
+}
+
 .location_icon{
     
     width: .75rem;
@@ -78,6 +83,28 @@
 
 .link_icon{
     width: 1rem;
+}
+
+.link_icon+a{
+
+    text-decoration: none;
+}
+
+.link_icon+a:link{
+
+    color: var(--UIGrey);
+}
+.link_icon+a:visited{
+
+    color: var(--UIGrey);
+}
+.link_icon+a:hover{
+
+    color: var(--Tertiary);
+}
+.link_icon+a:active{
+
+    color: var(--Tertiary1);
 }
 
 @media screen and (max-width: 1600px){

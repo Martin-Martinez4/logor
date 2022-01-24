@@ -7,6 +7,7 @@ import Post from "../Posts/Post";
 import Card from "../Card/Card";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
+import CommentBox from "../CommentBox/CommentBox";
 
 import "./postlist.css"
 
@@ -36,7 +37,8 @@ const PostList: FC = () => {
 
                     </div>
                 </Card>
-
+                
+                <CommentBox></CommentBox>
 
                 <Post /> 
                 <Post /> 

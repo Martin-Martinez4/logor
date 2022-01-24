@@ -38,7 +38,7 @@
 
 .round.profileImage{
     
-    border: 2px solid var(--UIBlack);
+    /* border: 2px solid var(--UIBlack); */
 
     width: 5rem;
     height: 5rem;
@@ -60,6 +60,7 @@
         flex-wrap: wrap;
     }
 }
+
 
 
 

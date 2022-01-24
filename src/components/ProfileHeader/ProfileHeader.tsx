@@ -17,15 +17,15 @@ const ProfileHeader:FC = () =>{
             </div>
             <div className="profile_header_container">
                 <h3 className="profile_name">Name</h3>
-                <h4 className="profile_tag">@tag</h4>
+                <h4 className="profile_tag"><em>@tag</em></h4>
                 <p className="profile_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ab et eius facere obcaecati voluptate quibusdam enim aliquam culpa quas magnam nostrum itaque deserunt consequuntur iste, odio reprehenderit praesentium aspernatur.</p>
 
                 <div className="profile_other">
-                    <p><img src={LocationIcon} alt="profile image" className="profile_icon location_icon"></img> West Cityville, Utzonia; Quidno</p>
+                    <p><img src={LocationIcon} alt="profile image" className="profile_icon location_icon"></img> <em>West Cityville, Utzonia; Quidno</em></p>
 
-                    <p><img src={LinkIcon} alt="profile image" className="profile_icon link_icon"></img><a href="http://localhost:3000/home">localhost:3000/home</a></p>
+                    <p><img src={LinkIcon} alt="profile image" className="profile_icon link_icon"></img><a href="http://localhost:3000/home"><em>localhost:3000/home</em></a></p>
 
-                    <p><img src={CalenderIcon} alt="profile image" className="profile_icon"></img>Joined June 2013</p>
+                    <p><img src={CalenderIcon} alt="profile image" className="profile_icon"></img><em>Joined June 2013</em></p>
 
                 </div>
 

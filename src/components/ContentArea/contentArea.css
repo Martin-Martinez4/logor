@@ -3,9 +3,15 @@
     display: flex;
     justify-content: center;
     gap: 1.5rem;
-    margin: 1vh .5vw 1vh .5vw;
+    margin: .5rem;
 
-    
+}
+
+@media screen and (max-width: 950px){
+
+    .contentArea{
+        gap: .75rem;
+    }
 }
 
 .leftSide{
@@ -15,6 +21,14 @@
     height: fit-content;
     width: 4vw;
    
+}
+
+@media screen and (max-width: 769px) {
+
+    .leftSide{
+        display: none;
+    }
+    
 }
 
 .rightSide > .header{
@@ -51,10 +65,18 @@
 
 }
 
+
 /* Add hover effects */
 .sidebar_icon{
     width: 2rem;
     cursor: pointer;
+}
+
+@media screen and (max-width: 950px){
+
+    .sidebar_icon{
+        width: 1.5rem;
+    }
 }
 
 .sidebar_text{

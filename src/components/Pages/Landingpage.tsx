@@ -1,6 +1,6 @@
 
 import React, {ReactElement}from "react";
-import TopBar from "../TopandBottom/TopBar";
+import TopBar2 from "../TopandBottom/TopBar2";
 import BottomBar from "../TopandBottom/BottomBar";
 import Signin from "../Siginin/Signin";
 import "./landingPage.css";
@@ -12,7 +12,7 @@ const Landingpage = ():ReactElement => {
   
         <React.Fragment>
 
-            <TopBar />
+            <TopBar2 />
             <div className="landingPage">
 
                 <div className="signin_image_container ">

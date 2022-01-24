@@ -13,7 +13,7 @@ const MiniProfile:FC = () => {
             <img src={Monkey2} alt="Monkey 2" className="profilePicture" />
             <div className="profileName">
                 <p><strong>wwwwwwwwwwwwwww</strong></p>
-                <p><strong><em>@wwwwwwwwwwwwwww</em></strong></p>
+                <p><em>@wwwwwwwwwwwwwww</em></p>
                 < button type="button" className="button" title="Click to move to next Step">Follow</button>
             </div>
             {/* < button type="button" className="button" title="Click to move to next Step">Follow</button> */}

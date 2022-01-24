@@ -47,6 +47,11 @@
 
 }
 
+.user_info__pipe{
+
+    color: var(--UIGrey2);
+}
+
 .post_body_text{
     margin-top: 0;
 }
