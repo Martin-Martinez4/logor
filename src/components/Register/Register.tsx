@@ -47,11 +47,11 @@ const Register:FC = () => {
             
             setUser(user => ({ ...user, profileImage: e.target.files === null? Monkey1:URL.createObjectURL(e.target.files[0]) }))
         }   
-    }
+}
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        if(e=== null){
+        if(e === null){
             return
         }
 

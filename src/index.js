@@ -2,6 +2,7 @@ import React from "react";
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
+import { AuthProvider } from "./components/useAuth/useAuth";
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -9,7 +10,9 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <Router>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </Router>,
   document.getElementById('root')
 );

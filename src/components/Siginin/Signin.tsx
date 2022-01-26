@@ -1,7 +1,72 @@
 
-import React, { ReactElement } from "react";
+import React, { FC, ReactElement, useState } from "react";
 
-const Signin = ():ReactElement => {
+import { useNavigate } from "react-router-dom";
+
+import useAuth from "../useAuth/useAuth";
+
+import TestData from "../../tempStaticData/testData.json"
+
+const Signin:FC = () => {
+
+    const navigate = useNavigate();
+    const { login } = useAuth();
+    
+    // const handleLogin = () => {
+    //     login().then(() => {
+    //     navigate("/home");
+    //     });
+    // };
+  
+    const [userCreds, setUserCreds] = useState({
+
+        username:"",
+        password:""
+    });
+
+    const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        console.log(e.target.name, e.target.value)
+        // console.log(TestData["login"]["1"]["username"])
+
+        setUserCreds(userCreds => ({...userCreds, [e.target.name]: (e.target.value).toString()}))
+
+        e.preventDefault();
+
+        
+    }
+
+    const onAttemptLogin = () => {
+
+        let userName = "";
+
+        for(let key in TestData["login"]){
+
+            // console.log("userCreds", userCreds.username)
+            // console.log(TestData["login"][key]["username"])
+
+            if(userCreds.username === TestData["login"][key]["username"]){
+
+                // console.log("success", userCreds.username)
+                userName = userCreds.username
+
+                if(userCreds.password === TestData["login"][key]["password"]){
+
+                    // handleLogin()
+                    login().then(() => {
+                        navigate("/home");
+                    });
+                }
+            }
+            else{
+
+                // logout()
+                console.log("fail")
+            }
+        }
+
+
+    }
 
     return (
         
@@ -16,17 +81,17 @@ const Signin = ():ReactElement => {
                 <label htmlFor="uname" className="upperleft">
                     <h4 className="inputName">Username</h4>
                 
-                    <input type="text" placeholder="Enter Username" name="uname" required />
+                    <input type="text" placeholder="Enter Username" name="username" onChange={oninputChange} required />
                 </label>
                 
-                <label htmlFor="psw" className="upperleft">
+                <label htmlFor="password" className="upperleft">
                     <h4 className="inputName">Password</h4>
                 
-                    <input type="password" placeholder="Enter Password" name="psw" required />
+                    <input type="password" placeholder="Enter Password" name="password" onChange={oninputChange} required />
                 </label>
 
                 <div>
-                    <button type="submit" className=" button primary">Login</button>
+                    <button type="submit" className=" button primary" onClick={onAttemptLogin} >Login</button>
                 </div>
                 <div>
                     <label>

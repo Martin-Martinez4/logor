@@ -18,6 +18,7 @@ const PostList: FC = () => {
             <div className="postlist_horizontal" >
             <Scroll>
                 <ProfileHeader/>
+                
                 <Card classes="content med_suggestion">
                     <p>Suggestions</p>
                     <div className="suggestions">
