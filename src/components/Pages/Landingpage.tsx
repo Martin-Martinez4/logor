@@ -1,11 +1,14 @@
 
-import React, {ReactElement}from "react";
+import React, { ReactElement, useState}from "react";
 import TopBar2 from "../TopandBottom/TopBar2";
 import BottomBar from "../TopandBottom/BottomBar";
 import Signin from "../Siginin/Signin";
 import "./landingPage.css";
+import { idText } from "typescript";
 
-const Landingpage = ():ReactElement => {
+
+
+const Landingpage = ({ loadUser }):ReactElement => {
     // Photo by <a href="https://unsplash.com/@ryunosuke_kikuno?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ryunosuke Kikuno</a> on <a href="https://unsplash.com/s/photos/green?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
     return(
@@ -20,7 +23,7 @@ const Landingpage = ():ReactElement => {
                 </div>
 
 
-                <Signin />
+                <Signin loadUser={loadUser}/>
 
             </div>
             <BottomBar />

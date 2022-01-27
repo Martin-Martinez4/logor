@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect, FC } from "react";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
 
@@ -13,19 +13,26 @@ import test from "../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplashBig.jpg"
 
 import "./Register.css";
 
-const Register:FC = () => {
+const Register:FC = ({ loadUser }) => {
     
     const [user, setUser] = useState({
 
+        id:"",
+        username:"",
+        joined_date:"",
+        tag:"",
+        profile_pic_url:Monkey1,
+        description:"",
+        header_img_url:"",
+        location:"",
+        links:"",
+        
         name:"",
         email:"",
         password:"",
         password2:"",
-        description:"",
-        location:"",
         gender:"",
-        other:"",
-        profileImage:Monkey1,
+        other:""
 
     });
 
@@ -45,7 +52,7 @@ const Register:FC = () => {
             });
         
             
-            setUser(user => ({ ...user, profileImage: e.target.files === null? Monkey1:URL.createObjectURL(e.target.files[0]) }))
+            setUser(user => ({ ...user, profile_pic_url: e.target.files === null? Monkey1:URL.createObjectURL(e.target.files[0]) }))
         }   
 }
 
@@ -65,14 +72,14 @@ const Register:FC = () => {
         const { src } = e.currentTarget;
 
 
-        setUser(user => ({ ...user, profileImage:src }))
+        setUser(user => ({ ...user, profile_pic_url:src }))
 
         e.preventDefault()
     }
 
     useEffect(() => {
         // console.log("user profileImage: " + user.profileImage); 
-    }, [user.profileImage]);
+    }, [user.profile_pic_url]);
     
 
     const numberOfSteps:number = 3;
@@ -245,7 +252,7 @@ const Register:FC = () => {
                        
 
                         <div className="form__img-input-container">
-                            <img src={user.profileImage} alt={alt} className="round profileImage"/>
+                            <img src={user.profile_pic_url} alt={alt} className="round profileImage"/>
                         </div>
 
                     </div>
@@ -265,7 +272,7 @@ const Register:FC = () => {
         :
         <div className="flexColContainer">
             <h2>I am error</h2>
-            <h4><a href="/">Go back</a></h4>
+            <h4><Link to="/">Go back</Link></h4>
         </div>
     }
 

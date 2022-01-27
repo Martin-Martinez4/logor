@@ -1,22 +1,17 @@
 
 import React, { FC, ReactElement, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import useAuth from "../useAuth/useAuth";
 
 import TestData from "../../tempStaticData/testData.json"
 
-const Signin:FC = () => {
+const Signin:FC = ({ loadUser }) => {
 
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, logout } = useAuth();
     
-    // const handleLogin = () => {
-    //     login().then(() => {
-    //     navigate("/home");
-    //     });
-    // };
   
     const [userCreds, setUserCreds] = useState({
 
@@ -26,7 +21,7 @@ const Signin:FC = () => {
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        console.log(e.target.name, e.target.value)
+        // console.log(e.target.name, e.target.value)
         // console.log(TestData["login"]["1"]["username"])
 
         setUserCreds(userCreds => ({...userCreds, [e.target.name]: (e.target.value).toString()}))
@@ -52,16 +47,24 @@ const Signin:FC = () => {
 
                 if(userCreds.password === TestData["login"][key]["password"]){
 
+                    const userData = Object.assign({id: key}, TestData["users"][key], TestData["headers"][key])
+
+                    console.log(userData);
+
+                    loadUser(userData);
+
                     // handleLogin()
                     login().then(() => {
                         navigate("/home");
-                    });
-                }
-            }
-            else{
+                    }).catch( err => {
 
-                // logout()
-                console.log("fail")
+                        console.log("fail")
+                        logout().then(() => {
+                            navigate("/");
+                        })
+
+                    })
+                }
             }
         }
 
@@ -101,8 +104,8 @@ const Signin:FC = () => {
             </div>
 
             <div className="flexColContainer inner" >
-                <span >Forgot your password?  <a href="/reset"> Reset your password.</a></span>
-                <span >Do not have an account? <a href="/register">Register Here.</a></span>
+                <span >Forgot your password?  <Link to="/reset"> Reset your password.</Link></span>
+                <span >Do not have an account? <Link to="/register">Register Here.</Link></span>
             </div>
         </div>
     </form>
