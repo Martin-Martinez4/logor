@@ -33,7 +33,7 @@ const Signin:FC = ({ loadUser }) => {
 
     const onAttemptLogin = () => {
 
-        let userName = "";
+        // let userName = "";
 
         for(let key in TestData["login"]){
 
@@ -43,7 +43,7 @@ const Signin:FC = ({ loadUser }) => {
             if(userCreds.username === TestData["login"][key]["username"]){
 
                 // console.log("success", userCreds.username)
-                userName = userCreds.username
+                // userName = userCreds.username
 
                 if(userCreds.password === TestData["login"][key]["password"]){
 
