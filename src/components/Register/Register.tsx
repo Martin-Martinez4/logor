@@ -4,6 +4,7 @@ import {useNavigate, Link} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import useAuth from "../useAuth/useAuth";
+import createNewUser from "../createNewUser/createNewUser";
 
 import TestData from "../../tempStaticData/testData.json"
 
@@ -15,10 +16,12 @@ import Monkey2 from "../../assets/Monkey_2.svg";
 import Monkey3 from "../../assets/Monkey_3.svg";
 import Monkey4 from "../../assets/Monkey_4.svg";
 
+import background1 from "../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplash__mobile2.jpg"
+
 import test from "../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplashBig.jpg"
 
 import "./Register.css";
-import { userInfo } from "os";
+// import { userInfo } from "os";
 
 const Register:FC = ({ loadUser }) => {
     
@@ -30,7 +33,7 @@ const Register:FC = ({ loadUser }) => {
         tag:"",
         profile_pic_url:Monkey1,
         description:"",
-        header_img_url:"",
+        header_img_url:background1,
         location:"",
         links:"",
 
@@ -57,9 +60,13 @@ const Register:FC = ({ loadUser }) => {
                 src: URL.createObjectURL(e.target.files[0]),
                 alt: e.target.files[0].name
             });
+
+            const targetName = e.target.name;
+
+            console.log(targetName)
         
             
-            setUser(user => ({ ...user, profile_pic_url: e.target.files === null? Monkey1:URL.createObjectURL(e.target.files[0]) }))
+            setUser(user => ({ ...user, [targetName]: e.target.files === null? Monkey1:URL.createObjectURL(e.target.files[0]) }))
         }   
 }
 
@@ -76,21 +83,32 @@ const Register:FC = ({ loadUser }) => {
     
     const onPickImage= (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
 
+        const el = e.target as HTMLInputElement
+
         const { src } = e.currentTarget;
 
+        const pictureType = el.getAttribute("pic-type")
 
-        setUser(user => ({ ...user, profile_pic_url:src }))
+        console.log(pictureType)
+
+
+        setUser(user => ({ ...user, [pictureType]:src }))
 
         e.preventDefault()
     }
 
+    // Helps stop unnecessary rerenders
     useEffect(() => {
-        // console.log("user profileImage: " + user.profileImage); 
+
     }, [user.profile_pic_url]);
+
+    useEffect(() => {
+
+    }, [user.header_img_url]);
     
 
-    const numberOfSteps:number = 3;
-    const labelsArray:string[] = ["Login Information", "User Information", "Profile Picture"]
+    const numberOfSteps:number = 4;
+    const labelsArray:string[] = ["Login Information", "User Information", "Profile Picture", "Background Pricture"]
     
 
     const barWidth1:number = 80;
@@ -111,74 +129,30 @@ const Register:FC = ({ loadUser }) => {
 
     const navigateSuccess = (data) => {
 
+        let test = new Date().getTime();
 
-        // create UUID for  user  id
+        // console.log(test)
 
-        const newUserId = uuidv4();
+        // console.log(data)
 
-        console.log("new uuid: ", newUserId);
+        const userData = createNewUser(user, data);
 
-        console.log("user.username: ",user.username);
+        setUser(user  => ({...user, joined_date:"sdsd"}))
 
-        data["login"][newUserId] = {};
-        data["users"][newUserId] = {};
 
-        data["login"][newUserId]["username"] = user.username;
-        data["users"][newUserId]["username"] = user.username;
+        // console.log("userData", userData)
 
-        // data["login"]["password"] = data.password.toString();
-
-        const userData = Object.assign({id: newUserId}, TestData["users"][newUserId], TestData["headers"][newUserId])
-
-        console.log("userData", userData)
-
-        // loadUser(userData)
+        loadUser(userData)
 
         login().then(() => {
 
             navigate('/success');
 
 
+        }).catch(err => {
+            console.log("something went wrong")
         });
 
-
-
-        // Create User
-           /* Login: {
-                "1":{
-                    username,
-                    password
-                }
-            }
-
-            "users":{
-
-                    "1":{
-
-                        "username": "Monk1",
-                        "tag": "@1Monk",
-                        "profile_pic_url": "../../assets/Monkey_1.svg"
-                    },
-                }
-
-            "headers":{
-
-                    "1":{
-
-                        "description": "First member of the site",
-                        "header_img_url": "...",
-                        "location": "New Ape City; The Great Cayon",
-                        "links": "apes.apes",
-                        "joined_date": "1/25/2015"
-                    },
-                }
-            */
-
-
-        // loadUser
-            // attempt login
-
-        // navigate('/success');
         }
 
 
@@ -207,6 +181,12 @@ const Register:FC = ({ loadUser }) => {
                         <h4 className="inputName">Username</h4>
                     
                         <input type="text" placeholder="Enter Username" name="username" onChange={oninputChange} value={user.username} required />
+                    </label>
+
+                    <label htmlFor="tag" className="upperleft">
+                        <h4 className="inputName">Tag</h4>
+                    
+                        <input type="text" placeholder="Enter Tag" name="tag" onChange={oninputChange} value={user.tag} required />
                     </label>
 
                     <label htmlFor="email" className="upperleft">
@@ -264,10 +244,10 @@ const Register:FC = ({ loadUser }) => {
                         <input type="text" placeholder="Enter Location" name="location" onChange={oninputChange} value={user.location} required />
                     </label>
 
-                    <label htmlFor="gender" className="upperleft">
-                        <h4 className="inputName">Gender</h4>
+                    <label htmlFor="links" className="upperleft">
+                        <h4 className="inputName">Links</h4>
                     
-                        <input type="text" placeholder="Enter Gender" name="gender" onChange={oninputChange} value={user.gender} required />
+                        <input type="links" placeholder="Enter Links" name="links" onChange={oninputChange} value={user.links} required />
                     </label>
                     
                     <label htmlFor="other" className="upperleft">
@@ -309,6 +289,7 @@ const Register:FC = ({ loadUser }) => {
                                 placeholder="Choose a Profile Image"
                                 accept=".png, .jpg, .jpeg" 
                                 id="photo" 
+                                name="profile_pic_url"
                                 className="file_input"
                                 onChange={handleImg}
                             />
@@ -316,11 +297,11 @@ const Register:FC = ({ loadUser }) => {
                     </div>
 
                     <div className="flexRowContainer profile_image_container">
-                        <img onClick={ onPickImage } className="round profileImage" src={Monkey1} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" src={Monkey2} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" src={Monkey3} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" src={Monkey4} alt="Monkey" />
-                        <img onClick={ onPickImage } src={test} className="round profileImage" alt="Profile Preveiw" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey1} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey2} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey3} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey4} alt="Monkey" />
+                        <img onClick={ onPickImage } src={test} className="round profileImage" pic-type="profile_pic_url" alt="Profile Preveiw" />
                        
                     </div>
 
@@ -339,7 +320,71 @@ const Register:FC = ({ loadUser }) => {
 
                     <div className="flexRowContainer margin1">
                         <button onClick={() => setCurrentStepValue((currentStep - 1)) } type="button" className="button red" title="Click to move back to step 2">Back</button>
-                        <a onClick={() => navigateSuccess(TestData)} className="button primary">Submit</a>
+                        <button onClick={() => setCurrentStepValue((currentStep + 1)) } type="button" className="button primary" title="Click to move to next Step"
+                            >Next</button>
+                    </div>
+                    
+                </div>
+
+                
+            </div>
+        </div>
+        : currentStep === 4
+        ?
+            
+        <div className="flexColContainer">
+            <div className="progressBar registeration_progress">
+                
+            <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
+
+            </div>
+            <h3>Profile Picture</h3>
+
+            <div className="inner">
+                <div className="flexColContainer">
+
+                    <div className="flexColContainer">
+                        <h4 className="inputName">Upload a picture or choose one from the circles below</h4>
+
+                        <label className="uploadLabel">
+
+                            <input 
+                                type="file" 
+                                placeholder="Choose a Profile Image"
+                                accept=".png, .jpg, .jpeg" 
+                                id="photo" 
+                                name="header_img_url"
+                                className="file_input"
+                                onChange={handleImg}
+                            />
+                        </label>
+                    </div>
+
+                    <div className="flexRowContainer profile_image_container">
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey1} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey2} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey3} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey4} alt="Monkey" />
+                        <img onClick={ onPickImage } src={test} className="round profileImage"pic-type="header_img_url" alt="Profile Preveiw" />
+                    
+                    </div>
+
+                    <div className="flexColContainer">
+
+                        <p>Preview</p>
+                    
+
+                        <div className="form__img-input-container">
+                            <img src={user.header_img_url} alt={alt} className="round profileImage"/>
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div className="flexRowContainer margin1">
+                        <button onClick={() => setCurrentStepValue((currentStep - 1)) } type="button" className="button red" title="Click to move back to step 2">Back</button>
+                        <button onClick={() => navigateSuccess(TestData)} className="button primary" type="button">Submit</button>
                     </div>
                     
                 </div>
