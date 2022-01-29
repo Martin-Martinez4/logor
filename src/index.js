@@ -3,6 +3,8 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import { AuthProvider } from "./components/useAuth/useAuth";
+import { UserInfoProvider } from "./components/userContext/userContext";
+
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -10,9 +12,12 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <Router>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+
+        <AuthProvider>
+        <UserInfoProvider>
+          <App />
+        </UserInfoProvider>
+        </AuthProvider>
   </Router>,
   document.getElementById('root')
 );

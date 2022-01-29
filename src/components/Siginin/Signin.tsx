@@ -10,8 +10,7 @@ import TestData from "../../tempStaticData/testData.json"
 const Signin:FC = ({ loadUser }) => {
 
     const navigate = useNavigate();
-    const { login, logout } = useAuth();
-    
+    const { login, logout } = useAuth();    
   
     const [userCreds, setUserCreds] = useState({
 
@@ -48,13 +47,10 @@ const Signin:FC = ({ loadUser }) => {
                 if(userCreds.password === TestData["login"][key]["password"]){
 
                     const userData = Object.assign({id: key}, TestData["users"][key], TestData["headers"][key])
-
-                    console.log(userData);
-
-                    loadUser(userData);
-
-                    // handleLogin()
+                    
                     login().then(() => {
+                        
+                        loadUser(userData);
                         navigate("/home");
                     }).catch( err => {
 

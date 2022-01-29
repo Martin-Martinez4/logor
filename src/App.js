@@ -5,8 +5,9 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import useAuth from "./components/useAuth/useAuth";
+import { UserInfoContext } from './components/userContext/userContext';
 import Home from './components/Pages/Home';
 import Landingpage from './components/Pages/Landingpage';
 import Register from './components/Register/Register';
@@ -21,22 +22,24 @@ function RequireAuth({ children, redirectTo }) {
   return isAuthenticated.authed ? children : <Navigate to="/" replace />;
 }
 
+// Avoid prop drilling of loggedInUser
+// let context = React.createContext(null);
+
 function App() {
 
-  const [loggedInUser, setloggedInUser] = useState({
+  // const [loggedInUser, setloggedInUser] = useState({
+  //     id:"",
+  //     username:"",
+  //     joined_date:"",
+  //     tag:"",
+  //     profile_pic_url:"",
+  //     description:"",
+  //     header_img_url:"",
+  //     location:"",
+  //     links:"",
+  // });
 
-    user:{
-      id:"",
-      username:"",
-      joined_date:"",
-      tag:"",
-      profile_pic_url:"",
-      description:"",
-      header_img_url:"",
-      location:"",
-      links:"",
-    }
-  });
+  const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
   const loadUser = (data) => {
 
@@ -59,14 +62,18 @@ function App() {
   
   return (
     <div className="App container">
+
       <Routes>
         <Route path="/" element={<Landingpage loadUser={loadUser} />} />
-        <Route path="/home" element={
-        
-            <RequireAuth>
-              <Home/>
-            </RequireAuth>
-          } />
+
+          
+          <Route path="/home" element={
+
+              
+              <RequireAuth>
+                  <Home/>
+              </RequireAuth>
+            } />
         <Route path="/register" element={<Register loadUser={loadUser} />} />
         <Route path="/success" element={<SuccessPage/>} />
 
