@@ -28,6 +28,23 @@ const PostList: FC = () => {
 
     const [userPosts, setUserPosts] = useState(loggedInComments);
 
+    // const [ newPost, setNewPost ] = useState({
+
+    //     commentBox:""
+
+    // })
+
+    // const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    //     if(e === null){
+    //         return
+    //     }
+
+    //     setNewPost(prev => ({ ...prev, [e.target.name]: e.target.value }))
+
+    //     e.preventDefault()
+    // }
+
     useEffect(() => {
 
         console.log("effect: ",userPosts)
@@ -35,7 +52,7 @@ const PostList: FC = () => {
     },[userPosts])
 
     
-    let postsList = (loggedInComments) => {
+    const createPosts = (loggedInComments) => {
         
         let posts = []
         
@@ -53,32 +70,30 @@ const PostList: FC = () => {
         return posts
     }
 
-    let posts = postsList(userPosts)
+    let posts = createPosts(userPosts)
     
     // On create a post set(old => {new, ...old}),then 
-    const addPostToList = () => {
+    // const addPostToList = () => {
 
-        let ui_id = uuidv4();
+    //     let ui_id = uuidv4();
 
-        let test = "test"
+    //     let test = "test"
         
 
-    
+    //     setUserPosts(user => ( { [ui_id]: {
+    //         "date_made":`${test}Mon Dec 13 2021 21:50:40 GMT-0700 (Mountain Standard Time)`,
 
-        setUserPosts(user => ( { [ui_id]: {
-            "date_made":`${test}Mon Dec 13 2021 21:50:40 GMT-0700 (Mountain Standard Time)`,
-
-            "text_content": "The Apollotec B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design Cross-group 3rd generation frame",
+    //         "text_content": "The Apollotec B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design Cross-group 3rd generation frame",
             
-            "like": "0",
-            "replies": []
-        } , ...user}))
+    //         "like": "0",
+    //         "replies": []
+    //     } , ...user}))
 
 
-        posts = postsList(loggedInComments)
+    //     posts = createPosts(loggedInComments)
 
 
-    }
+    // }
         return(
             // style={{ display:"flex", flexDirection: "column" }}
             <div className="postlist_horizontal" >
@@ -105,25 +120,9 @@ const PostList: FC = () => {
                     </div>
                 </Card>
                 
-                {/* <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} addPostToList={addPostToList} ></CommentBox> */}
-                {/* comment box area was changed from being a component to being part of this component to simplify the post creation function */}
-                <Card classes="content content__commentBox">
-
-                    <textarea id="commentBox" name="commentBox" className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
-
-                    <div className="commentBox__buttonArea">
-                        
-                        <em className="buttonArea__charsLeft">Characters Left: 920</em>
-                        <div className="buttonArea__buttons">
-                            <button className="button primary" onClick={() => addPostToList()}>Submit</button>
-                            <button className="button red">Cancel</button>
-
-                        </div>
-                    </div>
-                </Card>
-
+                <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts} loggedInComments={loggedInComments} ></CommentBox>
+              
                 {posts}
-                <button onClick={() => addPostToList()}>Test</button>
                
                 {/* White  space at the end of the scroll section */}
                 <div className="empty"></div>
