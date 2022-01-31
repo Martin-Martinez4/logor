@@ -5,7 +5,7 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import React, { useState, useContext } from 'react';
+import { useContext } from 'react';
 import useAuth from "./components/useAuth/useAuth";
 import { UserInfoContext } from './components/userContext/userContext';
 import Home from './components/Pages/Home';

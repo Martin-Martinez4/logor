@@ -1,10 +1,9 @@
 
-import React, { ReactElement, useState}from "react";
+import React, { ReactElement }from "react";
 import TopBar2 from "../TopandBottom/TopBar2";
 import BottomBar from "../TopandBottom/BottomBar";
 import Signin from "../Siginin/Signin";
 import "./landingPage.css";
-import { idText } from "typescript";
 
 
 

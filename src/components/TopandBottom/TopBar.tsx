@@ -7,7 +7,7 @@ const TopBar: FC = () => {
 
     return(
         <nav className="topBar">
-            <img src={Logo} className="topBar__logo"></img>
+            <img src={Logo} className="topBar__logo"  alt="site logo"></img>
             <input type="search" id="topBarSearch" name="topBarSearch" className="topBar__search"></input>
             <div>
                 <div className="dot"></div>

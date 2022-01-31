@@ -15,16 +15,13 @@ const ProfileHeader:FC = () =>{
     
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
-
-
-
     return(
 
         <Card classes="h_auto content profile_header">
          
 
             <div className="profile_header_background" style={{backgroundImage: `url('./unsplash_GBEHjsPQbEQ.png')`}} >
-                <img src={ loggedInUser["profile_pic_url"] } alt="profile image" className="profile_header_image "></img>
+                <img src={ loggedInUser["profile_pic_url"] } alt="profile" className="profile_header_image "></img>
             </div>
 
             <div className="profile_header_container">
@@ -37,11 +34,11 @@ const ProfileHeader:FC = () =>{
                 <p className="profile_description">{loggedInUser["description"]}</p>
 
                 <div className="profile_other">
-                    <p><img src={LocationIcon} alt="profile image" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p>
+                    <p><img src={LocationIcon} alt="profile" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p>
 
-                    <p><img src={LinkIcon} alt="profile image" className="profile_icon link_icon"></img><a href={loggedInUser["links"]}><em>{loggedInUser["links"]}</em></a></p>
+                    <p><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><a href={loggedInUser["links"]}><em>{loggedInUser["links"]}</em></a></p>
 
-                    <p><img src={CalenderIcon} alt="profile image" className="profile_icon"></img><em>{loggedInUser["joined_date"]}</em></p>
+                    <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{loggedInUser["joined_date"]}</em></p>
 
                 </div>
 

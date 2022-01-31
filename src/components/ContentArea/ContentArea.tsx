@@ -10,7 +10,6 @@ import ShareIcon from "../../assets/ShareIcon.svg";
 import PoundSign from "../../assets/PoundSign.svg";
 import HeartIcon from "../../assets/HeartIcon.svg";
 
-import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import"./contentArea.css";
 
 const ContentArea:FC = () => {
@@ -20,33 +19,33 @@ const ContentArea:FC = () => {
             <SideCard side="leftSide">
                 <div className="side_icon">
                     <img 
-                        src={ProfileIcon} alt="profile image" className="sidebar_icon">
+                        src={ProfileIcon} alt="profile" className="sidebar_icon">
                     </img>
                     <span className="sidebar_text"><strong>Profile</strong></span>
                 </div>
                 <div className="side_icon">
                     <img 
-                        src={GearIcon} alt="profile image" className="sidebar_icon">
+                        src={GearIcon} alt="profile" className="sidebar_icon">
                     </img>
                     <span className="sidebar_text"><strong>Settings</strong></span>
                 </div>
 
                 <div className="side_icon">
                     <img 
-                        src={ShareIcon} alt="profile image" className="sidebar_icon">
+                        src={ShareIcon} alt="profile" className="sidebar_icon">
                     </img>
                     <span className="sidebar_text"><strong>Lists</strong></span>
                 </div>
 
                 <div className="side_icon">
                     <img 
-                        src={PoundSign} alt="profile image" className="sidebar_icon">
+                        src={PoundSign} alt="profile " className="sidebar_icon">
                     </img>
                     <span className="sidebar_text"><strong>Trends</strong></span>
                 </div>
                 <div className="side_icon">
                     <img 
-                        src={HeartIcon} alt="profile image" className="sidebar_icon">
+                        src={HeartIcon} alt="profile" className="sidebar_icon">
                     </img>
                     <span className="sidebar_text"><strong>Favorites</strong></span>
                 </div>

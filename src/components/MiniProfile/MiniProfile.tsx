@@ -1,10 +1,9 @@
 
-import React, { FC } from "react";
+import { FC } from "react";
 
 import "./MiniProfile.css";
 import Monkey2 from "../../assets/Monkey_2.svg";
-import Monkey3 from "../../assets/Monkey_3.svg";
-import Monkey4 from "../../assets/Monkey_4.svg";
+
 
 const MiniProfile:FC = () => {
 

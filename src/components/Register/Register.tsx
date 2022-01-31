@@ -1,7 +1,6 @@
 
 import React, {useState, useEffect, FC } from "react";
 import {useNavigate, Link} from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
 import useAuth from "../useAuth/useAuth";
 import createNewUser from "../createNewUser/createNewUser";

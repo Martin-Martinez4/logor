@@ -1,4 +1,5 @@
 
+// Not efficent (while loop inside of for loop) but it is just a helper, may change later
 const faker = require("faker");
 
 const UUIDv4 = require('uuid') ;

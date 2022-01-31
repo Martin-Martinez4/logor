@@ -1,5 +1,4 @@
-import React, { FC } from "react";
-import Logo from "../../assets/Logo3.svg";
+import { FC } from "react";
 
 import "./Nav.css";
 

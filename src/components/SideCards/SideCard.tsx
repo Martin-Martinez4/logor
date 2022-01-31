@@ -1,8 +1,7 @@
 
-import React, { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import Card from "../Card/Card";
-import ProfileIcon from "../../assets/ProfileIcon.svg";
 
 type PropsSideCard = PropsWithChildren<{
 
