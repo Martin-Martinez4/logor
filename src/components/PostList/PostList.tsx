@@ -1,12 +1,11 @@
 
 import { FC, useContext, useState, useEffect } from "react";
 
-import { v4 as uuidv4 } from 'uuid';
-
 import Scroll from "../Scroll/Scroll";
 
-import Post from "../Posts/Post";
 import Card from "../Card/Card";
+import Post from "../Posts/Post";
+import DeletedPost from "../Posts/DeletedPost";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
 import CommentBox from "../CommentBox/CommentBox";
@@ -28,26 +27,11 @@ const PostList: FC = () => {
 
     const [userPosts, setUserPosts] = useState(loggedInComments);
 
-    // const [ newPost, setNewPost ] = useState({
-
-    //     commentBox:""
-
-    // })
-
-    // const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    //     if(e === null){
-    //         return
-    //     }
-
-    //     setNewPost(prev => ({ ...prev, [e.target.name]: e.target.value }))
-
-    //     e.preventDefault()
-    // }
-
     useEffect(() => {
 
-        console.log("effect: ",userPosts)
+        // console.log("effect: ",userPosts)
+
+        console.log("Stuff")
 
     },[userPosts])
 
@@ -62,8 +46,23 @@ const PostList: FC = () => {
             let date = loggedInComments[key]["date_made"];
             
             if(loggedInComments.hasOwnProperty(key)){
+
+                if(loggedInComments[key].hasOwnProperty("status")){
+
+                    if(loggedInComments[key]["status"] === "Deleted"){
+
+                        console.log("should  have worked")
+    
+                        posts.push(<DeletedPost uuid={key} />);
+    
+                    }
                 
-                posts.push( <Post key={key} uuid={key}userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} /> );
+                }else{
+
+                    posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} /> );
+                }
+
+                
             }
         }
         
@@ -72,28 +71,6 @@ const PostList: FC = () => {
 
     let posts = createPosts(userPosts)
     
-    // On create a post set(old => {new, ...old}),then 
-    // const addPostToList = () => {
-
-    //     let ui_id = uuidv4();
-
-    //     let test = "test"
-        
-
-    //     setUserPosts(user => ( { [ui_id]: {
-    //         "date_made":`${test}Mon Dec 13 2021 21:50:40 GMT-0700 (Mountain Standard Time)`,
-
-    //         "text_content": "The Apollotec B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design Cross-group 3rd generation frame",
-            
-    //         "like": "0",
-    //         "replies": []
-    //     } , ...user}))
-
-
-    //     posts = createPosts(loggedInComments)
-
-
-    // }
         return(
             // style={{ display:"flex", flexDirection: "column" }}
             <div className="postlist_horizontal" >

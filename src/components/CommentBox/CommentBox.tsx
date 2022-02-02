@@ -26,15 +26,17 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
         e.preventDefault()
     }
 
+    const clearInput = (targetName, setFunction) => {
+
+        setFunction({[targetName]:""})
+    }
+
     const addPostToList = () => {
 
-        let ui_id = uuidv4();
-
-        let test = "test"
-        
+        let ui_id = uuidv4();        
 
         setUserPosts(user => ( { [ui_id]: {
-            "date_made":`Mon Dec 13 2021 21:50:40 GMT-0700 (Mountain Standard Time)`,
+            "date_made":`Mon Dec 13 2021`,
 
             "text_content":` ${newPost.commentBox}`,
             
@@ -45,6 +47,7 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
         posts = createPosts(loggedInComments)
 
+        clearInput("commentBox", setNewPost);
 
     }
 
