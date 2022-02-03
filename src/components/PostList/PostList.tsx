@@ -51,13 +51,20 @@ const PostList: FC = () => {
 
                     if(loggedInComments[key]["status"] === "Deleted"){
 
-                        console.log("should  have worked")
+                        // console.log("should have worked")
     
                         posts.push(<DeletedPost uuid={key} />);
     
                     }
+                    else{
+
+                        posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} /> );
+    
+                    }
                 
                 }else{
+
+                    // console.log("key: ",key);
 
                     posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} /> );
                 }

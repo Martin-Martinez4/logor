@@ -11,13 +11,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
+  
   <Router>
 
+    <React.StrictMode>
         <AuthProvider>
         <UserInfoProvider>
           <App />
         </UserInfoProvider>
         </AuthProvider>
+  </React.StrictMode>
   </Router>,
   document.getElementById('root')
 );

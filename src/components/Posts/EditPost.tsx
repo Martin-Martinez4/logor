@@ -5,7 +5,7 @@ import { FC } from "react";
 import Card from "../Card/Card";
 import "./Posts.css";
 
-const DeletedPost: FC = ({ uuid }) => {
+const EditPost: FC = ({ uuid }) => {
  
 
         return(
@@ -18,5 +18,5 @@ const DeletedPost: FC = ({ uuid }) => {
         );
 }
 
-export default DeletedPost
+export default EditPost;
 

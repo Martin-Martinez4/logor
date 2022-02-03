@@ -7,12 +7,19 @@ import "./Posts.css";
 const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content, userPosts, posts, setUserPosts, createPosts, loggedInComments }) => {
 
 
-    const container = React.createRef();
+    const dropdownContainer = React.createRef();
     const cancelButton = React.createRef();
+    const editButton = React.createRef();
     
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+
+    const [editMode, setEdiMode] = useState({
+
+        visible: false,
+        textContent: text_content
+    });
 
     const toggleDropDownVisible = () => {
 
@@ -24,12 +31,20 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
         
         setDeleteConfirmationVisible(!deleteConfirmationVisible);
-        console.log(deleteConfirmationVisible)
+    }
 
+    const toggleEditMode = () => {
+        
+
+        let tempVisible:boolean = !(editMode.visible);
+
+        setEdiMode(prevEditMode => ({ ...prevEditMode, ["visible"]:tempVisible }))
+
+        console.log(editMode.visible)
     }
 
 
-      useEffect(() => {
+    useEffect(() => {
 
         document.addEventListener("mouseup", handleClickOutside);
 
@@ -38,13 +53,13 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
             document.removeEventListener("mouseup", handleClickOutside);
         }
-    }, [dropdownVisible, deleteConfirmationVisible]);
+    }, [dropdownVisible, deleteConfirmationVisible, editMode]);
 
     const handleClickOutside = (e) => {
        
         if (
-            container.current &&
-            !container?.current?.contains(e.target)
+            dropdownContainer.current &&
+            !dropdownContainer?.current?.contains(e.target)
             ) {
                 setDropdownVisible(false);
             }
@@ -56,33 +71,82 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                 setDeleteConfirmationVisible(false);
             }
  
+        if (
+            editButton.current &&
+            !editButton?.current?.contains(e.target)
+            ) {
+                setEdiMode(prevEditMode => ({ ...prevEditMode, ["visible"]:false }))
+            }
+ 
     };
 
     const handleDelete = (e) => {
 
+        // When session token implemented, check for token
+
         console.log(uuid)
+        // update the database
         loggedInComments[uuid]["text_content"] = "";
         loggedInComments[uuid]["status"] = "Deleted";
 
         // console.log(loggedInComments[uuid])
 
-        setUserPosts(user => ( { [uuid]: {
-            "date_made":`Mon Dec 13 2021`,
+        // Update  the front end state
+
+        const deletedPost = {[uuid]: {
+            "date_made":`${date_posted}`,
 
             "text_content":``,
             
             "like": "0",
             "status":"Deleted",
             "replies": []
-        } , ...user}))
+        }}
 
-        console.log( loggedInComments[uuid])
+        const newUsers = Object.assign({}, userPosts, deletedPost)
 
-        posts = createPosts(userPosts)
-
-        console.log(posts)
+        setUserPosts(newUsers)
 
 
+
+    }
+
+    const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        if(e === null){
+            return
+        }
+
+        setEdiMode(prev => ({ ...prev, [e.target.name]: e.target.value }))
+
+        e.preventDefault()
+    }
+
+    const handleEdit = () => {
+
+        loggedInComments[uuid]["text_content"] = editMode.textContent;
+
+        toggleEditMode()
+
+        const editedPost = {
+            [uuid]:
+            {
+            "date_made":`${date_posted}`,
+
+            "text_content":`${ editMode.textContent}`,
+            
+            "like": "0",
+            "status":"Edited",
+            "replies": []
+        }}
+
+        
+        const editedUsers = Object.assign({}, userPosts, editedPost)
+        
+        setUserPosts(editedUsers)
+
+
+        
     }
 
  
@@ -101,7 +165,30 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                         <em>{date_posted}</em>
 
                    </div>
-                    <p className="post_body_text">{text_content}</p>
+                   <div>
+
+                        {editMode.visible? 
+                            (
+                                <div ref={editButton}>
+                                <textarea id="commentBox" name="textContent" value={editMode.textContent} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
+
+                                <div className="commentBox__buttonArea">
+                                    
+                                    <em className="buttonArea__charsLeft">Characters Left: 920</em>
+                                    <div className="buttonArea__buttons">
+                                        <button className="button primary" onClick={handleEdit}>Submit</button>
+                                        <button className="button red">Cancel</button>
+
+                                    </div>
+                                </div>
+                                </div>
+                            ) 
+                            :
+                            <p className="post_body_text">
+                           { text_content}
+                            </p>
+                            }
+                    </div>
                     <span className={`dropdown ${deleteConfirmationVisible?"visible":"invisible"}`} >
                         <p>Are you sure you want to delete this post</p>
                         <div>
@@ -115,9 +202,9 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                     <div className="dot"></div>
                     <div className="dot"></div>
                     <div className="dot"></div>
-                    <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={container}>
+                    <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
                         <p>Embed</p>
-                        <p>Edit</p>
+                        <p onClick={toggleEditMode}>Edit</p>
                         <p onClick={toggleDeleteConfirmationVisible}>Delete</p>
                     </span>
                 </span>
