@@ -4,12 +4,15 @@ import React, { FC, useEffect, useState } from "react";
 import Card from "../Card/Card";
 import "./Posts.css";
 
+import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
+import CheckmarkIcon from "../../assets/CheckmarkIcon.svg";
+import ShareIcon from "../../assets/ShareIcon2.svg";
+
 const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content, userPosts, posts, setUserPosts, createPosts, loggedInComments }) => {
 
 
     const dropdownContainer = React.createRef();
     const cancelButton = React.createRef();
-    const editButton = React.createRef();
     
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -31,6 +34,14 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
         
         setDeleteConfirmationVisible(!deleteConfirmationVisible);
+
+        if(editMode.visible){
+
+            let tempVisible:boolean = false;
+    
+            setEdiMode(prevEditMode => ({ ...prevEditMode, ["visible"]:tempVisible }))
+        }
+
     }
 
     const toggleEditMode = () => {
@@ -40,7 +51,10 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
         setEdiMode(prevEditMode => ({ ...prevEditMode, ["visible"]:tempVisible }))
 
-        console.log(editMode.visible)
+        if(deleteConfirmationVisible){
+
+            setDeleteConfirmationVisible(false);
+        }
     }
 
 
@@ -71,12 +85,6 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                 setDeleteConfirmationVisible(false);
             }
  
-        if (
-            editButton.current &&
-            !editButton?.current?.contains(e.target)
-            ) {
-                setEdiMode(prevEditMode => ({ ...prevEditMode, ["visible"]:false }))
-            }
  
     };
 
@@ -145,8 +153,18 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
         
         setUserPosts(editedUsers)
 
-
         
+    }
+
+    const exitEditMode = (e) => {
+
+        toggleEditMode();
+
+        setEdiMode(prev => ({ ...prev, ["textContent"]: `${text_content}` }))
+
+        e.preventDefault()
+
+
     }
 
  
@@ -169,18 +187,18 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
                         {editMode.visible? 
                             (
-                                <div ref={editButton}>
-                                <textarea id="commentBox" name="textContent" value={editMode.textContent} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
+                                <div>
+                                    <textarea id="commentBox" name="textContent" value={editMode.textContent} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
 
-                                <div className="commentBox__buttonArea">
-                                    
-                                    <em className="buttonArea__charsLeft">Characters Left: 920</em>
-                                    <div className="buttonArea__buttons">
-                                        <button className="button primary" onClick={handleEdit}>Submit</button>
-                                        <button className="button red">Cancel</button>
+                                    <div className="commentBox__buttonArea">
+                                        
+                                        <em className="buttonArea__charsLeft">Characters Left: 920</em>
+                                        <div className="buttonArea__buttons">
+                                            <button className="button primary" onClick={handleEdit}>Submit</button>
+                                            <button className="button red" onClick={exitEditMode} >Cancel</button>
 
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                             ) 
                             :
@@ -189,6 +207,7 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                             </p>
                             }
                     </div>
+
                     <span className={`dropdown ${deleteConfirmationVisible?"visible":"invisible"}`} >
                         <p>Are you sure you want to delete this post</p>
                         <div>
@@ -197,6 +216,13 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
                         </div>
                     </span>
+
+                    <div className="post__icons">
+                        <HeartIcon></HeartIcon>
+                        <img src={CheckmarkIcon}></img>
+                        <img src={ShareIcon}></img>
+                        <p>Lasted Edited on MM-DD-YYYY-HH:MM</p>
+                    </div>
                 </div>
                 <span className="option_dots" onClick={toggleDropDownVisible}>
                     <div className="dot"></div>
