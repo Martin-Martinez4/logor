@@ -45,6 +45,7 @@ const Register:FC = ({ loadUser }) => {
 
     });
 
+      // eslint-disable-next-line 
     const [{alt, src}, setImg] = useState({
         src: Monkey4,
         alt: 'Upload an Image'
@@ -124,11 +125,12 @@ const Register:FC = ({ loadUser }) => {
         navigate('/');
         }
     
-    const { login, logout } = useAuth();
+    // eslint-disable-next-line
+    const { login } = useAuth();
 
     const navigateSuccess = (data) => {
 
-        let test = new Date().getTime();
+        // let test = new Date().getTime();
 
         // console.log(test)
 

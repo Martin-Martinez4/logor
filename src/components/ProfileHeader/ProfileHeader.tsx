@@ -13,6 +13,7 @@ import CalenderIcon from "../../assets/CalenderIcon.svg"
 
 const ProfileHeader:FC = () =>{
     
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
     return(

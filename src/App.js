@@ -27,18 +27,7 @@ function RequireAuth({ children, redirectTo }) {
 
 function App() {
 
-  // const [loggedInUser, setloggedInUser] = useState({
-  //     id:"",
-  //     username:"",
-  //     joined_date:"",
-  //     tag:"",
-  //     profile_pic_url:"",
-  //     description:"",
-  //     header_img_url:"",
-  //     location:"",
-  //     links:"",
-  // });
-
+  // eslint-disable-next-line
   const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
   const loadUser = (data) => {

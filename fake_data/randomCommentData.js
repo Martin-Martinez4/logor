@@ -68,6 +68,7 @@ for(let i = 1; i <= numberUsers; i++ ){
                                     
                                     "like": "10",
                                     "replies": []
+                                   
                                 }${counter < randNum-1 ? ",":""}       
         `
 

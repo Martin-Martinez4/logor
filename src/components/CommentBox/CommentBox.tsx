@@ -17,13 +17,37 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
+        e.preventDefault()
+        
         if(e === null){
             return
         }
-
+        console.log("test", e.target.value);
         setNewPost(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-        e.preventDefault()
+    }
+
+    const handleKeyDown = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        if (e.key === "Tab") {
+            e.preventDefault();
+
+            let tabAdded = e.target.value + "\t"; 
+
+            setNewPost(prev => ({ ...prev, [e.target.name]: tabAdded }))
+        
+            console.log("tab");
+          }
+
+        if (e.key === "Enter") {
+            e.preventDefault();
+
+            let tabAdded = e.target.value + "\n"; 
+
+            setNewPost(prev => ({ ...prev, [e.target.name]: tabAdded }))
+        
+            console.log("test", e.target.value);
+          }
     }
 
     const clearInput = (targetName, setFunction) => {
@@ -33,10 +57,14 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
     const addPostToList = () => {
 
-        let ui_id = uuidv4();        
+        let ui_id = uuidv4();   
+
+        const currTime = new Date().getTime()
+        
+        const readableDate:String = (new Date(currTime).toString());
 
         setUserPosts(user => ( { [ui_id]: {
-            "date_made":`Mon Dec 13 2021`,
+            "date_made":`${readableDate}`,
 
             "text_content":` ${newPost.commentBox}`,
             
@@ -56,7 +84,7 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
         <Card classes="content content__commentBox">
 
-            <textarea id="commentBox" name="commentBox" value={newPost.commentBox} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
+            <textarea id="commentBox" name="commentBox" value={newPost.commentBox} onChange={oninputChange} onKeyDown={handleKeyDown} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
 
             <div className="commentBox__buttonArea">
                 

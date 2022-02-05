@@ -5,7 +5,8 @@
     align-items: center;
     flex-direction: column;
     height: 14rem;
-    margin: .2rem 0rem 0rem 0rem;
+    margin: auto;
+    margin-bottom: .5rem;
     /* border-color: var(--UIGrey); */
     border: none;
 
@@ -17,10 +18,12 @@
     width: 94%;
     height: 80%;
     margin: .5rem;
-    padding: .25rem;
+    /* padding: .25rem; */
     border-radius: 10px;
     box-shadow: 0 0 0 1px var(--Tertiary);
     border: 3px solid transparent;
+
+    white-space: pre-wrap;
 
     font-size: 1rem;
 
@@ -32,6 +35,8 @@
     .commentBox__commentInput{
 
         width: 88%;
+        margin: auto;
+        margin-bottom: .5rem;
     }
 }
 
@@ -61,6 +66,16 @@
     width: 94%;
     height: 4rem;
 
+}
+
+@media screen and (max-width: 750px){
+
+    .commentBox__buttonArea{
+        display: block;
+        width: fit-content;
+        margin-bottom: 1rem;
+
+    }
 }
 
 @media screen and (max-width: 375px){

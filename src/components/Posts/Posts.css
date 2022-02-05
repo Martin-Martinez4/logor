@@ -5,6 +5,8 @@
 
     /* min-height: 4rem; */
 
+    align-items: flex-start;
+
     flex-direction: row;
     border-color: var(--Primary3);
     margin:0;
@@ -14,7 +16,7 @@
 .post>.user_content{
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    /* gap: .5rem; */
     padding: 1.2rem 0rem 0rem 0rem;
     margin: .5rem;
     margin-right: 0px;
@@ -24,8 +26,15 @@
    
 }
 .post>.user_content>.user_info{
-    gap:  .5rem;
+    gap: .5rem;
    
+}
+
+.post_body_text{
+    margin: 0rem 0rem 2.5rem 0rem;
+    white-space:pre-line;
+    line-height: 1.25rem;
+    width: 50vw;
 }
 
 @media screen and (max-width: 750px){
@@ -39,28 +48,38 @@
 
 }
 
-@media screen and (max-width: 1300px) and (min-width: 1299px){
+@media screen and (max-width: 1264px) and (min-width: 941px){
 
     .post>.user_content{
        width: 77vw;
        
     }
-}
 
+    .post_body_text{
+        width: 77vw
+    }
+}
+/* 
 @media screen and (max-width: 1299px) and (min-width: 941px){
 
     .post>.user_content{
        width: 77vw;
        
     }
-}
+} */
 
-@media screen and (max-width: 940px) and (min-width: 651px){
+@media screen and (max-width: 941px) and (min-width: 651px){
 
     .post>.user_content{
        width: 75vw;
        
     }
+
+    
+    .post_body_text{
+        width:75vw;
+    }
+
 }
 
 @media screen and (max-width: 650px) and (min-width: 521px){
@@ -68,6 +87,10 @@
     .post>.user_content{
        width: 72vw;
        
+    }
+
+    .post_body_text{
+        width:72vw;
     }
 }
 
@@ -77,6 +100,10 @@
        width: 70vw;
        
     }
+
+    .post_body_text{
+        width:70vw;
+    }
 }
 
 @media screen and (max-width: 480px) and (min-width: 351px){
@@ -84,6 +111,10 @@
     .post>.user_content{
        width: 65vw;
        
+    }
+
+    .post_body_text{
+        width: 65vw;
     }
 }
 
@@ -94,6 +125,10 @@
         width: 58vw;
         
     }
+
+    .post_body_text{
+        width: 58vw;
+    }
 }
 
 @media screen and (max-width: 279px){
@@ -102,7 +137,12 @@
        width: 50vw;
        
     }
+
+    .post_body_text{
+        width: 50vw;
+    }
 }
+
 .user_image{
     align-items: flex-start;
     padding: .5rem 0rem 0rem 0rem;
@@ -117,12 +157,9 @@
 
 .user_info__pipe{
 
-    color: var(--UIGrey2);
+    color: var(--UIGrey);
 }
 
-.post_body_text{
-    margin-top: 0;
-}
 
 @media screen and (max-width: 300px){
 
@@ -144,7 +181,7 @@
     }
 }
 
-.content>.option_dots{
+.option_dots{
     position: relative;
     display: flex;
     margin: .75rem .75rem 0 0;
@@ -155,7 +192,7 @@
 
 }
 
-.content>.option_dots>.dot{
+.option_dots>.dot{
 
     height: .2rem;
     width: .2rem;
@@ -215,6 +252,141 @@
 
     color: var(--UIGrey);
 }
+
+.post__bottomArea{
+
+    height: auto;
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+
+}
+
+.post__icons{
+
+    height: auto;
+    width: 80%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-around;
+}
+
+.post__lastEdited{
+
+    font-size: var(--x-small);
+    color: var(--UIGrey);
+    font-weight: bolder;
+
+    min-width: fit-content;
+
+    margin: 0;
+}
+
+.post__lastEdited p{
+
+    margin: .2rem;
+}
+
+@media screen and (min-width: 751px){
+
+    .on_Gthan750px{
+
+        display: flex;
+    }
+
+    .on_750px{
+
+        display: none;
+    }
+}
+
+@media screen and (max-width: 750px){
+
+    .on_Gthan750px{
+
+        display: none;
+    }
+
+    .on_750px{
+
+        display: flex;
+    }
+}
+
+@media screen and  (max-width: 660px) and (min-width: 360px){
+
+    .commentBox__buttonArea{
+
+        flex-direction: column;
+    }
+
+    .post__bottomArea{
+
+        display: block;
+
+        width: 70vw;
+    }
+
+    .post__lastEdited p{
+
+        font-size: var(--smaller);
+    }
+
+  
+}
+
+@media screen and  (max-width: 660px) and (min-width: 360px){
+
+    .commentBox__buttonArea{
+
+        flex-direction: column;
+    }
+
+    .post__bottomArea{
+
+        width: 70vw;
+    }
+
+  
+}
+
+@media screen and (max-width: 400px){
+
+    .post__bottomArea{
+
+        display: block;
+
+    }
+
+    .post__lastEdited{
+
+        width: max-content;
+    }
+
+}
+
+.userNameArea{
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.datePosted{
+
+    font-size: var(--x-small);
+}
+
+
 
 
 
