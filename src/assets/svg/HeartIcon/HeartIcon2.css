@@ -1,5 +1,7 @@
 
-.svgHeart:hover {animation: heartFill 1.5s cubic-bezier(0.1,0.4,1,0.2) 0s}
+.svgHeart {
+    animation: heartFill 1s cubic-bezier(0.1,0.4,1,0.2) 0s;
+}
 
 @keyframes heartFill {
     0%{fill:var(--UIWhite)}
@@ -10,15 +12,18 @@
 }
 
 .svgHeart{
-    fill:none;
-    }
-    
-.svgHeart:hover{
     fill:var(--Red);
-    transition:fill 3s cubic-bezier(0.1,0.4,1,0.2) 0s;
+    transition:fill 1s cubic-bezier(0.1,0.4,1,0.2) 0s;
 }
 
-.svgHeart--clicked{
-
-    fill: var(--Red);
+/* .svgDrain{
+    animation: heartDrain .5s cubic-bezier(0.1,0.4,1,0.2) 0s
 }
+
+@keyframes heartDrain {
+    0%{fill:var(--Red)}
+    25% {fill:var(--Red2)}
+    50% {fill:var(--Red3)}
+    75% {fill:var(--Red4)}
+    100% {fill:var(--UIWhite)}
+} */

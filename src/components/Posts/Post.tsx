@@ -9,6 +9,11 @@ import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../../assets/svg/ShareIcon2/ShareIcon2";
 const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content, userPosts, posts, status, setUserPosts, createPosts, loggedInComments }) => {
 
+    const maxChars = 920;
+
+    const [charsLeft, setCharsLeft] = useState(maxChars- text_content.length);
+
+
     const readableDate:String = (new Date(date_posted).toString());
 
     let lastEditedReadable: String;
@@ -49,6 +54,8 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
             let tempVisible:boolean = false;
     
             setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
+
+            setCharsLeft(maxChars - text_content.length);
         }
 
     }
@@ -159,6 +166,8 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
         setEdiMode(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
+        setCharsLeft(maxChars - e.target.value.length)
+
         e.preventDefault()
     }
 
@@ -223,6 +232,8 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
 
         setEdiMode(prev => ({ ...prev, "textContent": `${text_content}` }))
 
+        setCharsLeft(maxChars- text_content.length);
+
         e.preventDefault()
 
 
@@ -279,11 +290,11 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                         {editMode.visible? 
                             (
                                 <div>
-                                    <textarea id="commentBox" name="textContent" value={editMode.textContent} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
+                                    <textarea id="commentBox" name="textContent" value={editMode.textContent} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={maxChars} cols={92} rows={10}></textarea>
 
                                     <div className="commentBox__buttonArea">
                                         
-                                        <em className="buttonArea__charsLeft">Characters Left: 920</em>
+                                        <em className="buttonArea__charsLeft">Characters Left: {charsLeft}</em>
                                         <div className="buttonArea__buttons">
                                             <button className="button primary" onClick={handleEdit}>Submit</button>
                                             <button className="button red" onClick={exitEditMode} >Cancel</button>

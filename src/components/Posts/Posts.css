@@ -31,7 +31,7 @@
 }
 
 .post_body_text{
-    margin: 0rem 0rem 2.5rem 0rem;
+    margin: .5rem 0rem 2.5rem 0rem;
     white-space:pre-line;
     line-height: 1.25rem;
     width: 50vw;
@@ -206,8 +206,8 @@
 
 .option_dots>.dropdown{
     position: absolute;
-    left: -7rem;
-    top: 10px;
+    left: -6rem;
+    top: 0px;
 
     border: solid 1px var(--Primary1);
     border-radius: 5%;

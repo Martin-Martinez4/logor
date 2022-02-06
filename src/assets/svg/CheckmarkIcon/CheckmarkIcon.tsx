@@ -1,11 +1,27 @@
 
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
+import "./CheckmarkIcon.css";
 
 const CheckmarkIcon = () => {
 
+    const [animateClass, setAnimateClass] = useState(false);
+
+
+    const handleAnimateClick = () => {
+
+        setAnimateClass(!animateClass);
+    
+
+    }
+
+    useEffect(() => {
+
+    }, [animateClass])
+
     return(
 
-            <svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg onClick={handleAnimateClick} className={animateClass?"svgCheckMarkIcon":""} width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_d_237_114)">
                     <rect width="3.42714" height="10.2814" rx="1.71357" transform="matrix(0.635711 -0.771927 0.635711 0.771927 4 10.8765)" fill="white"/>
                     <rect x="0.635711" width="2.42714" height="9.28143" rx="1.21357" transform="matrix(0.635711 -0.771927 0.635711 0.771927 4.23158 11.3672)" stroke="#338877" strokeOpacity="0.75"/>

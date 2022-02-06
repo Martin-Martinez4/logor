@@ -8,12 +8,15 @@ import Card from "../Card/Card";
 
 const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments }) => {
 
+    const maxChars = 920;
     
     const [ newPost, setNewPost ] = useState({
 
         commentBox:""
 
-    })
+    });
+
+    const [charsLeft, setCharsLeft] = useState(maxChars)
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -22,8 +25,12 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
         if(e === null){
             return
         }
-        console.log("test", e.target.value);
+
+
+        setCharsLeft(maxChars - e.target.value.length)
+
         setNewPost(prev => ({ ...prev, [e.target.name]: e.target.value }))
+
 
     }
 
@@ -36,7 +43,6 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
             setNewPost(prev => ({ ...prev, [e.target.name]: tabAdded }))
         
-            console.log("tab");
           }
 
         if (e.key === "Enter") {
@@ -46,7 +52,6 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
             setNewPost(prev => ({ ...prev, [e.target.name]: tabAdded }))
         
-            console.log("test", e.target.value);
           }
     }
 
@@ -77,6 +82,8 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
         clearInput("commentBox", setNewPost);
 
+        setCharsLeft(maxChars)
+
     }
 
 
@@ -84,11 +91,11 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
         <Card classes="content content__commentBox">
 
-            <textarea id="commentBox" name="commentBox" value={newPost.commentBox} onChange={oninputChange} onKeyDown={handleKeyDown} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={920} cols={92} rows={10}></textarea>
+            <textarea id="commentBox" name="commentBox" value={newPost.commentBox} onChange={oninputChange} onKeyDown={handleKeyDown} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={maxChars} cols={92} rows={10}></textarea>
 
             <div className="commentBox__buttonArea">
                 
-                <em className="buttonArea__charsLeft">Characters Left: 920</em>
+                <em className="buttonArea__charsLeft">Characters Left: {charsLeft}</em>
                 <div className="buttonArea__buttons">
                     <button className="button primary" onClick={() => addPostToList()}>Submit</button>
                     <button className="button red">Cancel</button>
