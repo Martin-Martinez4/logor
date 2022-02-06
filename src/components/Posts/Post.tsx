@@ -72,26 +72,6 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
             setDeleteConfirmationVisible(false);
         }
     }
-
-    
-    // const handleClickOutside = (e) => {
-        
-    //     if (
-    //         dropdownContainer.current &&
-    //         !dropdownContainer?.current?.contains(e.target)
-    //         ) {
-    //             setDropdownVisible(false);
-    //         }
-            
-    //     if (
-    //         cancelButton.current &&
-    //         !cancelButton?.current?.contains(e.target)
-    //         ){
-    //             setDeleteConfirmationVisible(false);
-    //         }
-                
-            
-    // };
         
     useEffect(() => {
 

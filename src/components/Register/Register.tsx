@@ -100,11 +100,13 @@ const Register:FC = ({ loadUser }) => {
     // Helps stop unnecessary rerenders
     useEffect(() => {
 
-    }, [user.profile_pic_url]);
+    }, [user.profile_pic_url, user.joined_date]);
 
     useEffect(() => {
 
     }, [user.header_img_url]);
+    
+    
     
 
     const numberOfSteps:number = 4;
@@ -128,20 +130,22 @@ const Register:FC = ({ loadUser }) => {
     // eslint-disable-next-line
     const { login } = useAuth();
 
+    const getJoinedDate = () => {
+
+        const currTime = new Date().getTime();
+        
+        const readableCurrTime = new Date(currTime).toString();
+
+        
+        // setUser(prev => ({...prev, "joined_date":readableCurrTime}));
+        setUser(user => ({ ...user, joined_date:readableCurrTime }))
+
+        console.log("joined_date", user)
+    }
+
     const navigateSuccess = (data) => {
 
-        // let test = new Date().getTime();
-
-        // console.log(test)
-
-        // console.log(data)
-
         const userData = createNewUser(user, data);
-
-        setUser(user  => ({...user, joined_date:"sdsd"}))
-
-
-        // console.log("userData", userData)
 
         loadUser(userData)
 
@@ -321,7 +325,11 @@ const Register:FC = ({ loadUser }) => {
 
                     <div className="flexRowContainer margin1">
                         <button onClick={() => setCurrentStepValue((currentStep - 1)) } type="button" className="button red" title="Click to move back to step 2">Back</button>
-                        <button onClick={() => setCurrentStepValue((currentStep + 1)) } type="button" className="button primary" title="Click to move to next Step"
+                        <button onClick={() => { 
+                            getJoinedDate();
+
+                            setCurrentStepValue((currentStep + 1)) 
+                        }} type="button" className="button primary" title="Click to move to next Step"
                             >Next</button>
                     </div>
                     

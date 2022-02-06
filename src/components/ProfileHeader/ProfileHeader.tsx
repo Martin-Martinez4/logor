@@ -35,9 +35,19 @@ const ProfileHeader:FC = () =>{
                 <p className="profile_description">{loggedInUser["description"]}</p>
 
                 <div className="profile_other">
-                    <p><img src={LocationIcon} alt="profile" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p>
+                    {/* <p><img src={LocationIcon} alt="profile" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p> */}
 
-                    <p><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><a href={loggedInUser["links"]}><em>{loggedInUser["links"]}</em></a></p>
+
+                    {loggedInUser["location"] === ""
+                        ?<p></p>
+                        : 
+                        <p><img src={LocationIcon} alt="profile" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p>
+                    }
+                    {loggedInUser["links"] === ""
+                        ?<p></p>
+                        : 
+                        <p><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><a href={loggedInUser["links"]}><em>{loggedInUser["links"]}</em></a></p>
+                    }
 
                     <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{loggedInUser["joined_date"]}</em></p>
 
