@@ -1,5 +1,6 @@
 
 import React, { FC, useEffect, useState } from "react";
+import { Link, Route, BrowserRouter } from 'react-router-dom';
 
 import Card from "../Card/Card";
 import "./Posts.css";
@@ -12,6 +13,72 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
     const maxChars = 920;
 
     const [charsLeft, setCharsLeft] = useState(maxChars- text_content.length);
+
+    // let subTest = ([<span>paratgraosd</span>, <a>test</a>, <p>asdasdasd</p>])
+
+    const getTags = (text_string) => {
+
+        //eslint-disable-next-line
+        const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
+
+        let match;
+
+        let tempArray = [];
+
+        // let startOfText = true;
+
+        let tempPrevIndex;
+
+        while(match = pattern.exec(text_content)){
+
+            tempArray.push([text_string.substring(tempPrevIndex, match.index)])
+            tempArray.push([text_string.substring(match.index, pattern.lastIndex)])
+
+            tempPrevIndex = pattern.lastIndex;
+
+        }
+
+        if(tempPrevIndex !== text_content.length){
+
+            
+            tempArray.push([text_string.substring(tempPrevIndex, text_content.length)])
+        }
+
+        // console.log(tempArray)
+
+        return tempArray;
+    }
+
+    const addLinkTags = (treatedArray) => {
+
+        let linkTagsAdded = [];
+
+        //eslint-disable-next-line
+        const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
+
+        for(let i = 0; i < treatedArray.length; i++){
+
+            if(pattern.test(treatedArray[i][0])){
+
+                linkTagsAdded.push(<a href="/user">{treatedArray[i]}</a>)
+            }
+            else if(treatedArray[i][0][0] === undefined){
+
+                linkTagsAdded.push(" ");
+            }
+            else{
+                
+                // console.log(pattern.test(treatedArray[i][0]))
+                linkTagsAdded.push(<span>{treatedArray[i]}</span>);
+            }
+        }
+
+        // console.log("linkTagsAdded: ",linkTagsAdded)
+
+        return linkTagsAdded;
+
+
+    }
 
 
     const readableDate:String = (new Date(date_posted).toString());
@@ -285,7 +352,8 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                             ) 
                             :
                             <p className="post_body_text">
-                           { text_content}
+                           {/* { text_content} */}
+                           {addLinkTags(getTags(text_content))}
                             </p>
                             }
                     </div>
