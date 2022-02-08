@@ -4,6 +4,7 @@ import { Link, Route, BrowserRouter } from 'react-router-dom';
 
 import Card from "../Card/Card";
 import "./Posts.css";
+import formatDate, { formatDateAgo } from "../utils/formatDate";
 
 import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
@@ -89,7 +90,8 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
         lastEditedReadable = "";
     }
     else{
-        lastEditedReadable = new Date(status[1]).toString();
+        // lastEditedReadable = new Date(status[1]).toString();
+        lastEditedReadable = formatDate(status[1]);
     }
 
     const dropdownContainer = React.createRef();
@@ -315,9 +317,9 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                         </div>
                             <em>@{tag}</em>
                             <span className="user_info__pipe on_Gthan750px"> | </span>
-                            <em className="datePosted on_Gthan750px"> {readableDate}</em>
+                            <em className="datePosted on_Gthan750px"> {formatDateAgo(date_posted)}</em>
                             
-                            <span className="user_info__pipe on_750px"><em className="datePosted"> ○ {readableDate}</em></span>
+                            <span className="user_info__pipe on_750px"><em className="datePosted"> ○  {formatDateAgo(date_posted)}</em></span>
 
                             {/* <span className="option_dots on_Gthan750px" onClick={toggleDropDownVisible}>
                                 <div className="dot"></div>
