@@ -18,7 +18,7 @@ const Homepage:FC = () => {
         <React.Fragment>
             {console.log(id)}
             <TopBar />
-            <VisitorContentArea visiteeID={id?.toString()} />
+            <VisitorContentArea userOrTagID={id?.toString()} />
         </React.Fragment>
     );
 

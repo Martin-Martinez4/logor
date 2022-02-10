@@ -49,7 +49,6 @@ const PostList: FC = () => {
         
         let posts = []
 
-     
         
         for(let key in loggedInComments){
             

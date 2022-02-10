@@ -10,6 +10,11 @@ import VisitorPost from "../Posts/VisitorPost";
 import DeletedPost from "../Posts/DeletedPost";
 import TestData from "../../tempStaticData/testData.json";
 
+import NameTagID from "../../tempStaticData/NameTagID.json";
+import CommentIDUserID from "../../tempStaticData/CommentIdUserID.json";
+import UserIDCommentID from "../../tempStaticData/UserIdCommentID.json";
+import TagIDCommentID from "../../tempStaticData/TagIDCommentID.json";
+
 import VisitorProfileHeader from "../ProfileHeader/VisitorProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
 
@@ -20,20 +25,37 @@ import sortedComments from "../../tempStaticData/sortedComments.json";
 
 import "./postlist.css"
 
-const VisitorPostList: FC = ({ visiteeID }) => {
+const VisitorPostList: FC = ({ userOrTagID }) => {
+
+    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
     const location = useLocation();
 
     console.log(location.pathname);
 
+    let pathName = location.pathname;
+    let postsArray;
+
+    console.log(TagIDCommentID)
+
+    if(pathName.includes("/users/")){
+
+        // const {username, tag, profile_pic_url}: {username:string; tag:string; profile_pic_url:string } = TestData["users"][visiteeID];
+
+        postsArray =  Object.keys(CommentIDUserID).filter((key)=> {
+
+        if(CommentIDUserID[key] === "1")
+           return key
+       }).map( key => key);
+
+
+    }
+
     // eslint-disable-next-line
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
-    const {username, tag, profile_pic_url}: {username:string; tag:string; profile_pic_url:string } = TestData["users"][visiteeID];
 
-    let loggedInComments = sortedComments[visiteeID];
 
-    const [userPosts, setUserPosts] = useState(loggedInComments);
+    const [userPosts, setUserPosts] = useState();
 
     useEffect(() => {
 
@@ -42,8 +64,6 @@ const VisitorPostList: FC = ({ visiteeID }) => {
         console.log("Stuff")
 
     },[userPosts])
-
-    console.log(loggedInComments)
 
     
     const createPosts = (loggedInComments) => {
@@ -99,13 +119,13 @@ const VisitorPostList: FC = ({ visiteeID }) => {
         return(
             
             <div className="postlist_horizontal" >
-                {console.log(visiteeID)}
+                {console.log(userOrTagID)}
             <Scroll>
-
+{/* 
                 {location.pathname.includes("/users/")?
-                <VisitorProfileHeader visiteeID={visiteeID} />:
+                <VisitorProfileHeader userOrTagID={userOrTagID} />:
                 ""
-                }
+                } */}
                 
                 <Card classes="content med_suggestion">
                     <p>Suggestions</p>

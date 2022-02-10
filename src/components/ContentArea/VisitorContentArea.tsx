@@ -19,14 +19,14 @@ import HeartIcon from "../../assets/HeartIcon.svg";
 
 import"./contentArea.css";
 
-const VisitorContentArea:FC = ({visiteeID}) => {
+const VisitorContentArea:FC = ({ userOrTagID }) => {
 
 
     return (
 
         <div className="contentArea">
 
-            {console.log(visiteeID)}
+            {console.log(userOrTagID)}
   
             <SideCard side="leftSide">
                 <div className="side_icon">
@@ -63,7 +63,7 @@ const VisitorContentArea:FC = ({visiteeID}) => {
                 </div>
             </SideCard>
             <div>
-                <VisitorPostList visiteeID={visiteeID}/>
+                <VisitorPostList userOrTagID={ userOrTagID }/>
             </div>
             <SideCard side="rightSide" >
                 <h3 className="header">Suggestions</h3>
