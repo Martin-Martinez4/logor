@@ -303,7 +303,7 @@ const Register:FC = ({ loadUser }) => {
 
                     <div className="flexRowContainer profile_image_container">
                         <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey1} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey2} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={"../../users/default/Monkey_2.svg"} alt="Monkey"  />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey3} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey4} alt="Monkey" />
                         <img onClick={ onPickImage } src={test} className="round profileImage" pic-type="profile_pic_url" alt="Profile Preveiw" />
@@ -371,7 +371,7 @@ const Register:FC = ({ loadUser }) => {
 
                     <div className="flexRowContainer profile_image_container">
                         <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey1} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey2} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={"../../users/default/Monkey_2.svg"} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey3} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey4} alt="Monkey" />
                         <img onClick={ onPickImage } src={test} className="round profileImage"pic-type="header_img_url" alt="Profile Preveiw" />

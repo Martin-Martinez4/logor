@@ -9,7 +9,6 @@ const Homepage:FC = () => {
         <React.Fragment>
             <TopBar />
             <ContentArea />
-            {/* <BottomBar />  */}
         </React.Fragment>
     );
 

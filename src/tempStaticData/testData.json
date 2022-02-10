@@ -35,13 +35,13 @@
 
             "username": "Monk1",
             "tag": "@1Monk",
-            "profile_pic_url": "./Monkey_2.svg"
+            "profile_pic_url": "../../users/default/Monkey_2.svg"
         },
         "2":{
 
             "username": "Monkely",
             "tag": "@Monkely",
-            "profile_pic_url": "../../assets/Monkey_2.svg"
+            "profile_pic_url": "../../users/default/Monkey_2.svg"
         },
         "3":{
 
@@ -74,7 +74,7 @@
         "1":{
 
             "description": "First member of the site",
-            "header_img_url": "...",
+            "header_img_url": "../../users/1/unsplash_GBEHjsPQbEQ.png",
             "location": "New Ape City; The Great Cayon",
             "links": "apes.apes",
             "joined_date": "1/25/2015"
@@ -82,7 +82,7 @@
         "2":{
 
             "description": "Return to monkey.  Become primitive and be set free.  I am not na ape, I am a monkey",
-            "header_url": "...",
+            "header_img_url": "...",
             "location": "Jungle",
             "links": "",
             "joined_date": "1/25/2020"
@@ -90,7 +90,7 @@
         "3":{
 
             "description": "Not one but 2.",
-            "header_url": "...",
+            "header_img_url": "...",
             "location": "New Ape City",
             "links": "https://youtu.be/Axne054PkM4",
             "joined_date": "1/25/2015"
@@ -98,7 +98,7 @@
         "4":{
 
             "description": "Fourth member of the site",
-            "header_url": "...",
+            "header_img_url": "...",
             "location": "New Ape City; The Great Cayon",
             "links": "apes.apes",
             "joined_date": "1/25/2015"
@@ -106,7 +106,7 @@
         "5":{
 
             "description": "First member of the site",
-            "header_url": "...",
+            "header_img_url": "...",
             "location": "New Ape City; The Great Cayon",
             "links": "apes.apes",
             "joined_date": "1/25/2015"
@@ -114,25 +114,11 @@
         "6":{
 
             "description": "First member of the site",
-            "header_url": "...",
+            "header_img_url": "...",
             "location": "New Ape City; The Great Cayon",
             "links": "apes.apes",
             "joined_date": "1/25/2015"
         }
-    },
-
-    "sorted_comments":{
-
-        "1":{
-
-            "34234234234":{
-
-                "date_made":"12/23/2021",
-                "text_content": "${randName + ' ' +randName2}",
-                "like": "10",
-                "replies": []
-            }
-        }   
     }
 }
 

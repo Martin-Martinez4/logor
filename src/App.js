@@ -3,7 +3,8 @@ import './App.css';
 import {
   Routes,
   Route,
-  Navigate
+  Navigate,
+  useParams
 } from "react-router-dom";
 import { useContext } from 'react';
 import useAuth from "./components/useAuth/useAuth";
@@ -12,6 +13,7 @@ import Home from './components/Pages/Home';
 import Landingpage from './components/Pages/Landingpage';
 import Register from './components/Register/Register';
 import SuccessPage from './components/SuccessPage/SuccessPage';
+import VisitorPage from './components/VisitorPage/VisitorPage';
 import Test from './components/TestPage/TestPage';
 
 function RequireAuth({ children, redirectTo }) {
@@ -56,7 +58,7 @@ function App() {
         <Route path="/" element={<Landingpage loadUser={loadUser} />} />
 
           
-          <Route path="/home" element={
+          <Route path="/users" element={
 
               
               <RequireAuth>
@@ -66,7 +68,10 @@ function App() {
         <Route path="/register" element={<Register loadUser={loadUser} />} />
         <Route path="/success" element={<SuccessPage/>} />
 
-          <Route path="/test" element={<Test/>}/>
+        <Route path="/users/:id" element={<VisitorPage/>} />
+        <Route path="/tags/:id" element={<VisitorPage/>} />
+
+          <Route path="/test" element={<VisitorPage/>}/>
         {/* <Route path="*" element={<Homepage/>} /> */}
       </ Routes>
 

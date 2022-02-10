@@ -14,7 +14,7 @@ const SuccessPage: FC = () => {
     const navigate = useNavigate();
 
     const navigateHome = ():void => {
-        navigate('/home');
+        navigate('/users/');
         }
 
     const navigateLandingpage = ():void => {

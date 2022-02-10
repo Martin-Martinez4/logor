@@ -4,7 +4,7 @@ function formatDate(UTCDate){
 
     const newDate = new Date(UTCDate);
 
-    const test = newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second:'numeric',  hour12: true })
+    const time = newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second:'numeric',  hour12: true })
 
     const monthsArray:string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
     const daysArray:string[] = ['Sun','Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
@@ -14,7 +14,7 @@ function formatDate(UTCDate){
     let readableDateDay:string = newDate.getDate().toString().length === 1? "0"+newDate.getDate().toString(): newDate.getDate().toString();
     let readableDateFullYear:string = (newDate.getFullYear().toString());
 
-    return ` ${readableDateDayOfWeek} ${readableDateMonth}-${readableDateDay}-${readableDateFullYear} • ${test}`;
+    return ` ${readableDateDayOfWeek} ${readableDateMonth}-${readableDateDay}-${readableDateFullYear} • ${time}`;
 
 };
 
@@ -25,8 +25,6 @@ export function formatDateAgo(UTCDate){
     const currTimeSec = (new Date().getTime())/1000;
 
     const timeDifference = currTimeSec - oldTime;
-
-    // console.log(currTimeSec, oldTime, timeDifference)
 
         // 0 to 60 = secs ago
         // 60 to 3600 = minutes secs ago
@@ -47,7 +45,7 @@ export function formatDateAgo(UTCDate){
         if(timeDifference >= 0 && timeDifference < 60){
 
 
-            formattedDate = (timeDifference).toString() + "seconds ago"
+            formattedDate = (timeDifference.toFixed(2)).toString() + " seconds ago"
         }
         else if(timeDifference >= 60 && timeDifference< 3600){
             

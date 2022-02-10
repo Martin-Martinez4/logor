@@ -6,11 +6,12 @@ import { Location, useLocation } from "react-router-dom";
 import Scroll from "../Scroll/Scroll";
 
 import Card from "../Card/Card";
-import Post from "../Posts/Post";
+import VisitorPost from "../Posts/VisitorPost";
 import DeletedPost from "../Posts/DeletedPost";
-import ProfileHeader from "../ProfileHeader/ProfileHeader";
+import TestData from "../../tempStaticData/testData.json";
+
+import VisitorProfileHeader from "../ProfileHeader/VisitorProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
-import CommentBox from "../CommentBox/CommentBox";
 
 import { UserInfoContext } from "../userContext/userContext";
 
@@ -19,7 +20,7 @@ import sortedComments from "../../tempStaticData/sortedComments.json";
 
 import "./postlist.css"
 
-const PostList: FC = () => {
+const VisitorPostList: FC = ({ visiteeID }) => {
 
     const location = useLocation();
 
@@ -28,9 +29,9 @@ const PostList: FC = () => {
     // eslint-disable-next-line
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
-    const {username, tag, id, profile_pic_url}: {username:string; tag:string; id:string; profile_pic_url:string } = loggedInUser;
+    const {username, tag, profile_pic_url}: {username:string; tag:string; profile_pic_url:string } = TestData["users"][visiteeID];
 
-    let loggedInComments = sortedComments[id];
+    let loggedInComments = sortedComments[visiteeID];
 
     const [userPosts, setUserPosts] = useState(loggedInComments);
 
@@ -71,19 +72,19 @@ const PostList: FC = () => {
                     }
                     else if (loggedInComments[key]["status"][0] === "Edited"){
 
-                        posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
+                        posts.push( <VisitorPost key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
     
                     }
                     else{
 
-                        posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                        posts.push( <VisitorPost key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
                     }
                 
                 }else{
 
                     // console.log("key: ",key);
 
-                    posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                    posts.push( <VisitorPost key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
                 }
 
                 
@@ -96,10 +97,15 @@ const PostList: FC = () => {
     let posts = createPosts(userPosts)
     
         return(
-            // style={{ display:"flex", flexDirection: "column" }}
+            
             <div className="postlist_horizontal" >
+                {console.log(visiteeID)}
             <Scroll>
-                <ProfileHeader/>
+
+                {location.pathname.includes("/users/")?
+                <VisitorProfileHeader visiteeID={visiteeID} />:
+                ""
+                }
                 
                 <Card classes="content med_suggestion">
                     <p>Suggestions</p>
@@ -120,8 +126,6 @@ const PostList: FC = () => {
 
                     </div>
                 </Card>
-                
-                <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts} loggedInComments={loggedInComments} ></CommentBox>
               
                 {posts}
                
@@ -133,5 +137,5 @@ const PostList: FC = () => {
         );
 }
 
-export default PostList
+export default VisitorPostList;
 

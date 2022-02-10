@@ -21,7 +21,7 @@ const ProfileHeader:FC = () =>{
         <Card classes="h_auto content profile_header">
          
 
-            <div className="profile_header_background" style={{backgroundImage: `url('./unsplash_GBEHjsPQbEQ.png')`}} >
+         <div className="profile_header_background" style={{backgroundImage: `url('${loggedInUser["header_img_url"]}')`}} >
                 <img src={ loggedInUser["profile_pic_url"] } alt="profile" className="profile_header_image "></img>
             </div>
 

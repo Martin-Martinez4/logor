@@ -51,7 +51,7 @@ const Signin:FC = ({ loadUser }) => {
                     login().then(() => {
                         
                         loadUser(userData);
-                        navigate("/home");
+                        navigate("/users/");
                     }).catch( err => {
 
                         console.log("fail")

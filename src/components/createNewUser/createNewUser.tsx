@@ -35,10 +35,25 @@ function createNewUser(user, data){
 
     for (let key of Object.keys( data["users"][newUserId])){
 
+        // if profile_pic_url
+        if (key === "profile_pic_url"){
+    
+            let test = user[key].split("/");
+            test = test[test.length -1];
+            console.log("test", test[test.length -1]);
+            test = "../../default/"+test;
+            console.log("test2", test);
+        }
+
         data["users"][newUserId][key] = user[key];
     }
 
     for (let key of Object.keys( data["headers"][newUserId])){
+
+        // if header_img_url
+        // data["headers"][newUserId][key] = 
+
+
 
         data["headers"][newUserId][key] = user[key];
     }
