@@ -13,6 +13,5 @@ import 'dotenv/config';
 import { execSync } from 'child_process';
 // import { execSync } from 'child_process';  // replace ^ if using ES modules
 
-// const output = execSync(`psql -U ${process.env.POSTGRES_USER} -f ./database/deploy_schemas.sql`, { encoding: 'utf-8' });  // the default is 'buffer'
 const output = execSync(`psql -f ./database/deploy_schemas.sql postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}`, { encoding: 'utf-8' });  // the default is 'buffer'
 console.log('Output was:\n', output);

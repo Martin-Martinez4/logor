@@ -7,7 +7,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Deploy fresh database tabels:
 \i './database/tables/users.sql'
-\i './database/tables/login.sql'
+\i './database/tables/comments.sql'
+
+\i './database/seed/seed.sql'
 
 -- For testing purposes only. This file will add dummy data
 -- \i '/docker-entrypoint-initdb.d/seed/seed.sql'
