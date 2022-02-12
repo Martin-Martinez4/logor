@@ -1,0 +1,12 @@
+VALUES 
+
+('override neural panel Horizontal composite migration utilize synergistic experiences', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Meriden', 'http://karelle.biz', '2022-02-12 22:05:48', '2a616772-76f3-4613-b3e8-6ef67f4a1189'::UUID),
+('quantify primary interface Integrated system-worthy budgetary management visualize enterprise markets', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Aloha', 'https://jamie.info', '2022-02-12 22:05:48', '57dcfef6-b7c6-4f0a-94da-f6d319855895'::UUID),
+('synthesize optical monitor User-friendly transitional monitoring generate real-time e-commerce', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Malden', 'https://madelynn.com', '2022-02-12 22:05:48', '741035a1-3505-44de-8a2e-075d8b395695'::UUID),
+('parse wireless panel Re-contextualized global adapter generate virtual ROI', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Bethlehem', 'http://floyd.name', '2022-02-12 22:05:48', 'bcb68385-9ede-4947-9080-c5e255f5937a'::UUID),
+('index wireless panel Triple-buffered contextually-based pricing structure architect transparent convergence', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Germantown', 'https://matt.net', '2022-02-12 22:05:48', '62175a00-5aed-4c7c-9259-b077a45d7fb9'::UUID),
+('connect multi-byte monitor Versatile encompassing info-mediaries transition granular users', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Lakewood', 'http://letha.info', '2022-02-12 22:05:48', '893524e5-a4bd-4e55-ba4c-5e7afe685c06'::UUID),
+('reboot haptic port Inverse asynchronous standardization seize end-to-end action-items', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Santee', 'https://eloise.net', '2022-02-12 22:05:48', 'cf2dacf1-309d-483e-ac3d-2e5bafba0f6b'::UUID),
+('calculate multi-byte array Organic systemic forecast benchmark 24/7 e-commerce', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Bozeman', 'https://corine.info', '2022-02-12 22:05:48', 'ba83595c-340f-4149-be5f-89e914a501d9'::UUID),
+('reboot digital bus Inverse client-server matrices synthesize wireless web services', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Brentwood', 'https://mauricio.info', '2022-02-12 22:05:48', '158bfb62-6697-4543-a441-4ffb5dfdc530'::UUID),
+('bypass virtual alarm Devolved context-sensitive implementation matrix wireless portals', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'North Miami', 'http://ephraim.com', '2022-02-12 22:05:48', '0053bc9a-4679-4172-aa06-e09a76f3ace3'::UUID),

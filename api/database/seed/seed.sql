@@ -4,59 +4,49 @@
 --  insert uuids as '292a485f-a56a-4938-8f1a-bbbbbbbbbbb1'::UUID,
 
 
-INSERT INTO users(id, username, tag, profile_pic_url) 
+INSERT INTO users(id, username, nick_name, profile_pic_url) 
 VALUES 
-( 'ff3b766f-1807-4101-b174-20a7e81d0561', 'Zora73',  'mobile-fish', '../../users/default/Monkey_2.svg'),
-( '547a242e-3196-49df-9a78-ea99b0aed8b2', 'Elvera_Schneider41',  'digital-cat', '../../users/default/Monkey_2.svg'),
-( '13a12309-49e7-4e02-8c40-d419169192f6', 'Louisa.Pollich54',  'redundant-lion', '../../users/default/Monkey_2.svg'),
-( '93f4865a-4c9d-40ee-9278-c47fcc9ec39a', 'Rashad25',  'virtual-dog', '../../users/default/Monkey_2.svg'),
-( '9708b3f4-3e82-4f74-aeb4-892298a7e1a5', 'Letha_Rath90',  'mobile-fish', '../../users/default/Monkey_2.svg'),
-( '5e24734a-a239-4263-ab8c-4020c1470ed6', 'Jake73',  'multi-byte-cetacean', '../../users/default/Monkey_2.svg'),
-( '62efc95f-1129-49e2-82d3-86c9d0a206d4', 'Leopoldo_Fadel73',  'online-crocodilia', '../../users/default/Monkey_2.svg'),
-( 'b7939549-74e8-4845-a499-35b684d6e9b0', 'Scot50',  'solid state-cetacean', '../../users/default/Monkey_2.svg'),
-( '1db533cf-42a8-4452-a648-c90487b219d8', 'Kacey_McKenzie40',  'neural-snake', '../../users/default/Monkey_2.svg'),
-( 'd48d1dfd-9592-4be0-baab-610ec6b7430d', 'Lisandro.Lubowitz66',  'neural-bear', '../../users/default/Monkey_2.svg'),
-( '5f1e1bda-009d-4079-8108-c6c71db44620', 'Antonetta.Cruickshank44',  'redundant-cat', '../../users/default/Monkey_2.svg'),
-( 'a5849e3f-0840-4462-9511-c190a24b1af1', 'Corine.Ziemann',  'redundant-rabbit', '../../users/default/Monkey_2.svg'),
-( 'f7151783-0294-4854-a3db-e399267e86e8', 'Norris.Balistreri',  'multi-byte-snake', '../../users/default/Monkey_2.svg');
+( '2a616772-76f3-4613-b3e8-6ef67f4a1189', 'Antonia.Sipes',  'solid state-cetacean', '../../users/default/Monkey_2.svg'),
+( '57dcfef6-b7c6-4f0a-94da-f6d319855895', 'Cayla_Rau88',  'digital-dog', '../../users/default/Monkey_2.svg'),
+( '741035a1-3505-44de-8a2e-075d8b395695', 'Myrl.Hickle',  'redundant-crocodilia', '../../users/default/Monkey_2.svg'),
+( 'bcb68385-9ede-4947-9080-c5e255f5937a', 'Vernon.Larkin',  '1080p-cat', '../../users/default/Monkey_2.svg'),
+( '62175a00-5aed-4c7c-9259-b077a45d7fb9', 'Charlie_Hilpert92',  'back-end-horse', '../../users/default/Monkey_2.svg'),
+( '893524e5-a4bd-4e55-ba4c-5e7afe685c06', 'Tracey_Kulas',  'multi-byte-bird', '../../users/default/Monkey_2.svg'),
+( 'cf2dacf1-309d-483e-ac3d-2e5bafba0f6b', 'Bertrand65',  'mobile-cetacean', '../../users/default/Monkey_2.svg'),
+( 'ba83595c-340f-4149-be5f-89e914a501d9', 'Sedrick94',  'haptic-snake', '../../users/default/Monkey_2.svg'),
+( '158bfb62-6697-4543-a441-4ffb5dfdc530', 'Treva23',  'neural-bear', '../../users/default/Monkey_2.svg'),
+( '0053bc9a-4679-4172-aa06-e09a76f3ace3', 'Sheldon47',  'mobile-horse', '../../users/default/Monkey_2.svg');
 
 INSERT INTO user_headers( description, header_img_url, location, links, joined_date, user_id) 
 VALUES 
-('generate bluetooth pixel Decentralized bottom-line service-desk synergize sticky architectures', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Lansing', 'http://lance.org', '2022-02-12 04:51:53', 'ff3b766f-1807-4101-b174-20a7e81d0561'),
-('parse solid state bus Organized user-facing attitude target bleeding-edge markets', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Carolina', 'https://giovanny.biz', '2022-02-12 04:51:53', '547a242e-3196-49df-9a78-ea99b0aed8b2'),
-('navigate primary panel Re-contextualized empowering info-mediaries envisioneer enterprise ROI', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Palm Coast', 'http://major.info', '2022-02-12 04:51:53', '13a12309-49e7-4e02-8c40-d419169192f6'),
-('hack mobile card Integrated value-added open architecture envisioneer revolutionary infomediaries', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Pawtucket', 'http://abagail.biz', '2022-02-12 04:51:53', '9708b3f4-3e82-4f74-aeb4-892298a7e1a5'),
-('reboot cross-platform panel Polarised reciprocal orchestration exploit interactive channels', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Newport Beach', 'http://antone.name', '2022-02-12 04:51:53', '93f4865a-4c9d-40ee-9278-c47fcc9ec39a'),
-('program back-end system User-friendly non-volatile analyzer target turn-key synergies', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Fontana', 'http://verdie.com', '2022-02-12 04:51:53', '5e24734a-a239-4263-ab8c-4020c1470ed6'),
-('generate open-source microchip Proactive multi-tasking firmware brand revolutionary infomediaries', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Fishers', 'http://haylie.name', '2022-02-12 04:51:53', '62efc95f-1129-49e2-82d3-86c9d0a206d4'),
-('input virtual system Automated intermediate open system engineer ubiquitous action-items', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Enterprise', 'http://armando.com', '2022-02-12 04:51:53', 'b7939549-74e8-4845-a499-35b684d6e9b0'),
-('input haptic port Distributed neutral algorithm repurpose open-source solutions', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Grand Rapids', 'http://estella.biz', '2022-02-12 04:51:53', '1db533cf-42a8-4452-a648-c90487b219d8'),
-('back up bluetooth capacitor Realigned regional access expedite strategic eyeballs', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Evansville', 'https://camila.biz', '2022-02-12 04:51:53', 'd48d1dfd-9592-4be0-baab-610ec6b7430d'),
-('calculate multi-byte application Grass-roots dedicated software revolutionize world-class models', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Spring', 'https://olen.name', '2022-02-12 04:51:53', '5f1e1bda-009d-4079-8108-c6c71db44620'),
-('input haptic panel Sharable bandwidth-monitored complexity expedite B2C bandwidth', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Orem', 'http://sterling.com', '2022-02-12 04:51:53', 'a5849e3f-0840-4462-9511-c190a24b1af1'),
-('override wireless panel Automated dedicated time-frame incentivize web-enabled methodologies', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Farmington', 'https://russell.org', '2022-02-12 04:51:53', 'f7151783-0294-4854-a3db-e399267e86e8');
+('override neural panel Horizontal composite migration utilize synergistic experiences', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Meriden', 'http://karelle.biz', '2022-02-12 22:05:48', '2a616772-76f3-4613-b3e8-6ef67f4a1189'),
+('quantify primary interface Integrated system-worthy budgetary management visualize enterprise markets', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Aloha', 'https://jamie.info', '2022-02-12 22:05:48', '57dcfef6-b7c6-4f0a-94da-f6d319855895'),
+('synthesize optical monitor User-friendly transitional monitoring generate real-time e-commerce', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Malden', 'https://madelynn.com', '2022-02-12 22:05:48', '741035a1-3505-44de-8a2e-075d8b395695'),
+('parse wireless panel Re-contextualized global adapter generate virtual ROI', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Bethlehem', 'http://floyd.name', '2022-02-12 22:05:48', 'bcb68385-9ede-4947-9080-c5e255f5937a'),
+('index wireless panel Triple-buffered contextually-based pricing structure architect transparent convergence', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Germantown', 'https://matt.net', '2022-02-12 22:05:48', '62175a00-5aed-4c7c-9259-b077a45d7fb9'),
+('connect multi-byte monitor Versatile encompassing info-mediaries transition granular users', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Lakewood', 'http://letha.info', '2022-02-12 22:05:48', '893524e5-a4bd-4e55-ba4c-5e7afe685c06'),
+('reboot haptic port Inverse asynchronous standardization seize end-to-end action-items', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Santee', 'https://eloise.net', '2022-02-12 22:05:48', 'cf2dacf1-309d-483e-ac3d-2e5bafba0f6b'),
+('calculate multi-byte array Organic systemic forecast benchmark 24/7 e-commerce', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Bozeman', 'https://corine.info', '2022-02-12 22:05:48', 'ba83595c-340f-4149-be5f-89e914a501d9'),
+('reboot digital bus Inverse client-server matrices synthesize wireless web services', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'Brentwood', 'https://mauricio.info', '2022-02-12 22:05:48', '158bfb62-6697-4543-a441-4ffb5dfdc530'),
+('bypass virtual alarm Devolved context-sensitive implementation matrix wireless portals', '../../users/1/unsplash_GBEHjsPQbEQ.png', 'North Miami', 'http://ephraim.com', '2022-02-12 22:05:48', '0053bc9a-4679-4172-aa06-e09a76f3ace3');
 
 INSERT INTO login( username, password, user_id) 
 VALUES 
-('Zora73', 'password', 'ff3b766f-1807-4101-b174-20a7e81d0561'),
-('Elvera_Schneider41', 'password', '547a242e-3196-49df-9a78-ea99b0aed8b2'),
-('Louisa.Pollich54', 'password', '13a12309-49e7-4e02-8c40-d419169192f6'),
-('Rashad25', 'password', '93f4865a-4c9d-40ee-9278-c47fcc9ec39a'),
-('Letha_Rath90', 'password', '9708b3f4-3e82-4f74-aeb4-892298a7e1a5'),
-('Jake73', 'password', '5e24734a-a239-4263-ab8c-4020c1470ed6'),
-('Leopoldo_Fadel73', 'password', '62efc95f-1129-49e2-82d3-86c9d0a206d4'),
-('Scot50', 'password', 'b7939549-74e8-4845-a499-35b684d6e9b0'),
-('Kacey_McKenzie40', 'password', '1db533cf-42a8-4452-a648-c90487b219d8'),
-('Lisandro.Lubowitz66', 'password', 'd48d1dfd-9592-4be0-baab-610ec6b7430d'),
-('Antonetta.Cruickshank44', 'password', '5f1e1bda-009d-4079-8108-c6c71db44620'),
-('Corine.Ziemann', 'password', 'a5849e3f-0840-4462-9511-c190a24b1af1'),
-('Norris.Balistreri', 'password', 'f7151783-0294-4854-a3db-e399267e86e8');
-
+('Antonia.Sipes', 'password', '2a616772-76f3-4613-b3e8-6ef67f4a1189'),
+('Cayla_Rau88', 'password', '57dcfef6-b7c6-4f0a-94da-f6d319855895'),
+('Myrl.Hickle', 'password', '741035a1-3505-44de-8a2e-075d8b395695'),
+('Vernon.Larkin', 'password', 'bcb68385-9ede-4947-9080-c5e255f5937a'),
+('Charlie_Hilpert92', 'password', '62175a00-5aed-4c7c-9259-b077a45d7fb9'),
+('Tracey_Kulas', 'password', '893524e5-a4bd-4e55-ba4c-5e7afe685c06'),
+('Bertrand65', 'password', 'cf2dacf1-309d-483e-ac3d-2e5bafba0f6b'),
+('Sedrick94', 'password', 'ba83595c-340f-4149-be5f-89e914a501d9'),
+('Treva23', 'password', '158bfb62-6697-4543-a441-4ffb5dfdc530'),
+('Sheldon47', 'password', '0053bc9a-4679-4172-aa06-e09a76f3ace3');
 
 -- INSERT INTO follower_followee( follower_id, followee_id ) VALUES
 
 
--- INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id ) VALUES ('0470cdfc-5912-40bc-a2eb-f328d36bb3f5', 'test text', '1422169200000', '{0, ''}', 0, '206347a2-dbad-4dcd-a352-d0916bf85659'::UUID)
+-- INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id ) VALUES ('0470cdfc-5912-40bc-a2eb-f328d36bb3f5', 'test text', '1422169200000', '{'0', ''}', 0, '206347a2-dbad-4dcd-a352-d0916bf85659'::UUID)
 
 -- INSERT INTO tags( tag_id, tag_name) VALUES
 

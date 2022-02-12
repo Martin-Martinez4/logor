@@ -16,6 +16,16 @@ function getRndInteger(min, max) {
 
 function createUsers(number){
 
+    fs.writeFile('usersTest.sql', 'VALUES \n', function (err) {
+        if (err) throw err;
+    });
+    fs.writeFile('headersTest.sql', 'VALUES \n', function (err) {
+        if (err) throw err;
+    });
+    fs.writeFile('loginTest.sql', 'VALUES \n', function (err) {
+        if (err) throw err;
+    });
+
     let userIDs = []
 
     let tempUser = ``;
@@ -46,15 +56,12 @@ function createUsers(number){
 
         fs.appendFile('usersTest.sql', tempUser, function (err) {
             if (err) throw err;
-            console.log('Updated!');
         });
         fs.appendFile('headersTest.sql', tempHeaders, function (err) {
             if (err) throw err;
-            console.log('Updated!');
         });
         fs.appendFile('loginTest.sql', tempLogin, function (err) {
             if (err) throw err;
-            console.log('Updated!');
         });
 
 
@@ -64,9 +71,12 @@ function createUsers(number){
     return userIDs
 }
 
-console.log(createUsers(3));
 
 function createTags(number){
+
+    fs.writeFile('tags.sql', 'VALUES \n', function (err) {
+        if (err) throw err;
+    });
 
     let tagIDs = []
 
@@ -81,14 +91,13 @@ function createTags(number){
         tempTagName = '#' + faker.company.bsNoun();
 
 
-        tagEntry = `\n( '${tempTagID}', '${tempTagName}'),`;
+        tagEntry = `\n ( '${tempTagID}', '${tempTagName}'),`;
 
         tagIDs.push(tempTagID);
 
 
         fs.appendFile('tags.sql', tagEntry, function (err) {
             if (err) throw err;
-            console.log('Updated!');
         });
 
     }
@@ -97,47 +106,67 @@ function createTags(number){
     return tagIDs
 }
 
-console.log(createTags(3));
 
 const userIDsArray = createUsers(10);
 const tagsIDNameArray = createTags(10);
 
-// function createComments(userIDsArray, tagIDNameArray, maxNumOfComments,  minNumOfComments, maxNumberTagsPerComment){
+//  insert array as '{'', ''}' 
 
-//     for(let i = 0; i < userIDsArray.length -1; i++){
+function createComments(userIDsArray, maxNumOfComments, minNumOfComments){
 
-//         const numberOfComments = getRndInteger(minNumOfComments, maxNumOfComments);
+    fs.writeFile('comments.sql', 'VALUES \n', function (err) {
+        if (err) throw err;
+    });
 
-//         let counter = 0;
+    let commentIDArray = [];
 
-//         while(counter < numberOfComments){
+    console.log(userIDsArray.length)
 
-//             let tempComment;
+    for(let i = 0; i < userIDsArray.length -1; i++){
+
+        console.log("i", userIDsArray[i])
+
+        const numberOfComments = getRndInteger(minNumOfComments, maxNumOfComments);
+
+        let counter = 0;
+
+        while(counter < numberOfComments){
+
+            let tempComment = ``;
+
+            const commentID =  UUIDv4.v4();
+            const textContent = faker.commerce.productDescription() + " " + faker.company.catchPhrase();
+            
+            const createdAt = (new Date(faker.date.past())).getTime();
+            
+            // const status = ARRAY [' ',' ']";
+            const likes = 0;
+            const currentUserUUID = userIDsArray[i];
 
 
-//             const commentID =  UUIDv4.v4();
-//             const textContent = faker.commerce.productDescription() + " " + faker.company.catchPhrase();
+            // INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id ) VALUES
+
+            tempComment = `\n('${commentID}', '${textContent}',  '${createdAt}', '{'', ''}', ${likes}, '${currentUserUUID}'),`;
+
+            fs.appendFile('comments.sql', tempComment, function (err) {
+                if (err) throw err;
+            });
+
+            commentIDArray.push(commentID);
+
+            counter++;
     
-//             const createdAt = (new Date(faker.date.past())).getTime();
-
-//             const status = ARRAY ['999-876-5432','999-123-4567']
-
-//             // INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id ) VALUES
-
-//             tempComment = `\n( '${currentUserUUID}', '${currentUserName}',  '${currentUserNickName}', 'ARRAY ['0', '']'),`;
     
-    
-//             counter++;
-    
-//             // randNum = getRndInteger(0, 10)
-    
-//         }
-    
+        }
 
-//     }
+        
+        
+    }
+    return commentIDArray;
 
+}
 
-// }
+console.log(createComments(userIDsArray, 2, 3));
 
 
 
