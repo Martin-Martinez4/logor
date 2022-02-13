@@ -1,0 +1,32 @@
+BEGIN TRANSACTION;
+ INSERT INTO tag_comment( tag_id, comment_id )
+VALUES 
+
+ ('c0413b2b-7596-4d04-847e-eed4322dc5a5', '6c746823-8587-45b4-9fd7-205e41674127'),
+ ('de297e27-fbe2-453c-9b95-6d5c785faca5', '7df810e2-bd1d-42e8-a52c-0c6a35e4e72f'),
+ ('c5cf18ef-184d-4b44-88ec-2fe9406f3840', 'aceb3266-b193-4db0-8755-dc397b61c2df'),
+ ('c5000b4c-0bde-44ab-9636-6ddebeda3d8f', '98d985dd-4f6c-41d5-a193-57bfff69fc9e'),
+ ('c0d87db3-f1b4-4370-b356-37c4c5e0a0ed', '3d434744-1e1a-4eb8-929f-7ce0b2b2b6b4'),
+ ('c5000b4c-0bde-44ab-9636-6ddebeda3d8f', 'def19b02-6fc5-405f-a6d2-0ab5b6d9fd7b'),
+ ('d1fc8411-06be-43d2-b478-2c6f713e19bd', '3eb5d3ae-81da-46e2-8b99-e51d1f6c9767'),
+ ('e79b1db6-f8c1-4d03-b2e9-109a84db65f2', 'bed126f4-c44b-491b-b457-d525d4463225'),
+ ('d1fc8411-06be-43d2-b478-2c6f713e19bd', '1ee62fbd-9613-41df-85e1-fc2e82a9aafe'),
+ ('e79b1db6-f8c1-4d03-b2e9-109a84db65f2', 'b2c3742f-3f01-408d-9ff7-80d9ebdaf578'),
+ ('c0d87db3-f1b4-4370-b356-37c4c5e0a0ed', '1695a132-7328-49f3-a89d-279c64ba14f7'),
+ ('55951d1e-0d22-4544-b37f-801659ca839a', '90b4cd73-a4c9-417e-ab84-257b8ec41a5f'),
+ ('e79b1db6-f8c1-4d03-b2e9-109a84db65f2', '6225d30f-ba2d-4782-9d85-61a49b8e1531'),
+ ('c5000b4c-0bde-44ab-9636-6ddebeda3d8f', '3faa01ee-9e90-4868-b18f-b33843c842ea'),
+ ('55951d1e-0d22-4544-b37f-801659ca839a', '63d9013c-6549-4a6b-bb63-deacb8d2f538'),
+ ('c0413b2b-7596-4d04-847e-eed4322dc5a5', '4fcb6ddc-63b8-4cc9-8fda-700bc5b7b080'),
+ ('de297e27-fbe2-453c-9b95-6d5c785faca5', 'fa0da1db-a5c4-413c-973a-7d3b8f55fd32'),
+ ('55951d1e-0d22-4544-b37f-801659ca839a', 'ba4fd101-9186-4f00-969f-2bd2cb6817dc'),
+ ('e3a8b196-d0c3-44e5-8ad8-5a0dc4228b94', '2265cea3-5727-47da-b980-13fead96c9ed'),
+ ('c5cf18ef-184d-4b44-88ec-2fe9406f3840', 'f49ca07b-568a-4df0-9b83-fce6c8c0afa2'),
+ ('e3a8b196-d0c3-44e5-8ad8-5a0dc4228b94', '0d261a88-55b1-4739-b9d4-0670a78a4812'),
+ ('d1fc8411-06be-43d2-b478-2c6f713e19bd', 'b092c021-1bde-4c4c-a252-3b2dc3e0da67'),
+ ('e79b1db6-f8c1-4d03-b2e9-109a84db65f2', '41f00c59-0680-4e69-b2eb-e7f08adcc1b1'),
+ ('c5000b4c-0bde-44ab-9636-6ddebeda3d8f', '89375487-754a-4e61-9c21-8a04d3468e69'),
+ ('c5cf18ef-184d-4b44-88ec-2fe9406f3840', 'a9988d57-f128-4997-b767-43c019480b69'),
+ ('e79b1db6-f8c1-4d03-b2e9-109a84db65f2', '4e0de5ab-7e91-4d54-8b06-9f49ac5fc20d'),
+ ('c0413b2b-7596-4d04-847e-eed4322dc5a5', '469e3b34-f19a-4f4c-a8cd-f60ffdccb8af'),
+ COMMIT;

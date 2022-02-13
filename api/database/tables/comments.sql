@@ -14,7 +14,7 @@ CREATE TABLE comments(
 
 CREATE TABLE tags(
     tag_id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    tag VARCHAR(30),
+    tag_name VARCHAR(30),
     PRIMARY KEY (tag_id)
 );
 
