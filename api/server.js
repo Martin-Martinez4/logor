@@ -1,14 +1,17 @@
 
 
 import 'dotenv/config';
-const express = require('express');
-const app  = express();
+// const signin = require('./controllers/signin');
+import {handleSignin} from './controllers/signin.js';
+// const express = require('express');
+import express from 'express';
+const app = express();
 
 // const bcrypt = require('bcrypt');
-const cors = require('cors');
+import cors from 'cors';
 
 // Database queries with the knex module
-const knex = require('knex');
+import knex from 'knex';
 
 const db = knex({
     client: 'pg',
@@ -46,13 +49,17 @@ app.use(express.json());
 app.use(cors());
 
 
-// app.post("/signin", signin.signinAuthentication(db, bcrypt));
+app.post("/signin", (req, res) => {
 
-// app.get('/profile/:id', auth.requireAuth, (req, res) => {
+  handleSignin(req, res, db);
 
-//    profile.handleProfileGet(req,res,db)
+});
 
-// })
+app.get('/users/:id', (req, res) => {
+
+   profile.handleProfileGet(req,res,db)
+
+})
 
 
 app.get('/', res  => console.log("this is working"))
