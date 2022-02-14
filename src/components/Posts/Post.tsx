@@ -9,7 +9,7 @@ import formatDate, { formatDateAgo } from "../utils/formatDate";
 import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../../assets/svg/ShareIcon2/ShareIcon2";
-const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content, userPosts, posts, status, setUserPosts, createPosts, loggedInComments }) => {
+const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, userPosts, posts, status, setUserPosts, createPosts, loggedInComments }) => {
 
     const maxChars = 920;
 
@@ -315,7 +315,7 @@ const Post: FC = ({ uuid, userName, tag, user_profile, date_posted, text_content
                                 </span>
                             </span>
                         </div>
-                            <em>@{tag}</em>
+                            <em>@{nickname}</em>
                             <span className="user_info__pipe on_Gthan750px"> | </span>
                             <em className="datePosted on_Gthan750px"> {formatDateAgo(date_posted)}</em>
                             

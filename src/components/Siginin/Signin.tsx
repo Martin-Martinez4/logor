@@ -10,7 +10,14 @@ import TestData from "../../tempStaticData/testData.json"
 const Signin:FC = ({ loadUser }) => {
 
     const navigate = useNavigate();
-    const { login, logout } = useAuth();    
+    const { login, logout } = useAuth();
+    
+    const [loginError, setLoginError] = useState({
+
+        inputError:false,
+        flagTripped: false
+    });
+    const [hasLoaded, sethasLoaded] = useState(false);
   
     const [userCreds, setUserCreds] = useState({
 
@@ -30,42 +37,62 @@ const Signin:FC = ({ loadUser }) => {
         
     }
 
-    const onAttemptLogin = () => {
+    const errorMessageTimeout = (milisecs) => {
 
-        // let userName = "";
+        const {inputError, flagTripped} = loginError
 
-        for(let key in TestData["login"]){
+        setLoginError(prev =>({...prev, flagTripped:true}));
+        setLoginError(prev =>({...prev, inputError:true}));
 
-            // console.log("userCreds", userCreds.username)
-            // console.log(TestData["login"][key]["username"])
-
-            if(userCreds.username === TestData["login"][key]["username"]){
-
-                // console.log("success", userCreds.username)
-                // userName = userCreds.username
-
-                if(userCreds.password === TestData["login"][key]["password"]){
-
-                    const userData = Object.assign({id: key}, TestData["users"][key], TestData["headers"][key])
-                    
-                    login().then(() => {
-                        
-                        loadUser(userData);
-                        navigate("/users/");
-                    }).catch( err => {
-
-                        console.log("fail")
-                        logout().then(() => {
-                            navigate("/");
-                        })
-
-                    })
-                }
-            }
-        }
-
+        setTimeout(() =>  setLoginError(prev =>({...prev, inputError:false})), milisecs);
 
     }
+
+    const onAttemptLogin = (e) => {
+
+        e.preventDefault();
+
+        const {username, password} = userCreds
+
+        fetch('http://localhost:3001/signin', {
+
+            method: "post",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+        .then((response) => response.json())
+        .then((user) => {
+
+            if(user.id){
+
+                login().then(() => {
+                        
+                    loadUser(user);
+                    navigate("/users/");
+                }).catch( (err) => {
+
+                    console.log("fail")
+                    logout().then(() => {
+                        navigate("/");
+                    })
+
+                })
+
+            }
+            else{
+
+                errorMessageTimeout(3000);
+            }
+
+        }).catch((err)=> console.log(err))
+
+    }
+            
+
+
 
     return (
         
@@ -77,10 +104,13 @@ const Signin:FC = ({ loadUser }) => {
         <div className=" flexColContainer inner">
             <div className="flexColContainer">
 
-                <label htmlFor="uname" className="upperleft">
-                    <h4 className="inputName">Username</h4>
+            <span className={`${loginError.inputError?"errorBackground":loginError.flagTripped?"fadeOut":"hdden"}`} >incorrect username and/or password</span>
+
+
+                <label htmlFor="uname" className="upperleft ">
                 
-                    <input type="text" placeholder="Enter Username" name="username" onChange={oninputChange} required />
+                    <h4 className="inputName">Username</h4> 
+                    <input className="" type="text" placeholder="Enter Username" name="username" onChange={oninputChange} required />
                 </label>
                 
                 <label htmlFor="password" className="upperleft">

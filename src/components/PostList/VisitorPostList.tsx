@@ -40,7 +40,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
     if(pathName.includes("/users/")){
 
-        // const {username, tag, profile_pic_url}: {username:string; tag:string; profile_pic_url:string } = TestData["users"][visiteeID];
+        // const {username, nickname, profile_pic_url}: {username:string; nickname:string; profile_pic_url:string } = TestData["users"][visiteeID];
 
         postsArray =  Object.keys(CommentIDUserID).filter((key)=> {
 
@@ -92,19 +92,19 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
                     }
                     else if (loggedInComments[key]["status"][0] === "Edited"){
 
-                        posts.push( <VisitorPost key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
+                        posts.push( <VisitorPost key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
     
                     }
                     else{
 
-                        posts.push( <VisitorPost key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                        posts.push( <VisitorPost key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
                     }
                 
                 }else{
 
                     // console.log("key: ",key);
 
-                    posts.push( <VisitorPost key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                    posts.push( <VisitorPost key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
                 }
 
                 

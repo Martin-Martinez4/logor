@@ -28,7 +28,7 @@ const PostList: FC = () => {
     // eslint-disable-next-line
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
-    const {username, tag, id, profile_pic_url}: {username:string; tag:string; id:string; profile_pic_url:string } = loggedInUser;
+    const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
 
     let loggedInComments = sortedComments[id];
 
@@ -70,19 +70,19 @@ const PostList: FC = () => {
                     }
                     else if (loggedInComments[key]["status"][0] === "Edited"){
 
-                        posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
+                        posts.push( <Post key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
     
                     }
                     else{
 
-                        posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                        posts.push( <Post key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
                     }
                 
                 }else{
 
                     // console.log("key: ",key);
 
-                    posts.push( <Post key={key} uuid={key} userName={username} tag={tag} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                    posts.push( <Post key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
                 }
 
                 

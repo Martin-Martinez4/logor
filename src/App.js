@@ -34,14 +34,14 @@ function App() {
 
   const loadUser = (data) => {
 
-    // const [id, username, joined, tag, profile_pic_url, description, header_img_url, location, links] = data;
+    // const [id, username, joined, nickname, profile_pic_url, description, header_img_url, location, links] = data;
 
     setloggedInUser({
         
             id: data.id,
             username: data.username,
             joined_date: data.joined_date,
-            tag: data.tag,
+            nickname: data.nickname,
             profile_pic_url: data.profile_pic_url,
             description: data.description,
             header_img_url: data.header_img_url,

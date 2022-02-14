@@ -132,6 +132,83 @@ h5{
   
 }
 
+.error{
+
+  color: var(--Red);
+}
+
+.errorBackground{
+  /* background-color: var(--Red2); */
+  background-image: linear-gradient(to bottom right, var(--Red),var(--Red3));
+  width: 55%;
+  height: auto;
+  text-align: center;
+
+  color: var(--UIWhite);
+  
+}
+
+.errorBackground {
+  animation: appear .5s cubic-bezier(0.1,0.4,1,0.2) 0s;
+}
+
+@keyframes appear {
+  0%{opacity:0%}
+  25% {opacity:25%}
+  50% {opacity:50%}
+  75% {opacity:75%}
+  100% {opacity:100%}
+}
+
+.hdden {
+  opacity: 0%;
+
+  height: auto;
+  text-align: center;
+}
+
+.fadeOut{
+  background-image: linear-gradient(to bottom right, var(--Red),var(--Red3));
+  width: 55%;
+  height: auto;
+  text-align: center;
+
+  color: var(--UIWhite);
+  
+  animation: fade .5s cubic-bezier(0.1,0.4,1,0.2) 0s;
+  opacity: 0%;
+
+}
+
+@keyframes fade {
+  0%{opacity:100%}
+  25% {opacity:75%}
+  50% {opacity:50%}
+  75% {opacity:25%}
+  100% {opacity:0%}
+}
+
+/* .opacity0{
+  opacity: 0%;
+  background-color: var(--UIWhite);
+  color: var(--UIWhite);
+  
+} */
+
+/* .svgCheckMarkIcon{
+  fill:var(--Primary);
+  transition:fill .75s cubic-bezier(0.1,0.4,1,0.2) 0s;
+} */
+
+
+@media screen and (max-width: 1024px){
+  
+  .errorBackground{
+    width: 80%;
+  }
+
+}
+
 button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
 
   cursor: pointer;
