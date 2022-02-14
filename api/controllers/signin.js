@@ -17,9 +17,9 @@ export const handleSignin = (req, res, db) => {
         .where('username', '=', username)
         .then((data) => {
 
-            console.log(data);
+            // console.log(data);
 
-            console.log(data[0].password === password)
+            // console.log(data[0].password === password)
 
             if(data[0].password === password){
 
@@ -38,7 +38,7 @@ export const handleSignin = (req, res, db) => {
                 res.status(400).json("Trouble loggining in")
             }
         })
-        .catch(() => console.log("trouble"))
+        .catch(() => res.status(400).json("Trouble loggining in"))
 
 }
 
