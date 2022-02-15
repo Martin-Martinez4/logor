@@ -3,6 +3,8 @@ import React, { FC, useContext } from "react";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
 
+import formatDate from "../utils/formatDate";
+
 import { UserInfoContext } from "../userContext/userContext";
 
 // import ProfileImage from "../../assets/Monkey_1.svg";
@@ -31,7 +33,7 @@ const ProfileHeader:FC = () =>{
                 <h3 className="profile_name">{loggedInUser["username"]}</h3>
                 
 
-                <h4 className="profile_tag"><em>{loggedInUser["tag"]}</em></h4>
+                <h4 className="profile_tag"><em>{loggedInUser["nickname"]}</em></h4>
                 <p className="profile_description">{loggedInUser["description"]}</p>
 
                 <div className="profile_other">
@@ -49,7 +51,7 @@ const ProfileHeader:FC = () =>{
                         <p><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><a href={loggedInUser["links"]}><em>{loggedInUser["links"]}</em></a></p>
                     }
 
-                    <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{loggedInUser["joined_date"]}</em></p>
+                    <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{formatDate(loggedInUser["joined_date"])}</em></p>
 
                 </div>
 

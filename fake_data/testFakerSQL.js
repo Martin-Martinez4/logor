@@ -20,7 +20,7 @@ function createUsers(number){
     const headersPath = `${relativePath+'headers.sql'}`;
     const loginPath = `${relativePath+'login.sql'}`;
 
-    fs.writeFileSync(`${usersPath}`, 'BEGIN TRANSACTION;\n INSERT INTO users(id, username, nick_name, profile_pic_url)\nVALUES \n', function (err) {
+    fs.writeFileSync(`${usersPath}`, 'BEGIN TRANSACTION;\n INSERT INTO users(id, username, nickname, profile_pic_url)\nVALUES \n', function (err) {
         if (err) throw err;
     });
     fs.writeFileSync(`${headersPath}`, 'BEGIN TRANSACTION;\n INSERT INTO user_headers( description, header_img_url, location, links, joined_date, user_id)\nVALUES \n', function (err) {

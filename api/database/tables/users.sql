@@ -4,7 +4,7 @@ CREATE TABLE users (
 
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
     username VARCHAR(50) NOT NULL,
-    nick_name VARCHAR(50) NOT NULL ,
+    nickname VARCHAR(50) NOT NULL ,
     profile_pic_url VARCHAR(300) NOT NULL,
     PRIMARY KEY (id)
 );

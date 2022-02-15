@@ -4,7 +4,8 @@ import {
   Routes,
   Route,
   Navigate,
-  useParams
+  useParams,
+  useLocation
 } from "react-router-dom";
 import { useContext } from 'react';
 import useAuth from "./components/useAuth/useAuth";
@@ -50,24 +51,25 @@ function App() {
     })
   }
 
-  
   return (
     <div className="App container">
 
       <Routes>
         <Route path="/" element={<Landingpage loadUser={loadUser} />} />
 
+        <Route path="/home/:id" element={
+
+          <RequireAuth>
+              <Home/>
+          </RequireAuth>
+
+          } />
           
-          <Route path="/users" element={
-
-              
-              <RequireAuth>
-                  <Home/>
-              </RequireAuth>
-            } />
         <Route path="/register" element={<Register loadUser={loadUser} />} />
+        
         <Route path="/success" element={<SuccessPage/>} />
-
+          
+        
         <Route path="/users/:id" element={<VisitorPage/>} />
         <Route path="/tags/:id" element={<VisitorPage/>} />
 

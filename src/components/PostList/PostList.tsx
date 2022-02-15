@@ -30,69 +30,95 @@ const PostList: FC = () => {
 
     const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
 
-    let loggedInComments = sortedComments[id];
+    // let loggedInComments = sortedComments[id];
 
-    const [userPosts, setUserPosts] = useState(loggedInComments);
+    const [userPosts, setUserPosts] = useState();
 
-    useEffect(() => {
-
-        // console.log("effect: ",userPosts)
-
-        console.log("Stuff")
-
-    },[userPosts])
-
-    console.log(loggedInComments)
-
-    
-    const createPosts = (loggedInComments) => {
+    // Get user comments
+    const createPosts = (commentsArray) => {
         
         let posts = []
 
+        console.log(commentsArray)
+
+        for(let i = 0; i < commentsArray.length -1; i++ ){
+
+            let loggedInComments = commentsArray[i] 
+            
+            const {comment_id, text_content, created_at, status, like, user_id} = loggedInComments
         
-        for(let key in loggedInComments){
-            
-            let text = loggedInComments[key]["text_content"];
-            let date = loggedInComments[key]["date_made"];
-            
-            if(loggedInComments.hasOwnProperty(key)){
+            // for(let key in loggedInComments){
 
-
-                if(loggedInComments[key].hasOwnProperty("status")){
+                
+                
+                if(loggedInComments.hasOwnProperty("comment_id")){
+    
                     
-
-                    if(loggedInComments[key]["status"][0] === "Deleted"){
-
-                        // console.log("should have worked")
+                    if(loggedInComments.hasOwnProperty("status")){
+                        
+                        
+                        if(status[0] === "Deleted"){
+                            
+                            // console.log("should have worked")
+                            
+                            posts.push(<DeletedPost  key={comment_id} uuid={comment_id} />);
+                            
+                        }
+                        else if (status[0] === "Edited"){
+                            
+                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={status}/> );
+                            
+                        }
+                        else{
+                            console.log(comment_id)
+                            
+                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                        }
+                    
+                    }else{
     
-                        posts.push(<DeletedPost  key={key} uuid={key} />);
+                        // console.log("key: ",key);
     
+                        posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
                     }
-                    else if (loggedInComments[key]["status"][0] === "Edited"){
-
-                        posts.push( <Post key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
     
-                    }
-                    else{
-
-                        posts.push( <Post key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
-                    }
-                
-                }else{
-
-                    // console.log("key: ",key);
-
-                    posts.push( <Post key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                    
                 }
-
-                
-            }
+            // }
+            
         }
-        
+
+
         return posts
     }
+    useEffect(() => {
 
-    let posts = createPosts(userPosts)
+        fetch(`http://localhost:3001/home/${id}`, {
+    
+                method: "get",
+                headers: { "Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(comments => {
+
+                console.log(comments)
+                console.log("running")
+                setUserPosts(createPosts(comments))
+            })
+
+    }, [])
+
+    
+    useEffect(() => {
+        
+        // console.log("effect: ",userPosts)
+                
+    },[userPosts])
+    
+    // console.log(loggedInComments)
+
+    
+
+    let posts = userPosts
     
         return(
             // style={{ display:"flex", flexDirection: "column" }}
@@ -120,7 +146,7 @@ const PostList: FC = () => {
                     </div>
                 </Card>
                 
-                <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts} loggedInComments={loggedInComments} ></CommentBox>
+                <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts}  ></CommentBox>
               
                 {posts}
                

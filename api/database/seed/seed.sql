@@ -4,7 +4,7 @@
 --  insert uuids as '292a485f-a56a-4938-8f1a-bbbbbbbbbbb1'::UUID,
 
 
-INSERT INTO users(id, username, nick_name, profile_pic_url) 
+INSERT INTO users(id, username, nickname, profile_pic_url) 
 VALUES 
 ( 'c946c269-5bba-4401-9825-804a5f604698', 'Reginald55',  'bluetooth-cow', '../../users/default/Monkey_2.svg'),
 ( '9b4ce7b2-ac3b-492d-8536-6894f9b67a72', 'Eloise_Moore15',  'back-end-bear', '../../users/default/Monkey_2.svg'),

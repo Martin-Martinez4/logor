@@ -15,7 +15,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const [charsLeft, setCharsLeft] = useState(maxChars- text_content.length);
 
-    // let subTest = ([<span>paratgraosd</span>, <a>test</a>, <p>asdasdasd</p>])
+    let subTest = ([<span>paratgraosd</span>, <a>test</a>, <p>asdasdasd</p>])
 
     const getTags = (text_string) => {
 
@@ -124,7 +124,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     
             setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
 
-            setCharsLeft(maxChars - text_content.length);
+            // setCharsLeft(maxChars - text_content.length);
         }
 
     }
@@ -215,7 +215,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         setEdiMode(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-        setCharsLeft(maxChars - e.target.value.length)
+        // setCharsLeft(maxChars - e.target.value.length)
 
         e.preventDefault()
     }

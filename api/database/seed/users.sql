@@ -1,5 +1,5 @@
 BEGIN TRANSACTION;
- INSERT INTO users(id, username, nick_name, profile_pic_url)
+ INSERT INTO users(id, username, nickname, profile_pic_url)
 VALUES 
 
 ( 'ef9ad1e4-ed09-4d1a-8675-0d2bf45fa771', 'Duncan97',  'open-source-cow', '../../users/default/Monkey_2.svg'),

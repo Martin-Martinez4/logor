@@ -3,6 +3,8 @@
 import 'dotenv/config';
 // const signin = require('./controllers/signin');
 import {handleSignin} from './controllers/signin.js';
+import { handleRegister } from './controllers/register.js';
+import { handleGetComments } from './controllers/getOwnPosts.js';
 // const express = require('express');
 import express from 'express';
 const app = express();
@@ -55,12 +57,13 @@ app.post("/signin", (req, res) => {
 
 });
 
-app.get('/users/:id', (req, res) => {
+app.get('/home/:id', (req, res) => {
 
-   profile.handleProfileGet(req,res,db)
+  handleGetComments(req,res,db)
 
 })
 
+app.post('/register', (req, res) => { handleRegister(req, res, db ) })
 
 app.get('/', res  => console.log("this is working"))
 // app.post('/profile/:id', auth.requireAuth, (req, res) => { profile.handleProfileUpdate(req, res, db) })
@@ -70,7 +73,6 @@ app.get('/', res  => console.log("this is working"))
 // app.post('/imageurl', auth.requireAuth, (req, res) => {image.handleApiCall(req, res)})
 
 // Passing in denpendacies to the handleRegister is called dependacy injection
-// app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt, saltRounds) })
 
 
 

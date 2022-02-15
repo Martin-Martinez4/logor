@@ -29,7 +29,7 @@ const Register:FC = ({ loadUser }) => {
         id:"",
         username:"",
         joined_date:"",
-        tag:"",
+        nickname:"",
         profile_pic_url:Monkey1,
         description:"",
         header_img_url:background1,
@@ -130,33 +130,77 @@ const Register:FC = ({ loadUser }) => {
     // eslint-disable-next-line
     const { login } = useAuth();
 
-    const getJoinedDate = () => {
+    const onAttemptRegister = (data, e) => {
 
-        const currTime = new Date().getTime();
-        
-        const readableCurrTime = new Date(currTime).toString();
+        e.preventDefault();
 
-        
-        // setUser(prev => ({...prev, "joined_date":readableCurrTime}));
-        setUser(user => ({ ...user, joined_date:readableCurrTime }))
+        const { username, nickname, profile_pic_url, description, header_img_url, location, links, password, password2} = user
 
-        console.log("joined_date", user)
-    }
+        if(password === password2){
 
-    const navigateSuccess = (data) => {
+            fetch('http://localhost:3001/register', {
+    
+                method: "post",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: username, 
+                    nickname: nickname, 
+                    profile_pic_url: profile_pic_url, 
+                    description: description, 
+                    header_img_url: header_img_url, 
+                    location: location, 
+                    links: links, 
+                    password: password, 
+                    password2: password2
+                })
+    
+            })
+            .then((response) => response.json())
+            .then((user) => {
+    
+                console.log("response", user)
+    
+                if(user.id){
+    
+                    login().then(() => {
+                            
+                        loadUser(user);
+                        navigate("/users/");
+                    }).catch( (err) => {
+    
+                        console.log("fail")
+                        logout().then(() => {
+                            navigate("/");
+                        })
+    
+                    })
+    
+                }
+                else{
+    
+                    console.log("error");
+                }
+    
+            }).catch((err)=> console.log(err))
+        }else{
 
-        const userData = createNewUser(user, data);
-
-        loadUser(userData)
-
-        login().then(() => {
-
-            navigate('/success');
+            console.log("validation Error");
+        }
 
 
-        }).catch(err => {
-            console.log("something went wrong")
-        });
+
+        // const userData = createNewUser(user, data);
+
+        // loadUser(userData)
+
+        // login().then(() => {
+
+        //     navigate('/success');
+
+
+        // }).catch(err => {
+        //     console.log("something went wrong")
+        // });
 
         }
 
@@ -188,10 +232,10 @@ const Register:FC = ({ loadUser }) => {
                         <input type="text" placeholder="Enter Username" name="username" onChange={oninputChange} value={user.username} required />
                     </label>
 
-                    <label htmlFor="tag" className="upperleft">
-                        <h4 className="inputName">Tag</h4>
+                    <label htmlFor="nickname" className="upperleft">
+                        <h4 className="inputName">nickname</h4>
                     
-                        <input type="text" placeholder="Enter Tag" name="tag" onChange={oninputChange} value={user.tag} required />
+                        <input type="text" placeholder="Enter nickname" name="nickname" onChange={oninputChange} value={user.nickname} required />
                     </label>
 
                     <label htmlFor="email" className="upperleft">
@@ -326,8 +370,6 @@ const Register:FC = ({ loadUser }) => {
                     <div className="flexRowContainer margin1">
                         <button onClick={() => setCurrentStepValue((currentStep - 1)) } type="button" className="button red" title="Click to move back to step 2">Back</button>
                         <button onClick={() => { 
-                            getJoinedDate();
-
                             setCurrentStepValue((currentStep + 1)) 
                         }} type="button" className="button primary" title="Click to move to next Step"
                             >Next</button>
@@ -393,7 +435,7 @@ const Register:FC = ({ loadUser }) => {
 
                     <div className="flexRowContainer margin1">
                         <button onClick={() => setCurrentStepValue((currentStep - 1)) } type="button" className="button red" title="Click to move back to step 2">Back</button>
-                        <button onClick={() => navigateSuccess(TestData)} className="button primary" type="button">Submit</button>
+                        <button onClick={(e) => onAttemptRegister(TestData, e)} className="button primary" type="button">Submit</button>
                     </div>
                     
                 </div>
