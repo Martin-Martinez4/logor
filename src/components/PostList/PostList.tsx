@@ -21,6 +21,8 @@ import "./postlist.css"
 
 const PostList: FC = () => {
 
+    // let posts = []
+
     const location = useLocation();
 
     console.log(location.pathname);
@@ -94,7 +96,6 @@ const PostList: FC = () => {
     useEffect(() => {
 
         fetch(`http://localhost:3001/home/${id}`, {
-    
                 method: "get",
                 headers: { "Content-Type": "application/json"},
             }).then(response => response.json())
@@ -107,18 +108,17 @@ const PostList: FC = () => {
 
     }, [])
 
+    let posts = userPosts
     
     useEffect(() => {
-        
-        // console.log("effect: ",userPosts)
+        console.log(posts)
                 
-    },[userPosts])
+    },[, userPosts])
     
     // console.log(loggedInComments)
 
     
 
-    let posts = userPosts
     
         return(
             // style={{ display:"flex", flexDirection: "column" }}
@@ -148,7 +148,7 @@ const PostList: FC = () => {
                 
                 <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts}  ></CommentBox>
               
-                {posts}
+                {userPosts}
                
                 {/* White  space at the end of the scroll section */}
                 <div className="empty"></div>

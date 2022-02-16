@@ -4,7 +4,7 @@ BEGIN TRANSACTION;
 CREATE TABLE comments(
     comment_id uuid DEFAULT uuid_generate_v4() NOT NULL,
     text_content VARCHAR(920),
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
     status  TEXT [],
     likes INT,
     PRIMARY KEY(comment_id),

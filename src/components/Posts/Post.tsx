@@ -15,8 +15,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const [charsLeft, setCharsLeft] = useState(maxChars- text_content.length);
 
-    let subTest = ([<span>paratgraosd</span>, <a>test</a>, <p>asdasdasd</p>])
-
     const getTags = (text_string) => {
 
         //eslint-disable-next-line
@@ -176,32 +174,25 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const handleDelete = (e) => {
 
-        // When session token implemented, check for token
+        e.preventDefault();
 
-        console.log(uuid)
-        // update the database
-        loggedInComments[uuid]["text_content"] = "";
-        loggedInComments[uuid]["status"] = "Deleted";
+        fetch(`http://localhost:3001/home/delete/${uuid}`, {
+    
+            method: "post",
+            headers: { "Content-Type": "application/json"},
 
-        // console.log(loggedInComments[uuid])
+        })
+        .then(resp => {
 
-        // Update  the front end state
+            if(resp.status === 200 || resp.status === 304){
 
-        const tempStatus = ["Deleted", new Date().getTime()]
+                console.log("Success, Deleted")
 
-        const deletedPost = {[uuid]: {
-            "date_made":`${date_posted}`,
+            }
+        })
+        .catch(console.log)
 
-            "text_content":``,
-            
-            "like": "0",
-            "status":tempStatus,
-            "replies": []
-        }}
-
-        const newUsers = Object.assign({}, userPosts, deletedPost)
-
-        setUserPosts(newUsers)
+        // setUserPosts(newUsers)
 
 
 
@@ -220,60 +211,40 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         e.preventDefault()
     }
 
+    // Have not handled rerneder after editing because I wnat to make the post component do the rendering after an edit or "delete" as opposed to the postlist to avoid unneeded rerendering
+    // Editing works just have to reload to see changes
     const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        
+        e.preventDefault();
 
+        fetch(`http://localhost:3001/home/update/${uuid}`, {
+    
+            method: "post",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({
+                text_content: editMode.textContent
+            })
 
-        loggedInComments[uuid]["text_content"] = editMode.textContent;
+        })
+        .then(resp => {
+
+            if(resp.status === 200 || resp.status === 304){
+
+                console.log("Success")
+
+            }
+        })
+        .catch(console.log)
 
         toggleEditMode()
 
-        const currTime = new Date().getTime();
-        // text_content === editMode.textContent? status =="Edited"? "Edited":"":"Edited";
-
         
-        let statusToSet:[String, number] = ["", 0];
-
-        if(text_content === editMode.textContent){
-
-            if(status[0] === ""){
-
-                statusToSet =  ["", 0];
-            
-            }
-            
-            else if(status[0] === "Edited"){
-    
-                statusToSet = ["Edited", currTime]
-            }
-
-
-        }
-        else{
-            statusToSet = ["Edited", currTime];
-        }
-
-
-        const editedPost = {
-            [uuid]:
-            {
-            "date_made":`${date_posted}`,
-
-            "text_content":`${editMode.textContent}`,
-            
-            "like": "0",
-            "status":statusToSet,
-            "replies": []
-        }}
-
-        
-        const editedUsers = Object.assign({}, userPosts, editedPost)
-        
-        setUserPosts(editedUsers)
+        // setUserPosts(editedUsers)
 
         
     }
+
+    // s==============================
 
     const exitEditMode = (e) => {
 
@@ -317,20 +288,9 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                         </div>
                             <em>@{nickname}</em>
                             <span className="user_info__pipe on_Gthan750px"> | </span>
-                            <em className="datePosted on_Gthan750px"> {formatDateAgo(date_posted)}</em>
+                            <em className="datePosted on_Gthan750px"> {formatDateAgo(new Date(new Date(date_posted).toUTCString()).getTime())}</em>
                             
-                            <span className="user_info__pipe on_750px"><em className="datePosted"> ○  {formatDateAgo(date_posted)}</em></span>
-
-                            {/* <span className="option_dots on_Gthan750px" onClick={toggleDropDownVisible}>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <div className="dot"></div>
-                                <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
-                                    <p>Embed</p>
-                                    <p onClick={toggleEditMode}>Edit</p>
-                                    <p onClick={toggleDeleteConfirmationVisible}>Delete</p>
-                                </span>
-                            </span>  */}
+                            <span className="user_info__pipe on_750px"><em className="datePosted"> ○ {formatDateAgo(date_posted)}</em></span>
                             
 
                 </div>
@@ -354,7 +314,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                             ) 
                             :
                             <p className="post_body_text">
-                           {/* { text_content} */}
+
                            {addLinkTags(getTags(text_content))}
                             </p>
                             }

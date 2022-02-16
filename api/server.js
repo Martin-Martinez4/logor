@@ -5,6 +5,8 @@ import 'dotenv/config';
 import {handleSignin} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 import { handleGetComments } from './controllers/getOwnPosts.js';
+import { handleCreatePost } from './controllers/createPost.js';
+import { handleSlateForDeletion, handleUpdatePost } from './controllers/updatePost.js';
 // const express = require('express');
 import express from 'express';
 const app = express();
@@ -60,6 +62,26 @@ app.post("/signin", (req, res) => {
 app.get('/home/:id', (req, res) => {
 
   handleGetComments(req,res,db)
+
+})
+
+app.post("/home/:id", (req, res) => {
+
+  handleCreatePost(req, res, db)
+
+})
+
+app.post("/home/delete/:comment_id", (req, res) => {
+
+  // Actual deletion will take place during maintaince because of delete cascading
+  handleSlateForDeletion(req, res, db)
+
+})
+
+app.post("/home/update/:comment_id", (req, res) => {
+
+  // Actual deletion will take place during maintaince because of delete cascading
+  handleUpdatePost(req, res, db)
 
 })
 

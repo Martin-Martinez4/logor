@@ -1,12 +1,17 @@
 
-import React, { FC, useState } from "react";
+import React, { FC, useState, useContext } from "react";
 
 import { v4 as uuidv4 } from 'uuid';
 
 import "./CommentBox.css";
 import Card from "../Card/Card";
+import { UserInfoContext } from "../userContext/userContext";
 
 const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments }) => {
+
+    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+
+    const {id}: {id:string; profile_pic_url:string } = loggedInUser;
 
     const maxChars = 920;
     
@@ -62,27 +67,46 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
     const addPostToList = () => {
 
-        let ui_id = uuidv4();   
 
-        const currTime = new Date().getTime()
+        // let ui_id = uuidv4();   
+
+        // const currTime = new Date().getTime()
         
-        const readableDate:String = (new Date(currTime).toString());
+        // const readableDate:String = (new Date(currTime).toString());
 
-        setUserPosts(user => ( { [ui_id]: {
-            "date_made":`${readableDate}`,
+        // setUserPosts(user => ( { [ui_id]: {
+        //     "date_made":`${readableDate}`,
 
-            "text_content":` ${newPost.commentBox}`,
+        //     "text_content":` ${newPost.commentBox}`,
             
-            "like": "0",
-            "replies": []
-        } , ...user}))
+        //     "like": "0",
+        //     "replies": []
+        // } , ...user}))
+
+        fetch(`http://localhost:3001/home/${id}`, {
+
+            method: "post",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({
+                user_id: id,
+                text_content: newPost.commentBox
+            })
+        })
+        .then((response) => {
+
+           return response.json()
 
 
-        posts = createPosts(loggedInComments)
+        }).then((comments) => {
+
+            setUserPosts(createPosts(comments))
+        })
+
+
 
         clearInput("commentBox", setNewPost);
 
-        setCharsLeft(maxChars)
+        setCharsLeft(maxChars);
 
     }
 
