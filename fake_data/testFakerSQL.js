@@ -158,8 +158,9 @@ function createComments(userIDsArray, maxNumOfComments, minNumOfComments){
             const textContent = (faker.commerce.productDescription() + " " + faker.company.catchPhrase()).replace(new RegExp("\\'","gm"),"''");
             // text.replace(new RegExp("\\'","gm"),"''")
             
-            const createdAt = new Date(faker.date.past()).toISOString().slice(0, 19).replace('T', ' ');
-            
+            const createdAt = new Date((new Date(faker.date.past()).getTime())).toUTCString();
+
+                        
             // const status = ARRAY [' ',' ']";
             const likes = 0;
             const currentUserUUID = userIDsArray[i];
@@ -167,7 +168,7 @@ function createComments(userIDsArray, maxNumOfComments, minNumOfComments){
 
             // INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id ) VALUES
 
-            tempComment = `\n('${commentID}', '${textContent}',  '${createdAt}', '{'', ''}', ${likes}, '${currentUserUUID}')${i ===  userIDsArray.length-1?counter === numberOfComments-1? ';':',':','}`;
+            tempComment = `\n('${commentID}', '${textContent}',  '${createdAt}', '{'',''}', ${likes}, '${currentUserUUID}')${i ===  userIDsArray.length-1?counter === numberOfComments-1? ';':',':','}`;
 
 
             fs.appendFileSync(`${commentsPath}`, tempComment, function (err) {

@@ -47,7 +47,7 @@ const PostList: FC = () => {
 
             let loggedInComments = commentsArray[i] 
             
-            const {comment_id, text_content, created_at, status, like, user_id} = loggedInComments
+            const {comment_id, text_content, created_at, status, likes, user_id} = loggedInComments
         
             // for(let key in loggedInComments){
 
@@ -68,20 +68,20 @@ const PostList: FC = () => {
                         }
                         else if (status[0] === "Edited"){
                             
-                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={status}/> );
+                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={status} likes={likes} /> );
                             
                         }
                         else{
                             console.log(comment_id)
                             
-                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={status} likes={likes} /> );
                         }
                     
                     }else{
     
                         // console.log("key: ",key);
     
-                        posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
+                        posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
                     }
     
                     
@@ -108,12 +108,10 @@ const PostList: FC = () => {
 
     }, [])
 
+    
     let posts = userPosts
     
-    useEffect(() => {
-        console.log(posts)
-                
-    },[, userPosts])
+    
     
     // console.log(loggedInComments)
 

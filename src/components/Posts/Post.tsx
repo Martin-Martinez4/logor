@@ -1,6 +1,9 @@
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import { Link, Route, BrowserRouter } from 'react-router-dom';
+
+
+import { UserInfoContext } from "../userContext/userContext";
 
 import Card from "../Card/Card";
 import "./Posts.css";
@@ -13,7 +16,20 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const maxChars = 920;
 
-    const [charsLeft, setCharsLeft] = useState(maxChars- text_content.length);
+    // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+
+    const [postInformation, setPostInfomration] = useState({
+
+        text_content: text_content,
+        status: status
+    })
+    const [charsLeft, setCharsLeft] = useState(maxChars - text_content.length);
+
+
+    useEffect(() => {
+        console.log(postInformation.status)
+    }, [postInformation])
+
 
     const getTags = (text_string) => {
 
@@ -84,12 +100,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     let lastEditedReadable: String;
     
-    if(status[1] === 0){
+    if(postInformation.status[1] === ""){
         lastEditedReadable = "";
     }
     else{
         // lastEditedReadable = new Date(status[1]).toString();
-        lastEditedReadable = formatDate(status[1]);
+        lastEditedReadable = formatDate(postInformation.status[1]);
     }
 
     const dropdownContainer = React.createRef();
@@ -182,21 +198,26 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
             headers: { "Content-Type": "application/json"},
 
         })
-        .then(resp => {
+        .then(res => res.json()
+        )
+        .then( (comment) => {
 
-            if(resp.status === 200 || resp.status === 304){
-
-                console.log("Success, Deleted")
-
-            }
+            // setUser(user => ({ ...user, [pictureType]:src }))
+            console.log("comment", comment["status"])
+            setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
         })
         .catch(console.log)
 
-        // setUserPosts(newUsers)
+
 
 
 
     }
+
+    
+
+   
+
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -217,6 +238,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         e.preventDefault();
 
+        console.log(editMode.textContent)
+
         fetch(`http://localhost:3001/home/update/${uuid}`, {
     
             method: "post",
@@ -226,13 +249,13 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
             })
 
         })
-        .then(resp => {
+        .then(res => res.json()
+        )
+        .then( (comment) => {
 
-            if(resp.status === 200 || resp.status === 304){
-
-                console.log("Success")
-
-            }
+            // setUser(user => ({ ...user, [pictureType]:src }))
+            console.log("edit comment", comment["status"], " ", comment["text_content"])
+            setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
         })
         .catch(console.log)
 
@@ -262,7 +285,30 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
  
 
         return(
+
+            <>
+            {postInformation.status[0] === "Deleted"?
+            <Card classes="content post deleted">
+                    
+            <p className="post_body_text">This Post was Deleted by the user</p>
+            
+       
+            </Card>
+            :
+
+        
             <Card classes="content post">
+
+                {
+                status[0] === "Deleted"
+                ?
+                <>
+                {console.log(status[0])}
+                <p className="post_body_text">This Post was Deleted by the user</p>
+                </> 
+                :
+                <>
+                {console.log(status[0])}
                 <div className="post user_image">
                     <img src={user_profile} alt="profile" className="post_user_image "></img>
                    
@@ -315,7 +361,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                             :
                             <p className="post_body_text">
 
-                           {addLinkTags(getTags(text_content))}
+                           {addLinkTags(getTags(postInformation.text_content))}
                             </p>
                             }
                     </div>
@@ -341,7 +387,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                                 <ShareIcon2></ShareIcon2>
                             </div>
                             <div className="post__lastEdited">
-                            {status[0] === ""?<p></p>: (<React.Fragment><p>Lasted Edited on: </p><p> {lastEditedReadable}</p></React.Fragment>)}
+                            {postInformation.status[0] === "Edited"? (<React.Fragment><p>Lasted Edited on: </p><p> {lastEditedReadable}</p></React.Fragment>):<p></p>}
                             </div>
 
                             </React.Fragment>
@@ -359,7 +405,11 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                         <p onClick={toggleDeleteConfirmationVisible}>Delete</p>
                     </span>
                 </span> 
+                </>
+         }
             </Card>
+        }
+            </>
         );
 }
 
