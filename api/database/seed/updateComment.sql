@@ -1,93 +1,108 @@
 BEGIN TRANSACTION;
  
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infrastructures') 
- WHERE comment_id = '9179ff0b-ae2c-411a-a742-c3ab32c99e60';
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = 'e3468fb4-4437-4748-ae72-c0e4e3a7ecc1';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infomediaries') 
- WHERE comment_id = 'fce2bd05-0082-4c2a-9a0f-47daf5f8a34a';
+ SET text_content = CONCAT(text_content,'#markets') 
+ WHERE comment_id = '4961e34a-d4f6-470f-b7a4-43b73fb755f2';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#communities') 
- WHERE comment_id = '82cef731-68a9-4d78-bcc0-81acd1a8bc67';
+ SET text_content = CONCAT(text_content,'#markets') 
+ WHERE comment_id = '548b608e-f070-494a-81d1-06210b19a523';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#partnerships') 
- WHERE comment_id = '2fbf65b8-9d77-40ed-8382-a46c402bf460';
+ SET text_content = CONCAT(text_content,'#e-business') 
+ WHERE comment_id = '1fb66332-ba95-44b2-97a9-059d7a35c39f';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#communities') 
- WHERE comment_id = 'edbb36b0-61c3-4159-96e6-827793f71033';
+ SET text_content = CONCAT(text_content,'#markets') 
+ WHERE comment_id = '45967323-c424-4ad7-955f-195babeb8e71';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#systems') 
- WHERE comment_id = '9ae4cb04-7fe9-4b2d-9b94-2991acb0efff';
+ SET text_content = CONCAT(text_content,'#portals') 
+ WHERE comment_id = 'f5b51256-cfcf-4f43-adb9-d095b9ffbafd';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#partnerships') 
- WHERE comment_id = '3596c4df-ec4e-49b1-ac3c-7c3d8ecd6c77';
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = '260c96f6-db45-4768-9da6-9b98bdb97b7f';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#synergies') 
- WHERE comment_id = '57665f0a-ef56-4f6b-867e-f491094d3dab';
+ SET text_content = CONCAT(text_content,'#initiatives') 
+ WHERE comment_id = 'a233e798-4951-4142-88f7-3faf486e87f9';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#supply-chains') 
- WHERE comment_id = '753a6294-bc55-48aa-83e6-952d0633314a';
+ SET text_content = CONCAT(text_content,'#initiatives') 
+ WHERE comment_id = 'f85dc669-c5ca-455a-ad49-6228d2ae2390';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#supply-chains') 
- WHERE comment_id = 'd3e2ed65-581b-46da-a14d-f4a183031975';
+ SET text_content = CONCAT(text_content,'#e-business') 
+ WHERE comment_id = 'cb261cc2-10c0-4d13-b6e5-8d6c98032ec7';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infrastructures') 
- WHERE comment_id = '470567dd-69ea-43fb-8636-e77ffc9bd25f';
+ SET text_content = CONCAT(text_content,'#paradigms') 
+ WHERE comment_id = 'b4b3de6c-cfb4-49e9-8858-d42ceab661ef';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infomediaries') 
- WHERE comment_id = '5cfdbc00-de93-42b0-bea4-a5d0f038988f';
+ SET text_content = CONCAT(text_content,'#paradigms') 
+ WHERE comment_id = 'ecb2564d-f05a-45dc-b7f5-9a7ff356e04c';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infrastructures') 
- WHERE comment_id = '0268490a-e901-4b5c-9835-3b87d2cac037';
+ SET text_content = CONCAT(text_content,'#initiatives') 
+ WHERE comment_id = '1fb72923-0e43-450c-a939-d1fdb9bb314b';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#supply-chains') 
- WHERE comment_id = 'ec40abeb-9d38-4ec0-9b39-68080f9b6032';
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = '4e07b128-2927-4ef8-a24a-3ed61a71faeb';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#synergies') 
- WHERE comment_id = '79aa6ef0-10b2-45cd-8962-071afd03dfe4';
+ SET text_content = CONCAT(text_content,'#initiatives') 
+ WHERE comment_id = '19615894-7a81-4346-9c97-a3387b015444';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#communities') 
- WHERE comment_id = 'f2c3a72b-c6a5-462f-8c61-f1d8b75f4e1e';
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = '34dfd774-5156-4100-be81-327e8b7bb245';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#networks') 
- WHERE comment_id = '67cc5c44-f409-45a5-ad90-a0192b0769ba';
+ SET text_content = CONCAT(text_content,'#relationships') 
+ WHERE comment_id = 'db88a85b-aaed-43de-823d-740b5a610099';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infomediaries') 
- WHERE comment_id = '913b2579-8bf0-44d7-ac8b-8ae0a339d0fd';
- UPDATE comments 
- SET text_content = CONCAT(text_content,'#supply-chains') 
- WHERE comment_id = 'defb5eee-5adc-49e2-abc0-122e8fe9ce6f';
- UPDATE comments 
- SET text_content = CONCAT(text_content,'#communities') 
- WHERE comment_id = 'cbd2d70b-13a0-46b9-90d8-2b9ee6de79aa';
+ SET text_content = CONCAT(text_content,'#relationships') 
+ WHERE comment_id = '76cc421b-010b-428a-88c9-40ccf2173c9e';
  UPDATE comments 
  SET text_content = CONCAT(text_content,'#mindshare') 
- WHERE comment_id = 'e41f988e-d3c9-4f52-a58b-faa896a3b9af';
+ WHERE comment_id = '353399e5-c144-41f5-b097-7078438248ae';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infomediaries') 
- WHERE comment_id = '107ee174-a555-4771-9356-d0cef14649e9';
+ SET text_content = CONCAT(text_content,'#e-business') 
+ WHERE comment_id = '053e9c09-100a-433a-a15b-70d41c07cedf';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#networks') 
- WHERE comment_id = '36979084-b605-43c3-9eb0-da4662f2afde';
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = '0acae266-7c52-4692-8251-3cf94290e1db';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#partnerships') 
- WHERE comment_id = '73f6b0f9-4fc5-46b7-87ef-6c62814f5dad';
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = 'bb4f0491-261e-4acb-92fc-6eeab26e1442';
+ UPDATE comments 
+ SET text_content = CONCAT(text_content,'#relationships') 
+ WHERE comment_id = '8f791030-6249-4bad-8dd3-b48929c7339a';
+ UPDATE comments 
+ SET text_content = CONCAT(text_content,'#portals') 
+ WHERE comment_id = 'd43efced-c9f4-421b-9e76-d865061901d2';
+ UPDATE comments 
+ SET text_content = CONCAT(text_content,'#portals') 
+ WHERE comment_id = '012023bc-ddd4-4f94-aa6b-49c3c50a1874';
+ UPDATE comments 
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = 'e2abcda2-84bc-4b31-87ba-c5a5d8a12e95';
  UPDATE comments 
  SET text_content = CONCAT(text_content,'#mindshare') 
- WHERE comment_id = 'e7e78654-37c8-46a4-8a5d-3286869df278';
+ WHERE comment_id = 'bbe17c4e-f61e-408a-afae-b197e79d97f1';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infrastructures') 
- WHERE comment_id = 'c9c7f9ef-3f00-4374-8bd4-eb5a6af78751';
+ SET text_content = CONCAT(text_content,'#paradigms') 
+ WHERE comment_id = '55c3c420-7709-4c2f-9e02-a45ba457d5c1';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#networks') 
- WHERE comment_id = '77091cdd-4f24-4a4d-87db-65c6d90c9c6c';
+ SET text_content = CONCAT(text_content,'#mindshare') 
+ WHERE comment_id = '45717c72-83bf-44c1-b245-0e61546e9cea';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#communities') 
- WHERE comment_id = '345d9c86-802a-4526-ac48-795f9f651976';
+ SET text_content = CONCAT(text_content,'#paradigms') 
+ WHERE comment_id = 'f68b0162-3f52-4b24-a8e7-648e951656c5';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#supply-chains') 
- WHERE comment_id = 'b39e86eb-c1e5-4481-98c4-4bb11041a07d';
+ SET text_content = CONCAT(text_content,'#markets') 
+ WHERE comment_id = '253bd4f6-c943-4051-a72b-802caeca7a5a';
  UPDATE comments 
- SET text_content = CONCAT(text_content,'#infrastructures') 
- WHERE comment_id = '83a27dae-5a43-4059-a967-338665550777';
+ SET text_content = CONCAT(text_content,'#mindshare') 
+ WHERE comment_id = 'c14dcd6f-6a78-4a44-b02d-ed726d48a506';
+ UPDATE comments 
+ SET text_content = CONCAT(text_content,'#markets') 
+ WHERE comment_id = '4c8c16be-26ea-4b1d-afac-5ec319166460';
+ UPDATE comments 
+ SET text_content = CONCAT(text_content,'#e-markets') 
+ WHERE comment_id = 'd2caf7fd-3dc0-4b40-9f03-be624277c6da';
+ UPDATE comments 
+ SET text_content = CONCAT(text_content,'#e-business') 
+ WHERE comment_id = '546bc009-d40d-476d-b1fc-fb8ce742e422';
  COMMIT;

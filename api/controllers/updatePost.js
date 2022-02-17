@@ -39,7 +39,7 @@ export const handleSlateForDeletion = (req, res, db) => {
 
     const { comment_id } = req.params
 
-    const text_content = null;
+    const text_content = "";
     const newDate = new Date((new Date().getTime())).toUTCString();
 
     const status = ['Deleted', `'${newDate}'`];
@@ -53,15 +53,23 @@ export const handleSlateForDeletion = (req, res, db) => {
             text_content: text_content,
             status: status
         })
-        .then(resp => {
+        // .returning('*')
+        // .where("comment_id", comment_id)
+        // .then(comment => {
+        //     console.log(comment[0])
+        //     res.json(comment[0])
+        // })
+        .then(() => {
 
-            if(resp){
-                console.log(`${comment_id}: updated`)
-            }
-            else{
-                res.status(400).json('Not found')
-            }
-        })
+            db.select('*').from('comments')
+                .where('comment_id', '=', comment_id)
+                .then((comment) => {
+                    
+                    console.log(comment[0])
+                    res.json(comment[0])
+                })
+                .catch((err) => console.log(err))
+            })
         .then(trx.commit)
         .catch(trx.rollback)
     })

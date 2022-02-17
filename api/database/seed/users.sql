@@ -2,14 +2,14 @@ BEGIN TRANSACTION;
  INSERT INTO users(id, username, nickname, profile_pic_url)
 VALUES 
 
-( 'ef9ad1e4-ed09-4d1a-8675-0d2bf45fa771', 'Duncan97',  'open-source-cow', '../../users/default/Monkey_2.svg'),
-( '5c0a2872-324a-4b08-a9f4-9529d35d7ff1', 'Alessandro.Maggio',  'optical-cetacean', '../../users/default/Monkey_2.svg'),
-( '5ad53f14-b654-4ad0-b45b-7f09e570f4fc', 'Georgiana42',  'solid state-horse', '../../users/default/Monkey_2.svg'),
-( '3bcd8984-56b3-4ba4-9701-0c7569f61801', 'Tressa_Bosco75',  'mobile-cat', '../../users/default/Monkey_2.svg'),
-( '846cde23-2f2a-487c-bf8c-da301754a302', 'Kianna_Bogisich',  '1080p-dog', '../../users/default/Monkey_2.svg'),
-( '0db53a53-fb06-4cf5-a065-83f99f364792', 'Ephraim_Swaniawski0',  'solid state-cetacean', '../../users/default/Monkey_2.svg'),
-( 'a2b922f7-5bb0-40f9-94d4-2ec1f3b63b7a', 'Lola.Pagac',  'auxiliary-bear', '../../users/default/Monkey_2.svg'),
-( 'e04cd6e2-9931-499a-bd2d-c3c7b80d7ac2', 'Selena31',  '1080p-horse', '../../users/default/Monkey_2.svg'),
-( '01f41778-e322-429e-8397-1dcea106e778', 'Abigale_Ziemann',  'optical-cetacean', '../../users/default/Monkey_2.svg'),
-( '89360b41-b101-4a24-ab65-07dc04486239', 'Kaitlin_Grimes',  'online-fish', '../../users/default/Monkey_2.svg');
+( 'c7089113-7d4f-4a5d-ade0-6f3697aa816d', 'Leta_Sanford67',  'online-cow', '../../users/default/Monkey_2.svg'),
+( 'd594302e-722e-4343-971a-e85ac9cb6d53', 'Modesta36',  'optical-cat', '../../users/default/Monkey_2.svg'),
+( 'a3bd3d85-680f-4be1-a5f6-996666f8bc44', 'Vicky.Leffler62',  'auxiliary-snake', '../../users/default/Monkey_2.svg'),
+( '8779472c-2d56-44e8-a107-f85bc6cc1744', 'Thaddeus57',  'virtual-bear', '../../users/default/Monkey_2.svg'),
+( 'da3a41b1-daa8-42b0-baed-b252e3ad008b', 'Toby65',  'solid state-snake', '../../users/default/Monkey_2.svg'),
+( '7f5d3bb8-272e-4581-937e-08888b692f58', 'Connie_Adams22',  'primary-insect', '../../users/default/Monkey_2.svg'),
+( 'f4a6c0d1-e37e-48a0-b0b7-fcae42518922', 'Vinnie25',  'optical-fish', '../../users/default/Monkey_2.svg'),
+( '6c2fb9cd-3d18-4fc2-b567-6c035c650c0f', 'Eloisa_Beer',  'multi-byte-cow', '../../users/default/Monkey_2.svg'),
+( '0278f021-df44-4331-a71e-4c0f59ea5d74', 'Dwight52',  'digital-cow', '../../users/default/Monkey_2.svg'),
+( '5212fbc9-dca8-42e9-b3ff-f9ba313925b9', 'Yvette_Schultz',  'solid state-crocodilia', '../../users/default/Monkey_2.svg');
  COMMIT;

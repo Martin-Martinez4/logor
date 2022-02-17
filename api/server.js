@@ -7,6 +7,7 @@ import { handleRegister } from './controllers/register.js';
 import { handleGetComments } from './controllers/getOwnPosts.js';
 import { handleCreatePost } from './controllers/createPost.js';
 import { handleSlateForDeletion, handleUpdatePost } from './controllers/updatePost.js';
+import { handleGetSinglePost } from './controllers/getSinlgePost.js';
 // const express = require('express');
 import express from 'express';
 const app = express();
@@ -62,6 +63,12 @@ app.post("/signin", (req, res) => {
 app.get('/home/:id', (req, res) => {
 
   handleGetComments(req,res,db)
+
+})
+
+app.get('/post/:id', (req, res) => {
+
+  handleGetSinglePost(req,res,db)
 
 })
 
