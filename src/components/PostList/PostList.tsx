@@ -41,52 +41,22 @@ const PostList: FC = () => {
         
         let posts = []
 
-        console.log(commentsArray)
+        // console.log(commentsArray)
 
         for(let i = 0; i < commentsArray.length -1; i++ ){
 
             let loggedInComments = commentsArray[i] 
             
             const {comment_id, text_content, created_at, status, likes, user_id} = loggedInComments
-        
-            // for(let key in loggedInComments){
+                
+                
+            if(loggedInComments.hasOwnProperty("comment_id")){
+
+
+                    posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
 
                 
-                
-                if(loggedInComments.hasOwnProperty("comment_id")){
-    
-                    
-                    if(loggedInComments.hasOwnProperty("status")){
-                        
-                        
-                        if(status[0] === "Deleted"){
-                            
-                            // console.log("should have worked")
-                            
-                            posts.push(<DeletedPost  key={comment_id} uuid={comment_id} />);
-                            
-                        }
-                        else if (status[0] === "Edited"){
-                            
-                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={status} likes={likes} /> );
-                            
-                        }
-                        else{
-                            console.log(comment_id)
-                            
-                            posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={status} likes={likes} /> );
-                        }
-                    
-                    }else{
-    
-                        // console.log("key: ",key);
-    
-                        posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
-                    }
-    
-                    
-                }
-            // }
+            }
             
         }
 
@@ -110,11 +80,6 @@ const PostList: FC = () => {
 
     
     let posts = userPosts
-    
-    
-    
-    // console.log(loggedInComments)
-
     
 
     

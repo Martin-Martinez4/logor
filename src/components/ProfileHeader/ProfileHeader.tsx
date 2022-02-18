@@ -3,9 +3,11 @@ import React, { FC, useContext } from "react";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
 
-import formatDate from "../utils/formatDate";
 
 import { UserInfoContext } from "../userContext/userContext";
+
+import formatDate, { formatDateMonthDayYear } from "../utils/formatDate";
+
 
 // import ProfileImage from "../../assets/Monkey_1.svg";
 import LocationIcon from "../../assets/LocationIcon.svg"
@@ -51,7 +53,7 @@ const ProfileHeader:FC = () =>{
                         <p><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><a href={loggedInUser["links"]}><em>{loggedInUser["links"]}</em></a></p>
                     }
 
-                    <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{formatDate(loggedInUser["joined_date"])}</em></p>
+                    <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{formatDateMonthDayYear(loggedInUser["joined_date"])}</em></p>
 
                 </div>
 

@@ -18,6 +18,22 @@ function formatDate(UTCDate){
 
 };
 
+export function formatDateMonthDayYear(UTCDate){
+
+    const newDate = new Date(UTCDate);
+
+    const time = newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second:'numeric',  hour12: true })
+
+    const monthsArray:string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
+    let readableDateMonth:string = monthsArray[(newDate.getMonth())];
+    let readableDateDay:string = newDate.getDate().toString().length === 1? "0"+newDate.getDate().toString(): newDate.getDate().toString();
+    let readableDateFullYear:string = (newDate.getFullYear().toString());
+
+    return ` ${readableDateMonth}-${readableDateDay}-${readableDateFullYear}`;
+
+};
+
 export function formatDateAgo(UTCDate){
 
     const oldTime = (new Date(UTCDate).getTime())/1000;

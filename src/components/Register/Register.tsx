@@ -128,7 +128,7 @@ const Register:FC = ({ loadUser }) => {
         }
     
     // eslint-disable-next-line
-    const { login } = useAuth();
+    const { login, logout } = useAuth();
 
     const onAttemptRegister = (data, e) => {
 
@@ -165,7 +165,7 @@ const Register:FC = ({ loadUser }) => {
                     login().then(() => {
                             
                         loadUser(user);
-                        navigate("/users/");
+                        navigate(`/home/${user.id}`);
                     }).catch( (err) => {
     
                         console.log("fail")

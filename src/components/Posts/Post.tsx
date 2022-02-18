@@ -27,11 +27,20 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
 
     useEffect(() => {
-        console.log(postInformation.status)
-    }, [postInformation])
+
+        treatedText = addLinkTags(getTags(postInformation.text_content))
+
+        console.log("treated" ,treatedText)
+    }, [postInformation.status, postInformation.text_content])
 
 
     const getTags = (text_string) => {
+
+        if(text_string === null || text_string === undefined){
+            text_string = "";
+        }
+
+        console.log("triuggered")
 
         //eslint-disable-next-line
         const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
@@ -44,7 +53,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         let tempPrevIndex;
 
-        while(match = pattern.exec(text_content)){
+        while(match = pattern.exec(text_string)){
 
             tempArray.push([text_string.substring(tempPrevIndex, match.index)])
             tempArray.push([text_string.substring(match.index, pattern.lastIndex)])
@@ -53,13 +62,15 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         }
 
-        if(tempPrevIndex !== text_content.length){
+        if(tempPrevIndex !== text_string.length){
+
+            console.log("last index:",  tempPrevIndex)
 
             
-            tempArray.push([text_string.substring(tempPrevIndex, text_content.length)])
+            tempArray.push([text_string.substring(tempPrevIndex, text_string.length)])
         }
 
-        // console.log(tempArray)
+        console.log(tempArray)
 
         return tempArray;
     }
@@ -75,6 +86,19 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
             if(pattern.test(treatedArray[i][0])){
 
+                if(treatedArray[i][0].startsWith("@")){
+
+                    console.log("tag: ", treatedArray[i][0]);
+                }
+                else if (treatedArray[i][0].startsWith("#")){
+
+                    console.log("hash: ", treatedArray[i][0]);
+                }
+                else{
+
+                    console.log("link: ", treatedArray[i][0]);
+                }
+                
                 linkTagsAdded.push(<a href="/user">{treatedArray[i]}</a>)
             }
             else if(treatedArray[i][0][0] === undefined){
@@ -282,6 +306,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }
 
+    let treatedText = addLinkTags(getTags(postInformation.text_content))
+
  
 
         return(
@@ -361,7 +387,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                             :
                             <p className="post_body_text">
 
-                           {addLinkTags(getTags(postInformation.text_content))}
+                           {/* {addLinkTags(getTags(postInformation.text_content))} */}
+                           {treatedText}
                             </p>
                             }
                     </div>
