@@ -8,12 +8,6 @@ import Scroll from "../Scroll/Scroll";
 import Card from "../Card/Card";
 import VisitorPost from "../Posts/VisitorPost";
 import DeletedPost from "../Posts/DeletedPost";
-import TestData from "../../tempStaticData/testData.json";
-
-import NameTagID from "../../tempStaticData/NameTagID.json";
-import CommentIDUserID from "../../tempStaticData/CommentIdUserID.json";
-import UserIDCommentID from "../../tempStaticData/UserIdCommentID.json";
-import TagIDCommentID from "../../tempStaticData/TagIDCommentID.json";
 
 import VisitorProfileHeader from "../ProfileHeader/VisitorProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
@@ -24,108 +18,111 @@ import sortedComments from "../../tempStaticData/sortedComments.json";
 
 
 import "./postlist.css"
+import ProfileHeader from "../ProfileHeader/ProfileHeader";
 
 const VisitorPostList: FC = ({ userOrTagID }) => {
 
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    console.log("postlist: ", userOrTagID  )
 
-    const location = useLocation();
+     const location = useLocation();
 
-    console.log(location.pathname);
+     console.log(location.pathname);
+ 
+     // eslint-disable-next-line
+     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+ 
+     const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
+ 
+     // let loggedInComments = sortedComments[id];
+ 
+     const [userPosts, setUserPosts] = useState();
+ 
+     // Get user comments
+     const createPosts = (commentsArray) => {
+         
+         let posts = []
+ 
+        //  console.log(commentsArray)
+ 
+         for(let i = 0; i < commentsArray.length -1; i++ ){
+ 
+             let loggedInComments = commentsArray[i] 
 
-    let pathName = location.pathname;
-    let postsArray;
+            //  console.log(loggedInComments)
+             
+             const {comment_id, text_content, created_at, status, likes, nickname, profile_pic_url} = loggedInComments
+                 
+                 
+             if(loggedInComments.hasOwnProperty("comment_id")){
+ 
+ 
+                     posts.push( <VisitorPost key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={status} likes={likes} /> );
+ 
+                 
+             }
+             
+         }
+ 
+ 
+         return posts
+     }
 
-    console.log(TagIDCommentID)
+     useEffect(() => {
 
-    if(pathName.includes("/users/")){
-
-        // const {username, nickname, profile_pic_url}: {username:string; nickname:string; profile_pic_url:string } = TestData["users"][visiteeID];
-
-        postsArray =  Object.keys(CommentIDUserID).filter((key)=> {
-
-        if(CommentIDUserID[key] === "1")
-           return key
-       }).map( key => key);
-
-
-    }
-
-    // eslint-disable-next-line
-
-
-
-    const [userPosts, setUserPosts] = useState();
-
-    useEffect(() => {
-
-        // console.log("effect: ",userPosts)
-
-        console.log("Stuff")
-
-    },[userPosts])
-
-    
-    const createPosts = (loggedInComments) => {
         
-        let posts = []
+        if(location.pathname.includes("/users/")){
 
-     
-        
-        for(let key in loggedInComments){
+            // fetch data from comments table with id after /users/
+            //  SELECT * FROM comments jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
+
+            console.log("/users/")
+
+            fetch(`http://localhost:3001/users/${userOrTagID}`, {
+                method: "get",
+                headers:  {"Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(comments => {
+                console.log("comments: ",  comments)
+                setUserPosts(createPosts(comments))
+            })
+
             
-            let text = loggedInComments[key]["text_content"];
-            let date = loggedInComments[key]["date_made"];
-            
-            if(loggedInComments.hasOwnProperty(key)){
 
 
-                if(loggedInComments[key].hasOwnProperty("status")){
-                    
+        }else if (location.pathname.includes("/tag/")){
 
-                    if(loggedInComments[key]["status"][0] === "Deleted"){
+            // fetch data from tags table with id after /tags/
+            //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
 
-                        // console.log("should have worked")
-    
-                        posts.push(<DeletedPost  key={key} uuid={key} />);
-    
-                    }
-                    else if (loggedInComments[key]["status"][0] === "Edited"){
 
-                        posts.push( <VisitorPost key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={loggedInComments[key]["status"]}/> );
-    
-                    }
-                    else{
-
-                        posts.push( <VisitorPost key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
-                    }
-                
-                }else{
-
-                    // console.log("key: ",key);
-
-                    posts.push( <VisitorPost key={key} uuid={key} userName={username} nickname={nickname} date_posted = {date} user_profile={profile_pic_url} text_content={text} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={loggedInComments} createPosts={createPosts} posts={posts} status={ ["", 0]} /> );
-                }
-
-                
-            }
         }
-        
-        return posts
-    }
-
-    let posts = createPosts(userPosts)
+ 
+        //  fetch(`http://localhost:3001/home/${id}`, {
+        //          method: "get",
+        //          headers: { "Content-Type": "application/json"},
+        //      }).then(response => response.json())
+        //      .then(comments => {
+ 
+        //          console.log(comments)
+        //          console.log("running")
+        //          setUserPosts(createPosts(comments))
+        //      })
+ 
+     }, [])
+ 
+     
+     let posts = userPosts
     
         return(
             
             <div className="postlist_horizontal" >
                 {console.log(userOrTagID)}
             <Scroll>
-{/* 
+
                 {location.pathname.includes("/users/")?
                 <VisitorProfileHeader userOrTagID={userOrTagID} />:
                 ""
-                } */}
+                }
                 
                 <Card classes="content med_suggestion">
                     <p>Suggestions</p>
@@ -146,8 +143,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
                     </div>
                 </Card>
-              
-                {posts}
+                {userPosts}
                
                 {/* White  space at the end of the scroll section */}
                 <div className="empty"></div>

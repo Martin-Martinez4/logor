@@ -12,6 +12,7 @@ import formatDate, { formatDateAgo } from "../utils/formatDate";
 import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../../assets/svg/ShareIcon2/ShareIcon2";
+
 const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, userPosts, posts, status, setUserPosts, createPosts, loggedInComments }) => {
 
     const maxChars = 920;
@@ -22,8 +23,9 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         text_content: text_content,
         status: status
-    })
-    const [charsLeft, setCharsLeft] = useState(maxChars - text_content.length);
+    });
+
+    const [charsLeft, setCharsLeft] = useState(maxChars - postInformation.text_content.length);
 
 
     useEffect(() => {
@@ -162,7 +164,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     
             setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
 
-            // setCharsLeft(maxChars - text_content.length);
+            // setCharsLeft(maxChars - postInformation.text_content.length);
         }
 
     }
@@ -251,7 +253,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         setEdiMode(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-        // setCharsLeft(maxChars - e.target.value.length)
+        setCharsLeft(maxChars - e.target.value.length)
 
         e.preventDefault()
     }
@@ -297,9 +299,9 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         toggleEditMode();
 
-        setEdiMode(prev => ({ ...prev, "textContent": `${text_content}` }))
+        setEdiMode(prev => ({ ...prev, "textContent": `${postInformation.text_content}` }))
 
-        setCharsLeft(maxChars- text_content.length);
+        setCharsLeft(maxChars- postInformation.text_content.length);
 
         e.preventDefault()
 

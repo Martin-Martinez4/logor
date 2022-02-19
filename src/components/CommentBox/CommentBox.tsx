@@ -110,6 +110,13 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
     }
 
+    const handleCancelCommentBox = () => {
+
+        clearInput("commentBox", setNewPost);
+        setCharsLeft(maxChars);
+
+    }
+
 
     return(
 
@@ -122,7 +129,7 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
                 <em className="buttonArea__charsLeft">Characters Left: {charsLeft}</em>
                 <div className="buttonArea__buttons">
                     <button className="button primary" onClick={() => addPostToList()}>Submit</button>
-                    <button className="button red">Cancel</button>
+                    <button className="button red" onClick={() => handleCancelCommentBox()}>Cancel</button>
 
                 </div>
             </div>

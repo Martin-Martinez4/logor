@@ -2,12 +2,16 @@
 
 import 'dotenv/config';
 // const signin = require('./controllers/signin');
+
+import { handleGetUserInfo } from './controllers/getUserInfo.js';
 import {handleSignin} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 import { handleGetComments } from './controllers/getOwnPosts.js';
 import { handleCreatePost } from './controllers/createPost.js';
 import { handleSlateForDeletion, handleUpdatePost } from './controllers/updatePost.js';
 import { handleGetSinglePost } from './controllers/getSinlgePost.js';
+
+import { handleGetCommentsByTag, handleGetCommentsByUser } from './controllers/getOtherPosts.js';
 // const express = require('express');
 import express from 'express';
 const app = express();
@@ -60,6 +64,12 @@ app.post("/signin", (req, res) => {
 
 });
 
+app.get("/usersInfo/:id", (req, res) => {
+
+  handleGetUserInfo(req, res, db)
+  
+})
+
 app.get('/home/:id', (req, res) => {
 
   handleGetComments(req,res,db)
@@ -69,6 +79,18 @@ app.get('/home/:id', (req, res) => {
 app.get('/post/:id', (req, res) => {
 
   handleGetSinglePost(req,res,db)
+
+})
+
+app.get("/tag/:id", (req, res) => {
+
+  handleGetCommentsByTag(req, res, db);
+  
+})
+
+app.get("/users/:id", (req, res) => {
+
+  handleGetCommentsByUser(req, res, db);
 
 })
 
@@ -91,6 +113,7 @@ app.post("/home/update/:comment_id", (req, res) => {
   handleUpdatePost(req, res, db)
 
 })
+
 
 app.post('/register', (req, res) => { handleRegister(req, res, db ) })
 

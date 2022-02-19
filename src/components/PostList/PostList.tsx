@@ -63,6 +63,7 @@ const PostList: FC = () => {
 
         return posts
     }
+    
     useEffect(() => {
 
         fetch(`http://localhost:3001/home/${id}`, {
