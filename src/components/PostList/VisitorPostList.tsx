@@ -44,7 +44,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
  
         //  console.log(commentsArray)
  
-         for(let i = 0; i < commentsArray.length -1; i++ ){
+         for(let i = 0; i < commentsArray.length; i++ ){
  
              let loggedInComments = commentsArray[i] 
 
@@ -69,13 +69,26 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
      useEffect(() => {
 
-        
-        if(location.pathname.includes("/users/")){
+        if(location.pathname.includes("/users/nickname/")){
+
+            console.log("by nickname")
+
+            fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
+                method: "get",
+                headers:  {"Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(comments => {
+                console.log("comments: ",  comments)
+                setUserPosts(createPosts(comments))
+            })
+
+        }
+        else if(location.pathname.includes("/users/")){
 
             // fetch data from comments table with id after /users/
             //  SELECT * FROM comments jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
 
-            console.log("/users/")
+            // console.log("/users/")
 
             fetch(`http://localhost:3001/users/${userOrTagID}`, {
                 method: "get",
@@ -86,13 +99,40 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
                 setUserPosts(createPosts(comments))
             })
 
-            
 
-
-        }else if (location.pathname.includes("/tag/")){
+        }else if (location.pathname.includes("/name/")){
 
             // fetch data from tags table with id after /tags/
             //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
+
+            console.log("tags/name: ", userOrTagID)
+
+            fetch(`http://localhost:3001/tags/byName/${userOrTagID}`, {
+                method: "get",
+                headers:  {"Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(comments => {
+                console.log("comments tags/name: ",  comments)
+                setUserPosts(createPosts(comments))
+            })
+
+
+        
+        }else if (location.pathname.includes("/tags/id/")){
+
+            // fetch data from tags table with id after /tags/
+            //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
+
+            console.log("/tags/id")
+
+            fetch(`http://localhost:3001/tags/${userOrTagID}`, {
+                method: "get",
+                headers:  {"Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(comments => {
+                console.log("comments: ",  comments)
+                setUserPosts(createPosts(comments))
+            })
 
 
         }

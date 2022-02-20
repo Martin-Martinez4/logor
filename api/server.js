@@ -3,15 +3,16 @@
 import 'dotenv/config';
 // const signin = require('./controllers/signin');
 
-import { handleGetUserInfo } from './controllers/getUserInfo.js';
+import { handleGetUserInfo, handleGetUserInfoByNickname } from './controllers/getUserInfo.js';
+import { handleGetTagID, handleGetUserID } from './controllers/getIDs.js';
 import {handleSignin} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 import { handleGetComments } from './controllers/getOwnPosts.js';
 import { handleCreatePost } from './controllers/createPost.js';
-import { handleSlateForDeletion, handleUpdatePost } from './controllers/updatePost.js';
+import { handleSlateForDeletion, handleUpdatePost} from './controllers/updatePost.js';
 import { handleGetSinglePost } from './controllers/getSinlgePost.js';
 
-import { handleGetCommentsByTag, handleGetCommentsByUser } from './controllers/getOtherPosts.js';
+import { handleGetCommentsByUserNickname, handleGetCommentsByUserID, handleGetCommentsByTag, handleGetTagByName } from './controllers/getOtherPosts.js';
 // const express = require('express');
 import express from 'express';
 const app = express();
@@ -64,11 +65,30 @@ app.post("/signin", (req, res) => {
 
 });
 
+app.get("/tagID/:name", (req, res) => {
+
+  handleGetTagID(req, res, db);
+})
+
+app.get("/tags/byName/:name", (req, res) => {
+
+  handleGetTagByName(req, res, db);
+})
+
+
+
+app.get("/userID/:nickname", (req, res) => {
+
+  handleGetUserID(req, res, db);
+})
+
 app.get("/usersInfo/:id", (req, res) => {
 
   handleGetUserInfo(req, res, db)
   
 })
+
+
 
 app.get('/home/:id', (req, res) => {
 
@@ -82,7 +102,7 @@ app.get('/post/:id', (req, res) => {
 
 })
 
-app.get("/tag/:id", (req, res) => {
+app.get("/tags/:id", (req, res) => {
 
   handleGetCommentsByTag(req, res, db);
   
@@ -90,7 +110,19 @@ app.get("/tag/:id", (req, res) => {
 
 app.get("/users/:id", (req, res) => {
 
-  handleGetCommentsByUser(req, res, db);
+  handleGetCommentsByUserID(req, res, db);
+
+})
+
+app.get("/users/byNickname/:nickname", (req, res) => {
+
+  handleGetCommentsByUserNickname(req, res, db);
+
+})
+
+app.get("/usersInfo/byNickname/:nickname", (req, res) => {
+
+  handleGetUserInfoByNickname(req, res, db);
 
 })
 

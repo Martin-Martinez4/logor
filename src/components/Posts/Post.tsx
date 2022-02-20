@@ -25,6 +25,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         status: status
     });
 
+
     const [charsLeft, setCharsLeft] = useState(maxChars - postInformation.text_content.length);
 
 
@@ -42,7 +43,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
             text_string = "";
         }
 
-        console.log("triuggered")
+        // console.log("triuggered")
 
         //eslint-disable-next-line
         const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
@@ -66,13 +67,13 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         if(tempPrevIndex !== text_string.length){
 
-            console.log("last index:",  tempPrevIndex)
+            // console.log("last index:",  tempPrevIndex)
 
             
             tempArray.push([text_string.substring(tempPrevIndex, text_string.length)])
         }
 
-        console.log(tempArray)
+        // console.log(tempArray)
 
         return tempArray;
     }
@@ -83,25 +84,28 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         //eslint-disable-next-line
         const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
-
+        
         for(let i = 0; i < treatedArray.length; i++){
+
 
             if(pattern.test(treatedArray[i][0])){
 
-                if(treatedArray[i][0].startsWith("@")){
+                if(treatedArray[i][0].startsWith("#")){
 
-                    console.log("tag: ", treatedArray[i][0]);
+                    linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
+                    
                 }
-                else if (treatedArray[i][0].startsWith("#")){
-
+                else if (treatedArray[i][0].startsWith("@")){
+                    
                     console.log("hash: ", treatedArray[i][0]);
+                    linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
                 }
                 else{
 
                     console.log("link: ", treatedArray[i][0]);
                 }
+
                 
-                linkTagsAdded.push(<a href="/user">{treatedArray[i]}</a>)
             }
             else if(treatedArray[i][0][0] === undefined){
 
@@ -117,6 +121,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         // console.log("linkTagsAdded: ",linkTagsAdded)
 
         return linkTagsAdded;
+
 
 
     }
@@ -360,7 +365,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                                 </span>
                             </span>
                         </div>
-                            <em>@{nickname}</em>
+                            <em>{nickname}</em>
                             <span className="user_info__pipe on_Gthan750px"> | </span>
                             <em className="datePosted on_Gthan750px"> {formatDateAgo(new Date(new Date(date_posted).toUTCString()).getTime())}</em>
                             

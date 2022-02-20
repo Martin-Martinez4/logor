@@ -48,7 +48,7 @@ function createUsers(number){
         currentUserName = faker.internet.userName();
 
 
-        tempUser = `\n( '${currentUserUUID}', '${currentUserName}',  '${currentUserNickName}', '../../users/default/Monkey_2.svg')${i === number-1? ';':','}`;
+        tempUser = `\n( '${currentUserUUID}', '${currentUserName}',  '@${currentUserNickName}', '../../users/default/Monkey_2.svg')${i === number-1? ';':','}`;
         tempLogin = `\n('${currentUserName}', 'password', '${currentUserUUID}')${i === number-1? ';':','}`;
 
         // user_headers( description, header_img_url, location, links, joined_date, user_id) 

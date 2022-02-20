@@ -14,3 +14,21 @@ export const handleGetUserInfo = (req, res , db) => {
 
 
 }
+
+export const handleGetUserInfoByNickname = (req, res , db) => {
+
+    const { nickname } = req.params;
+
+    const tagNickanme = '@'+nickname
+
+    db.select("*").from('users')
+    .join('user_headers', 'users.id', 'user_headers.user_id')
+    .where("users.nickname", "=", `${tagNickanme}`)
+    .then((user) => {
+        
+        res.json(user)
+    })
+    .catch(err => console.log(err))
+
+
+}

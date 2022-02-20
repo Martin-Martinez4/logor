@@ -1,20 +1,23 @@
 
 import React, { FC, useContext, useEffect, useState } from "react";
+
+import { useLocation } from "react-router-dom";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
 
 import { UserInfoContext } from "../userContext/userContext";
-import TestData from "../../tempStaticData/testData.json";
 
 
 // import ProfileImage from "../../assets/Monkey_1.svg";
 import LocationIcon from "../../assets/LocationIcon.svg"
 import LinkIcon from "../../assets/LinkIcon.svg"
 import CalenderIcon from "../../assets/CalenderIcon.svg"
-import { userInfo } from "os";
 
 
 const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
+
+    const location = useLocation();
+
     
      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
@@ -34,26 +37,58 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
 
     useEffect(() => {
 
-        fetch(`http://localhost:3001/usersInfo/${userOrTagID}`, {
-            method: "get",
-            headers: { "Content-Type": "application/json"},
-        }).then(response => response.json())
-        .then(userInfo => {
+        if(location.pathname.includes("/users/nickname/")){
 
-            console.log("userIfno", userInfo[0])
-         
-            setVisiteeUser((prev) => 
-                    ({...prev, 
-                    username:userInfo[0].username,
-                    nickname:userInfo[0].nickname,
-                    profile_pic_url:userInfo[0].profile_pic_url,
-                    header_img_url:userInfo[0].header_img_url,
-                    joined_date:userInfo[0].joined_date,
-                    description:userInfo[0].description,
-                    location:userInfo[0].location,
-                    links:userInfo[0].links
-            }))
-        })
+            console.log("header by nickname")
+
+            console.log("header", userOrTagID)
+
+            fetch(`http://localhost:3001/usersInfo/byNickname/${userOrTagID}`, {
+                method: "get",
+                headers: { "Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(userInfo => {
+    
+                console.log("userIfno", userInfo[0])
+             
+                setVisiteeUser((prev) => 
+                        ({...prev, 
+                        username:userInfo[0].username,
+                        nickname:userInfo[0].nickname,
+                        profile_pic_url:userInfo[0].profile_pic_url,
+                        header_img_url:userInfo[0].header_img_url,
+                        joined_date:userInfo[0].joined_date,
+                        description:userInfo[0].description,
+                        location:userInfo[0].location,
+                        links:userInfo[0].links
+                }))
+            })
+
+        }
+        else{
+
+            fetch(`http://localhost:3001/usersInfo/${userOrTagID}`, {
+                method: "get",
+                headers: { "Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(userInfo => {
+    
+                console.log("userIfno", userInfo[0])
+             
+                setVisiteeUser((prev) => 
+                        ({...prev, 
+                        username:userInfo[0].username,
+                        nickname:userInfo[0].nickname,
+                        profile_pic_url:userInfo[0].profile_pic_url,
+                        header_img_url:userInfo[0].header_img_url,
+                        joined_date:userInfo[0].joined_date,
+                        description:userInfo[0].description,
+                        location:userInfo[0].location,
+                        links:userInfo[0].links
+                }))
+            })
+        }
+
 
     },[])
 

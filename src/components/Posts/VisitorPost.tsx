@@ -84,20 +84,21 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
             if(pattern.test(treatedArray[i][0])){
 
-                if(treatedArray[i][0].startsWith("@")){
+                if(treatedArray[i][0].startsWith("#")){
 
-                    // console.log("tag: ", treatedArray[i][0]);
+                    linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
+                    
                 }
-                else if (treatedArray[i][0].startsWith("#")){
-
-                    // console.log("hash: ", treatedArray[i][0]);
+                else if (treatedArray[i][0].startsWith("@")){
+                    
+                    console.log("hash: ", treatedArray[i][0]);
+                    linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
                 }
                 else{
 
-                    // console.log("link: ", treatedArray[i][0]);
+                    console.log("link: ", treatedArray[i][0]);
                 }
-                
-                linkTagsAdded.push(<a href="/user">{treatedArray[i]}</a>)
+
             }
             else if(treatedArray[i][0][0] === undefined){
 
@@ -165,18 +166,18 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     }
 
-    const toggleEditMode = () => {
+    // const toggleEditMode = () => {
         
 
-        let tempVisible:boolean = !(editMode.visible);
+    //     let tempVisible:boolean = !(editMode.visible);
 
-        setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
+    //     setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
 
-        if(deleteConfirmationVisible){
+    //     if(deleteConfirmationVisible){
 
-            setDeleteConfirmationVisible(false);
-        }
-    }
+    //         setDeleteConfirmationVisible(false);
+    //     }
+    // }
         
     useEffect(() => {
 
@@ -210,36 +211,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     }, [dropdownVisible, deleteConfirmationVisible, editMode, status,  cancelButton, dropdownContainer]);
 
-    const handleDelete = (e) => {
-
-        e.preventDefault();
-
-        fetch(`http://localhost:3001/home/delete/${uuid}`, {
     
-            method: "post",
-            headers: { "Content-Type": "application/json"},
-
-        })
-        .then(res => res.json()
-        )
-        .then( (comment) => {
-
-            // setUser(user => ({ ...user, [pictureType]:src }))
-            console.log("comment", comment["status"])
-            setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
-        })
-        .catch(console.log)
-
-
-
-
-
-    }
-
-    
-
-   
-
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -254,55 +226,8 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
         e.preventDefault()
     }
 
-    // Have not handled rerneder after editing because I wnat to make the post component do the rendering after an edit or "delete" as opposed to the postlist to avoid unneeded rerendering
-    // Editing works just have to reload to see changes
-    const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-        e.preventDefault();
-
-        console.log(editMode.textContent)
-
-        fetch(`http://localhost:3001/home/update/${uuid}`, {
-    
-            method: "post",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({
-                text_content: editMode.textContent
-            })
-
-        })
-        .then(res => res.json()
-        )
-        .then( (comment) => {
-
-            // setUser(user => ({ ...user, [pictureType]:src }))
-            console.log("edit comment", comment["status"], " ", comment["text_content"])
-            setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
-        })
-        .catch(console.log)
-
-        toggleEditMode()
-
-        
-        // setUserPosts(editedUsers)
-
-        
-    }
-
-    // s==============================
-
-    const exitEditMode = (e) => {
-
-        toggleEditMode();
-
-        setEdiMode(prev => ({ ...prev, "textContent": `${postInformation.text_content}` }))
-
-        setCharsLeft(maxChars- postInformation.text_content.length);
-
-        e.preventDefault()
 
 
-    }
 
     let treatedText = addLinkTags(getTags(postInformation.text_content))
 
@@ -352,12 +277,12 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
                             <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
 
                                 <p>Embed</p>
-                                <p onClick={toggleEditMode}>Edit</p>
-                                <p onClick={toggleDeleteConfirmationVisible}>Delete</p>
+                                <p>Other Option</p>
+                          
                             </span>
                         </span>
                     </div>
-                        <em>@{nickname}</em>
+                        <em>{nickname}</em>
                         <span className="user_info__pipe on_Gthan750px"> | </span>
                         <em className="datePosted on_Gthan750px"> {formatDateAgo(new Date(new Date(date_posted).toUTCString()).getTime())}</em>
                         
@@ -367,39 +292,15 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
             </div>
                <div>
 
-                    {editMode.visible? 
-                        (
-                            <div>
-                                <textarea id="commentBox" name="textContent" value={editMode.textContent} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={maxChars} cols={92} rows={10}></textarea>
-
-                                <div className="commentBox__buttonArea">
-                                    
-                                    <em className="buttonArea__charsLeft">Characters Left: {charsLeft}</em>
-                                    <div className="buttonArea__buttons">
-                                        <button className="button primary" onClick={handleEdit}>Submit</button>
-                                        <button className="button red" onClick={exitEditMode} >Cancel</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        ) 
-                        :
+                
                         <p className="post_body_text">
 
-                       {/* {addLinkTags(getTags(postInformation.text_content))} */}
-                       {treatedText}
+                            {treatedText}
                         </p>
-                        }
+                        
                 </div>
 
-                <span className={`dropdown ${deleteConfirmationVisible?"visible":"invisible"}`} >
-                    <p>Are you sure you want to delete this post</p>
-                    <div>
-                        <button className="button red" onClick={toggleDeleteConfirmationVisible} ref={cancelButton}>No</button>
-                        <button className="button primary" onClick={handleDelete} >Yes</button>
-
-                    </div>
-                </span>
+             
 
                 <div className="post__bottomArea">
                     {
@@ -427,8 +328,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
                 <div className="dot"></div>
                 <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
                     <p>Embed</p>
-                    <p onClick={toggleEditMode}>Edit</p>
-                    <p onClick={toggleDeleteConfirmationVisible}>Delete</p>
+                 
                 </span>
             </span> 
             </>

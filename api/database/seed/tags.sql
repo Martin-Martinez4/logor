@@ -1,15 +1,15 @@
 BEGIN TRANSACTION;
  INSERT INTO tags( tag_id, tag_name)
 VALUES
-('849998ef-e4b6-48ce-aa0d-7bbef2ee1995', '#e-markets'), 
-('c01508c9-252d-4953-a935-fa5f7466cb0c', '#portals'), 
-('a4f36008-0b8d-4414-90b3-d8220f3b43d3', '#e-markets'), 
-('9b7cf595-3813-4ba9-a167-3b3354775fa2', '#e-business'), 
-('1c121e50-ed98-49e7-b99e-ba2e96f708a5', '#initiatives'), 
-('ced10421-7b4f-417e-a3d3-2fbf55480edc', '#relationships'), 
-('96a73ab0-bd81-43f6-aee1-1e8d95775937', '#mindshare'), 
-('b34e208f-9ff2-433a-b50a-7c651f498282', '#markets'), 
-('375d0b76-a0ec-40a4-8b4d-055896f65b39', '#paradigms'), 
-('6225beb0-89ae-4702-8b90-af9692454bf3', '#users'); 
+('c1f563d5-7617-4343-9608-d2797bbb766c', '#solutions'), 
+('a23db5f6-3ad4-41cb-8416-9c5e7f3f57ea', '#portals'), 
+('1747c32d-c94c-4f3c-90dd-ebd2f3a09a41', '#models'), 
+('1a349a50-18cd-4678-b05a-a5d7524a6aa5', '#action-items'), 
+('fc083dc1-f6d0-4d65-b17a-f1be495c972f', '#users'), 
+('2b9daab0-3002-498b-bf0b-346a62455403', '#supply-chains'), 
+('c9907519-6b84-4082-bc34-2310b149b5bc', '#portals'), 
+('5ea94eb7-321f-49af-a998-cddb51d8d713', '#ROI'), 
+('de0bc111-ecd8-4323-9dfb-91a2626153b7', '#e-markets'), 
+('4029ed71-4527-4261-a942-3ea3ff654d37', '#synergies'); 
 
  COMMIT;

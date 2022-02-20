@@ -15,7 +15,7 @@ import Landingpage from './components/Pages/Landingpage';
 import Register from './components/Register/Register';
 import SuccessPage from './components/SuccessPage/SuccessPage';
 import VisitorPage from './components/VisitorPage/VisitorPage';
-import Test from './components/TestPage/TestPage';
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 function RequireAuth({ children, redirectTo }) {
   let isAuthenticated = useAuth();
@@ -72,9 +72,11 @@ function App() {
         
         <Route path="/users/:id" element={<VisitorPage/>} />
         <Route path="/tags/:id" element={<VisitorPage/>} />
+        <Route path="/tags/name/:id" element={<VisitorPage/>} />
+        <Route path="/users/nickname/:id" element={<VisitorPage/>} />
 
-          <Route path="/test" element={<VisitorPage/>}/>
-        {/* <Route path="*" element={<Homepage/>} /> */}
+        {/* <Route path="/test" element={<VisitorPage/>}/> */}
+        <Route path="*" element={<PageNotFound />} />
       </ Routes>
 
     </div>

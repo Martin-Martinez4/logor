@@ -43,7 +43,7 @@ const PostList: FC = () => {
 
         // console.log(commentsArray)
 
-        for(let i = 0; i < commentsArray.length -1; i++ ){
+        for(let i = 0; i < commentsArray.length; i++ ){
 
             let loggedInComments = commentsArray[i] 
             

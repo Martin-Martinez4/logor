@@ -46,6 +46,17 @@
     height:80vh;
 }
 
+.card.coverPage{
+    width: 100vw;
+    height: 100vh;
+}
+
+.card.CenterText{
+
+    text-align: center;
+    
+}
+
 @media screen and (max-width: 991.98px) {
     
     .card.register_card{
