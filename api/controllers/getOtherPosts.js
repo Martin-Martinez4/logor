@@ -17,6 +17,11 @@ export const handleGetCommentsByUserID = (req, res, db) => {
             // console.log(comments);
             res.json(comments);
         })
+        .catch(err => {
+            // console.log(err)
+            res.json([])
+        });
+
 
 }
 
@@ -24,16 +29,21 @@ export const handleGetCommentsByUserNickname = (req, res, db) => {
 
     const { nickname } = req.params
 
-    const tagNickanme = '@'+nickname
+    const tagNickname = '@'+nickname
+
+    console.log(tagNickname)
 
     db.select('*').from('users')
     .join('comments', 'comments.user_id', 'users.id')
-        .where('users.nickname', '=', `${tagNickanme}`)
+        .where('users.nickname', '=', `${tagNickname}`)
         .orderBy('created_at', 'DESC')
         .then((comments) => {
 
+            console.log(comments)
+
             res.json(comments);
         })
+        .catch(err => console.log(err));
 
 }
 
@@ -52,6 +62,7 @@ export const handleGetCommentsByTag = (req, res, db) => {
 
         res.json(data);
     })
+    .catch(err => console.log(err));
 
 }
 
@@ -74,6 +85,7 @@ export const handleGetTagByName = (req, res, db) => {
         // console.log(data)
         res.json(data);
     })
+    .catch(err => console.log(err));
 }
 
 

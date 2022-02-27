@@ -62,6 +62,12 @@
 
 }
 
+@media screen and (max-width: 320px){
+  :root{
+    line-height: normal;
+  }
+}
+
 @font-face {
   font-family: 'Lato';
   src: url('./assets/lato-v20-latin-regular.woff2') format('woff2'),
@@ -72,6 +78,7 @@ body, html {
   overflow-x: hidden; 
   overflow-y: hidden;
   font-family: 'Lato-Regular', sans-serif;
+  box-sizing: border-box;
   /* background-color: var(--UIGrey3); */
 }
 body, html { 
@@ -99,6 +106,8 @@ body, html {
 h1{
   font-size: var(--HeaderH1);
 }
+
+
 h2{
   font-size: var(--HeaderH2);
 }
@@ -208,6 +217,8 @@ h5{
   }
 
 }
+
+
 
 button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
 

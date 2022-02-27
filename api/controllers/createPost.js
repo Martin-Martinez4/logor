@@ -36,6 +36,7 @@ export const handleCreatePost = (req, res, db) => {
                 })
                 .catch((err) => console.log(err))
         })
+        .catch(err => console.log(err));
 
 
 

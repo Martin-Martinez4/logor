@@ -31,9 +31,9 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     useEffect(() => {
 
-        treatedText = addLinkTags(getTags(postInformation.text_content))
+        treatedText = addLinkTags(getTagsAtsLinks(postInformation.text_content))
 
-        console.log("treated" ,treatedText)
+        // console.log("treated" ,treatedText)
     }, [postInformation.status, postInformation.text_content])
 
 
@@ -46,7 +46,89 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         // console.log("triuggered")
 
         //eslint-disable-next-line
-        const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
+        const pattern = /(#)[a-zA-Z]{1}[\-a-zA-Z0-9]{1,14}/g;
+
+        let match;
+
+        let tempArray = [];
+
+        // let startOfText = true;
+
+        let tempPrevIndex;
+
+        while(match = pattern.exec(text_string)){
+
+            // tempArray.push([text_string.substring(tempPrevIndex, match.index)])
+            tempArray.push([text_string.substring(match.index, pattern.lastIndex)])
+
+            tempPrevIndex = pattern.lastIndex;
+
+        }
+
+        // if(tempPrevIndex !== text_string.length){
+
+        //     // console.log("last index:",  tempPrevIndex)
+
+            
+        //     tempArray.push([text_string.substring(tempPrevIndex, text_string.length)])
+        // }
+
+        // console.log(tempArray)
+
+        return tempArray;
+    }
+
+    const getMentions = (text_string) => {
+
+        if(text_string === null || text_string === undefined){
+            text_string = "";
+        }
+
+        // console.log("triuggered")
+
+        //eslint-disable-next-line
+        const pattern = /(@)[a-zA-Z]{1}[\-a-zA-Z0-9]{1,}/g;
+
+        let match;
+
+        let tempArray = [];
+
+        // let startOfText = true;
+
+        let tempPrevIndex;
+
+        while(match = pattern.exec(text_string)){
+
+            // tempArray.push([text_string.substring(tempPrevIndex, match.index)])
+            tempArray.push([text_string.substring(match.index, pattern.lastIndex)])
+
+            tempPrevIndex = pattern.lastIndex;
+
+        }
+
+        // if(tempPrevIndex !== text_string.length){
+
+        //     // console.log("last index:",  tempPrevIndex)
+
+            
+        //     tempArray.push([text_string.substring(tempPrevIndex, text_string.length)])
+        // }
+
+        // console.log(tempArray)
+
+        return tempArray;
+    }
+
+    const getTagsAtsLinks = (text_string) => {
+
+        if(text_string === null || text_string === undefined){
+            text_string = "";
+        }
+
+        // console.log("triuggered")
+
+        //eslint-disable-next-line
+        const pattern = /(#|@)[a-zA-Z]{1}[\-a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
 
         let match;
 
@@ -83,7 +165,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         let linkTagsAdded = [];
 
         //eslint-disable-next-line
-        const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
+        const pattern = /(#|@)[a-zA-Z]{1}[\-a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
         
         for(let i = 0; i < treatedArray.length; i++){
 
@@ -98,11 +180,13 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                 else if (treatedArray[i][0].startsWith("@")){
                     
                     console.log("hash: ", treatedArray[i][0]);
-                    linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
+                    linkTagsAdded.push(<a href={`/users/nickname/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
                 }
                 else{
 
                     console.log("link: ", treatedArray[i][0]);
+                    // need to check for https:// at the begining or else ad it 
+                    linkTagsAdded.push(<a target="_blank" href={`${treatedArray[i][0]}`}>{treatedArray[i]}</a>)
                 }
 
                 
@@ -234,14 +318,10 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         .then( (comment) => {
 
             // setUser(user => ({ ...user, [pictureType]:src }))
-            console.log("comment", comment["status"])
+            // console.log("comment", comment["status"])
             setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
         })
         .catch(console.log)
-
-
-
-
 
     }
 
@@ -263,13 +343,156 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         e.preventDefault()
     }
 
-    // Have not handled rerneder after editing because I wnat to make the post component do the rendering after an edit or "delete" as opposed to the postlist to avoid unneeded rerendering
-    // Editing works just have to reload to see changes
-    const handleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fetchTagNameByComment = async (comment_id) => {
+        const test = await fetch(`http://localhost:3001/tags/byName/comment/${comment_id}`, {
+    
+            method: "get",
+            headers: { "Content-Type": "application/json"},
+
+        })
+        .then(data =>  {
+            
+            return data.json()
+        });
+
+        return test
+       
+    }
+
+    const fetchMentionsByComment = async (comment_id) => {
+        const test = await fetch(`http://localhost:3001/mentions/byName/comment/${comment_id}`, {
+    
+            method: "get",
+            headers: { "Content-Type": "application/json"},
+
+        })
+        .then(data =>  {
+            
+            return data.json()
+        });
+
+        return test
+       
+    }
+ 
+
+    const insertTagIfNotExist = async (tagname) => {
+
+
+            await fetch('http://localhost:3001/create/tag/', {
+    
+                method: "post",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify({
+                    tag_name: tagname, 
+                   
+                })
+    
+            })
+            
+
+        return "Done"
+
+    }
+
+
+    // Need To Change !!!!!!!!!!!!!!!!!
+    
+    const insertTagCommentRelation  = async (tagName) => {
+
+
+            await fetch('http://localhost:3001/comment/addTag/', {
+    
+                method: "post",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify({
+                    tag_name: tagName,
+                    comment_id: uuid
+                   
+                })
+    
+            })
+            .then((response) => response.json())
+
+            // Add tag_id, comment_id pair to tag_comment
+            
+        return "Done"
+
+    }
+
+    
+     // Need To Change !!!!!!!!!!!!!!!!!
+    const insertMentionRelation  = async (mentioned_nickname) => {
+
+
+            await fetch('http://localhost:3001/comment/addMention/', {
+    
+                method: "post",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify({
+                    nickname: mentioned_nickname,
+                    comment_id: uuid
+                   
+                })
+    
+            })
+            .then((response) => response.json())
+
+            // Add tag_id, comment_id pair to tag_comment
+            
+        return "Done"
+
+    }
+
+    const deleteTagCommentRelation  = async (tagName) => {
+
+        await fetch('http://localhost:3001/comment/deleteTag/', {
+
+            method: "delete",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({
+                tag_name: tagName,
+                comment_id: uuid
+                
+            })
+
+        })
+        .then((response) => response.json())
+        
+
+        return "Done"
+            
+    }
+
+    // Need To Change !!!!!!!!!!!!!!!!!
+    const deleteMentionRelation  = async (mentioned_nickname) => {
+
+        await fetch('http://localhost:3001/comment/deleteMention/', {
+
+            method: "delete",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({
+                nickname: mentioned_nickname,
+                comment_id: uuid
+                
+            })
+
+        })
+        .then((response) => response.json())
+        
+
+        return "Done"
+            
+    }
+    
+    
+    const handleEdit = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
         e.preventDefault();
 
-        console.log(editMode.textContent)
+        toggleEditMode()
+
+        // console.log(editMode.textContent)
 
         fetch(`http://localhost:3001/home/update/${uuid}`, {
     
@@ -285,20 +508,94 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         .then( (comment) => {
 
             // setUser(user => ({ ...user, [pictureType]:src }))
-            console.log("edit comment", comment["status"], " ", comment["text_content"])
+            // console.log("edit comment", comment["status"], " ", comment["text_content"])
             setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
         })
         .catch(console.log)
 
-        toggleEditMode()
+        // getTagsAtsLinks(postInformation.tex_content)
+
+        let oldTagsNameObject = await fetchTagNameByComment(uuid)
+        let oldMentionsNameObject = await fetchMentionsByComment(uuid)
+        console.log("olTags: ", oldTagsNameObject)
+        console.log("olMentions: ", oldMentionsNameObject)
+
+        let oldTags = oldTagsNameObject.map((object) => {
+
+            return object.tag_name
+
+        })
+
+
+        let oldMentions = oldMentionsNameObject.map((object) => {
+
+            return object.nickname
+
+        })
+
+        console.log("oldTags: ", oldTags)
+        console.log("oldMentions: ",oldMentions)
+
+
+        let newTagsArrays = await getTags(editMode.textContent)
+        let newMentionsArrays = await getMentions(editMode.textContent)
+        
+        let newTags = newTagsArrays.map((array) => {
+
+            return array[0]
+        })
+
+        let newMentions = newMentionsArrays.map((array) => {
+
+            return array[0]
+        })
+        console.log("newTags: ", newTags)
+        console.log("newMentions: ", newMentions)
+        // Loop through array and if starts  with # insert
+
+
+
+        const tagsToDelete =  oldTags.filter(tag => !newTags.includes(tag))
+        const tagsToAdd =  newTags.filter(tag => !oldTags.includes(tag))
+
+        const mentionsToDelete =  oldMentions.filter(mention => !newMentions.includes(mention))
+        const mentionsToAdd =  newMentions.filter(mention => !oldMentions.includes(mention))
+
+        console.log("toAdd: ", tagsToAdd, " toDelete: ", tagsToDelete)
+
+        for(let i = 0; i < tagsToAdd.length ; i++){
+
+            console.log("tagsToAdd[i]: ", tagsToAdd[i])
+
+            await insertTagIfNotExist(tagsToAdd[i]);
+            await insertTagCommentRelation(tagsToAdd[i]);
+        }
+
+        for(let j = 0; j < tagsToDelete.length ; j++){
+
+            console.log("test:", tagsToDelete[j])
+
+            await deleteTagCommentRelation(tagsToDelete[j])
+        }
+
+        for(let i = 0; i < mentionsToAdd.length ; i++){
+
+            console.log("mentionsToAdd[i]: ", mentionsToAdd[i])
+
+            await insertMentionRelation(mentionsToAdd[i]);
+        }
+
+        for(let j = 0; j < mentionsToDelete.length ; j++){
+
+            console.log("mentionsToDelete[j]:", mentionsToDelete[j])
+
+            await deleteMentionRelation(mentionsToDelete[j])
+        }
+
 
         
-        // setUserPosts(editedUsers)
-
         
     }
-
-    // s==============================
 
     const exitEditMode = (e) => {
 
@@ -313,7 +610,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }
 
-    let treatedText = addLinkTags(getTags(postInformation.text_content))
+    let treatedText = addLinkTags(getTagsAtsLinks(postInformation.text_content))
 
  
 
@@ -336,12 +633,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                 status[0] === "Deleted"
                 ?
                 <>
-                {console.log(status[0])}
+                {/* {console.log(status[0])} */}
                 <p className="post_body_text">This Post was Deleted by the user</p>
                 </> 
                 :
                 <>
-                {console.log(status[0])}
+                {/* {console.log(status[0])} */}
                 <div className="post user_image">
                     <img src={user_profile} alt="profile" className="post_user_image "></img>
                    

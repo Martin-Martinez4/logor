@@ -9,5 +9,6 @@ export const handleGetSinglePost = (req, res, db) => {
 
         res.json(data);
     })
+    .catch(err => console.log(err));
 
 }

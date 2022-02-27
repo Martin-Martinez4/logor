@@ -144,7 +144,7 @@ const Register:FC = ({ loadUser }) => {
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify({
                     username: username, 
-                    nickname: nickname, 
+                    nickname: '@'+nickname, 
                     profile_pic_url: profile_pic_url, 
                     description: description, 
                     header_img_url: header_img_url, 
@@ -186,6 +186,8 @@ const Register:FC = ({ loadUser }) => {
 
             console.log("validation Error");
         }
+
+        navigate(`/home/${user.id}`);
 
 
 

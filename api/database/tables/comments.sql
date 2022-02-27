@@ -14,7 +14,7 @@ CREATE TABLE comments(
 
 CREATE TABLE tags(
     tag_id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    tag_name VARCHAR(30),
+    tag_name VARCHAR(30) UNIQUE,
     PRIMARY KEY (tag_id)
 );
 
@@ -34,6 +34,17 @@ CREATE TABLE user_likes(
     FOREIGN KEY (user_id) REFERENCES users(id),
     comment_id UUID NOT NULL,
     FOREIGN KEY (comment_id) REFERENCES comments(comment_id),
+    PRIMARY KEY (user_id, comment_id)
+);
+
+CREATE TABLE mentions(
+
+    user_id UUID NOT NUll,
+    FOREIGN Key (user_id) REFERENCES users(id),
+
+    comment_id UUID NOT NULL,
+    FOREIGN KEY (comment_id) REFERENCES comments(comment_id),
+
     PRIMARY KEY (user_id, comment_id)
 );
 

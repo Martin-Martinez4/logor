@@ -87,6 +87,7 @@ export const handleSlateForDeletion = (req, res, db) => {
         .then(trx.commit)
         .catch(trx.rollback)
     })
+    .catch(err => console.log(err));
 
 
 }

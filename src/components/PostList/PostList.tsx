@@ -14,7 +14,6 @@ import CommentBox from "../CommentBox/CommentBox";
 
 import { UserInfoContext } from "../userContext/userContext";
 
-import sortedComments from "../../tempStaticData/sortedComments.json";
 
 
 import "./postlist.css"

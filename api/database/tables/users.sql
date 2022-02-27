@@ -43,6 +43,7 @@ CREATE TABLE follower_followee(
 );
 
 
+
 COMMIT;
 
 

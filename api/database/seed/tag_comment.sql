@@ -2,25 +2,19 @@ BEGIN TRANSACTION;
  INSERT INTO tag_comment( tag_id, comment_id )
 VALUES 
 
- ('fc083dc1-f6d0-4d65-b17a-f1be495c972f', '83e825de-21f8-41e8-906f-6d28faa4ca11'),
- ('1a349a50-18cd-4678-b05a-a5d7524a6aa5', '899bdfa4-d759-4abe-bc58-f4c7fb3a8103'),
  ('2b9daab0-3002-498b-bf0b-346a62455403', '4ebf596f-1c9a-49bd-bd15-a3be0bb405df'),
- ('1a349a50-18cd-4678-b05a-a5d7524a6aa5', '541398f3-e6be-43b5-9447-236b3c17a035'),
  ('a23db5f6-3ad4-41cb-8416-9c5e7f3f57ea', 'f21f83ca-fc9d-4fa3-b2ca-0b581fe0637f'),
  ('2b9daab0-3002-498b-bf0b-346a62455403', '0371fcb7-7602-49d5-9851-efe02fb2437c'),
  ('c1f563d5-7617-4343-9608-d2797bbb766c', '5905ebc5-cfe9-40fc-a3cb-a6caffbe5840'),
  ('a23db5f6-3ad4-41cb-8416-9c5e7f3f57ea', '368dc9fe-5316-43b0-8cc6-9921e32bc58c'),
- ('c9907519-6b84-4082-bc34-2310b149b5bc', '9f0d55ad-5eb2-4ba8-9eae-c5a70e68cd22'),
- ('c9907519-6b84-4082-bc34-2310b149b5bc', 'b29f6f46-54af-4231-adfd-7a4b7014777f'),
+ 
  ('a23db5f6-3ad4-41cb-8416-9c5e7f3f57ea', 'fe99b125-cf25-4185-9051-7c0c68364381'),
  ('de0bc111-ecd8-4323-9dfb-91a2626153b7', '664a8782-8ee4-4da6-a40b-7ba4a639daaf'),
  ('c1f563d5-7617-4343-9608-d2797bbb766c', '21d0b8a6-4ab5-4b41-92da-6b4ded4e9e97'),
- ('c9907519-6b84-4082-bc34-2310b149b5bc', '67745e3e-3da2-4635-8bcc-dd846f63d6da'),
  ('5ea94eb7-321f-49af-a998-cddb51d8d713', '57eeff68-33d9-453a-baec-6da40ba25328'),
  ('fc083dc1-f6d0-4d65-b17a-f1be495c972f', '457737de-063d-4cac-9588-cce881908d9d'),
  ('1747c32d-c94c-4f3c-90dd-ebd2f3a09a41', '7889df43-7c9b-4152-bd83-87eb74b33424'),
  ('a23db5f6-3ad4-41cb-8416-9c5e7f3f57ea', '0fe50338-887c-466f-829d-3da76dcac00c'),
- ('1a349a50-18cd-4678-b05a-a5d7524a6aa5', '4c9b930a-c827-4da1-8b83-c09ca1db36ec'),
  ('fc083dc1-f6d0-4d65-b17a-f1be495c972f', '1a2bb1f5-cced-47cc-b147-0c4963b530f7'),
  ('a23db5f6-3ad4-41cb-8416-9c5e7f3f57ea', '68083245-5318-4a85-bfbb-8a7c7febfec9'),
  ('5ea94eb7-321f-49af-a998-cddb51d8d713', 'fa786cf9-22ba-403e-bf64-63f5bd5a44c7');

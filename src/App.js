@@ -8,6 +8,7 @@ import {
   useLocation
 } from "react-router-dom";
 import { useContext } from 'react';
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import useAuth from "./components/useAuth/useAuth";
 import { UserInfoContext } from './components/userContext/userContext';
 import Home from './components/Pages/Home';
@@ -15,7 +16,7 @@ import Landingpage from './components/Pages/Landingpage';
 import Register from './components/Register/Register';
 import SuccessPage from './components/SuccessPage/SuccessPage';
 import VisitorPage from './components/VisitorPage/VisitorPage';
-import PageNotFound from "./components/PageNotFound/PageNotFound";
+import PageNotFound from "./components/404Page/PageNotFound";
 
 function RequireAuth({ children, redirectTo }) {
   let isAuthenticated = useAuth();
@@ -69,11 +70,15 @@ function App() {
         
         <Route path="/success" element={<SuccessPage/>} />
           
-        
-        <Route path="/users/:id" element={<VisitorPage/>} />
-        <Route path="/tags/:id" element={<VisitorPage/>} />
-        <Route path="/tags/name/:id" element={<VisitorPage/>} />
-        <Route path="/users/nickname/:id" element={<VisitorPage/>} />
+          <Route path="/users/:id" element={
+            <ErrorBoundary>
+
+              <VisitorPage/>
+            </ErrorBoundary>
+            } />
+          <Route path="/tags/:id" element={<VisitorPage/>} />
+          <Route path="/tags/name/:id" element={<VisitorPage/>} />
+          <Route path="/users/nickname/:id" element={<VisitorPage/>} />
 
         {/* <Route path="/test" element={<VisitorPage/>}/> */}
         <Route path="*" element={<PageNotFound />} />

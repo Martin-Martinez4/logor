@@ -11,6 +11,10 @@ import { handleGetComments } from './controllers/getOwnPosts.js';
 import { handleCreatePost } from './controllers/createPost.js';
 import { handleSlateForDeletion, handleUpdatePost} from './controllers/updatePost.js';
 import { handleGetSinglePost } from './controllers/getSinlgePost.js';
+import { handleGetTagNamesFromCommentID } from './controllers/getTagNames.js';
+import { handleCreateTag, handleDeleteTagToComment, handleAddTagToComment } from './controllers/addDeleteTags.js';
+import { handleAddMentionToComment, handleDeleteMentionToComment } from './controllers/addDeleteMention.js';
+import { handleGetMentionsFromCommentID } from './controllers/getMentions.js'
 
 import { handleGetCommentsByUserNickname, handleGetCommentsByUserID, handleGetCommentsByTag, handleGetTagByName } from './controllers/getOtherPosts.js';
 // const express = require('express');
@@ -70,6 +74,7 @@ app.get("/tagID/:name", (req, res) => {
   handleGetTagID(req, res, db);
 })
 
+
 app.get("/tags/byName/:name", (req, res) => {
 
   handleGetTagByName(req, res, db);
@@ -108,6 +113,18 @@ app.get("/tags/:id", (req, res) => {
   
 })
 
+app.get("/tags/byName/comment/:id", (req, res)  => {
+
+  handleGetTagNamesFromCommentID(req, res, db);
+
+})
+
+app.get("/mentions/byName/comment/:id", (req, res)  => {
+
+  handleGetMentionsFromCommentID(req, res, db);
+
+})
+
 app.get("/users/:id", (req, res) => {
 
   handleGetCommentsByUserID(req, res, db);
@@ -123,6 +140,36 @@ app.get("/users/byNickname/:nickname", (req, res) => {
 app.get("/usersInfo/byNickname/:nickname", (req, res) => {
 
   handleGetUserInfoByNickname(req, res, db);
+
+})
+
+app.post("/create/tag/", (req, res) => {
+
+  handleCreateTag(req, res, db)
+
+})
+
+app.post("/comment/addTag/", (req, res) => {
+
+  handleAddTagToComment(req, res, db)
+
+})
+
+app.delete("/comment/deleteTag/", (req, res) => {
+
+  handleDeleteTagToComment(req, res, db)
+
+})
+
+app.post("/comment/addMention/", (req, res) => {
+
+  handleAddMentionToComment(req, res, db)
+
+})
+
+app.delete("/comment/deleteMention/", (req, res) => {
+
+  handleDeleteMentionToComment(req, res, db)
 
 })
 

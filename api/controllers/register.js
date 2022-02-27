@@ -79,6 +79,7 @@ export const handleRegister = (req, res ,db) => {
         .catch(trx.rollback)
              
     })
+    .catch(err => console.log(err));
 
 }
 

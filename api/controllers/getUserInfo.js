@@ -10,7 +10,10 @@ export const handleGetUserInfo = (req, res , db) => {
         
         res.json(user)
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        console.log(err)
+        res.json([])
+    })
 
 
 }

@@ -5,12 +5,16 @@ import { Location, useLocation } from "react-router-dom";
 
 import Scroll from "../Scroll/Scroll";
 
+import UserNotFound from "../UserNotFound/UserNotFound";
+
 import Card from "../Card/Card";
 import VisitorPost from "../Posts/VisitorPost";
 import DeletedPost from "../Posts/DeletedPost";
 
 import VisitorProfileHeader from "../ProfileHeader/VisitorProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
+
+import NoPosts from "../NoPosts/NoPosts";
 
 import { UserInfoContext } from "../userContext/userContext";
 
@@ -69,38 +73,11 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
      useEffect(() => {
 
-        if(location.pathname.includes("/users/nickname/")){
+        setUserPosts(undefined)
 
-            console.log("by nickname")
-
-            fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
-                method: "get",
-                headers:  {"Content-Type": "application/json"},
-            }).then(response => response.json())
-            .then(comments => {
-                console.log("comments: ",  comments)
-                setUserPosts(createPosts(comments))
-            })
-
-        }
-        else if(location.pathname.includes("/users/")){
-
-            // fetch data from comments table with id after /users/
-            //  SELECT * FROM comments jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
-
-            // console.log("/users/")
-
-            fetch(`http://localhost:3001/users/${userOrTagID}`, {
-                method: "get",
-                headers:  {"Content-Type": "application/json"},
-            }).then(response => response.json())
-            .then(comments => {
-                console.log("comments: ",  comments)
-                setUserPosts(createPosts(comments))
-            })
-
-
-        }else if (location.pathname.includes("/name/")){
+        let isMounted = true;   
+        
+        if (location.pathname.includes("/tags/name/")){
 
             // fetch data from tags table with id after /tags/
             //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
@@ -113,12 +90,65 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
             }).then(response => response.json())
             .then(comments => {
                 console.log("comments tags/name: ",  comments)
-                setUserPosts(createPosts(comments))
+                if (isMounted){
+
+                    setUserPosts(createPosts(comments))
+                }
+            })
+        }
+
+        // if(location.pathname.includes("/users/nickname/")){
+
+        //     console.log("by nickname")
+
+        //     fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
+        //         method: "get",
+        //         headers:  {"Content-Type": "application/json"},
+        //     }).then(response => response.json())
+        //     .then(comments => {
+        //         console.log("comments: ",  comments)
+        //         if (isMounted){
+
+        //             setUserPosts(createPosts(comments))
+        //         }
+        //     })
+
+            
+
+        // }
+        else if(location.pathname.includes("/users/nickname/")){
+
+            console.log("by nickname")
+
+            fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
+                method: "get",
+                headers:  {"Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(comments => {
+             
+
+                    setUserPosts(createPosts(comments))
+            })
+        }
+        else if(location.pathname.includes("/users/")){
+
+         
+
+            fetch(`http://localhost:3001/users/${userOrTagID}`, {
+                method: "get",
+                headers:  {"Content-Type": "application/json"},
+            }).then(response => response.json())
+            .then(comments => {
+                console.log("comments: ",  comments)
+                if (isMounted){
+
+                    setUserPosts(createPosts(comments))
+                }
             })
 
 
-        
-        }else if (location.pathname.includes("/tags/id/")){
+        }
+        else if (location.pathname.includes("/tags/id/")){
 
             // fetch data from tags table with id after /tags/
             //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
@@ -131,27 +161,21 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
             }).then(response => response.json())
             .then(comments => {
                 console.log("comments: ",  comments)
-                setUserPosts(createPosts(comments))
+                if (isMounted){
+
+                    setUserPosts(createPosts(comments))
+                }
             })
 
 
         }
  
-        //  fetch(`http://localhost:3001/home/${id}`, {
-        //          method: "get",
-        //          headers: { "Content-Type": "application/json"},
-        //      }).then(response => response.json())
-        //      .then(comments => {
- 
-        //          console.log(comments)
-        //          console.log("running")
-        //          setUserPosts(createPosts(comments))
-        //      })
+        return () => { isMounted = false };
  
      }, [])
  
      
-     let posts = userPosts
+    //  let posts = userPosts
     
         return(
             
@@ -159,9 +183,9 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
                 {console.log(userOrTagID)}
             <Scroll>
 
+                {console.log("userpost: ",userPosts)}
                 {location.pathname.includes("/users/")?
-                <VisitorProfileHeader userOrTagID={userOrTagID} />:
-                ""
+                <VisitorProfileHeader userOrTagID={userOrTagID} />:""
                 }
                 
                 <Card classes="content med_suggestion">
@@ -183,7 +207,8 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
                     </div>
                 </Card>
-                {userPosts}
+                {console.log("undef: ", userPosts === undefined?"undef:":userPosts.length)}
+                {userPosts === undefined?<UserNotFound/>:userPosts.length > 0?userPosts: <NoPosts />}
                
                 {/* White  space at the end of the scroll section */}
                 <div className="empty"></div>
