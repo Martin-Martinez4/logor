@@ -13,6 +13,9 @@ export const handleGetMentionsFromCommentID = (req, res,  db) => {
         console.log(mentionsInfo)
         res.json(mentionsInfo);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err)
+        res.json("")
+    });
 }
 

@@ -97,25 +97,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
             })
         }
 
-        // if(location.pathname.includes("/users/nickname/")){
-
-        //     console.log("by nickname")
-
-        //     fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
-        //         method: "get",
-        //         headers:  {"Content-Type": "application/json"},
-        //     }).then(response => response.json())
-        //     .then(comments => {
-        //         console.log("comments: ",  comments)
-        //         if (isMounted){
-
-        //             setUserPosts(createPosts(comments))
-        //         }
-        //     })
-
-            
-
-        // }
+    
         else if(location.pathname.includes("/users/nickname/")){
 
             console.log("by nickname")
@@ -148,7 +130,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
 
         }
-        else if (location.pathname.includes("/tags/id/")){
+        else if (location.pathname.includes("/tags/")){
 
             // fetch data from tags table with id after /tags/
             //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;

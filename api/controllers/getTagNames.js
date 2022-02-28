@@ -11,5 +11,10 @@ export const handleGetTagNamesFromCommentID = (req, res,  db) => {
         console.log(tagInfo)
         res.json(tagInfo);
     })
+    .catch(err => {
+        console.log(err)
+        res.json("")
+    });
 }
+
 

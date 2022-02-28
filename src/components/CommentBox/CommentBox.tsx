@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import "./CommentBox.css";
 import Card from "../Card/Card";
+
+import { tagsMentionsCreate } from "../utils/tagMentions";
 import { UserInfoContext } from "../userContext/userContext";
 
 const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments }) => {
@@ -67,21 +69,7 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
     const addPostToList = () => {
 
-
-        // let ui_id = uuidv4();   
-
-        // const currTime = new Date().getTime()
-        
-        // const readableDate:String = (new Date(currTime).toString());
-
-        // setUserPosts(user => ( { [ui_id]: {
-        //     "date_made":`${readableDate}`,
-
-        //     "text_content":` ${newPost.commentBox}`,
-            
-        //     "like": "0",
-        //     "replies": []
-        // } , ...user}))
+        const comment_id = uuidv4();
 
         fetch(`http://localhost:3001/home/${id}`, {
 
@@ -89,12 +77,15 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({
                 user_id: id,
-                text_content: newPost.commentBox
+                text_content: newPost.commentBox,
+                newComment_id: comment_id
             })
         })
         .then((response) => {
 
-           return response.json()
+            tagsMentionsCreate(comment_id, newPost["commentBox"])
+            return response.json()
+
 
 
         }).then((comments) => {
