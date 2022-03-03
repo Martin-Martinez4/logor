@@ -151,6 +151,14 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
 
         }
+        else if (location.pathname.includes("/comment/thread/")){
+
+            // recursive fetch
+            // .then => setUserpost(createPosts(comments))
+
+            
+
+        }
  
         return () => { isMounted = false };
  

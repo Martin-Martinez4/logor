@@ -59,6 +59,13 @@
 
 }
 
+.profile_following>p{
+
+    color: var(--UIGrey)
+
+}
+
+
 .profile_description{
     margin: .5rem;
     margin-top: 1rem;
@@ -116,7 +123,20 @@
         margin-top: 0rem;
     
     }
+
+    .profile_following{
+
+        display: flex;
+        margin-top: 1.5rem;
+        
+    }
+    .profile_following>p{
+
+        margin: .25rem;
+        
+    }
     
 }
+
 
 

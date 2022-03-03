@@ -19,7 +19,7 @@ import {
     deleteMentionRelation,
     fetchForEachIndexInAnArray,
     fetchForEachIndexInAnArrayCommentID 
-} from "../utils/fetchCallsTagsMentions";
+} from "./fetchTagsMentions";
 
 export const tagsMentionsEdit = async (comment_id, new_text) => {
 

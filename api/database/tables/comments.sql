@@ -48,5 +48,14 @@ CREATE TABLE mentions(
     PRIMARY KEY (user_id, comment_id)
 );
 
+CREATE TABLE responses(
+
+    parent_id UUID,
+
+    comment_id UUID NOT NULL,
+
+    PRIMARY KEY (parent_id, comment_id)
+);
+
 
 COMMIT;

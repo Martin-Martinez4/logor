@@ -6,7 +6,7 @@ import "./ProfileHeader.css";
 
 import { UserInfoContext } from "../userContext/userContext";
 
-import formatDate, { formatDateMonthDayYear } from "../utils/formatDate";
+import { formatDateMonthDayYear } from "../utils/formatDate";
 
 
 // import ProfileImage from "../../assets/Monkey_1.svg";
@@ -55,6 +55,10 @@ const ProfileHeader:FC = () =>{
 
                     <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{formatDateMonthDayYear(loggedInUser["joined_date"])}</em></p>
 
+                </div>
+
+                <div className="profile_other profile_following">
+                    <p>Followers: <em>100</em></p> <p>Following: <em>100</em></p>
                 </div>
 
             </div>

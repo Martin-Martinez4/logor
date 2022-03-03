@@ -80,6 +80,8 @@ function App() {
           <Route path="/tags/name/:id" element={<VisitorPage/>} />
           <Route path="/users/nickname/:id" element={<VisitorPage/>} />
 
+          <Route path="/comment/thread/:id" element={<VisitorPage/>} />
+
         {/* <Route path="/test" element={<VisitorPage/>}/> */}
         <Route path="*" element={<PageNotFound />} />
       </ Routes>

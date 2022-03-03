@@ -295,6 +295,19 @@
     margin: .2rem;
 }
 
+.userNameArea{
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.datePosted{
+
+    font-size: var(--x-small);
+}
+
 @media screen and (min-width: 751px){
 
     .on_Gthan750px{
@@ -360,6 +373,11 @@
 
 @media screen and (max-width: 400px){
 
+    .userNameArea{
+
+        width: 100%;
+    }
+
     .post__bottomArea{
 
         display: block;
@@ -373,18 +391,7 @@
 
 }
 
-.userNameArea{
 
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-}
-
-.datePosted{
-
-    font-size: var(--x-small);
-}
 
 
 

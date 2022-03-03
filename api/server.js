@@ -4,19 +4,32 @@ import 'dotenv/config';
 // const signin = require('./controllers/signin');
 
 import { handleGetUserInfo, handleGetUserInfoByNickname } from './controllers/getUserInfo.js';
-import { handleGetTagID, handleGetUserID } from './controllers/getIDs.js';
+import { handleGetTagID, handleGetUserID } from './controllers/getIds/getIDs.js';
 import {handleSignin} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
-import { handleGetComments } from './controllers/getOwnPosts.js';
-import { handleCreatePost } from './controllers/createPost.js';
-import { handleSlateForDeletion, handleUpdatePost} from './controllers/updatePost.js';
-import { handleGetSinglePost } from './controllers/getSinlgePost.js';
-import { handleGetTagNamesFromCommentID } from './controllers/getTagNames.js';
-import { handleCreateTag, handleDeleteTagToComment, handleAddTagToComment } from './controllers/addDeleteTags.js';
-import { handleAddMentionToComment, handleDeleteMentionToComment } from './controllers/addDeleteMention.js';
-import { handleGetMentionsFromCommentID } from './controllers/getMentions.js'
+import { handleGetComments } from './controllers/getPosts/getOwnPosts.js';
+import { handleCreatePost } from './controllers/post/createPost.js';
+import { handleSlateForDeletion, handleUpdatePost} from './controllers/post/updatePost.js';
+import { handleGetSinglePost } from './controllers/getPosts/getSinlgePost.js';
+import { handleGetTagNamesFromCommentID } from './controllers/tags/getTagNames.js';
+import { handleCreateTag, handleDeleteTagToComment, handleAddTagToComment } from './controllers/tags/addDeleteTags.js';
 
-import { handleGetCommentsByUserNickname, handleGetCommentsByUserID, handleGetCommentsByTag, handleGetTagByName } from './controllers/getOtherPosts.js';
+import { handleAddMentionToComment, handleDeleteMentionToComment } from './controllers/mentions/addDeleteMention.js';
+import { handleGetMentionsFromCommentID } from './controllers/mentions/getMentions.js'
+
+import { handleAddResponse } from './controllers/responses/addResponse.js';
+
+import { handleCheckIfLiked } from './controllers/likes/checkIfLiked.js'
+import { handleAddLike, handleDeleteLike } from './controllers/likes/addDeleteLikes.js'
+
+import { handleCountFollowersByUserID } from './controllers/followers/countFollowers.js';
+import { handleCountFollowingByUserID } from './controllers/followers/countFollowing.js';
+
+import { handleAddFollower, handleDeleteFollower } from './controllers/followers/addDeleteFollowers.js';
+import { handleCheckIfFollower } from './controllers/followers/checkIfFollower.js';
+
+import { handleGetCommentsByUserNickname, handleGetCommentsByUserID, handleGetCommentsByTag, handleGetTagByName } from './controllers/getPosts/getOtherPosts.js';
+
 // const express = require('express');
 import express from 'express';
 const app = express();
@@ -39,13 +52,6 @@ const db = knex({
   });
 
 
-// returns a promise need a .then()
-// postgres.select('*').from('users');
-// db.select('*').from('users')
-//     .then((data) => {
-//         console.log(data);
-//     }).catch((error) => console.log(error));
-
 app.use(express.json());
 
 // Needed to able to send and recieve request to websites
@@ -63,11 +69,47 @@ app.use(express.json());
 app.use(cors());
 
 
+//=================Register/Signin=================
+
 app.post("/signin", (req, res) => {
 
   handleSignin(req, res, db);
 
 });
+
+app.post('/register', (req, res) => { 
+  handleRegister(req, res, db ) 
+
+});
+
+//=================Signed In User=================
+
+app.post("/home/:id", (req, res) => {
+
+  handleCreatePost(req, res, db)
+
+})
+
+app.get('/home/:id', (req, res) => {
+
+  handleGetComments(req,res,db)
+
+})
+
+app.post("/home/delete/:comment_id", (req, res) => {
+
+  handleSlateForDeletion(req, res, db)
+
+})
+
+app.post("/home/update/:comment_id", (req, res) => {
+
+  handleUpdatePost(req, res, db)
+
+})
+
+
+//=================Tags=================
 
 app.get("/tagID/:name", (req, res) => {
 
@@ -78,70 +120,7 @@ app.get("/tagID/:name", (req, res) => {
 app.get("/tags/byName/:name", (req, res) => {
 
   handleGetTagByName(req, res, db);
-})
-
-
-
-app.get("/userID/:nickname", (req, res) => {
-
-  handleGetUserID(req, res, db);
-})
-
-app.get("/usersInfo/:id", (req, res) => {
-
-  handleGetUserInfo(req, res, db)
-  
-})
-
-
-
-app.get('/home/:id', (req, res) => {
-
-  handleGetComments(req,res,db)
-
-})
-
-app.get('/post/:id', (req, res) => {
-
-  handleGetSinglePost(req,res,db)
-
-})
-
-app.get("/tags/:id", (req, res) => {
-
-  handleGetCommentsByTag(req, res, db);
-  
-})
-
-app.get("/tags/byName/comment/:id", (req, res)  => {
-
-  handleGetTagNamesFromCommentID(req, res, db);
-
-})
-
-app.get("/mentions/byName/comment/:id", (req, res)  => {
-
-  handleGetMentionsFromCommentID(req, res, db);
-
-})
-
-app.get("/users/:id", (req, res) => {
-
-  handleGetCommentsByUserID(req, res, db);
-
-})
-
-app.get("/users/byNickname/:nickname", (req, res) => {
-
-  handleGetCommentsByUserNickname(req, res, db);
-
-})
-
-app.get("/usersInfo/byNickname/:nickname", (req, res) => {
-
-  handleGetUserInfoByNickname(req, res, db);
-
-})
+});
 
 app.post("/create/tag/", (req, res) => {
 
@@ -161,6 +140,116 @@ app.delete("/comment/deleteTag/", (req, res) => {
 
 })
 
+
+//=================User Info=================
+
+app.get("/userID/:nickname", (req, res) => {
+
+  handleGetUserID(req, res, db);
+})
+
+app.get("/usersInfo/:id", (req, res) => {
+
+  handleGetUserInfo(req, res, db)
+  
+})
+
+app.get("/usersInfo/byNickname/:nickname", (req, res) => {
+
+  handleGetUserInfoByNickname(req, res, db);
+
+})
+
+
+//=================Comments=================
+
+
+app.get('/post/:id', (req, res) => {
+
+  handleGetSinglePost(req,res,db)
+
+})
+
+app.get("/tags/:id", (req, res) => {
+
+  handleGetCommentsByTag(req, res, db);
+  
+})
+
+app.get("/users/:id", (req, res) => {
+
+  handleGetCommentsByUserID(req, res, db);
+
+})
+
+app.get("/users/byNickname/:nickname", (req, res) => {
+
+  handleGetCommentsByUserNickname(req, res, db);
+
+})
+
+//=================Comment Info=================
+
+app.get("/tags/byName/comment/:id", (req, res)  => {
+
+  handleGetTagNamesFromCommentID(req, res, db);
+
+})
+
+app.get("/mentions/byName/comment/:id", (req, res)  => {
+
+  handleGetMentionsFromCommentID(req, res, db);
+
+})
+
+//==================Comment Responses=================
+
+app.post("/responses/create/", (req, res) => {
+
+  handleAddResponse(req, res, db)
+
+})
+
+app.get("/responses/count/:id", (req, res) => {
+
+  handleCountResponses(req, res, db)
+
+})
+
+//=================Followers=================
+
+app.get("/users/number/followers/:id", (req, res) => {
+
+  handleCountFollowersByUserID(req, res, db)
+
+})
+
+app.get("/users/number/following/:id", (req, res) => {
+
+  handleCountFollowingByUserID(req, res, db)
+
+})
+
+app.post("/user/isFollower/", (req, res) => {
+
+  handleCheckIfFollower(req, res, db)
+
+})
+
+app.post("/users/create/following/", (req, res) => {
+
+  handleAddFollower(req, res, db)
+  
+})
+
+app.delete("/users/delete/following/", (req, res) => {
+
+  handleDeleteFollower(req, res, db)
+  
+})
+
+//=================Mentions=================
+
 app.post("/comment/addMention/", (req, res) => {
 
   handleAddMentionToComment(req, res, db)
@@ -173,28 +262,32 @@ app.delete("/comment/deleteMention/", (req, res) => {
 
 })
 
-app.post("/home/:id", (req, res) => {
+//=================Likes=================
 
-  handleCreatePost(req, res, db)
+app.post("/comment/add/like/", (req, res) => {
 
-})
-
-app.post("/home/delete/:comment_id", (req, res) => {
-
-  // Actual deletion will take place during maintaince because of delete cascading
-  handleSlateForDeletion(req, res, db)
+  handleAddLike(req, res, db)
 
 })
 
-app.post("/home/update/:comment_id", (req, res) => {
+app.delete("/comment/delete/like/", (req, res) => {
 
-  // Actual deletion will take place during maintaince because of delete cascading
-  handleUpdatePost(req, res, db)
+  handleDeleteLike(req, res, db)
 
 })
 
+app.get("/comment/count/likes/:id", (req, res) => {
 
-app.post('/register', (req, res) => { handleRegister(req, res, db ) })
+  handleCountLikes(req, res, db)
+
+})
+
+app.post("/user/liked/comment/", (req, res) => {
+
+  handleCheckIfLiked(req, res ,db)
+
+})
+
 
 app.get('/', res  => console.log("this is working"))
 // app.post('/profile/:id', auth.requireAuth, (req, res) => { profile.handleProfileUpdate(req, res, db) })

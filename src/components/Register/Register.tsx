@@ -5,8 +5,6 @@ import {useNavigate, Link} from 'react-router-dom';
 import useAuth from "../useAuth/useAuth";
 import createNewUser from "../createNewUser/createNewUser";
 
-import TestData from "../../tempStaticData/testData.json"
-
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
 
@@ -130,7 +128,7 @@ const Register:FC = ({ loadUser }) => {
     // eslint-disable-next-line
     const { login, logout } = useAuth();
 
-    const onAttemptRegister = (data, e) => {
+    const onAttemptRegister = (user, e) => {
 
         e.preventDefault();
 
@@ -191,20 +189,7 @@ const Register:FC = ({ loadUser }) => {
 
 
 
-        // const userData = createNewUser(user, data);
-
-        // loadUser(userData)
-
-        // login().then(() => {
-
-        //     navigate('/success');
-
-
-        // }).catch(err => {
-        //     console.log("something went wrong")
-        // });
-
-        }
+    }
 
 
     return (
@@ -437,7 +422,7 @@ const Register:FC = ({ loadUser }) => {
 
                     <div className="flexRowContainer margin1">
                         <button onClick={() => setCurrentStepValue((currentStep - 1)) } type="button" className="button red" title="Click to move back to step 2">Back</button>
-                        <button onClick={(e) => onAttemptRegister(TestData, e)} className="button primary" type="button">Submit</button>
+                        <button onClick={(e) => onAttemptRegister(user, e)} className="button primary" type="button">Submit</button>
                     </div>
                     
                 </div>

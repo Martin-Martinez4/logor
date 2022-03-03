@@ -1,5 +1,5 @@
 
-/* Need  to add media queries for tablet sizes */
+/* Need to add media queries for tablet sizes */
 
 /* Setup color scheme and spacing */
 :root{
@@ -197,17 +197,6 @@ h5{
   100% {opacity:0%}
 }
 
-/* .opacity0{
-  opacity: 0%;
-  background-color: var(--UIWhite);
-  color: var(--UIWhite);
-  
-} */
-
-/* .svgCheckMarkIcon{
-  fill:var(--Primary);
-  transition:fill .75s cubic-bezier(0.1,0.4,1,0.2) 0s;
-} */
 
 
 @media screen and (max-width: 1024px){
@@ -249,7 +238,7 @@ button.button, input[type=file]::file-selector-button, input::-webkit-file-uploa
   text-align: center;
   font-size: 1rem;
   text-decoration: none;
-  color:var(--UIWhite);
+  color: var(--UIWhite);
 
   transition: all .2s ease-in-out;
   transition: scale .2s linear;
