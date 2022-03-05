@@ -10,6 +10,10 @@ import PageNotFound from "../404Page/PageNotFound";
 
 import UserNotFound from "../UserNotFound/UserNotFound";
 
+import { getUserIdByNickname } from "../utils/fetchUserData";
+
+import { getFollowersCount, getFollowingCount } from "../utils/fetchFollowers";
+
 
 // import ProfileImage from "../../assets/Monkey_1.svg";
 import LocationIcon from "../../assets/LocationIcon.svg"
@@ -40,12 +44,17 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
         joined_date:"",
         description:"",
         location:"",
-        links:""
+        links:"",
+        followers:"",
+        following:""
 
 
     })
 
     useEffect(() => {
+
+        const fetchUserData = async (userOrTagID, setVisiteeUser) => {
+
 
         if(location.pathname.includes("/users/nickname/")){
             
@@ -54,13 +63,13 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
             console.log("header", userOrTagID)
             try{
 
-                fetch(`http://localhost:3001/usersInfo/byNickname/${userOrTagID}`, {
+                await fetch(`http://localhost:3001/usersInfo/byNickname/${userOrTagID}`, {
                     method: "get",
                     headers: { "Content-Type": "application/json"},
                 }).then(response => response.json())
                 .then(userInfo => {
         
-                    // console.log("userIfno", userInfo[0])
+                    console.log("userIfno", userInfo[0])
 
                     if(userInfo[0] === undefined){
 
@@ -68,7 +77,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                         
                     }else{
 
-                        setVisiteeUser((prev) => 
+                         setVisiteeUser((prev) => 
                                 ({...prev, 
                                 username:userInfo[0].username,
                                 nickname:userInfo[0].nickname,
@@ -82,6 +91,24 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                     }
                  
                 })
+
+                const userID =  await getUserIdByNickname(userOrTagID)
+
+
+                const followersCount =  await getFollowersCount(userID)
+                const followingCount =  await getFollowingCount(userID)
+
+                // console.log("followers: ", followersCount, " Following: ", followingCount)
+
+                setVisiteeUser((prev) => 
+                        ({...prev, 
+                      followers: followersCount,
+                      following: followingCount
+                }))
+
+                
+
+
             }
             catch{
 
@@ -95,7 +122,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
 
             console.log("byID")
 
-            fetch(`http://localhost:3001/usersInfo/${userOrTagID}`, {
+            await fetch(`http://localhost:3001/usersInfo/${userOrTagID}`, {
                 method: "get",
                 headers: { "Content-Type": "application/json"},
             }).then(response => response.json())
@@ -124,8 +151,24 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                     }))
                 }
             })
+
+
+            const followersCount =  await getFollowersCount(userOrTagID)
+            const followingCount =  await getFollowingCount(userOrTagID)
+
+            // console.log("followers: ", followersCount, " Following: ", followingCount)
+
+            setVisiteeUser((prev) => 
+                    ({...prev, 
+                  followers: followersCount,
+                  following: followingCount
+            }))
         }
 
+        
+    }
+    
+    fetchUserData(userOrTagID, setVisiteeUser)
 
     },[])
 
@@ -167,6 +210,15 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                         <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{ visiteeUser.joined_date }</em></p>
 
                     </div>
+
+                    <div className="profile_other profile_following">
+                        <p><a href="">Followers: </a><em>{visiteeUser.followers}</em></p> <p><a href="">Followers: </a><em>{visiteeUser.following}</em></p>
+                        <div> 
+                            <button type="button" className="button primary" title="Follow Status">Follow</button>
+                            <button type="button" className="button red" title="Follow Status">Unfollow</button>
+                        </div>
+                    </div>
+
 
                 </div>
                 </>

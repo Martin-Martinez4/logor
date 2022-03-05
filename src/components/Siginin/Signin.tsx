@@ -5,8 +5,6 @@ import { useNavigate, Link } from "react-router-dom";
 
 import useAuth from "../useAuth/useAuth";
 
-import TestData from "../../tempStaticData/testData.json"
-
 const Signin:FC = ({ loadUser }) => {
 
     const navigate = useNavigate();

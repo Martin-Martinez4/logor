@@ -7,7 +7,7 @@ export const handleCountLikes = (req, res, db) => {
     .count("*")
     .where({
 
-        comment_id: comment_id,
+        comment_id: `${comment_id}`,
     })
     .then(count => {
 
@@ -16,7 +16,7 @@ export const handleCountLikes = (req, res, db) => {
     .catch(err => {
 
         console.log(err)
-        res.json("0")
+        res.json("NA")
     })
 }
 

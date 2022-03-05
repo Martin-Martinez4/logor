@@ -3,6 +3,9 @@ export const handleAddFollower = (req, res, db) => {
 
     const {followee_id, follower_id} = req.body
 
+    console.log(followee_id)
+
+
     db("follower_followee")
     .insert({
         followee_id: followee_id,

@@ -21,6 +21,7 @@ import { handleAddResponse } from './controllers/responses/addResponse.js';
 
 import { handleCheckIfLiked } from './controllers/likes/checkIfLiked.js'
 import { handleAddLike, handleDeleteLike } from './controllers/likes/addDeleteLikes.js'
+import { handleCountLikes } from './controllers/likes/countLikes.js';
 
 import { handleCountFollowersByUserID } from './controllers/followers/countFollowers.js';
 import { handleCountFollowingByUserID } from './controllers/followers/countFollowing.js';
@@ -210,7 +211,7 @@ app.post("/responses/create/", (req, res) => {
 
 })
 
-app.get("/responses/count/:id", (req, res) => {
+app.get("/responses/count/:comment_id", (req, res) => {
 
   handleCountResponses(req, res, db)
 
@@ -218,19 +219,19 @@ app.get("/responses/count/:id", (req, res) => {
 
 //=================Followers=================
 
-app.get("/users/number/followers/:id", (req, res) => {
+app.get("/users/number/followers/:user_id", (req, res) => {
 
   handleCountFollowersByUserID(req, res, db)
 
 })
 
-app.get("/users/number/following/:id", (req, res) => {
+app.get("/users/number/following/:user_id", (req, res) => {
 
   handleCountFollowingByUserID(req, res, db)
 
 })
 
-app.post("/user/isFollower/", (req, res) => {
+app.post("/user/is/follower/", (req, res) => {
 
   handleCheckIfFollower(req, res, db)
 
@@ -276,7 +277,7 @@ app.delete("/comment/delete/like/", (req, res) => {
 
 })
 
-app.get("/comment/count/likes/:id", (req, res) => {
+app.get("/comment/count/likes/:comment_id", (req, res) => {
 
   handleCountLikes(req, res, db)
 

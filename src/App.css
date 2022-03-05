@@ -135,7 +135,25 @@ h5{
   height: 90%;
 }
 
+.flexColContainer2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fitContent{
+
+  width: fit-content;
+  height: fit-content;
+}
+
 .flexRowContainer{
+
+  display: flex;
+  
+}
+
+.flexRowContainer2{
 
   display: flex;
   
@@ -152,6 +170,7 @@ h5{
   width: 55%;
   height: auto;
   text-align: center;
+
 
   color: var(--UIWhite);
   
@@ -171,6 +190,7 @@ h5{
 
 .hdden {
   opacity: 0%;
+  display: none;
 
   height: auto;
   text-align: center;
@@ -188,6 +208,7 @@ h5{
   opacity: 0%;
 
 }
+
 
 @keyframes fade {
   0%{opacity:100%}

@@ -1,9 +1,12 @@
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import { Link, Route, BrowserRouter } from 'react-router-dom';
 
 import Card from "../Card/Card";
 import "./Posts.css";
+
+import { UserInfoContext } from "../userContext/userContext";
+
 import formatDate, { formatDateAgo } from "../utils/formatDate";
 
 import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
@@ -13,7 +16,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     const maxChars = 920;
 
-    // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
     const [postInformation, setPostInfomration] = useState({
 
@@ -308,7 +311,8 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
                         <div> </div> :
                         <React.Fragment>
                            <div className="post__icons">
-                            <HeartIcon></HeartIcon>
+                            {console.log("visitorPOst: ",loggedInUser.id === "")}
+                            <HeartIcon comment_id={uuid} loggedInUserId={loggedInUser.id}></HeartIcon>
                             <CheckmarkIcon></CheckmarkIcon>
                             <ShareIcon2></ShareIcon2>
                             <ShareIcon2></ShareIcon2>

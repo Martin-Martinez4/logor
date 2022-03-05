@@ -11,7 +11,7 @@ export const handleCountFollowingByUserID = (req, res, db) => {
     })
     .catch(err => {
         console.log(err)
-        res.json("0")
+        res.json("NA")
     })
 
 

@@ -25,6 +25,10 @@ export const fetchMentionsByComment = async (comment_id) => {
     .then(data =>  {
         
         return data.json()
+        
+    }).catch(err => {
+
+        console.log(err)
     });
 
     return test

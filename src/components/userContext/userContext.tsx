@@ -15,6 +15,8 @@ const  UserInfoProvider = ({ children }) => {
         header_img_url:"",
         location:"",
         links:"",
+        followers:"",
+        following:""
     });
   
 

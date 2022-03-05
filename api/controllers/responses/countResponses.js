@@ -1,5 +1,5 @@
 
-const handleCountResponses = (req, res, db) => {
+export const handleCountResponses = (req, res, db) => {
 
     const { comment_id } = req.params;
 
@@ -8,11 +8,11 @@ const handleCountResponses = (req, res, db) => {
     .where("comment_id", "=", `${comment_id}`)
     .then(count => {
 
-        res.json(count)
+        res.json(count[0]["count"])
     })
     .catch(err => {
         console.log(err)
-        res.json("Error")
+        res.json("NA")
     })
 
 }

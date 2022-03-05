@@ -20,7 +20,10 @@ const CheckmarkIcon = () => {
     }, [animateClass])
 
     return(
+        
+        <div className='flexRowContainer2 fitContent'>
 
+       
             <svg onClick={handleAnimateClick} className={animateClass?"svgCheckMarkIcon":""} width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_d_237_114)">
                     <rect width="3.42714" height="10.2814" rx="1.71357" transform="matrix(0.635711 -0.771927 0.635711 0.771927 4 10.8765)" fill="white"/>
@@ -53,6 +56,10 @@ const CheckmarkIcon = () => {
                     </filter>
                 </defs>
             </svg>
+
+            <p className='icon__number'>10000000</p>
+
+        </div>
 
     )
 }

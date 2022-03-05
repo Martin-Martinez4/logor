@@ -16,6 +16,15 @@
     transition:fill 1s cubic-bezier(0.1,0.4,1,0.2) 0s;
 }
 
+.icon__number{
+
+    font-size: var(--x-small);
+    font-style: italic;
+    font-weight: 525;
+
+
+}
+
 /* .svgDrain{
     animation: heartDrain .5s cubic-bezier(0.1,0.4,1,0.2) 0s
 }

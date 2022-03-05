@@ -18,12 +18,15 @@ import { tagsMentionsEdit } from "../utils/tagMentions";
 import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../../assets/svg/ShareIcon2/ShareIcon2";
+import { userInfo } from "os";
 
 const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
 
+    
+    
     const maxChars = 920;
-
-    // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    
+    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
     const [postInformation, setPostInfomration] = useState({
 
@@ -322,7 +325,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                             <div> </div> :
                             <React.Fragment>
                                <div className="post__icons">
-                                <HeartIcon></HeartIcon>
+                                <HeartIcon comment_id={uuid} loggedInId={loggedInUser.id}></HeartIcon>
                                 <CheckmarkIcon></CheckmarkIcon>
                                 <ShareIcon2></ShareIcon2>
                                 <ShareIcon2></ShareIcon2>

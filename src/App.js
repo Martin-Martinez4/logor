@@ -50,6 +50,7 @@ function App() {
             location: data.location,
             links: data.links,
     })
+    
   }
 
   return (
