@@ -3,9 +3,11 @@
 import 'dotenv/config';
 // const signin = require('./controllers/signin');
 
-import { handleGetUserInfo, handleGetUserInfoByNickname } from './controllers/getUserInfo.js';
+import jwt from "express-jwt";
+
+import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetUserInfoByToken } from './controllers/getUserInfo.js';
 import { handleGetTagID, handleGetUserID } from './controllers/getIds/getIDs.js';
-import {handleSignin} from './controllers/signin.js';
+import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 import { handleGetComments } from './controllers/getPosts/getOwnPosts.js';
 import { handleCreatePost } from './controllers/post/createPost.js';
@@ -31,15 +33,30 @@ import { handleCheckIfFollower } from './controllers/followers/checkIfFollower.j
 
 import { handleGetCommentsByUserNickname, handleGetCommentsByUserID, handleGetCommentsByTag, handleGetTagByName } from './controllers/getPosts/getOtherPosts.js';
 
+import { authenticateToken } from './middleware/authorization.js';
+
+
+
+
+
 // const express = require('express');
 import express from 'express';
+import cookieParser from "cookie-parser"; 
+
 const app = express();
+
+const secret = process.env.ACCESS_SECRET;
+
+
 
 // const bcrypt = require('bcrypt');
 import cors from 'cors';
 
+
 // Database queries with the knex module
 import knex from 'knex';
+import { env } from 'process';
+import { refreshCookie } from './utils/createTokens.js';
 
 const db = knex({
     client: 'pg',
@@ -52,22 +69,22 @@ const db = knex({
     }
   });
 
+  const allowedOrigins = ['http://localhost:3000'];
 
+const options = {
+  origin: allowedOrigins,
+  credentials: true
+
+};
+
+// Then pass these options to cors:
 app.use(express.json());
+app.use(cors(options));
+app.use(cookieParser())
 
-// Needed to able to send and recieve request to websites
-// const whitelist = ["http://localhost:3000"];
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-// };
 
-app.use(cors());
+
+
 
 
 //=================Register/Signin=================
@@ -75,6 +92,12 @@ app.use(cors());
 app.post("/signin", (req, res) => {
 
   handleSignin(req, res, db);
+
+});
+
+app.post("/signin2", (req, res) => {
+
+  handleSignin2(req, res, db);
 
 });
 
@@ -143,6 +166,18 @@ app.delete("/comment/deleteTag/", (req, res) => {
 
 
 //=================User Info=================
+
+// app.get("/user/get/info", authenticateToken , (req, res) => {
+
+//   handleGetUserInfoByToken(req, res ,db)
+
+// })
+
+// app.get("/user/get/info", (req, res) => {
+
+//   handleGetUserInfoByToken(req, res ,db)
+
+// })
 
 app.get("/userID/:nickname", (req, res) => {
 
@@ -286,6 +321,14 @@ app.get("/comment/count/likes/:comment_id", (req, res) => {
 app.post("/user/liked/comment/", (req, res) => {
 
   handleCheckIfLiked(req, res ,db)
+
+})
+
+//=================Tokens=================
+
+app.get("/token/refresh/", (req, res) => {
+
+  refreshCookie(req, res)
 
 })
 

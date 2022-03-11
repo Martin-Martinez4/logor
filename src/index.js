@@ -1,13 +1,17 @@
 import React from "react";
 import {
   BrowserRouter as Router,
+  Routes,
+  Route
 } from "react-router-dom";
-import { AuthProvider } from "./components/useAuth/useAuth";
-import { UserInfoProvider } from "./components/userContext/userContext";
+// import { AuthProvider } from "./components/useAuth/useAuth";
+import { UserInfoProvider } from "./components/context/userContext";
 
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { AuthProvider } from './components/useAuth/AuthProvider';
+
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -17,7 +21,11 @@ ReactDOM.render(
     <React.StrictMode>
         <AuthProvider>
         <UserInfoProvider>
-          <App />
+          <Routes>
+
+            {/* <App /> */}
+            <Route path="/*" element={<App />} />
+          </Routes>
         </UserInfoProvider>
         </AuthProvider>
   </React.StrictMode>

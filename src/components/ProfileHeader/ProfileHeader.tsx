@@ -4,7 +4,7 @@ import Card from "../Card/Card";
 import "./ProfileHeader.css";
 
 
-import { UserInfoContext } from "../userContext/userContext";
+import { UserInfoContext } from "../context/userContext";
 
 import { formatDateMonthDayYear } from "../utils/formatDate";
 

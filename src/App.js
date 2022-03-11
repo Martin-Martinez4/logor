@@ -3,28 +3,32 @@ import './App.css';
 import {
   Routes,
   Route,
-  Navigate,
-  useParams,
-  useLocation
+ 
 } from "react-router-dom";
 import { useContext } from 'react';
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
-import useAuth from "./components/useAuth/useAuth";
-import { UserInfoContext } from './components/userContext/userContext';
+import RequireAuth from "./components/requireAuth";
+// import useAuth from "./components/useAuth/useAuth";
+import { UserInfoContext } from './components/context/userContext';
 import Home from './components/Pages/Home';
 import Landingpage from './components/Pages/Landingpage';
 import Register from './components/Register/Register';
 import SuccessPage from './components/SuccessPage/SuccessPage';
 import VisitorPage from './components/VisitorPage/VisitorPage';
 import PageNotFound from "./components/404Page/PageNotFound";
+import Refresh from "./components/Refresh/Refresh"
 
-function RequireAuth({ children, redirectTo }) {
-  let isAuthenticated = useAuth();
+import PersistLogin from './components/PersistLogin/PersistLogin';
+import LoadingUser from './components/LoadingUser/LoadingUser';
 
-  // console.log(isAuthenticated);
+
+// function RequireAuth({ children, redirectTo }) {
+//   let isAuthenticated = useAuth();
+
+//   // console.log(isAuthenticated);
   
-  return isAuthenticated.authed ? children : <Navigate to="/" replace />;
-}
+//   return isAuthenticated.authed ? children : <Navigate to="/" replace />;
+// }
 
 // Avoid prop drilling of loggedInUser
 // let context = React.createContext(null);
@@ -50,23 +54,29 @@ function App() {
             location: data.location,
             links: data.links,
     })
-    
+
   }
 
   return (
     <div className="App container">
 
       <Routes>
+
+        <Route path="/refresh" element={<Refresh/>} />
+
         <Route path="/" element={<Landingpage loadUser={loadUser} />} />
 
-        <Route path="/home/:id" element={
+        <Route element={<PersistLogin/>}>
+          <Route element={<RequireAuth loadUser={loadUser} />} >
+  
+            <Route  path="/home/:id" element={<Home loadUser={loadUser}/>} />
+            <Route path="/loading/user/:id" element={<LoadingUser loadUser={loadUser}/>} />
 
-          <RequireAuth>
-              <Home/>
-          </RequireAuth>
+          </Route>
+        </Route> 
 
-          } />
-          
+     
+                  
         <Route path="/register" element={<Register loadUser={loadUser} />} />
         
         <Route path="/success" element={<SuccessPage/>} />

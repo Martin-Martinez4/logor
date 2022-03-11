@@ -5,7 +5,7 @@ import { Link, Route, BrowserRouter } from 'react-router-dom';
 import Card from "../Card/Card";
 import "./Posts.css";
 
-import { UserInfoContext } from "../userContext/userContext";
+import { UserInfoContext } from "../context/userContext";
 
 import formatDate, { formatDateAgo } from "../utils/formatDate";
 

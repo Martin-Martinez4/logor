@@ -7,7 +7,7 @@ import "./CommentBox.css";
 import Card from "../Card/Card";
 
 import { tagsMentionsCreate } from "../utils/tagMentions";
-import { UserInfoContext } from "../userContext/userContext";
+import { UserInfoContext } from "../context/userContext";
 
 const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments }) => {
 

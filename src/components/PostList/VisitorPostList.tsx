@@ -16,7 +16,7 @@ import MiniProfile from "../MiniProfile/MiniProfile";
 
 import NoPosts from "../NoPosts/NoPosts";
 
-import { UserInfoContext } from "../userContext/userContext";
+import { UserInfoContext } from "../context/userContext";
 
 import sortedComments from "../../tempStaticData/sortedComments.json";
 

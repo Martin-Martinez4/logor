@@ -1,9 +1,9 @@
 
 import React, { FC, useEffect, useState, useContext } from "react";
-import { Link, Route, BrowserRouter } from 'react-router-dom';
+import { Link, Route, BrowserRouter, Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 
-import { UserInfoContext } from "../userContext/userContext";
+import { UserInfoContext } from "../context/userContext";
 
 import Card from "../Card/Card";
 import "./Posts.css";
@@ -14,17 +14,26 @@ import addLinkTags from "../utils/addLinkTags";
 
 
 import { tagsMentionsEdit } from "../utils/tagMentions";
+import useAuth from "../hooks/useAuth";
+import useModal from "../hooks/useModal";
+import SigininModal from "../SigninModal/SigninModal";
+import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
 import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../../assets/svg/ShareIcon2/ShareIcon2";
-import { userInfo } from "os";
 
 const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
 
     
     
     const maxChars = 920;
+
+    const { auth, setAuth } = useAuth();
+    const { showModal, toggleModal } = useModal();
+    const location = useLocation();  
+    const navigate = useNavigate();
+
     
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
@@ -79,33 +88,69 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }
 
-    const toggleDeleteConfirmationVisible = () => {
+    const toggleDeleteConfirmationVisible = async () => {
 
-        
-        setDeleteConfirmationVisible(!deleteConfirmationVisible);
+        try{
 
-        if(editMode.visible){
-
-            let tempVisible:boolean = false;
+            if(await refreshTokenBool(auth, setAuth)){
     
-            setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
-
-            // setCharsLeft(maxChars - postInformation.text_content.length);
+                setDeleteConfirmationVisible(!deleteConfirmationVisible);
+        
+                if(editMode.visible){
+        
+                    let tempVisible:boolean = false;
+            
+                    setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
+        
+                }
+            }
+            else{
+    
+                toggleModal()
+                
+                
+            }
         }
+        catch{
+            
+            toggleModal()
+        }
+
 
     }
 
-    const toggleEditMode = () => {
-        
+    const toggleEditMode = async () => {
 
-        let tempVisible:boolean = !(editMode.visible);
+        try{
 
-        setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
-
-        if(deleteConfirmationVisible){
-
-            setDeleteConfirmationVisible(false);
+            if(await refreshTokenBool(auth, setAuth)){
+    
+                
+                        let tempVisible:boolean = !(editMode.visible);
+                
+                        setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
+                
+                        if(deleteConfirmationVisible){
+                
+                            setDeleteConfirmationVisible(false);
+                        }
+                    }else{
+                
+                        // alert("please sign in to Edit post")
+                        
+                        // navigate("/", { replace: true });
+                
+                        toggleModal()
+                    }
         }
+        catch{
+
+            toggleModal()
+                    
+        }
+
+
+        
     }
         
     useEffect(() => {
@@ -230,6 +275,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         return(
 
             <>
+
+                <SigininModal
+                    showModal={showModal}
+                    hide={toggleModal}
+                />
+
             {postInformation.status[0] === "Deleted"?
             <Card classes="content post deleted">
                     

@@ -1,14 +1,20 @@
 
 import React, { FC, useState } from "react";
 
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
-import useAuth from "../useAuth/useAuth";
+import useAuth from "../hooks/useAuth";
 
 const Signin:FC = ({ loadUser }) => {
 
+    const { auth, setAuth } = useAuth();
+
     const navigate = useNavigate();
-    const { login, logout } = useAuth();
+    const location = useLocation();
+
+
+    
+
     
     const [loginError, setLoginError] = useState({
 
@@ -46,16 +52,23 @@ const Signin:FC = ({ loadUser }) => {
 
     }
 
-    const onAttemptLogin = (e) => {
+    const onAttemptLogin = async (e) => {
 
+        
         e.preventDefault();
-
+        
+        console.log("test") 
         const {username, password} = userCreds
 
-        fetch('http://localhost:3001/signin', {
+        await fetch('http://localhost:3001/signin2', {
 
             method: "post",
-            headers: { "Content-Type": "application/json"},
+            credentials:'include',
+            cache:'no-cache',
+            headers: {
+                
+                'Content-Type': 'application/json',
+              },
             body: JSON.stringify({
                 username: username,
                 password: password
@@ -63,22 +76,66 @@ const Signin:FC = ({ loadUser }) => {
         })
         .then((response) => response.json())
         .then((user) => {
+            
 
-            if(user.id){
+            console.log(user)
 
-                login().then(() => {
+            // console.log(user.access_token)
+            if(user.access_token){
+
+
+                // token stuff
+
+                setAuth(() => {
+
+                    return { user_id: user.user_id, access_token:user.access_token }
+                });
+
+
+
+                
+
+                // login().then(() => {
                         
-                    loadUser(user);
-                    navigate(`/home/${user.id}`);
-                }).catch( (err) => {
+                    // loadUser(user);
+                      return fetch(`http://localhost:3001/usersInfo/${user.user_id}`, {
 
-                    console.log("fail")
-                    logout().then(() => {
-                        navigate("/");
+                        method: "get",
+                        headers: {
+                            
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(res => res.json())
+                    .then(user => {
+                        console.log("user:",user[0])
+
+                        try{
+
+                            loadUser(user[0]) 
+                            
+                            const from = location.state?.from?.pathname || `/home/${user[0].id}`;
+                            
+                            navigate(from, { replace: true });
+                            // navigate(`/home/${user[0].id}`)
+                            
+                        }
+                        catch(err){
+
+                            console.error(err)
+                        }
+                    
                     })
 
-                })
+                    // if(auth?.user_id){
 
+                    //     const from = location.state?.from?.pathname || `/home/${user.user_id}`;
+                    //     navigate(from, { replace:true });
+                    // }
+                                
+                
+
+                   
             }
             else{
 
@@ -86,6 +143,40 @@ const Signin:FC = ({ loadUser }) => {
             }
 
         }).catch((err)=> console.log(err))
+
+        // await fetch(`http://localhost:3001/usersInfo/${auth.user_id}`, {
+
+        //     method: "get",
+        //     headers: {
+                
+        //         'Content-Type': 'application/json',
+        //       },
+        // })
+        // .then(res => res.json())
+        // .then(user => {
+        //     console.log("user:",user[0])
+
+        //     try{
+
+        //         loadUser(user[0]) 
+                
+        //         const from = location.state?.from?.pathname || "/";
+                
+        //         navigate(from, { replace: true });
+        //         // navigate(`/home/${user[0].id}`)
+        //     }
+        //     catch(err){
+
+        //         console.error(err)
+        //     }
+        
+        // })
+
+        // if(auth?.user_id){
+
+        //     const from = location.state?.from?.pathname || `/home/${user.user_id}`;
+        //     navigate(from, { replace:true });
+        // }
 
     }
             

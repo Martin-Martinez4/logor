@@ -1,8 +1,7 @@
 
 import getTags from "../utils/getTags";
 import getMentions from "../utils/getMentions";
-import getTagsMentionsLinks from "../utils/getTagsMentionsLinks";
-import addLinkTags from "../utils/addLinkTags";
+
 
 import { differenceArrayAFromArrayB } from "../utils/differenceAFromB";
 import { arrayFromObjProp } from "../utils/arrayFromObjProp";

@@ -7,12 +7,14 @@ import Scroll from "../Scroll/Scroll";
 
 import Card from "../Card/Card";
 import Post from "../Posts/Post";
-import DeletedPost from "../Posts/DeletedPost";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
 import CommentBox from "../CommentBox/CommentBox";
 
-import { UserInfoContext } from "../userContext/userContext";
+import { UserInfoContext } from "../context/userContext";
+
+import useAuth from "../hooks/useAuth";
+
 
 
 
@@ -21,15 +23,18 @@ import "./postlist.css"
 const PostList: FC = () => {
 
     // let posts = []
+    const { auth, setAuth } = useAuth();
+
 
     const location = useLocation();
-
-    console.log(location.pathname);
 
     // eslint-disable-next-line
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
+
     const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
+
+    console.log("loggedinUser: ", loggedInUser)
 
     // let loggedInComments = sortedComments[id];
 
@@ -46,7 +51,10 @@ const PostList: FC = () => {
 
             let loggedInComments = commentsArray[i] 
             
-            const {comment_id, text_content, created_at, status, likes, user_id} = loggedInComments
+            const {comment_id, text_content, created_at, status, likes, user_id} = loggedInComments;
+            const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
+
+            console.log("username: ",username)
                 
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
@@ -65,7 +73,9 @@ const PostList: FC = () => {
     
     useEffect(() => {
 
-        fetch(`http://localhost:3001/home/${id}`, {
+        
+
+        fetch(`http://localhost:3001/home/${auth.user_id}`, {
                 method: "get",
                 headers: { "Content-Type": "application/json"},
             }).then(response => response.json())
@@ -76,11 +86,15 @@ const PostList: FC = () => {
                 setUserPosts(createPosts(comments))
             })
 
-    }, [])
+    }, [loggedInUser])
 
     
     let posts = userPosts
-    
+
+    useEffect(() => {
+
+
+    }, [auth.user_id])
 
     
         return(

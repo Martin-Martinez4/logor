@@ -1,9 +1,32 @@
 
-import React, { FC } from "react";
+import React, { FC, useEffect, useContext } from "react";
 import TopBar from "../TopandBottom/TopBar";
 import ContentArea from "../ContentArea/ContentArea";
+import useAuth from "../hooks/useAuth";
+import { UserInfoContext } from "../context/userContext";
 
-const Homepage:FC = () => {
+import SigininModal from "../SigninModal/SigninModal";
+import useModal from "../hooks/useModal";
+
+
+
+
+const Homepage:FC = ({  loadUser}) => {
+
+    // const { auth, setAuth } = useAuth();
+      // eslint-disable-next-line
+    //   const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+
+
+    // useEffect(() => {
+
+    //     console.log()
+
+    // }, [loggedInUser])
+
+    const { showModal, toggleModal } = useModal();
+
+
 
     return(
         <React.Fragment>

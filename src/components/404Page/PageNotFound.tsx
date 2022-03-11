@@ -1,5 +1,5 @@
 
-import React, { FC, useContext, useEffect, useState } from "react";
+import { FC } from "react";
 
 import Card from "../Card/Card"
 
