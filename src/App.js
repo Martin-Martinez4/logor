@@ -66,32 +66,36 @@ function App() {
 
         <Route path="/" element={<Landingpage loadUser={loadUser} />} />
 
-        <Route element={<PersistLogin/>}>
-          <Route element={<RequireAuth loadUser={loadUser} />} >
-  
-            <Route  path="/home/:id" element={<Home loadUser={loadUser}/>} />
-            <Route path="/loading/user/:id" element={<LoadingUser loadUser={loadUser}/>} />
-
-          </Route>
-        </Route> 
-
-     
-                  
         <Route path="/register" element={<Register loadUser={loadUser} />} />
-        
         <Route path="/success" element={<SuccessPage/>} />
+
+
+          <Route element={<PersistLogin/>}>
+            <Route element={<RequireAuth loadUser={loadUser} />} >
+    
+                <Route  path="/home/:id" element={<Home loadUser={loadUser}/>} />
+                <Route path="/loading/user/:id" element={<LoadingUser loadUser={loadUser}/>} />
+
+
+            </Route>
+          </Route> 
+
+      
+                    
           
-          <Route path="/users/:id" element={
-            <ErrorBoundary>
+            
+            <Route path="/users/:id" element={
+              <ErrorBoundary>
 
-              <VisitorPage/>
-            </ErrorBoundary>
-            } />
-          <Route path="/tags/:id" element={<VisitorPage/>} />
-          <Route path="/tags/name/:id" element={<VisitorPage/>} />
-          <Route path="/users/nickname/:id" element={<VisitorPage/>} />
+                <VisitorPage/>
+              </ErrorBoundary>
+              } />
+            <Route path="/tags/:id" element={<VisitorPage/>} />
+            <Route path="/tags/name/:id" element={<VisitorPage/>} />
+            <Route path="/users/nickname/:id" element={<VisitorPage/>} />
 
-          <Route path="/comment/thread/:id" element={<VisitorPage/>} />
+            <Route path="/comment/thread/:id" element={<VisitorPage/>} />
+
 
         {/* <Route path="/test" element={<VisitorPage/>}/> */}
         <Route path="*" element={<PageNotFound />} />

@@ -9,12 +9,23 @@ import { UserInfoContext } from "../context/userContext";
 
 import formatDate, { formatDateAgo } from "../utils/formatDate";
 
-import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
-import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
-import ShareIcon2 from "../../assets/svg/ShareIcon2/ShareIcon2";
+import useAuth from "../hooks/useAuth";
+import useModal from "../hooks/useModal";
+import SigininModal from "../SigninModal/SigninModal";
+import { refreshTokenBool } from "../utils/tokenRefreshedBool";
+
+import HeartIcon from "../svg/HeartIcon/HeartIcon2";
+import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
+import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
+
 const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, userPosts, posts, status, setUserPosts, createPosts, loggedInComments }) => {
 
     const maxChars = 920;
+
+    const { auth, setAuth } = useAuth();
+    const { showModal, toggleModal } = useModal();
+    const location = useLocation();  
+    const navigate = useNavigate();
 
     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
@@ -169,18 +180,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     }
 
-    // const toggleEditMode = () => {
-        
 
-    //     let tempVisible:boolean = !(editMode.visible);
-
-    //     setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
-
-    //     if(deleteConfirmationVisible){
-
-    //         setDeleteConfirmationVisible(false);
-    //     }
-    // }
         
     useEffect(() => {
 
@@ -240,6 +240,12 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
     return(
 
         <>
+
+            <SigininModal
+                showModal={showModal}
+                hide={toggleModal}
+            />
+
         {postInformation.status[0] === "Deleted"?
         <Card classes="content post deleted">
                 
@@ -294,13 +300,10 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
             </div>
                <div>
+                    <p className="post_body_text">
 
-                
-                        <p className="post_body_text">
-
-                            {treatedText}
-                        </p>
-                        
+                        {treatedText}
+                    </p> 
                 </div>
 
              

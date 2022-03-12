@@ -1,6 +1,7 @@
 
 import React, { FC, useEffect, useContext } from "react";
 import TopBar from "../TopandBottom/TopBar";
+import SigninModalHOC from "../SigninModal/SigninModalHOC";
 import ContentArea from "../ContentArea/ContentArea";
 import useAuth from "../hooks/useAuth";
 import { UserInfoContext } from "../context/userContext";
@@ -31,7 +32,10 @@ const Homepage:FC = ({  loadUser}) => {
     return(
         <React.Fragment>
             <TopBar />
+            <SigninModalHOC>
+
             <ContentArea />
+            </SigninModalHOC>
         </React.Fragment>
     );
 

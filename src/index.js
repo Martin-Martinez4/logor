@@ -11,6 +11,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { AuthProvider } from './components/useAuth/AuthProvider';
+import { SigninModalProvider } from "./components/useSigninModal/SigninModalProvider";
 
 import reportWebVitals from './reportWebVitals';
 
@@ -21,11 +22,15 @@ ReactDOM.render(
     <React.StrictMode>
         <AuthProvider>
         <UserInfoProvider>
-          <Routes>
+          <SigninModalProvider>
+            <Routes>
 
-            {/* <App /> */}
-            <Route path="/*" element={<App />} />
-          </Routes>
+              {/* <App /> */}
+              <Route path="/*" element={<App />} />
+            
+            </Routes>
+
+          </SigninModalProvider>
         </UserInfoProvider>
         </AuthProvider>
   </React.StrictMode>

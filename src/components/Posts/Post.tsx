@@ -19,9 +19,9 @@ import useModal from "../hooks/useModal";
 import SigininModal from "../SigninModal/SigninModal";
 import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
-import HeartIcon from "../../assets/svg/HeartIcon/HeartIcon2";
-import CheckmarkIcon from "../../assets/svg/CheckmarkIcon/CheckmarkIcon";
-import ShareIcon2 from "../../assets/svg/ShareIcon2/ShareIcon2";
+import HeartIcon from "../svg/HeartIcon/HeartIcon2";
+import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
+import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 
 const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
 

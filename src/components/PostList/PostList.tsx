@@ -11,6 +11,8 @@ import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
 import CommentBox from "../CommentBox/CommentBox";
 
+import SigninModalHOC from "../SigninModal/SigninModalHOC";
+
 import { UserInfoContext } from "../context/userContext";
 
 import useAuth from "../hooks/useAuth";
@@ -123,7 +125,10 @@ const PostList: FC = () => {
                     </div>
                 </Card>
                 
-                <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts}  ></CommentBox>
+                <SigninModalHOC>
+
+                    <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts}  ></CommentBox>
+                </SigninModalHOC>
               
                 {userPosts}
                
