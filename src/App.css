@@ -79,12 +79,16 @@ body, html {
   overflow-y: hidden;
   font-family: 'Lato-Regular', sans-serif;
   box-sizing: border-box;
+  position: relative;
+  min-height: 100%;
   /* background-color: var(--UIGrey3); */
 }
 body, html { 
   overflow-x: hidden; 
   overflow-y: hidden;
 }
+
+
 
 @media (max-width: 991.98px) {
 
@@ -105,23 +109,26 @@ body, html {
 
 h1{
   font-size: var(--HeaderH1);
+  margin: .5rem;
 }
 
 
 h2{
   font-size: var(--HeaderH2);
+  margin: .5rem;
+
 }
 h3{
   font-size: var(--HeaderH3);
-  margin: 1rem;
+  margin: .5rem;
 }
 h4{
   font-size: var(--HeaderH4);
-  margin: 1rem;
+  margin: .5rem;
 }
 h5{
   font-size: var(--HeaderH5);
-  margin: 1rem;
+  margin: .5rem;
 }
 
 
@@ -387,7 +394,7 @@ input{
 
   input{
 
-    width: 50vw;
+    width: 45vw;
   }
 }
 
@@ -471,7 +478,7 @@ label > input[type=checkbox] {
 
   input{
 
-    width: 35vw;
+    width: 25vw;
   }
 }
 

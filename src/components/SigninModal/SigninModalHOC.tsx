@@ -18,9 +18,10 @@ const SigninModalHOC = ({ children }) => {
                     showModal={showModal}
                     hide={toggleModal}
                     
-            />
-            
+            >
             {children}
+            </SigininModal>
+            
 
         </>
     )

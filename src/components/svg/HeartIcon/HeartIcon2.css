@@ -1,6 +1,23 @@
 
 .svgHeart {
     animation: heartFill 1s cubic-bezier(0.1,0.4,1,0.2) 0s;
+    cursor: pointer;
+}
+
+/* a.svg-cursor:before {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    cursor: pointer;
+    /* plus width and height of the SVG */
+    
+   
+/* }  */
+
+.pointer{
+
+    cursor: pointer;
 }
 
 @keyframes heartFill {
@@ -14,6 +31,7 @@
 .svgHeart{
     fill:var(--Red);
     transition:fill 1s cubic-bezier(0.1,0.4,1,0.2) 0s;
+    cursor: pointer;
 }
 
 .icon__number{
@@ -21,6 +39,7 @@
     font-size: var(--x-small);
     font-style: italic;
     font-weight: 525;
+
 
 
 }

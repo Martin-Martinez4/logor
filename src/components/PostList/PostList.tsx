@@ -12,8 +12,11 @@ import MiniProfile from "../MiniProfile/MiniProfile";
 import CommentBox from "../CommentBox/CommentBox";
 
 import SigninModalHOC from "../SigninModal/SigninModalHOC";
+import UserInfoContext from "../context/UserInfoProvider";
 
-import { UserInfoContext } from "../context/userContext";
+
+import useUserInfo from "../hooks/useUserInfo";
+
 
 import useAuth from "../hooks/useAuth";
 
@@ -31,7 +34,8 @@ const PostList: FC = () => {
     const location = useLocation();
 
     // eslint-disable-next-line
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
 
     const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
@@ -77,9 +81,14 @@ const PostList: FC = () => {
 
         
 
-        fetch(`http://localhost:3001/home/${auth.user_id}`, {
+        fetch(`http://localhost:3001/home/`, {
                 method: "get",
-                headers: { "Content-Type": "application/json"},
+                credentials:'include',
+                    cache:'no-cache',
+                    headers: {
+                        
+                        'Content-Type': 'application/json',
+                      },
             }).then(response => response.json())
             .then(comments => {
 

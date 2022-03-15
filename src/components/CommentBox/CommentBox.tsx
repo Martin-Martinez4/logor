@@ -7,7 +7,7 @@ import "./CommentBox.css";
 import Card from "../Card/Card";
 import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
-import useModal from "../hooks/useModal";
+// import useModal from "../hooks/useModal";
 // import SigininModal from "../SigninModal/SigninModal";
 import useAuth from "../hooks/useAuth";
 
@@ -15,11 +15,16 @@ import useSigninModal from "../hooks/useModal";
 
 
 import { tagsMentionsCreate } from "../utils/tagMentions";
-import { UserInfoContext } from "../context/userContext";
+import useUserInfo from "../hooks/useUserInfo";
+import UserInfoContext from "../context/UserInfoProvider";
+
+
 
 const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments }) => {
 
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
 
     const {id}: {id:string; profile_pic_url:string } = loggedInUser;
 
@@ -89,10 +94,15 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
         
                 const comment_id = uuidv4();
         
-                fetch(`http://localhost:3001/home/${id}`, {
+                fetch(`http://localhost:3001/home/create/comments`, {
         
                     method: "post",
-                    headers: { "Content-Type": "application/json"},
+                    credentials:'include',
+                    cache:'no-cache',
+                    headers: {
+                        
+                        'Content-Type': 'application/json',
+                      },
                     body: JSON.stringify({
                         user_id: id,
                         text_content: newPost.commentBox,

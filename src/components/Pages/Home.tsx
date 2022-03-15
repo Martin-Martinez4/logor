@@ -4,7 +4,7 @@ import TopBar from "../TopandBottom/TopBar";
 import SigninModalHOC from "../SigninModal/SigninModalHOC";
 import ContentArea from "../ContentArea/ContentArea";
 import useAuth from "../hooks/useAuth";
-import { UserInfoContext } from "../context/userContext";
+import { UserInfoContext } from "../context/UserInfoProvider";
 
 import SigininModal from "../SigninModal/SigninModal";
 import useModal from "../hooks/useModal";
@@ -34,7 +34,7 @@ const Homepage:FC = ({  loadUser}) => {
             <TopBar />
             <SigninModalHOC>
 
-            <ContentArea />
+                <ContentArea />
             </SigninModalHOC>
         </React.Fragment>
     );

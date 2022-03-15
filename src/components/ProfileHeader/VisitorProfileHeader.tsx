@@ -5,7 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
 
-import { UserInfoContext } from "../context/userContext";
+import useUserInfo from "../hooks/useUserInfo";
+
 import PageNotFound from "../404Page/PageNotFound";
 
 import UserNotFound from "../UserNotFound/UserNotFound";

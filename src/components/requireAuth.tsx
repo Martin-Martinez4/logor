@@ -1,12 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
 import LoadingUser from "./LoadingUser/LoadingUser";
+import UserInfoContext from "./context/UserInfoProvider";
 
-const RequireAuth = ({ loadUser }) => {
+
+const RequireAuth = () => {
     
     const { auth } = useAuth();
-    const location = useLocation();  
+    const location = useLocation();
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+  
     
     useEffect(() => {
 
@@ -26,12 +30,8 @@ const RequireAuth = ({ loadUser }) => {
      
                  try{
      
-                     loadUser(user[0]) 
+                    loadUser(user[0]) 
                      
-                     // const from = location.state?.from?.pathname || `/home/${user[0].id}`;
-                     
-                     // navigate(from, { replace: true });
-                     // navigate(`/home/${user[0].id}`)
                  }
                  catch(err){
      

@@ -2,9 +2,12 @@
 import React, { FC, useContext } from "react";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
+import UserInfoContext from "../context/UserInfoProvider";
 
 
-import { UserInfoContext } from "../context/userContext";
+
+import useUserInfo from "../hooks/useUserInfo";
+
 
 import { formatDateMonthDayYear } from "../utils/formatDate";
 
@@ -18,7 +21,9 @@ import CalenderIcon from "../../assets/CalenderIcon.svg"
 const ProfileHeader:FC = () =>{
     
      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
 
     return(
 

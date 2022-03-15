@@ -5,7 +5,7 @@ import {
   Route
 } from "react-router-dom";
 // import { AuthProvider } from "./components/useAuth/useAuth";
-import { UserInfoProvider } from "./components/context/userContext";
+import { UserInfoProvider } from "./components/context/UserInfoProvider";
 
 import ReactDOM from 'react-dom';
 import './index.css';

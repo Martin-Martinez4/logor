@@ -1,4 +1,7 @@
+
 import { createContext, useState } from "react";
+
+import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
 const SigninModalContext = createContext(false);
 
@@ -12,8 +15,15 @@ export const SigninModalProvider = ({ children }) => {
 
     }
 
+    const hideModal = () => {
+
+        setShowModal(false)
+    }
+
+
+
     return (
-        <SigninModalContext.Provider value={{ showModal, toggleModal }}>
+        <SigninModalContext.Provider value={{ showModal, toggleModal, hideModal }}>
             {children}
         </SigninModalContext.Provider>
     )

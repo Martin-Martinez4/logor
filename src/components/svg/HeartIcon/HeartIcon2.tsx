@@ -5,6 +5,11 @@ import "./HeartIcon2.css";
 
 import { formatNumber } from '../../../components/utils/formatNumber';
 
+import { refreshTokenBool } from '../../utils/tokenRefreshedBool';
+import useSigninModal from "../../hooks/useModal";
+import useAuth from "../../hooks/useAuth";
+
+
 import { userLiked } from '../../../components/utils/fetchLikes';
 import { deleteLike, createLike, getLikesCount } from '../../../components/utils/fetchLikes';
 
@@ -16,6 +21,9 @@ export const HeartIcon2 = ({ comment_id, loggedInId }) => {
         flagTripped: false
     });
 
+    const { showModal, toggleModal } = useSigninModal();
+    const { auth, setAuth } = useAuth();
+
     const [animateClass, setAnimateClass] = useState(false);
 
     const [numberOfLikes, setNumberOfLikes] = useState();
@@ -24,34 +32,49 @@ export const HeartIcon2 = ({ comment_id, loggedInId }) => {
 
     const handleAnimateClick = async () => {
 
+        try{
+
+            if(await refreshTokenBool(auth, setAuth)){
+
+                if(loggedInId === undefined){
+        
+                    return
+                }
+        
+                if(loggedInLiked){
+                    // Liked already and clcked
+                    await deleteLike(comment_id, loggedInId)
+        
+                    
+                }else{
+        
+                    console.log("create like")
+        
+                    await createLike(comment_id, loggedInId)
+                }
+                
+                let tempLiked = await userLiked(comment_id, loggedInId);
+        
+                let numLikes = await getLikesCount(comment_id)
+        
+                setNumberOfLikes(numLikes)
+        
+                setAnimateClass(tempLiked)
+                setLoggedInLiked(tempLiked)
+                setAnimateClass(!animateClass);
+            }
+            else{
+
+                toggleModal();
+            }
+        }
+        catch{
+
+            toggleModal();
+        }
+
     
 
-        if(loggedInId === undefined){
-
-            return
-        }
-
-        if(loggedInLiked){
-            // Liked already and clcked
-            await deleteLike(comment_id, loggedInId)
-
-            
-        }else{
-
-            console.log("create like")
-
-            await createLike(comment_id, loggedInId)
-        }
-        
-        let tempLiked = await userLiked(comment_id, loggedInId);
-
-        let numLikes = await getLikesCount(comment_id)
-
-        setNumberOfLikes(numLikes)
-
-        setAnimateClass(tempLiked)
-        setLoggedInLiked(tempLiked)
-        setAnimateClass(!animateClass);
     
     }
 
@@ -100,7 +123,7 @@ export const HeartIcon2 = ({ comment_id, loggedInId }) => {
             // store likeCount
         })(comment_id, loggedInId, userLiked);
 
-    },[])
+    },[loggedInId])
 
     useEffect(() => {
 
@@ -111,7 +134,7 @@ export const HeartIcon2 = ({ comment_id, loggedInId }) => {
     return (
         <div className='flexRowContainer2 fitContent'>
 
-            <svg onClick={handleAnimateClick} className={animateClass?"svgHeart":""} width="28" height="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg onClick={handleAnimateClick} className={animateClass?"pointer svgHeart":"pointer"} width="28" height="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_d_237_118)">
                     <path d="M24 3.56303C24 8.46927 18.2849 16 13.8667 16C9.44839 16 4 8.46927 4 3.56302C4 -1.34322 10.6667 -1.02955 13.8667 3.56305C17.3333 -0.582605 24 -1.34322 24 3.56303Z" fill="white"/>
 

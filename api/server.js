@@ -5,13 +5,15 @@ import 'dotenv/config';
 
 import jwt from "express-jwt";
 
+import home from "./home.js"
+
 import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetUserInfoByToken } from './controllers/getUserInfo.js';
 import { handleGetTagID, handleGetUserID } from './controllers/getIds/getIDs.js';
 import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
-import { handleGetComments } from './controllers/getPosts/getOwnPosts.js';
-import { handleCreatePost } from './controllers/post/createPost.js';
-import { handleSlateForDeletion, handleUpdatePost} from './controllers/post/updatePost.js';
+// import { handleGetComments } from './controllers/getPosts/getOwnPosts.js';
+// import { handleCreatePost } from './controllers/post/createPost.js';
+// import { handleSlateForDeletion, handleUpdatePost} from './controllers/post/updatePost.js';
 import { handleGetSinglePost } from './controllers/getPosts/getSinlgePost.js';
 import { handleGetTagNamesFromCommentID } from './controllers/tags/getTagNames.js';
 import { handleCreateTag, handleDeleteTagToComment, handleAddTagToComment } from './controllers/tags/addDeleteTags.js';
@@ -108,29 +110,31 @@ app.post('/register', (req, res) => {
 
 //=================Signed In User=================
 
-app.post("/home/:id", (req, res) => {
+app.use(home);
 
-  handleCreatePost(req, res, db)
+// app.post("/home/create/comments", authenticateToken, (req, res) => {
 
-})
+//   handleCreatePost(req, res, db)
 
-app.get('/home/:id', (req, res) => {
+// })
 
-  handleGetComments(req,res,db)
+// app.get('/home/', authenticateToken, (req, res) => {
 
-})
+//   handleGetComments(req,res,db)
 
-app.post("/home/delete/:comment_id", (req, res) => {
+// })
 
-  handleSlateForDeletion(req, res, db)
+// app.post("/home/delete/:comment_id", (req, res) => {
 
-})
+//   handleSlateForDeletion(req, res, db)
 
-app.post("/home/update/:comment_id", (req, res) => {
+// })
 
-  handleUpdatePost(req, res, db)
+// app.post("/home/update/:comment_id", (req, res) => {
 
-})
+//   handleUpdatePost(req, res, db)
+
+// })
 
 
 //=================Tags=================

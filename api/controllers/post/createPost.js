@@ -5,7 +5,11 @@ export const handleCreatePost = (req, res, db) => {
         //  Like register, create comment, return comments list, run through make posts, setUserPost to result, postlist will rerender
         // INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id )
 
-        const {text_content, user_id, newComment_id} = req.body;
+        const user_id = req.user_id
+
+        console.log("create_id: ", req.user_id)
+
+        const {text_content, newComment_id} = req.body;
 
         // console.log(user_id)
 

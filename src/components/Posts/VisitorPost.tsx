@@ -1,11 +1,12 @@
 
 import React, { FC, useEffect, useState, useContext } from "react";
-import { Link, Route, BrowserRouter } from 'react-router-dom';
+import { Link, Route, BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 
 import Card from "../Card/Card";
 import "./Posts.css";
 
-import { UserInfoContext } from "../context/userContext";
+import useUserInfo from "../hooks/useUserInfo";
+
 
 import formatDate, { formatDateAgo } from "../utils/formatDate";
 
@@ -13,6 +14,12 @@ import useAuth from "../hooks/useAuth";
 import useModal from "../hooks/useModal";
 import SigininModal from "../SigninModal/SigninModal";
 import { refreshTokenBool } from "../utils/tokenRefreshedBool";
+
+import getTagsMentionsLinks from "../utils/getTagsMentionsLinks";
+import addLinkTags from "../utils/addLinkTags";
+
+
+import { tagsMentionsEdit } from "../utils/tagMentions";
 
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
@@ -40,97 +47,10 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     useEffect(() => {
 
-        treatedText = addLinkTags(getTags(postInformation.text_content))
+        treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
 
         // console.log("treated" ,treatedText)
     }, [postInformation.status, postInformation.text_content])
-
-
-    const getTags = (text_string) => {
-
-        if(text_string === null || text_string === undefined){
-            text_string = "";
-        }
-
-        // console.log("triuggered")
-
-        //eslint-disable-next-line
-        const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
-
-        let match;
-
-        let tempArray = [];
-
-        // let startOfText = true;
-
-        let tempPrevIndex;
-
-        while(match = pattern.exec(text_string)){
-
-            tempArray.push([text_string.substring(tempPrevIndex, match.index)])
-            tempArray.push([text_string.substring(match.index, pattern.lastIndex)])
-
-            tempPrevIndex = pattern.lastIndex;
-
-        }
-
-        if(tempPrevIndex !== text_string.length){
-
-            // console.log("last index:",  tempPrevIndex)
-
-            
-            tempArray.push([text_string.substring(tempPrevIndex, text_string.length)])
-        }
-
-        // console.log(tempArray)
-
-        return tempArray;
-    }
-
-    const addLinkTags = (treatedArray) => {
-
-        let linkTagsAdded = [];
-
-        //eslint-disable-next-line
-        const pattern = /(#|@)[a-zA-Z]{1}[a-zA-Z0-9]{1,14}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
-
-        for(let i = 0; i < treatedArray.length; i++){
-
-            if(pattern.test(treatedArray[i][0])){
-
-                if(treatedArray[i][0].startsWith("#")){
-
-                    linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
-                    
-                }
-                else if (treatedArray[i][0].startsWith("@")){
-                    
-                    console.log("hash: ", treatedArray[i][0]);
-                    linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
-                }
-                else{
-
-                    console.log("link: ", treatedArray[i][0]);
-                }
-
-            }
-            else if(treatedArray[i][0][0] === undefined){
-
-                linkTagsAdded.push(" ");
-            }
-            else{
-                
-                // console.log(pattern.test(treatedArray[i][0]))
-                linkTagsAdded.push(<span>{treatedArray[i]}</span>);
-            }
-        }
-
-        // console.log("linkTagsAdded: ",linkTagsAdded)
-
-        return linkTagsAdded;
-
-
-    }
 
 
     const readableDate:String = (new Date(date_posted).toString());
@@ -232,7 +152,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
 
 
-    let treatedText = addLinkTags(getTags(postInformation.text_content))
+    let treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
 
  
  

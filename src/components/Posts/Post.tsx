@@ -3,7 +3,8 @@ import React, { FC, useEffect, useState, useContext } from "react";
 import { Link, Route, BrowserRouter, Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 
-import { UserInfoContext } from "../context/userContext";
+import useUserInfo from "../hooks/useUserInfo";
+
 
 import Card from "../Card/Card";
 import "./Posts.css";
@@ -22,20 +23,26 @@ import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
+import useSigninModal from "../hooks/useModal";
+import UserInfoContext from "../context/UserInfoProvider";
+
+
 
 const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
 
-    
-    
     const maxChars = 920;
 
     const { auth, setAuth } = useAuth();
-    const { showModal, toggleModal } = useModal();
+    // const { showModal, toggleModal } = useModal();
+    const { showModal, toggleModal } = useSigninModal();
+
     const location = useLocation();  
     const navigate = useNavigate();
 
     
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
 
     const [postInformation, setPostInfomration] = useState({
 
@@ -44,7 +51,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     });
 
 
-    const [charsLeft, setCharsLeft] = useState(maxChars - postInformation.text_content.length);
+    const [charsLeft, setCharsLeft] = useState(maxChars - (postInformation.text_content?.length? postInformation.text_content.length:0));
 
 
     useEffect(() => {
@@ -119,39 +126,42 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }
 
+
+
     const toggleEditMode = async () => {
 
         try{
 
             if(await refreshTokenBool(auth, setAuth)){
     
+        
+                let tempVisible:boolean = !(editMode.visible);
+        
+                setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
+        
+                if(deleteConfirmationVisible){
+        
+                    setDeleteConfirmationVisible(false);
+                }
+            }else{
+        
+                // alert("please sign in to Edit post")
                 
-                        let tempVisible:boolean = !(editMode.visible);
-                
-                        setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
-                
-                        if(deleteConfirmationVisible){
-                
-                            setDeleteConfirmationVisible(false);
-                        }
-                    }else{
-                
-                        // alert("please sign in to Edit post")
-                        
-                        // navigate("/", { replace: true });
-                
-                        toggleModal()
-                    }
-        }
+                // navigate("/", { replace: true });
+        
+                toggleModal()
+            }
+}
         catch{
 
             toggleModal()
                     
         }
-
-
-        
     }
+
+
+
+
         
     useEffect(() => {
 
@@ -216,7 +226,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         setEdiMode(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-        setCharsLeft(maxChars - e.target.value.length)
+        setCharsLeft(maxChars - (e.target.value?.length? e.target.value.length: 0) )
 
         e.preventDefault()
     }

@@ -9,7 +9,7 @@ import { useContext } from 'react';
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import RequireAuth from "./components/requireAuth";
 // import useAuth from "./components/useAuth/useAuth";
-import { UserInfoContext } from './components/context/userContext';
+// import { UserInfoContext } from './components/context/userContext';
 import Home from './components/Pages/Home';
 import Landingpage from './components/Pages/Landingpage';
 import Register from './components/Register/Register';
@@ -19,8 +19,9 @@ import PageNotFound from "./components/404Page/PageNotFound";
 import Refresh from "./components/Refresh/Refresh"
 
 import PersistLogin from './components/PersistLogin/PersistLogin';
-import LoadingUser from './components/LoadingUser/LoadingUser';
+// import LoadingUser from './components/LoadingUser/LoadingUser';
 
+import UserInfoContext from "./components/context/UserInfoProvider";
 
 // function RequireAuth({ children, redirectTo }) {
 //   let isAuthenticated = useAuth();
@@ -36,45 +37,51 @@ import LoadingUser from './components/LoadingUser/LoadingUser';
 function App() {
 
   // eslint-disable-next-line
-  const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+  // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
 
-  const loadUser = (data) => {
+  // const loadUser = (data) => {
 
-    // const [id, username, joined, nickname, profile_pic_url, description, header_img_url, location, links] = data;
+  //   // const [id, username, joined, nickname, profile_pic_url, description, header_img_url, location, links] = data;
 
-    setloggedInUser({
+  //   setloggedInUser({
         
-            id: data.id,
-            username: data.username,
-            joined_date: data.joined_date,
-            nickname: data.nickname,
-            profile_pic_url: data.profile_pic_url,
-            description: data.description,
-            header_img_url: data.header_img_url,
-            location: data.location,
-            links: data.links,
-    })
+  //           id: data.id,
+  //           username: data.username,
+  //           joined_date: data.joined_date,
+  //           nickname: data.nickname,
+  //           profile_pic_url: data.profile_pic_url,
+  //           description: data.description,
+  //           header_img_url: data.header_img_url,
+  //           location: data.location,
+  //           links: data.links,
+  //   })
 
-  }
+  // }
 
   return (
     <div className="App container">
 
       <Routes>
 
+        {/* <Route element={<UserInfoContext/>}> */}
+
         <Route path="/refresh" element={<Refresh/>} />
 
-        <Route path="/" element={<Landingpage loadUser={loadUser} />} />
+        {/* <Route path="/" element={<Landingpage loadUser={loadUser} />} /> */}
+        <Route path="/" element={<Landingpage />} />
 
-        <Route path="/register" element={<Register loadUser={loadUser} />} />
+        {/* <Route path="/register" element={<Register loadUser={loadUser} />} /> */}
+        <Route path="/register" element={<Register />} />
         <Route path="/success" element={<SuccessPage/>} />
 
 
           <Route element={<PersistLogin/>}>
-            <Route element={<RequireAuth loadUser={loadUser} />} >
+            {/* <Route element={<RequireAuth loadUser={loadUser} />} > */}
+            <Route element={<RequireAuth />} >
     
-                <Route  path="/home/:id" element={<Home loadUser={loadUser}/>} />
-                <Route path="/loading/user/:id" element={<LoadingUser loadUser={loadUser}/>} />
+                {/* <Route  path="/home/:id" element={<Home loadUser={loadUser}/>} /> */}
+                <Route  path="/home/:id" element={<Home />} />
+                {/* <Route path="/loading/user/:id" element={<LoadingUser loadUser={loadUser}/>} /> */}
 
 
             </Route>
@@ -99,6 +106,7 @@ function App() {
 
         {/* <Route path="/test" element={<VisitorPage/>}/> */}
         <Route path="*" element={<PageNotFound />} />
+        {/* </Route> */}
       </ Routes>
 
     </div>

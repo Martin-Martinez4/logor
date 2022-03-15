@@ -5,7 +5,7 @@
     /* background-color: #002233; */
     background-color: var(--UIBlack);
     width: 100vw;
-    height: 3.5rem;
+    height: 6vh;
     border: 1px solid black;
     display: flex;
 
@@ -76,7 +76,8 @@
     width: 100vw;
     height: 6vh;
     border: 1px solid black;
-    grid-area: footer;
     display: flex;
 
 }
+
+

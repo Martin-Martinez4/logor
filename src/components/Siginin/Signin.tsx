@@ -1,11 +1,21 @@
 
-import React, { FC, useState } from "react";
+import React, { FC, useState, useContext } from "react";
 
 import { useNavigate, Link, useLocation } from "react-router-dom";
 
-import useAuth from "../hooks/useAuth";
+import useSigninModal from "../hooks/useModal";
 
-const Signin:FC = ({ loadUser }) => {
+import useAuth from "../hooks/useAuth";
+import useUserInfo from "../hooks/useUserInfo";
+import UserInfoContext from "../context/UserInfoProvider";
+
+const Signin:FC = () => {
+
+    const { showModal, toggleModal } = useSigninModal();
+
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
+    // const { loadUser } = useUserInfo();
 
     const { auth, setAuth } = useAuth();
 
@@ -115,9 +125,15 @@ const Signin:FC = ({ loadUser }) => {
                             loadUser(user[0]) 
                             
                             const from = location.state?.from?.pathname || `/home/${user[0].id}`;
+
+                            console.log(showModal)
+
+                            if(showModal){
+
+                                toggleModal();
+                            }
                             
-                            navigate(from, { replace: true });
-                            // navigate(`/home/${user[0].id}`)
+                            navigate(`/home/${user[0].id}`)
                             
                         }
                         catch(err){
@@ -187,13 +203,13 @@ const Signin:FC = ({ loadUser }) => {
         
     <form className="signin flexColContainer">
 
-        <h1> Welcome!</h1>
-        <h2>Login!</h2>
+        <h2> Welcome!</h2>
+        <h3>Login!</h3>
 
         <div className=" flexColContainer inner">
             <div className="flexColContainer">
 
-            <span className={`${loginError.inputError?"errorBackground":loginError.flagTripped?"fadeOut":"hdden"}`} >incorrect username and/or password</span>
+                <span className={`${loginError.inputError?"errorBackground":loginError.flagTripped?"fadeOut":"hdden"}`} >incorrect username and/or password</span>
 
 
                 <label htmlFor="uname" className="upperleft ">
