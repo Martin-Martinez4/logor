@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
 
-import useUserInfo from "../hooks/useUserInfo";
+import UserInfoContext from "../context/UserInfoProvider";
 
 import PageNotFound from "../404Page/PageNotFound";
 
@@ -35,7 +35,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
     const [undefUser, setUndefUser] = useState(false)
     
      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
     const [visiteeUser, setVisiteeUser] = useState({
         username:"",
@@ -93,7 +93,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                  
                 })
 
-                const userID =  await getUserIdByNickname(userOrTagID)
+                const userID = await getUserIdByNickname(userOrTagID)
 
 
                 const followersCount =  await getFollowersCount(userID)

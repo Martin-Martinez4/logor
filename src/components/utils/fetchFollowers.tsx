@@ -3,7 +3,7 @@
 
 export const getFollowersCount = async (user_id) => {
 
-    const followersCount = await fetch(`http://localhost:3001/users/number/followers/${user_id}`, {
+    const followersCount = await fetch(`http://localhost:3001/user/number/followers/${user_id}`, {
 
         method: "get",
         headers: { "Content-Type": "application/json"},
@@ -26,7 +26,7 @@ export const getFollowersCount = async (user_id) => {
 
 export const getFollowingCount = async (user_id) => {
 
-    const followingCount = await fetch(`http://localhost:3001/users/number/following/${user_id}`, {
+    const followingCount = await fetch(`http://localhost:3001/user/number/following/${user_id}`, {
 
         method: "get",
         headers: { "Content-Type": "application/json"},

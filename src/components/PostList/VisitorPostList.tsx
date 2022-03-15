@@ -33,7 +33,8 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
      console.log(location.pathname);
  
      // eslint-disable-next-line
-     const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
  
      const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
  

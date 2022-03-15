@@ -63,8 +63,6 @@ function App() {
 
       <Routes>
 
-        {/* <Route element={<UserInfoContext/>}> */}
-
         <Route path="/refresh" element={<Refresh/>} />
 
         {/* <Route path="/" element={<Landingpage loadUser={loadUser} />} /> */}
@@ -106,7 +104,6 @@ function App() {
 
         {/* <Route path="/test" element={<VisitorPage/>}/> */}
         <Route path="*" element={<PageNotFound />} />
-        {/* </Route> */}
       </ Routes>
 
     </div>

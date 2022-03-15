@@ -18,6 +18,9 @@ import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 import getTagsMentionsLinks from "../utils/getTagsMentionsLinks";
 import addLinkTags from "../utils/addLinkTags";
 
+import UserInfoContext from "../context/UserInfoProvider";
+
+
 
 import { tagsMentionsEdit } from "../utils/tagMentions";
 
@@ -34,7 +37,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
     const location = useLocation();  
     const navigate = useNavigate();
 
-    const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
     const [postInformation, setPostInfomration] = useState({
 

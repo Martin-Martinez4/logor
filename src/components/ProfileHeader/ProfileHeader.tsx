@@ -1,5 +1,5 @@
 
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useEffect } from "react";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
 import UserInfoContext from "../context/UserInfoProvider";
@@ -23,6 +23,11 @@ const ProfileHeader:FC = () =>{
      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
+    useEffect(() => {
+
+                 
+    }, [loggedInUser])
 
 
     return(
@@ -63,7 +68,7 @@ const ProfileHeader:FC = () =>{
                 </div>
 
                 <div className="profile_other profile_following">
-                    <p>Followers: <em>100</em></p> <p>Following: <em>100</em></p>
+                    <p>Followers: <em>{loggedInUser.followers}</em></p> <p>Following: <em>{loggedInUser.following}</em></p>
                 </div>
 
             </div>

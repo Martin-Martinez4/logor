@@ -1,10 +1,5 @@
 
 import 'dotenv/config';
-// const signin = require('./controllers/signin');
-
-import jwt from "express-jwt";
-
-// import { authenticateToken } from './middleware/authorization.js';
 
 import { handleGetComments } from './controllers/getPosts/getOwnPosts.js';
 import { handleCreatePost } from './controllers/post/createPost.js';
@@ -15,8 +10,6 @@ import { authenticateToken } from './middleware/authorization.js';
 
 // Database queries with the knex module
 import knex from 'knex';
-import { env } from 'process';
-import { refreshCookie } from './utils/createTokens.js';
 
 const db = knex({
     client: 'pg',
@@ -30,17 +23,10 @@ const db = knex({
   });
 
 
-
-
-
 // const express = require('express');
 import express from 'express';
 
-
-
-
 const router = express.Router() 
-
 
 
 router.post("/home/create/comments", authenticateToken, (req, res) => {
