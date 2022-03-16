@@ -2,6 +2,7 @@
 .topBar__search.contained{
 
     width: 100%;
+    height: fit-content;
     margin: 0;
 
     border-radius: 5px 5px 2px 2px;
@@ -59,7 +60,7 @@
     /* background-color: #002233; */
     background-color: var(--UIBlack);
     width: 100vw;
-    height: fit-content;
+    height: 6vh;
     border: 1px solid black;
     display: flex;
 
