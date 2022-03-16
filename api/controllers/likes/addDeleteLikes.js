@@ -1,7 +1,9 @@
 
 export const handleAddLike = (req, res,  db) => {
 
-    const { user_id, comment_id } = req.body;
+    const { comment_id } = req.body;
+
+    const user_id = req.user_id
 
     db("user_likes").insert({
 
@@ -22,7 +24,9 @@ export const handleAddLike = (req, res,  db) => {
 
 export const handleDeleteLike = (req, res,  db) => {
 
-    const { user_id, comment_id } = req.body;
+    const { comment_id } = req.body;
+
+    const user_id = req.user_id;
 
     db("user_likes")
     .where({

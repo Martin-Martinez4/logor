@@ -1,7 +1,9 @@
 
 export const handleAddFollower = (req, res, db) => {
 
-    const {followee_id, follower_id} = req.body
+    const follower_id = req.user_id
+
+    const { followee_id} = req.body
 
     console.log(followee_id)
 
@@ -25,7 +27,9 @@ export const handleAddFollower = (req, res, db) => {
 
 export const handleDeleteFollower = (req, res, db) => {
 
-    const {followee_id, follower_id} = req.body
+    const follower_id = req.user_id
+
+    const {followee_id } = req.body
 
 
     db("follower_followee")

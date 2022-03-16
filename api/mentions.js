@@ -25,6 +25,8 @@ import express from 'express';
 
 const router = express.Router() 
 
+// Create and update are protected are these are part of these functions, no need for middleware
+
 router.post("/comment/addMention/", (req, res) => {
 
     handleAddMentionToComment(req, res, db)

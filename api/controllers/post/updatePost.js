@@ -5,6 +5,8 @@ export const handleUpdatePost = (req, res, db) => {
 
     const { comment_id } = req.params
 
+    const user_id = req.user_id;
+
     const { text_content } = req.body;
 
     const newDate = new Date((new Date().getTime())).toUTCString();
@@ -15,7 +17,10 @@ export const handleUpdatePost = (req, res, db) => {
     db.transaction(trx => {
     trx("comments")
     .returning(['text_content', 'status'])
-    .where('comment_id', comment_id)
+    .where({
+        comment_id: comment_id,
+        user_id: user_id
+    })
     .update({ 
         text_content: text_content, 
         status: status 
@@ -56,7 +61,11 @@ export const handleUpdatePost = (req, res, db) => {
 
 export const handleSlateForDeletion = (req, res, db) => {
 
-    const { comment_id } = req.params
+    const { comment_id } = req.params;
+
+    const user_id = req.user_id;
+
+    console.log("user_id: ", user_id)
 
     const text_content = null;
     const newDate = new Date((new Date().getTime())).toUTCString();
@@ -66,7 +75,9 @@ export const handleSlateForDeletion = (req, res, db) => {
     db.transaction(trx => {
 
         trx('comments')
-        .where({ comment_id: comment_id })
+        .where({ comment_id: comment_id,
+                user_id: user_id 
+        })
         .update({
 
             text_content: text_content,
@@ -76,7 +87,9 @@ export const handleSlateForDeletion = (req, res, db) => {
         .then(() => {
 
             db.select('*').from('comments')
-                .where('comment_id', '=', comment_id)
+                .where({
+                    comment_id: comment_id,
+                })
                 .then((comment) => {
                     
                     // console.log(comment[0])

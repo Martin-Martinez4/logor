@@ -41,13 +41,13 @@ router.get('/home/', authenticateToken, (req, res) => {
 
 })
 
-router.post("/home/delete/:comment_id", (req, res) => {
+router.post("/home/delete/:comment_id", authenticateToken, (req, res) => {
 
     handleSlateForDeletion(req, res, db)
 
 })
 
-router.post("/home/update/:comment_id", (req, res) => {
+router.post("/home/update/:comment_id", authenticateToken, (req, res) => {
 
     handleUpdatePost(req, res, db)
 

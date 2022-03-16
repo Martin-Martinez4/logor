@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import "./HeartIcon2.css";
 
@@ -13,7 +13,10 @@ import useAuth from "../../hooks/useAuth";
 import { userLiked } from '../../../components/utils/fetchLikes';
 import { deleteLike, createLike, getLikesCount } from '../../../components/utils/fetchLikes';
 
-export const HeartIcon2 = ({ comment_id, loggedInId }) => {
+import UserInfoContext from "../../context/UserInfoProvider";
+
+
+export const HeartIcon2 = ({ comment_id }) => {
 
     const [loginError, setLoginError] = useState({
 
@@ -23,6 +26,10 @@ export const HeartIcon2 = ({ comment_id, loggedInId }) => {
 
     const { showModal, toggleModal } = useSigninModal();
     const { auth, setAuth } = useAuth();
+
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
+    const loggedInId = loggedInUser.id
 
     const [animateClass, setAnimateClass] = useState(false);
 
@@ -43,17 +50,17 @@ export const HeartIcon2 = ({ comment_id, loggedInId }) => {
         
                 if(loggedInLiked){
                     // Liked already and clcked
-                    await deleteLike(comment_id, loggedInId)
+                    await deleteLike(comment_id)
         
                     
                 }else{
         
                     console.log("create like")
         
-                    await createLike(comment_id, loggedInId)
+                    await createLike(comment_id)
                 }
                 
-                let tempLiked = await userLiked(comment_id, loggedInId);
+                let tempLiked = await userLiked(comment_id );
         
                 let numLikes = await getLikesCount(comment_id)
         
@@ -103,7 +110,7 @@ export const HeartIcon2 = ({ comment_id, loggedInId }) => {
 
             }else{
 
-                tempLiked = await userLiked(comment_id, loggedInId);
+                tempLiked = await userLiked(comment_id );
 
                 if(tempLiked){
 

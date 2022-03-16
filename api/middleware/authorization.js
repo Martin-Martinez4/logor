@@ -1,35 +1,6 @@
 
 import jwt from "jsonwebtoken"
 
-// export const requireAuth = (req, res, next) => {
-
-//     const authHeader = req.headers.authorization;
-
-//     // const jwtToken = authHeader && authHeader.split(' ')[1];
-//     const jwtToken = authHeader && authHeader;
-
-//     console.log("veri: ", jwtToken)
-
-//    if(jwtToken === null){
-
-//     return res.status(401).json({error: "Null Token"})
-
-//    }
-
-//    jwt.verify(jwtToken, process.env.ACCESS_SECRET, (err, id) => {
-
-//     console.log("user: ",user)
-    
-//     if(err){
-//         return res.status(401).json({error: err.message });
-//     }
-    
-//         // console.log(user)
-//         req.user  = user;
-//         next();
-
-//    });
-// }
 
 export const authenticateToken = (req, res, next) => {
 

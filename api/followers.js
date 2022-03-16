@@ -49,13 +49,15 @@ router.post("/user/is/follower/", (req, res) => {
 
 })
 
-router.post("/user/create/following/", (req, res) => {
+// authenticateToken
+router.post("/user/create/following/", authenticateToken, (req, res) => {
 
   handleAddFollower(req, res, db)
   
 })
 
-router.delete("/user/delete/following/", (req, res) => {
+// authenticateToken
+router.delete("/user/delete/following/", authenticateToken, (req, res) => {
 
   handleDeleteFollower(req, res, db)
   

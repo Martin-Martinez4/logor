@@ -1,7 +1,8 @@
 
 export const handleCheckIfLiked = (req, res ,db) => {
 
-    const {user_id, comment_id} = req.body
+    const { comment_id} = req.body
+    const user_id  = req.user_id
 
     console.log(user_id)
 

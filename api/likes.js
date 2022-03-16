@@ -27,13 +27,15 @@ import express from 'express';
 
 const router = express.Router();
 
-router.post("/comment/add/like/", (req, res) => {
+// authenticateToken
+router.post("/comment/add/like/", authenticateToken, (req, res) => {
 
     handleAddLike(req, res, db)
   
 })
 
-router.delete("/comment/delete/like/", (req, res) => {
+// authenticateToken
+router.delete("/comment/delete/like/", authenticateToken, (req, res) => {
 
     handleDeleteLike(req, res, db)
 
@@ -45,7 +47,8 @@ router.get("/comment/count/likes/:comment_id", (req, res) => {
 
 })
 
-router.post("/user/liked/comment/", (req, res) => {
+
+router.post("/user/liked/comment/", authenticateToken, (req, res) => {
 
     handleCheckIfLiked(req, res ,db)
 

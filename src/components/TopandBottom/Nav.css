@@ -1,13 +1,70 @@
 
+.topBar__search.contained{
+
+    width: 100%;
+    margin: 0;
+
+    border-radius: 5px 5px 2px 2px;
+
+    border-bottom: none;
+
+}
+
+.searchBar_container{
+    position: relative;
+    display: flex;
+
+    flex-direction: column;
+
+    width: fit-content;
+    height: auto;
+
+    width: 56vw;
+
+}
+
+.autocom-box{
+
+    border: 2px solid var(--UIGrey1);
+
+    border-top: 1px dotted var(--UIGrey1);
+
+    box-sizing: border-box;
+
+    position: absolute;
+
+    top: 1.75rem;
+
+    background-color: var(--UIWhite);
+
+    width: 100%;
+
+    margin: 0;
+
+    border-radius: 2px 2px 5px 5px;
+
+}
+
+.autocom-box>p{
+
+    margin-left: .25rem;
+
+    border-radius: 2px 2px 5px 5px;
+
+}
+
 
 .topBar{
 
     /* background-color: #002233; */
     background-color: var(--UIBlack);
     width: 100vw;
-    height: 6vh;
+    height: fit-content;
     border: 1px solid black;
     display: flex;
+
+    padding: .2rem;
+    box-sizing: border-box;
 
     align-items: center;
 }
@@ -15,7 +72,8 @@
 .topBar__search{
 
     align-self: center;
-    width: 56vw;
+    /* width: 56vw; */
+    width: 100%;
 
 }
 

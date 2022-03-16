@@ -202,7 +202,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         fetch(`http://localhost:3001/home/delete/${uuid}`, {
     
             method: "post",
-            headers: { "Content-Type": "application/json"},
+            credentials:'include',
+            cache:'no-cache',
+            headers: {
+                
+                'Content-Type': 'application/json',
+              },
 
         })
         .then(res => res.json()
@@ -243,7 +248,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         fetch(`http://localhost:3001/home/update/${uuid}`, {
     
             method: "post",
-            headers: { "Content-Type": "application/json"},
+            credentials:'include',
+            cache:'no-cache',
+            headers: {
+                
+                'Content-Type': 'application/json',
+              },
             body: JSON.stringify({
                 text_content: editMode.textContent
             })
