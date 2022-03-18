@@ -35,9 +35,9 @@ const TopBar: FC = () => {
                 <input type="search" id="topBarSearch" name="topBarSearch" value={searchState.topBarSearch} onChange={oninputChange} placeholder="Search..." className="topBar__search contained" >
                     
                 </input>
-                <div className="autocom-box">
+                {/* <div className="autocom-box">
                     <p>Test</p>
-                    {/* <p>
+                    <p>
                         <MiniProfile></MiniProfile>
                     </p>
                     <p>
@@ -47,11 +47,11 @@ const TopBar: FC = () => {
                     <p>
                         <MiniProfile></MiniProfile>
 
-                    </p> */}
+                    </p> 
                     <p>Test</p>
                     <p>Test</p>
 
-                </div>
+                </div> */}
 
             </div>
             

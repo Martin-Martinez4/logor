@@ -63,18 +63,25 @@ export const handleGetUserInfoByToken = (req, res, db) => {
         }
     }
 
-   
-    // db.select('*').from('users')
-    // .join('user_headers', 'users.id', 'user_headers.user_id')
-    //     .where('users.username', '=', data[0].username)
-    //     .then((user) => {
-            
-    //         console.log(user[0])
-    //         res.json(user[0])
-    //     })
-    //     .catch((err) => console.log(err))
-          
-
-    //     .catch(() => res.status(400).json("Trouble loggining in"))
 
 }
+
+export const handleGetGetMiniProfileInfo = (req, res, db) => {
+
+    const user_id = req.params.id;
+
+    console.log(user_id)
+
+    db.select("*").from("users")
+    .where({
+
+        id: user_id
+    })
+    .then(userInfo => {
+
+        res.json(userInfo)
+    })
+    .catch(err => console.log(err))
+
+}
+

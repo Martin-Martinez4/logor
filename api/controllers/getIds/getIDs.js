@@ -47,4 +47,19 @@ export const handleGetTagIDName = (req, res, db) => {
 
 }
 
+export const handleGetRandomUserIDs = (req,res, db) => {
+
+    const { number } =  req.params;
+
+    db.select("id").from("users")
+    .orderBy(db.raw('RANDOM()'))
+    .limit(parseInt(number))
+    .then((user_ids) => {
+
+        res.json(user_ids);
+    })
+    .catch(err => console.log(err))
+
+}
+
 

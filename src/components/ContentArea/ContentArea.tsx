@@ -1,5 +1,7 @@
 
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
+
+import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
 
 import SideCard from "../SideCards/SideCard";
 import PostList from "../PostList/PostList";
@@ -13,6 +15,79 @@ import HeartIcon from "../../assets/HeartIcon.svg";
 import"./contentArea.css";
 
 const ContentArea:FC = () => {
+
+    const [ suggestedProfiles, setSuggestedProfiles ] = useState();
+
+    let miniprofilesArray = [];
+
+    // get three random user_ids
+    useEffect(() => {
+
+        (async (setSuggestedProfiles) => {
+
+            const featuredUsers = await getRandomUserIDs(3);
+
+            console.log("featueredUsers: ", featuredUsers)
+
+            setSuggestedProfiles(featuredUsers)
+
+            // console.log("setSuggestedProfiles: ", suggestedProfiles)
+            
+        })(setSuggestedProfiles)
+        
+        console.log("setSuggestedProfiles: ", suggestedProfiles)
+        
+    }, [])
+    
+    useEffect(() => {
+        
+        console.log("setSuggestedProfiles 2: ", suggestedProfiles)
+        // create the miniProfile  element list here
+        const createMiniProfiles = (suggestedProfiles) => {
+
+            let profilesArray = []
+
+            console.log("inside function: ",suggestedProfiles)
+
+            for(let i = 0; i < suggestedProfiles?.length?suggestedProfiles.length:0; i++){
+
+                console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])
+
+                profilesArray.push( <MiniProfile user_id={suggestedProfiles[i]["id"]} ></MiniProfile>)
+
+            }
+
+            return profilesArray
+        }
+
+        miniprofilesArray = createMiniProfiles(suggestedProfiles);
+
+        console.log("miniprofilesArray2: ", miniprofilesArray)
+
+
+
+    }, [suggestedProfiles])
+
+    const createMiniProfiles = (suggestedProfiles) => {
+
+        let profilesArray = []
+
+        console.log("inside function: ",suggestedProfiles)
+
+        for(let i = 0; i < suggestedProfiles?.length?suggestedProfiles.length:0; i++){
+
+            console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])
+
+            profilesArray.push( <MiniProfile user_id={suggestedProfiles[i]["id"]} ></MiniProfile>)
+
+        }
+
+        return profilesArray
+    }
+
+    miniprofilesArray = createMiniProfiles(suggestedProfiles);
+
+    console.log("miniprofilesArray: ", miniprofilesArray)
 
     return (
         <div className="contentArea">
@@ -62,9 +137,9 @@ const ContentArea:FC = () => {
 
                
                 <div className="rightSide_content featured_content">
-                    <MiniProfile></MiniProfile>
-                    <MiniProfile></MiniProfile>
-                    <MiniProfile></MiniProfile>
+                    {/* <MiniProfile></MiniProfile>
+                    <MiniProfile></MiniProfile> */}
+                    {miniprofilesArray}
                 </div>
                        
             </SideCard> 

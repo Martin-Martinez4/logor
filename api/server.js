@@ -17,8 +17,8 @@ import mentions from "./mentions.js";
 
 import responses from "./responses.js";
 
-import { handleGetUserInfo, handleGetUserInfoByNickname } from './controllers/getUserInfo.js';
-import { handleGetUserID } from './controllers/getIds/getIDs.js';
+import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetGetMiniProfileInfo } from './controllers/getUserInfo.js';
+import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/getIDs.js';
 import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 
@@ -119,6 +119,18 @@ app.get("/usersInfo/:id", (req, res) => {
 app.get("/usersInfo/byNickname/:nickname", (req, res) => {
 
   handleGetUserInfoByNickname(req, res, db);
+
+})
+
+app.get("/users/info/random/:number", (req, res) => {
+
+  handleGetRandomUserIDs(req, res, db);
+
+})
+
+app.get("/users/info/miniprofile/:id", (req, res) => {
+
+  handleGetGetMiniProfileInfo(req, res, db);
 
 })
 
