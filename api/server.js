@@ -17,6 +17,8 @@ import mentions from "./mentions.js";
 
 import responses from "./responses.js";
 
+import simpleSearch from "./simpleSearch.js"
+
 import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetGetMiniProfileInfo } from './controllers/getUserInfo.js';
 import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/getIDs.js';
 import { handleSignin, handleSignin2} from './controllers/signin.js';
@@ -157,6 +159,10 @@ app.use(mentions);
 
 app.use(likes);
 
+
+//=================Simple Search=================
+
+app.use(simpleSearch)
 
 //=================Tokens=================
 
