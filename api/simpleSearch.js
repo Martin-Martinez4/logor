@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 import { authenticateToken } from './middleware/authorization.js';
 
-import { handleGetUsersLike } from './controllers/search/searchLike.js';
+import { handleGetUsersLike, handleGetTagsLike } from './controllers/search/searchLike.js';
 
 // Database queries with the knex module
 import knex from 'knex';
@@ -30,6 +30,12 @@ const router = express.Router()
 router.post("/users/search/", (req, res) => {
 
     handleGetUsersLike(req, res, db);
+});
+
+router.post("/tags/search/", (req, res) => {
+
+    handleGetTagsLike(req, res, db)
+
 })
 
 export default router;
