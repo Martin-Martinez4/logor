@@ -58,11 +58,13 @@
 
     margin: 0;
 
+    /* padding: 1rem; */
+
     border-radius: 2px 2px 5px 5px;
 
     z-index: 1;
 
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 
 
 }
@@ -72,5 +74,28 @@
     margin-left: .25rem;
 
     border-radius: 2px 2px 5px 5px;
+    
+}
+
+.autocom_category>*{
+
+    border-bottom: dotted 1px var(--Primary2);
+
+    margin-left: 1.25rem;
+    
+    
+}
+
+.autocom_link{
+    
+    text-decoration: none;
+    color: var(--UIBlack);
 
 }
+
+.autocom_link:hover{
+    
+    color: var(--UIGrey);
+
+}
+

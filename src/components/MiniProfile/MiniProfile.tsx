@@ -39,7 +39,7 @@ const MiniProfile:FC = ({ user_id }) => {
         <div className="miniProfile">
             <img src={miniProfileUser?.profile_pic_url} alt="Monkey 2" className="profilePicture" />
             <div className="profileName">
-                <a href={`/users/nickname/` + miniProfileUser?.nickname.substring(1,)}>
+                <a className="miniProfile_link" href={`/users/nickname/` + miniProfileUser?.nickname.substring(1,)}>
                     <p><strong>{miniProfileUser?.username}</strong></p>
                     <p><em>{miniProfileUser?.nickname}</em></p>
                 </a>

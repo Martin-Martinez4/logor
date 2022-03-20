@@ -61,3 +61,26 @@
 
 }
 
+.miniProfile_link{
+
+    margin: 0;
+    width: fit-content;
+    text-align: left;
+    color: var(--UIBlack);
+
+    text-decoration: none;
+
+
+}
+
+.miniProfile_link:hover{
+    
+    color: var(--UIGrey);
+
+}
+
+.miniProfile_link>p{
+
+    margin: 0;
+}
+

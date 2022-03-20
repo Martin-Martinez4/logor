@@ -170,6 +170,20 @@ h5{
   
 }
 
+.height75{
+
+  height: 75vh;
+}
+
+.height50{
+
+  height: 50vh;
+}
+.height100Percent{
+
+  height: 100%;
+}
+
 .error{
 
   color: var(--Red);
