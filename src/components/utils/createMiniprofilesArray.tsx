@@ -5,11 +5,11 @@ import MiniProfile from "../MiniProfile/MiniProfile"
 
     let profilesArray = []
 
-    console.log("inside function: ",suggestedProfiles)
+    // console.log("inside function: ",suggestedProfiles)
 
     for(let i = 0; i < suggestedProfiles?.length?suggestedProfiles.length:0; i++){
 
-        console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])
+        // console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])
 
         profilesArray.push( <MiniProfile user_id={suggestedProfiles[i]["id"]} ></MiniProfile>)
 

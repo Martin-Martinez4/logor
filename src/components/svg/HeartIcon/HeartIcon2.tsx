@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 
 import "./HeartIcon2.css";
 
@@ -31,6 +31,8 @@ export const HeartIcon2 = ({ comment_id }) => {
 
     const loggedInId = loggedInUser.id
 
+    const mountedRef = useRef(true)
+
     const [animateClass, setAnimateClass] = useState(false);
 
     const [numberOfLikes, setNumberOfLikes] = useState();
@@ -55,7 +57,7 @@ export const HeartIcon2 = ({ comment_id }) => {
                     
                 }else{
         
-                    console.log("create like")
+                    // console.log("create like")
         
                     await createLike(comment_id)
                 }
@@ -87,48 +89,64 @@ export const HeartIcon2 = ({ comment_id }) => {
 
     useEffect(() => {
 
-        (async (comment_id, setNumberOfLikes) => {
+        let isMounted = true; 
 
-            let numLikes = await getLikesCount(comment_id)
-
-            setNumberOfLikes(numLikes)
-
-        })(comment_id, setNumberOfLikes);
+        (async (comment_id, setNumberOfLikes, isMounted) => {
 
 
-        (async (comment_id, loggedInId, userLiked) => {
+                let numLikes = await getLikesCount(comment_id)
 
-            console.log(comment_id)
+                if (!mountedRef.current) return null
+                if(isMounted){
 
-            console.log("heart SVG: ", loggedInId)
-
-            let tempLiked;
-
-            if(loggedInId === undefined){
-
-                tempLiked = false;
-
-            }else{
-
-                tempLiked = await userLiked(comment_id );
-
-                if(tempLiked){
-
-                    setAnimateClass(tempLiked)
+                    setNumberOfLikes(numLikes)
                 }
+                else{
+                    return
+                }
+    
+
+
+        })(comment_id, setNumberOfLikes, isMounted);
+
+
+        (async (comment_id, loggedInId, userLiked, isMounted) => {
+
+            if(isMounted){
+
+                let tempLiked;
+    
+                if(loggedInId === undefined){
+    
+                    tempLiked = false;
+    
+                }else{
+    
+                    tempLiked = await userLiked(comment_id );
+                    
+                    if (!mountedRef.current) return null
+
+                    if(tempLiked){  
+    
+                        setAnimateClass(tempLiked)
+                    }
+                }
+    
+                setLoggedInLiked(tempLiked)
+            }
+            else{
+
+                return
             }
 
-            setLoggedInLiked(tempLiked)
 
 
-            // console.log("loogined: ", loggedInLiked)
+           
+
             
-            // get didLoggedInLike
-            // set animateClass to didLoggedInLike response
-    
-            // get likeCount
-            // store likeCount
-        })(comment_id, loggedInId, userLiked);
+        })(comment_id, loggedInId, userLiked, isMounted);
+        
+        return () => { isMounted = false };
 
     },[loggedInId])
 
@@ -137,6 +155,12 @@ export const HeartIcon2 = ({ comment_id }) => {
         // console.log(animateClass);
 
     }, [animateClass])
+
+    useEffect(() => {
+        return () => { 
+          mountedRef.current = false
+        }
+      }, [])
 
     return (
         <div className='flexRowContainer2 fitContent'>

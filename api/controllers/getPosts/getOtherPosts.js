@@ -31,7 +31,7 @@ export const handleGetCommentsByUserNickname = (req, res, db) => {
 
     const tagNickname = '@'+nickname
 
-    console.log(tagNickname)
+    // console.log(tagNickname)
 
     db.select('*').from('users')
     .join('comments', 'comments.user_id', 'users.id')
@@ -39,7 +39,7 @@ export const handleGetCommentsByUserNickname = (req, res, db) => {
         .orderBy('created_at', 'DESC')
         .then((comments) => {
 
-            console.log(comments)
+            // console.log(comments)
 
             res.json(comments);
         })

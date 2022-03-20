@@ -28,7 +28,7 @@ const ContentArea:FC = () => {
 
             const featuredUsers = await getRandomUserIDs(3);
 
-            console.log("featueredUsers: ", featuredUsers)
+            // console.log("featueredUsers: ", featuredUsers)
 
             setSuggestedProfiles(featuredUsers)
 
@@ -36,7 +36,7 @@ const ContentArea:FC = () => {
             
         })(setSuggestedProfiles)
         
-        console.log("setSuggestedProfiles: ", suggestedProfiles)
+        // console.log("setSuggestedProfiles: ", suggestedProfiles)
         
     }, [])
     

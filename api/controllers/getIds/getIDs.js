@@ -18,13 +18,13 @@ export const handleGetUserID = (req, res, db) => {
 
     const { nickname } = req.params
 
-    console.log(nickname)
+    // console.log(nickname)
 
     db.select("id").from("users")
     .where("nickname", "=", `@${nickname}`)
     .then((id) => {
 
-        console.log(id[0].id)
+        // console.log(id[0].id)
         res.json(id[0])
     })
     .catch(err => console.log(err))

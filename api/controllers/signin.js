@@ -31,7 +31,7 @@ export const handleSignin = (req, res, db) => {
                     .where('users.username', '=', data[0].username)
                     .then((user) => {
                         
-                        console.log(user[0])
+                        // console.log(user[0])
                         res.json(user[0])
                     })
                     .catch((err) => console.log(err))
@@ -73,7 +73,7 @@ export const handleSignin2 = (req, res, db) => {
                 .where('users.username', '=', data[0].username)
                 .then((user) => {
                         
-                    console.log("user[0].id: ", user[0].id)
+                    // console.log("user[0].id: ", user[0].id)
 
                     const tokens = jwtTokens(user[0])
 
@@ -82,7 +82,7 @@ export const handleSignin2 = (req, res, db) => {
 
                     tokens.user_id = user[0].id
 
-                    console.log("tokens: ", tokens)
+                    // console.log("tokens: ", tokens)
 
                     res.json(tokens);
                 })

@@ -4,11 +4,21 @@ export const handleGetUsersLike = (req, res ,db ) => {
 
     const queryString = req.body.query;
 
+    let queryLimit
+
+    if(req.body.limit){
+
+        queryLimit = req.body.limit
+
+    }else{
+
+        queryLimit = 5
+    }
+
     db("users")
     .whereILike("username", `${queryString}%`)
     .orWhereILike("nickname", `${queryString}%`)
-    // .orWhereILike("nickname", `${queryString}%`)
-   
+    .limit(parseInt(queryLimit))
     .then( users => {
 
         res.json(users)

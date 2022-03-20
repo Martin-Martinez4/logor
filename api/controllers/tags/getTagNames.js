@@ -8,7 +8,7 @@ export const handleGetTagNamesFromCommentID = (req, res,  db) => {
     .where("tag_comment.comment_id", "=", `${id}`)
     .then((tagInfo) => {
 
-        console.log(tagInfo)
+        // console.log(tagInfo)
         res.json(tagInfo);
     })
     .catch(err => {

@@ -70,7 +70,7 @@ const SearchBar = () => {
 
                 for(let i = 0; i < usersSearchResults.length; i++){
 
-                    console.log("sersSearchResults[i][id]: ", usersSearchResults[i]["id"])
+                    // console.log("sersSearchResults[i][id]: ", usersSearchResults[i]["id"])
 
                     usersResult.push( usersSearchResults[i]["id"])
                 }
@@ -101,7 +101,7 @@ const SearchBar = () => {
     },[searchState])
 
     useEffect(()=> {
-        console.log(searchResults.tagsResult, searchResults.usersResult)
+        // console.log(searchResults.tagsResult, searchResults.usersResult)
 
     }, [searchResults.usersResult, searchResults.tagsResult])
 

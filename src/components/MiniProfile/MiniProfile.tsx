@@ -30,7 +30,7 @@ const MiniProfile:FC = ({ user_id }) => {
     useEffect(() => {
 
    
-        console.log("miniProfileUser: ", miniProfileUser)
+        // console.log("miniProfileUser: ", miniProfileUser)
 
 
     }, [miniProfileUser])

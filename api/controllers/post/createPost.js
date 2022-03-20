@@ -7,7 +7,7 @@ export const handleCreatePost = (req, res, db) => {
 
         const user_id = req.user_id
 
-        console.log("create_id: ", req.user_id)
+        // console.log("create_id: ", req.user_id)
 
         const {text_content, newComment_id} = req.body;
 

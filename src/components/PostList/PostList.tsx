@@ -67,7 +67,7 @@ const PostList: FC = () => {
             const {comment_id, text_content, created_at, status, likes, user_id} = loggedInComments;
             const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
 
-            console.log("username: ",username)
+            // console.log("username: ",username)
                 
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
@@ -99,8 +99,8 @@ const PostList: FC = () => {
             }).then(response => response.json())
             .then(comments => {
 
-                console.log(comments)
-                console.log("running")
+                // console.log(comments)
+                // console.log("running")
                 setUserPosts(createPosts(comments))
 
                 setPostlistLoading(false)
@@ -133,7 +133,7 @@ const PostList: FC = () => {
 
             const featuredUsers = await getRandomUserIDs(4);
 
-            console.log("featueredUsers: ", featuredUsers)
+            // console.log("featueredUsers: ", featuredUsers)
 
             setSuggestedProfiles(featuredUsers)
 
@@ -141,18 +141,18 @@ const PostList: FC = () => {
             
         })(setSuggestedProfiles)
         
-        console.log("setSuggestedProfiles: ", suggestedProfiles)
+        // console.log("setSuggestedProfiles: ", suggestedProfiles)
         
     }, [])
     
     useEffect(() => {
         
-        console.log("setSuggestedProfiles 2: ", suggestedProfiles)
+        // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
         // create the miniProfile  element list here
 
         miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
-        console.log("miniprofilesArray2: ", miniprofilesArray)
+        // console.log("miniprofilesArray2: ", miniprofilesArray)
 
 
 
@@ -160,7 +160,7 @@ const PostList: FC = () => {
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
-    console.log("miniprofilesArray: ", miniprofilesArray)
+    // console.log("miniprofilesArray: ", miniprofilesArray)
 
     
         return(

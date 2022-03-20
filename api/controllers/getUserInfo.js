@@ -50,7 +50,7 @@ export const handleGetUserInfoByToken = (req, res, db) => {
         // const authorization = req.headers.authorization;
         const authorization = req.headers.authorization.split(' ')[1];
 
-        console.log("req headers:", authorization)
+        // console.log("req headers:", authorization)
 
         try {
 
@@ -70,7 +70,7 @@ export const handleGetGetMiniProfileInfo = (req, res, db) => {
 
     const user_id = req.params.id;
 
-    console.log(user_id)
+    // console.log(user_id)
 
     db.select("*").from("users")
     .where({
