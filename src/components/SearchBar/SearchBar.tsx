@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import MiniProfile from "../MiniProfile/MiniProfile";
 
 import { userSearch, tagSearch } from "../utils/fetchSearchQuery";
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
+
 
 import "./searchbar.css";
 
@@ -22,8 +24,8 @@ const SearchBar = () => {
         usersResult: []
     })
 
-    // let usersResult = []
-    // let tagsResult = []
+    const [ autocomIsLoading, setAutocomIsLoading ] = useState();
+
 
     const [throttle, setThrottle] = useState(false);
 
@@ -47,6 +49,8 @@ const SearchBar = () => {
         
 
             setThrottle(true)
+
+            setAutocomIsLoading(true)
 
             setTimeout(async () => {
     
@@ -81,16 +85,17 @@ const SearchBar = () => {
                     })
                 }
 
-                console.log("userResult:  ",usersResult)
-                console.log("tagResult:  ",tagsResult)
+                // console.log("userResult:  ",usersResult)
+                // console.log("tagResult:  ",tagsResult)
 
                 setSearchResults({usersResult:usersResult, tagsResult:tagsResult})
+                setAutocomIsLoading(false)
                 // setSearchResults({usersResult:usersResult, tagsResult:tagsResult})
     
     
     
     
-            }, 400)
+            }, 600)
 
         
     },[searchState])
@@ -110,36 +115,24 @@ const SearchBar = () => {
         </input>
         <div className="autocom-box">
             <p>Users</p>
-            {/* {searchResults.usersResult}
-            {console.log("inside return: ",searchResults.usersResult)} */}
+            <LoaderHOC loading={ autocomIsLoading } >
+
             {searchResults.usersResult.map((id) => (
                 <MiniProfile key={`miniProfile${id}`} user_id={id}/>
             ))}
-            {/* <div>
-
-                <p>
-                    <MiniProfile></MiniProfile>
-                </p>
-                <p>
-                    <MiniProfile></MiniProfile>
-                    
-                </p>
-                <p>
-                    <MiniProfile></MiniProfile>
-
-                </p> 
-            </div> */}
+            </LoaderHOC>
 
             <p>Tags</p>
             <div>
+                <LoaderHOC  loading={ autocomIsLoading }>
 
-              {searchResults.tagsResult.map((tag_name) => (
-                //   console.log("tag_name, render: ",tag_name)
-                    <p>
-                
-                        <a href={tag_name.toLink} >{tag_name.tag_name}</a>
-                    </p>
-              ))}
+                    {searchResults.tagsResult.map((tag_name) => (
+                        <p>
+                    
+                            <a href={tag_name.toLink} >{tag_name.tag_name}</a>
+                        </p>
+                    ))}
+              </LoaderHOC>
             </div>
 
         </div>

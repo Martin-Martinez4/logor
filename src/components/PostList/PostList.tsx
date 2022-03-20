@@ -11,9 +11,14 @@ import ProfileHeader from "../ProfileHeader/ProfileHeader";
 import MiniProfile from "../MiniProfile/MiniProfile";
 import CommentBox from "../CommentBox/CommentBox";
 
+import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
+
+import { createMiniProfiles } from "../utils/createMiniprofilesArray";
+
 import SigninModalHOC from "../SigninModal/SigninModalHOC";
 import UserInfoContext from "../context/UserInfoProvider";
 
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
 import useUserInfo from "../hooks/useUserInfo";
 
@@ -30,6 +35,8 @@ const PostList: FC = () => {
     // let posts = []
     const { auth, setAuth } = useAuth();
 
+    const [ postlistLoading, setPostlistLoading ] = useState();
+
 
     const location = useLocation();
 
@@ -40,7 +47,7 @@ const PostList: FC = () => {
 
     const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
 
-    console.log("loggedinUser: ", loggedInUser)
+    // console.log("loggedinUser: ", loggedInUser)
 
     // let loggedInComments = sortedComments[id];
 
@@ -79,7 +86,7 @@ const PostList: FC = () => {
     
     useEffect(() => {
 
-        
+        setPostlistLoading(true)
 
         fetch(`http://localhost:3001/home/`, {
                 method: "get",
@@ -95,7 +102,11 @@ const PostList: FC = () => {
                 console.log(comments)
                 console.log("running")
                 setUserPosts(createPosts(comments))
+
+                setPostlistLoading(false)
             })
+
+
 
     }, [loggedInUser])
 
@@ -104,8 +115,52 @@ const PostList: FC = () => {
 
     useEffect(() => {
 
+        setPostlistLoading(true)
+
+        return (() => { setPostlistLoading(false)})
+
 
     }, [auth.user_id])
+
+    const [ suggestedProfiles, setSuggestedProfiles ] = useState();
+
+    let miniprofilesArray = [];
+
+    // get three random user_ids
+    useEffect(() => {
+
+        (async (setSuggestedProfiles) => {
+
+            const featuredUsers = await getRandomUserIDs(4);
+
+            console.log("featueredUsers: ", featuredUsers)
+
+            setSuggestedProfiles(featuredUsers)
+
+            // console.log("setSuggestedProfiles: ", suggestedProfiles)
+            
+        })(setSuggestedProfiles)
+        
+        console.log("setSuggestedProfiles: ", suggestedProfiles)
+        
+    }, [])
+    
+    useEffect(() => {
+        
+        console.log("setSuggestedProfiles 2: ", suggestedProfiles)
+        // create the miniProfile  element list here
+
+        miniprofilesArray = createMiniProfiles(suggestedProfiles);
+
+        console.log("miniprofilesArray2: ", miniprofilesArray)
+
+
+
+    }, [suggestedProfiles])
+
+    miniprofilesArray = createMiniProfiles(suggestedProfiles);
+
+    console.log("miniprofilesArray: ", miniprofilesArray)
 
     
         return(
@@ -124,12 +179,13 @@ const PostList: FC = () => {
                     </div>
                     <p>Featured</p>
                     <div className="features">
-                        <MiniProfile></MiniProfile>
+                        {miniprofilesArray}
+                        {/* <MiniProfile></MiniProfile>
 
                         <MiniProfile></MiniProfile>
                         <MiniProfile></MiniProfile>
 
-                        <MiniProfile></MiniProfile>
+                        <MiniProfile></MiniProfile> */}
 
                     </div>
                 </Card>
@@ -138,8 +194,11 @@ const PostList: FC = () => {
 
                     <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts}  ></CommentBox>
                 </SigninModalHOC>
-              
+                    
+                <LoaderHOC loading={postlistLoading}>
+
                 {userPosts}
+                </LoaderHOC>
                
                 {/* White  space at the end of the scroll section */}
                 <div className="empty"></div>

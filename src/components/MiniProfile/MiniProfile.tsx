@@ -15,8 +15,7 @@ const MiniProfile:FC = ({ user_id }) => {
 
         
         (async (setMiniProfileUser, user_id) => {
-            console.log(": ",user_id)
-            
+
             const userMiniprofileInfo  = await getMiniProfileInfo(user_id)
 
             // console.log("userMiniprofileInfo22222222: ", userMiniprofileInfo )
@@ -35,9 +34,6 @@ const MiniProfile:FC = ({ user_id }) => {
 
 
     }, [miniProfileUser])
-
-    useEffect(() => {}, [user_id])
-
 
     return(
         <div className="miniProfile">

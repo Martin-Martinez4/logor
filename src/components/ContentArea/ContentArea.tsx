@@ -6,6 +6,7 @@ import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
 import SideCard from "../SideCards/SideCard";
 import PostList from "../PostList/PostList";
 import MiniProfile from "../MiniProfile/MiniProfile";
+import { createMiniProfiles } from "../utils/createMiniprofilesArray";
 import ProfileIcon from "../../assets/ProfileIcon.svg";
 import GearIcon from "../../assets/GearIcon.svg";
 import ShareIcon from "../../assets/ShareIcon.svg";
@@ -41,53 +42,20 @@ const ContentArea:FC = () => {
     
     useEffect(() => {
         
-        console.log("setSuggestedProfiles 2: ", suggestedProfiles)
-        // create the miniProfile  element list here
-        const createMiniProfiles = (suggestedProfiles) => {
-
-            let profilesArray = []
-
-            console.log("inside function: ",suggestedProfiles)
-
-            for(let i = 0; i < suggestedProfiles?.length?suggestedProfiles.length:0; i++){
-
-                console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])
-
-                profilesArray.push( <MiniProfile user_id={suggestedProfiles[i]["id"]} ></MiniProfile>)
-
-            }
-
-            return profilesArray
-        }
+        // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
 
         miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
-        console.log("miniprofilesArray2: ", miniprofilesArray)
+        // console.log("miniprofilesArray2: ", miniprofilesArray)
 
 
 
     }, [suggestedProfiles])
 
-    const createMiniProfiles = (suggestedProfiles) => {
-
-        let profilesArray = []
-
-        console.log("inside function: ",suggestedProfiles)
-
-        for(let i = 0; i < suggestedProfiles?.length?suggestedProfiles.length:0; i++){
-
-            console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])
-
-            profilesArray.push( <MiniProfile user_id={suggestedProfiles[i]["id"]} ></MiniProfile>)
-
-        }
-
-        return profilesArray
-    }
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
-    console.log("miniprofilesArray: ", miniprofilesArray)
+    // console.log("miniprofilesArray: ", miniprofilesArray)
 
     return (
         <div className="contentArea">
