@@ -43,7 +43,7 @@ const MiniProfile:FC = ({ user_id }) => {
                     <p><strong>{miniProfileUser?.username}</strong></p>
                     <p><em>{miniProfileUser?.nickname}</em></p>
                 </a>
-                < button type="button" className="button" title="Click to move to next Step">Follow</button>
+                < button type="button" className="button" title="Click to follow">Follow</button>
             </div>
             {/* < button type="button" className="button" title="Click to move to next Step">Follow</button> */}
         </div>

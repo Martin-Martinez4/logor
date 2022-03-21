@@ -5,6 +5,8 @@ import 'dotenv/config';
 
 import jwt from "express-jwt";
 
+import path from "path";
+
 import home from "./home.js"
 
 import followers from "./followers.js"
@@ -24,6 +26,8 @@ import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/ge
 import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 
+import {  handleUploadImage, handleUploadProfileImage, handleUploadProfileHeaderImage } from "./controllers/images/uploadImage.js";
+
 // import { handleAddResponse } from './controllers/responses/addResponse.js';
 
 
@@ -35,6 +39,8 @@ import { authenticateToken } from './middleware/authorization.js';
 // const express = require('express');
 import express from 'express';
 import cookieParser from "cookie-parser"; 
+
+import multer from "multer";
 
 const app = express();
 
@@ -75,6 +81,30 @@ const options = {
 app.use(express.json());
 app.use(cors(options));
 app.use(cookieParser())
+
+const storage = multer.diskStorage({
+
+  destination: (req, file, cb) => {
+
+    cb(null, "./");
+
+  },
+
+  filename: function(req, file, cb){
+
+    const ext = file.mimetype.split("/")[1];
+    const originalname = file.originalname.split(".")[0];
+    // Stores the file in temp as the origiginal filename-dat.filetype
+    // Could maybe get the user_id from the req later on
+    cb(null, `temp/${originalname}-${Date.now()}.${ext}`)
+  }
+
+});
+
+const upload = multer({
+
+  storage: storage
+})
 
 
 //=================Register/Signin=================
@@ -163,6 +193,26 @@ app.use(likes);
 //=================Simple Search=================
 
 app.use(simpleSearch)
+
+//=================Image Upload=================
+
+app.post("/api/image/", upload.single('image'), (req, res) => {
+
+  handleUploadImage(req, res, db)
+
+})
+
+app.post("/api/image/profile/", upload.single('image'), (req, res) => {
+
+  handleUploadProfileImage(req, res, db)
+
+})
+
+app.post("/api/image/profile/header/",  upload.array('image'), (req, res) => {
+
+  handleUploadProfileHeaderImage(req, res, db)
+
+})
 
 //=================Tokens=================
 

@@ -28,9 +28,9 @@ const Register:FC = ({ loadUser }) => {
         username:"",
         joined_date:"",
         nickname:"",
-        profile_pic_url:Monkey1,
+        profile_pic_url: Monkey1,
         description:"",
-        header_img_url:background1,
+        header_img_url: background1,
         location:"",
         links:"",
 
@@ -50,12 +50,15 @@ const Register:FC = ({ loadUser }) => {
     });
 
     const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault()
         if(e.target.files === null){
             return
         }
         if(e.target.files[0]) {
+            const file = e?.target.files[0]
+            console.log("file: ", file)
             setImg({
-                src: URL.createObjectURL(e.target.files[0]),
+                src: URL.createObjectURL(file),
                 alt: e.target.files[0].name
             });
 
@@ -64,7 +67,7 @@ const Register:FC = ({ loadUser }) => {
             console.log(targetName)
         
             
-            setUser(user => ({ ...user, [targetName]: e.target.files === null? Monkey1:URL.createObjectURL(e.target.files[0]) }))
+            setUser(user => ({ ...user, [targetName]: e.target.files === null? Monkey1:file }))
         }   
     }
 
@@ -87,7 +90,7 @@ const Register:FC = ({ loadUser }) => {
 
         const pictureType = el.getAttribute("pic-type")
 
-        console.log(pictureType)
+        // console.log(pictureType)
 
 
         setUser(user => ({ ...user, [pictureType]:src }))
@@ -126,7 +129,7 @@ const Register:FC = ({ loadUser }) => {
         }
     
     // eslint-disable-next-line
-    const { login, logout } = useAuth();
+    // const { login, logout } = useAuth();
 
     const onAttemptRegister = (user, e) => {
 
@@ -159,19 +162,34 @@ const Register:FC = ({ loadUser }) => {
                 console.log("response", user)
     
                 if(user.id){
+
+                    console.log("user.id: ",user.id)
     
-                    login().then(() => {
-                            
+                    const formData = new FormData()
+
+                    formData.append('image', profile_pic_url)
+                    formData.append('image', header_img_url)
+                    formData.append('user_id', user.id)
+            
+                   return fetch(`http://localhost:3001/api/image/profile/header/`, {
+            
+                        method: 'POST',
+                        body: formData,
+                        headers:{
+                            'Accept': 'multipart/form-data',
+                        },
+                        credentials: 'include',
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+            
+                        // setUploadStatus(res.msg)
+                    })
+                    .catch( err => console.error(err))
                         loadUser(user);
                         navigate(`/home/${user.id}`);
-                    }).catch( (err) => {
-    
-                        console.log("fail")
-                        logout().then(() => {
-                            navigate("/");
-                        })
-    
-                    })
+
+                    
     
                 }
                 else{
@@ -376,7 +394,7 @@ const Register:FC = ({ loadUser }) => {
             <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
 
             </div>
-            <h3>Profile Picture</h3>
+            <h3>Header Picture</h3>
 
             <div className="inner">
                 <div className="flexColContainer">

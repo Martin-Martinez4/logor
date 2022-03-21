@@ -19,6 +19,8 @@ import PageNotFound from "./components/404Page/PageNotFound";
 import Refresh from "./components/Refresh/Refresh"
 
 import PersistLogin from './components/PersistLogin/PersistLogin';
+
+import Fileupload from './testcomponents/Fileupload';
 // import LoadingUser from './components/LoadingUser/LoadingUser';
 
 import UserInfoContext from "./components/context/UserInfoProvider";
@@ -104,6 +106,7 @@ function App() {
 
         {/* <Route path="/test" element={<VisitorPage/>}/> */}
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/test/file/upload/" element={<Fileupload/>}></Route>
       </ Routes>
 
     </div>

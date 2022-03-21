@@ -112,40 +112,40 @@ const SearchBar = () => {
 
         <div className="searchBar_container relative">
 
-        <input type="search" id="topBarSearch" name="topBarSearch" value={searchState.topBarSearch} onChange={oninputChange} placeholder="Search..." className="topBar__search contained" >
-            
-        </input>
-        <div className="autocom-box height50">
-        <Scroll classNames=" height100Percent">
-            <p className="autocom_category" >Users</p>
-            <div className="autocom_category">
+            <input type="search" id="topBarSearch" name="topBarSearch" value={searchState.topBarSearch} onChange={oninputChange} placeholder="Search..." className="topBar__search contained" >
+                
+            </input>
+            <div className="autocom-box height50">
+                <Scroll classNames=" height100Percent">
+                    <p className="autocom_category" >Users</p>
+                    <div className="autocom_category">
 
-            <LoaderHOC loading={ autocomIsLoading } >
+                        <LoaderHOC loading={ autocomIsLoading } >
 
-            {searchResults.usersResult.map((id) => (
-                <MiniProfile key={`miniProfile${id}`} user_id={id}/>
-                ))}
-            </LoaderHOC>
-            </div>
+                            {searchResults.usersResult.map((id) => (
+                                <MiniProfile key={`miniProfile${id}`} user_id={id}/>
+                            ))}
+                        </LoaderHOC>
+                    </div>
 
-            <p>Tags</p>
-            <div className="autocom_category" >
-                <LoaderHOC  loading={ autocomIsLoading }>
+                    <p>Tags</p>
+                    <div className="autocom_category" >
+                        <LoaderHOC loading={ autocomIsLoading }>
 
-                    {searchResults.tagsResult.map((tag_name) => (
-                        <p>
+                            {searchResults.tagsResult.map((tag_name) => (
+                                <p>
+                            
+                                    <a className="autocom_link" href={tag_name.toLink} >{tag_name.tag_name}</a>
+                                </p>
+                            ))}
+                    </LoaderHOC>
                     
-                            <a className="autocom_link" href={tag_name.toLink} >{tag_name.tag_name}</a>
-                        </p>
-                    ))}
-              </LoaderHOC>
-               
+                    </div>
+
+                </Scroll>
             </div>
 
-        </Scroll>
         </div>
-
-    </div>
 
     )
 

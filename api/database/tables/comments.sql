@@ -57,5 +57,11 @@ CREATE TABLE responses(
     PRIMARY KEY (parent_id, comment_id)
 );
 
+CREATE TABLE images(
+
+    image VARCHAR(400),
+    image_id VARCHAR(400)
+);
+
 
 COMMIT;
