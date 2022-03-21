@@ -6,7 +6,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import useSigninModal from "../hooks/useModal";
 
 import useAuth from "../hooks/useAuth";
-import useUserInfo from "../hooks/useUserInfo";
+// import useUserInfo from "../hooks/useUserInfo";
 import UserInfoContext from "../context/UserInfoProvider";
 
 const Signin:FC = () => {
@@ -126,7 +126,7 @@ const Signin:FC = () => {
                             
                             const from = location.state?.from?.pathname || `/home/${user[0].id}`;
 
-                            console.log(showModal)
+                            // console.log(showModal)
 
                             if(showModal){
 

@@ -1,9 +1,15 @@
 
-import React, {useState, useEffect, FC } from "react";
-import {useNavigate, Link} from 'react-router-dom';
+import React, {useState, useEffect, useContext, FC } from "react";
+import {useNavigate, useLocation, Link} from 'react-router-dom';
 
-import useAuth from "../useAuth/useAuth";
+// import useAuth from "../useAuth/useAuth";
 import createNewUser from "../createNewUser/createNewUser";
+
+import useSigninModal from "../hooks/useModal";
+
+import useAuth from "../hooks/useAuth";
+// import useUserInfo from "../hooks/useUserInfo";
+import UserInfoContext from "../context/UserInfoProvider";
 
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
@@ -20,7 +26,18 @@ import test from "../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplashBig.jpg"
 import "./Register.css";
 // import { userInfo } from "os";
 
-const Register:FC = ({ loadUser }) => {
+const Register:FC = () => {
+
+    const { showModal, toggleModal } = useSigninModal();
+
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
+    // const { loadUser } = useUserInfo();
+
+    const { auth, setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
     
     const [user, setUser] = useState({
 
@@ -122,7 +139,6 @@ const Register:FC = ({ loadUser }) => {
 
     const [currentStep, setCurrentStepValue] = useState(1);
 
-    const navigate = useNavigate();
 
     const navigateHome = () => {
         navigate('/');
@@ -131,7 +147,7 @@ const Register:FC = ({ loadUser }) => {
     // eslint-disable-next-line
     // const { login, logout } = useAuth();
 
-    const onAttemptRegister = (user, e) => {
+    const onAttemptRegister = async (user, e) => {
 
         e.preventDefault();
 
@@ -139,7 +155,7 @@ const Register:FC = ({ loadUser }) => {
 
         if(password === password2){
 
-            fetch('http://localhost:3001/register', {
+            await fetch('http://localhost:3001/register', {
     
                 method: "post",
                 headers: { "Content-Type": "application/json"},
@@ -159,7 +175,7 @@ const Register:FC = ({ loadUser }) => {
             .then((response) => response.json())
             .then((user) => {
     
-                console.log("response", user)
+                // console.log("response", user)
     
                 if(user.id){
 
@@ -184,10 +200,9 @@ const Register:FC = ({ loadUser }) => {
                     .then(res => {
             
                         // setUploadStatus(res.msg)
+
                     })
                     .catch( err => console.error(err))
-                        loadUser(user);
-                        navigate(`/home/${user.id}`);
 
                     
     
@@ -198,12 +213,88 @@ const Register:FC = ({ loadUser }) => {
                 }
     
             }).catch((err)=> console.log(err))
+
+            await fetch('http://localhost:3001/signin2', {
+
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                    
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then((response) => response.json())
+            .then((user) => {
+                
+    
+                console.log(user)
+    
+                // console.log(user.access_token)
+                if(user.access_token){
+    
+    
+                    // token stuff
+    
+                    setAuth(() => {
+    
+                        return { user_id: user.user_id, access_token:user.access_token }
+                    });
+    
+    
+                          return fetch(`http://localhost:3001/usersInfo/${user.user_id}`, {
+    
+                            method: "get",
+                            headers: {
+                                
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                        .then(res => res.json())
+                        .then(user => {
+                            console.log("user:",user[0])
+    
+                            try{
+    
+                                loadUser(user[0]) 
+                                
+                                const from = location.state?.from?.pathname || `/home/${user[0].id}`;
+    
+                                // console.log(showModal)
+    
+                                if(showModal){
+    
+                                    toggleModal();
+                                }
+                                
+                                navigate(`/home/${user[0].id}`)
+                                
+                            }
+                            catch(err){
+    
+                                console.error(err)
+                            }
+                        
+                        })
+    
+                       
+                }
+                else{
+    
+                    console.log("login Error");
+                }
+    
+            }).catch((err)=> console.log(err))
+
         }else{
 
             console.log("validation Error");
         }
 
-        navigate(`/home/${user.id}`);
 
 
 
