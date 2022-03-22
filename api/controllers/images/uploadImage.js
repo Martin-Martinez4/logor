@@ -150,7 +150,7 @@ export const handleUploadProfileHeaderImage = (req, res, db) => {
 
         console.log(newProfileFilepath)
         
-        fs.move('./temp/' +profileImageName, './temp' + "/"+`${id}`+ '/' + newProfileFilepath, function (err) {
+        fs.move('./temp/' +profileImageName, newProfileFilepath, function (err) {
             if (err) {
                 return console.error(err);
             }
@@ -180,7 +180,7 @@ export const handleUploadProfileHeaderImage = (req, res, db) => {
                 })
         });
         
-        fs.move('./temp/'+headerImageName, './temp' + "/"+`${id}`+ '/' + newHeaderFilepath, function (err) {
+        fs.move('./temp/'+headerImageName, newHeaderFilepath, function (err) {
             if (err) {
                 return console.error(err);
             }

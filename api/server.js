@@ -106,6 +106,34 @@ const upload = multer({
   storage: storage
 })
 
+//=================Image Get=================
+
+// app.use(express.static(__dirname+'temp'))
+app.use(express.static('/temp'));
+
+app.get('/temp/', (req, res) => {
+  // return res.status(200).send('This is the root of my express application');
+
+  const fileName = req.params.filename
+  const fileQuery = req.query.filepath
+
+  // api\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
+  // The url should be as follows
+  // http://localhost:3001/temp?filepath=025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
+
+  console.log("filepath: ", fileName)
+
+  console.log("fileQuery: ", fileQuery)
+
+    res.sendFile(fileQuery, { root: "./temp" }, function (err) {
+      if (err) {
+        console.error(err)
+      } else {
+          console.log('Sent:', fileName);
+      }
+  });
+})
+
 
 //=================Register/Signin=================
 
@@ -213,6 +241,7 @@ app.post("/api/image/profile/header/",  upload.array('image'), (req, res) => {
   handleUploadProfileHeaderImage(req, res, db)
 
 })
+
 
 //=================Tokens=================
 
