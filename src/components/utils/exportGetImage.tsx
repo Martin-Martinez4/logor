@@ -1,5 +1,6 @@
 
 export const getImageString = "http://localhost:3001/temp?filepath="
+export const serverAddressString = "http://localhost:3001"
 
 // Set in component as such:
 // ( async (getProfileImage, setPictures) => {

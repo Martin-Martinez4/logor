@@ -2,7 +2,7 @@
 import React, { FC, useContext, useEffect, useState } from "react";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
-import { getImageString } from "../utils/exportGetImage"; 
+import { getImageString, serverAddressString } from "../utils/exportGetImage"; 
 import UserInfoContext from "../context/UserInfoProvider";
 
 
@@ -25,11 +25,11 @@ const ProfileHeader:FC = () =>{
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
-    const [pictures, setPictures] = useState({
+    // const [pictures, setPictures] = useState({
 
-        headerImage:"",
-        profileImage:""
-    })
+    //     headerImage:"",
+    //     profileImage:""
+    // })
 
     useEffect(() => {
 
@@ -44,6 +44,10 @@ const ProfileHeader:FC = () =>{
         
     }, [loggedInUser])
 
+    const backgroundImageStyle = {
+        background: `url(${serverAddressString}${loggedInUser["header_img_url"]}) no-repeat cover center`
+    }
+
 
     return(
 
@@ -53,8 +57,10 @@ const ProfileHeader:FC = () =>{
          {/* <div className="profile_header_background" style={{backgroundImage: `url('${getImageString}${loggedInUser["header_img_url"]}')`}} >
                 <img src={ `${getImageString}${loggedInUser["profile_pic_url"]}` } alt="profile" className="profile_header_image "></img>
             </div> */}
-         <div className="profile_header_background" style={{backgroundImage: `url('${getImageString}${loggedInUser["header_img_url"]}')`}} >
-                <img src={ `${pictures.profileImage}` } alt="profile" className="profile_header_image "></img>
+         <div className="profile_header_background" style={{
+        background: `url(${serverAddressString}${loggedInUser["header_img_url"]}) no-repeat center`
+    }} >
+                <img src={ `${serverAddressString}${loggedInUser["profile_pic_url"]}`} alt="profile" className="profile_header_image "></img>
             </div>
 
             <div className="profile_header_container">

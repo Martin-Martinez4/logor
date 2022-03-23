@@ -123,27 +123,18 @@ const upload = multer({
 // app.use(express.static(__dirname+'temp'))
 
 // app.use(express.static('temp'));
-// app.use('/static', express.static('temp'))
+app.use('/static', express.static('temp'))
+app.use('/profiles', express.static('temp/profiles'))
+app.use('/header', express.static('temp/header'))
 
 app.get('/temp/', async (req, res) => {
-  // return res.status(200).send('This is the root of my express application');
-
-  // const fileName = req.params.filename
 
   try{
 
     const fileQuery = req.query.filepath
   
     const fileName = req.query.filepath.split("/").pop()
-  
-    // api\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
-    // The url should be as follows
-    // http://localhost:3001/temp?filepath=025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
-    // http://localhost:3001/temp?filepath=fa49ffdc-3216-47b6-896c-b4631f6017a4\profile\hunting-dog-vector-clipart-1647922855484.png
-  
-    // Can be put in src and it will display 
-    // http://localhost:3001/temp?filepath= should be a variable fa49ffdc-3216-47b6-896c-b4631f6017a4\profile\hunting-dog-vector-clipart-1647922855484.png should come from the database
-  
+
     // console.log("filepath: ", fileName)
   
     // console.log("fileQuery: ", fileQuery)
@@ -165,7 +156,7 @@ app.get('/temp/', async (req, res) => {
         }
     });
   }catch{
-    
+
   }
 
 })
@@ -260,6 +251,7 @@ app.use(simpleSearch)
 
 //=================Image Upload=================
 
+// Need to add authenication middleware
 app.post("/api/image/", upload.single('image'), (req, res) => {
 
   handleUploadImage(req, res, db)
@@ -288,7 +280,7 @@ app.get("/token/refresh/", (req, res) => {
 })
 
 
-app.get('/', res  => console.log("this is working"))
+// app.get('/', res  => console.log("this is working"))
 
 
 app.listen(3001, () => {

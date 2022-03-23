@@ -45,9 +45,9 @@ const Register:FC = () => {
         username:"",
         joined_date:"",
         nickname:"",
-        profile_pic_url: Monkey1,
+        profile_pic_url: "",
         description:"",
-        header_img_url: background1,
+        header_img_url: "",
         location:"",
         links:"",
 
@@ -187,7 +187,7 @@ const Register:FC = () => {
                     formData.append('image', header_img_url)
                     formData.append('user_id', user.id)
             
-                   return fetch(`http://localhost:3001/api/image/profile/header/`, {
+                   return (async () => await fetch(`http://localhost:3001/api/image/profile/header/`, {
             
                         method: 'POST',
                         body: formData,
@@ -202,7 +202,7 @@ const Register:FC = () => {
                         // setUploadStatus(res.msg)
 
                     })
-                    .catch( err => console.error(err))
+                    .catch( err => console.error(err)))()
 
                     
     
@@ -435,6 +435,7 @@ const Register:FC = () => {
                                 accept=".png, .jpg, .jpeg" 
                                 id="photo" 
                                 name="profile_pic_url"
+                                // value={user.profile_pic_url}
                                 className="file_input"
                                 onChange={handleImg}
                             />
@@ -486,6 +487,7 @@ const Register:FC = () => {
 
             </div>
             <h3>Header Picture</h3>
+            <div></div>
 
             <div className="inner">
                 <div className="flexColContainer">
@@ -497,10 +499,11 @@ const Register:FC = () => {
 
                             <input 
                                 type="file" 
-                                placeholder="Choose a Profile Image"
+                                placeholder="Choose a header Image"
                                 accept=".png, .jpg, .jpeg" 
-                                id="photo" 
+                                id="header" 
                                 name="header_img_url"
+                                // value={user.header_img_url}
                                 className="file_input"
                                 onChange={handleImg}
                             />
@@ -538,7 +541,11 @@ const Register:FC = () => {
 
                 
             </div>
+            
+            
         </div>
+        
+        
         :
         <div className="flexColContainer">
             <h2>I am error</h2>
