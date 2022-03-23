@@ -7,6 +7,13 @@ import jwt from "express-jwt";
 
 import path from "path";
 
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 import home from "./home.js"
 
 import followers from "./followers.js"
@@ -45,6 +52,11 @@ import multer from "multer";
 const app = express();
 
 const secret = process.env.ACCESS_SECRET;
+
+app.use(express.static(path.join(__dirname,'temp')));
+
+// console.log(path.join(__dirname,'temp'))
+
 
 
 
@@ -109,29 +121,53 @@ const upload = multer({
 //=================Image Get=================
 
 // app.use(express.static(__dirname+'temp'))
-app.use(express.static('/temp'));
 
-app.get('/temp/', (req, res) => {
+// app.use(express.static('temp'));
+// app.use('/static', express.static('temp'))
+
+app.get('/temp/', async (req, res) => {
   // return res.status(200).send('This is the root of my express application');
 
-  const fileName = req.params.filename
-  const fileQuery = req.query.filepath
+  // const fileName = req.params.filename
 
-  // api\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
-  // The url should be as follows
-  // http://localhost:3001/temp?filepath=025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
+  try{
 
-  console.log("filepath: ", fileName)
+    const fileQuery = req.query.filepath
+  
+    const fileName = req.query.filepath.split("/").pop()
+  
+    // api\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\temp\025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
+    // The url should be as follows
+    // http://localhost:3001/temp?filepath=025a707d-e4bd-4c29-b49c-440416e5bd16\header\hunting-dog-vector-clipart-1647894119049.png
+    // http://localhost:3001/temp?filepath=fa49ffdc-3216-47b6-896c-b4631f6017a4\profile\hunting-dog-vector-clipart-1647922855484.png
+  
+    // Can be put in src and it will display 
+    // http://localhost:3001/temp?filepath= should be a variable fa49ffdc-3216-47b6-896c-b4631f6017a4\profile\hunting-dog-vector-clipart-1647922855484.png should come from the database
+  
+    // console.log("filepath: ", fileName)
+  
+    // console.log("fileQuery: ", fileQuery)
+  
+    const options = {
+      root: path.join(__dirname, 'temp')
+  };
+  
+    // let p = path.join(__dirname, `${fileQuery}`);
+   
+      // send a png file
+    // res.sendFile(p);
+  
+      res.sendFile(fileQuery, options, function (err) {
+        if (err) {
+          // console.error(err)
+        } else {
+            console.log('Sent:', fileName);
+        }
+    });
+  }catch{
+    
+  }
 
-  console.log("fileQuery: ", fileQuery)
-
-    res.sendFile(fileQuery, { root: "./temp" }, function (err) {
-      if (err) {
-        console.error(err)
-      } else {
-          console.log('Sent:', fileName);
-      }
-  });
 })
 
 

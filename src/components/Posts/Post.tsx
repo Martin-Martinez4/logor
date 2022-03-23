@@ -5,7 +5,7 @@ import { Link, Route, BrowserRouter, Navigate, useLocation, useNavigate } from '
 
 import useUserInfo from "../hooks/useUserInfo";
 
-
+import { getImageString } from "../utils/exportGetImage";
 import Card from "../Card/Card";
 import "./Posts.css";
 import formatDate, { formatDateAgo } from "../utils/formatDate";
@@ -324,7 +324,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                 <>
                 {/* {console.log(status[0])} */}
                 <div className="post user_image">
-                    <img src={user_profile} alt="profile" className="post_user_image "></img>
+                    <img src={`${getImageString}${user_profile}`} alt="profile" className="post_user_image "></img>
                    
                 </div>
                 <div className="post user_content">

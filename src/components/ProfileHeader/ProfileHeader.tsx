@@ -1,7 +1,8 @@
 
-import React, { FC, useContext, useEffect } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
+import { getImageString } from "../utils/exportGetImage"; 
 import UserInfoContext from "../context/UserInfoProvider";
 
 
@@ -24,9 +25,23 @@ const ProfileHeader:FC = () =>{
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
+    const [pictures, setPictures] = useState({
+
+        headerImage:"",
+        profileImage:""
+    })
+
     useEffect(() => {
 
-                 
+        // console.log(getProfileImage(loggedInUser["profile_pic_url"]))
+    //    ( async (getProfileImage, setPictures) => {
+
+    //         const profileBlob = await getProfileImage(loggedInUser["profile_pic_url"])
+
+    //         console.log("profileBlob: ", profileBlob)
+    //         setPictures(prev => ({...prev, profileImage: profileBlob}))
+    //     })(getProfileImage, setPictures)
+        
     }, [loggedInUser])
 
 
@@ -35,8 +50,11 @@ const ProfileHeader:FC = () =>{
         <Card classes="h_auto content profile_header">
          
 
-         <div className="profile_header_background" style={{backgroundImage: `url('${loggedInUser["header_img_url"]}')`}} >
-                <img src={ loggedInUser["profile_pic_url"] } alt="profile" className="profile_header_image "></img>
+         {/* <div className="profile_header_background" style={{backgroundImage: `url('${getImageString}${loggedInUser["header_img_url"]}')`}} >
+                <img src={ `${getImageString}${loggedInUser["profile_pic_url"]}` } alt="profile" className="profile_header_image "></img>
+            </div> */}
+         <div className="profile_header_background" style={{backgroundImage: `url('${getImageString}${loggedInUser["header_img_url"]}')`}} >
+                <img src={ `${pictures.profileImage}` } alt="profile" className="profile_header_image "></img>
             </div>
 
             <div className="profile_header_container">

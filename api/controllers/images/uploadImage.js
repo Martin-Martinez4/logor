@@ -145,8 +145,11 @@ export const handleUploadProfileHeaderImage = (req, res, db) => {
 
         // const dir = req.body.directory
 
-        const newProfileFilepath = './temp' + "/"+`${id}`+ '/' + 'profile/'+ profileImageName
-        const newHeaderFilepath = './temp' + "/"+`${id}`+ '/' + 'header/'+ headerImageName
+        const newProfileFilepath = './temp/' + `${id}`+ '/' + 'profile/'+ profileImageName
+        const newHeaderFilepath = './temp/' + `${id}`+ '/' + 'header/'+ headerImageName
+
+        const profileFilepath = `${id}`+ '/' + 'profile/'+ profileImageName
+        const headerFilepath = `${id}`+ '/' + 'header/'+ headerImageName
 
         console.log(newProfileFilepath)
         
@@ -165,7 +168,7 @@ export const handleUploadProfileHeaderImage = (req, res, db) => {
                 })
                 .update({
         
-                    profile_pic_url: newProfileFilepath,
+                    profile_pic_url: profileFilepath,
             
                 })
                 .then(data => {
@@ -195,7 +198,7 @@ export const handleUploadProfileHeaderImage = (req, res, db) => {
                 })
                 .update({
         
-                    header_img_url: newHeaderFilepath,
+                    header_img_url: headerFilepath,
             
                 })
                 .then(data => {
