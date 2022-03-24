@@ -66,7 +66,7 @@ export const handleUploadProfileImage = (req, res, db) => {
 
     const fileTypeRegexp = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/;
 
-    if(!req.file.originalname.match( /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/)){
+    if(!req?.file?.originalname.match( /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/)){
 
         res.send({msg: 'Only png, gif, jpeg, and svg ar allowed!'})
 
@@ -125,14 +125,164 @@ export const handleUploadProfileImage = (req, res, db) => {
 
 }
 
+export const handleUpdateProfileWithDefault = async (req, res, db) => {
+
+    const id = req.body.id;
+
+    console.log("req.body: ",req.body)
+
+    
+    if(typeof req?.body?.profile_pic_url === "string"){
+
+        const profileImageNameString = req.body.profile_pic_url.split("/").pop()
+
+        console.log(profileImageNameString)
+
+        const profileFilepathString = '/profiles/'+ profileImageNameString
+
+        console.log(req.body.profile_pic_url)
+
+        db("users").where({
+            id: id
+        })
+        .update({
+
+            profile_pic_url: profileFilepathString,
+    
+        })
+        .then(data => {
+
+            res.json(id)
+
+        })
+        .catch(err => {
+
+            console.log(err)
+            res.json({
+                msg: err
+            })
+        });
+
+
+
+    }
+
+}
+
+export const handleUpdateHeaderWithDefault = async (req, res, db) => {
+
+    const id = req.body.user_id;
+
+    
+    if(typeof req?.body?.profile_pic_url === "string"){
+
+        const headerImageNameString = req.body.header_img_url.split("/").pop()
+
+        const headerFilepathString = '/headers/'+ headerImageNameString
+
+        console.log(req.body.profile_pic_url)
+
+        db("user_headers").where({
+            user_id: id
+        })
+        .update({
+
+            header_img_url: headerFilepathString,
+    
+        })
+        .then(data => {
+
+            res.json(id)
+
+        })
+        .catch(err => {
+
+            console.log(err)
+            res.json({
+                msg: err
+            })
+        })
+
+    }
+}
+
 export const handleUploadProfileHeaderImage = async (req, res, db) => {
 
     const fileTypeRegexp = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/;
 
-    // console.log("profile and header: ", req)
-    // console.log("profile and header: ", req.files)
+    const id = req.body.user_id;
 
-    if(!req.files[0].originalname.match( fileTypeRegexp) || !req.files[1].originalname.match(fileTypeRegexp)){
+
+    // console.log("profile and header: ", req)
+    console.log("profile and header: ", typeof req?.body?.profile_pic_url)
+    console.log("profile and header: ", typeof  req?.body?.header_img_url)
+
+    // check if string or other type
+    // console.log(typeof req.body.profile_pic_url)
+
+    if(typeof req?.body?.profile_pic_url === "string"){
+
+        const profileImageNameString = req.body.profile_pic_url.split("/").pop()
+
+        console.log(profileImageNameString)
+
+        const profileFilepathString = '/profiles/'+ profileImageNameString
+
+        console.log(req.body.profile_pic_url)
+
+        db("users").where({
+            id: id
+        })
+        .update({
+
+            profile_pic_url: profileFilepathString,
+    
+        })
+        .then(data => {
+
+        })
+        .catch(err => {
+
+            console.log(err)
+            res.json({
+                msg: err
+            })
+        });
+
+
+
+    }
+
+    if(typeof req?.body?.header_img_url === "string"){
+
+        const headerImageNameString = req.body.header_img_url.split("/").pop()
+
+        const headerFilepathString = '/headers/'+ headerImageNameString
+
+        console.log(req.body.profile_pic_url)
+
+        db("user_headers").where({
+            user_id: id
+        })
+        .update({
+
+            header_img_url: headerFilepathString,
+    
+        })
+        .then(data => {
+
+
+        })
+        .catch(err => {
+
+            console.log(err)
+            res.json({
+                msg: err
+            })
+        })
+    }
+
+    if(!req?.files[0]?.originalname.match( fileTypeRegexp) || !req?.files[1]?.originalname.match(fileTypeRegexp)){
 
         res.send({msg: 'Only png, gif, jpeg, and svg ar allowed!'})
 
@@ -147,7 +297,7 @@ export const handleUploadProfileHeaderImage = async (req, res, db) => {
                     const resizedHeader = path.resolve(req.files[1].destination,'temp','resized','headers', req.files[1].filename.split("/").pop())
             
                     await sharp(req.files[0].path)
-                    .resize(300, 300,
+                    .resize(800, 800,
                     {
                         kernel: sharp.kernel.nearest,
                         fit: 'contain',
@@ -162,7 +312,7 @@ export const handleUploadProfileHeaderImage = async (req, res, db) => {
                     )
                     
                     await sharp(req.files[1].path)
-                    .resize(1000, 750,
+                    .resize(1600 , 750,
                     {
                         kernel: sharp.kernel.nearest,
                         fit: 'contain',
@@ -183,7 +333,7 @@ export const handleUploadProfileHeaderImage = async (req, res, db) => {
                     
                     const headerImageName = req.files[1].filename.split("/").pop()
                     // JSON.parse(req.body.data).directory
-                    const id = req.body.user_id;
+                    // const id = req.body.user_id;
             
                     // const dir = req.body.directory
                     
@@ -269,10 +419,6 @@ export const handleUploadProfileHeaderImage = async (req, res, db) => {
                                 })
                             })
                     });
-        // }catch(err){
-
-        //     console.error(err)
-        // }
     
 
     }

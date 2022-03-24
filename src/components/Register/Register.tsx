@@ -7,6 +7,8 @@ import createNewUser from "../createNewUser/createNewUser";
 
 import useSigninModal from "../hooks/useModal";
 
+import { serverAddressString } from "../utils/exportGetImage";
+
 import useAuth from "../hooks/useAuth";
 // import useUserInfo from "../hooks/useUserInfo";
 import UserInfoContext from "../context/UserInfoProvider";
@@ -14,10 +16,10 @@ import UserInfoContext from "../context/UserInfoProvider";
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
 
-import Monkey1 from "../../assets/Monkey_1.svg";
-import Monkey2 from "../../assets/Monkey_2.svg";
-import Monkey3 from "../../assets/Monkey_3.svg";
-import Monkey4 from "../../assets/Monkey_4.svg";
+// import Monkey1 from "../../assets/Monkey_1.svg";
+// import Monkey2 from "../../assets/Monkey_2.svg";
+// import Monkey3 from "../../assets/Monkey_3.svg";
+// import Monkey4 from "../../assets/Monkey_4.svg";
 
 import background1 from "../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplash__mobile2.jpg"
 
@@ -27,6 +29,13 @@ import "./Register.css";
 // import { userInfo } from "os";
 
 const Register:FC = () => {
+
+    // const Monkey1 = "../../users/default/Monkey_1.svg";
+    const Monkey1 = `${serverAddressString}/profiles/Monkey_1.svg`;
+    const Monkey2 = "../../users/default/Monkey_2.svg";
+    const Monkey3 = "../../users/default/Monkey_3.svg";
+    const Monkey4 = "../../users/default/Monkey_4.svg";
+    const header1 = "../../users/default/ryunosuke-kikuno-RKwivgSTXVI-unsplash.jpg";
 
     const { showModal, toggleModal } = useSigninModal();
 
@@ -66,23 +75,34 @@ const Register:FC = () => {
         alt: 'Upload an Image'
     });
 
+    const [previewBlobs, setPreviewBlobs] = useState({
+
+    })
+
     const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
+
+        console.log(e.target.files)
         if(e.target.files === null){
             return
         }
         if(e.target.files[0]) {
             const file = e?.target.files[0]
-            console.log("file: ", file)
-            setImg({
-                src: URL.createObjectURL(file),
-                alt: e.target.files[0].name
-            });
+            console.log("file: ", URL.createObjectURL(file))
 
-            const targetName = e.target.name;
+            const fileName = e?.target?.files[0].name? e?.target?.files[0].name : ""
+
+            const targetName = e?.target?.name;
+            
+            setPreviewBlobs(prev => ({ ...prev, [targetName]:{
+                src: URL.createObjectURL(file),
+                alt: fileName
+            }}));
+
 
             console.log(targetName)
-        
+            
+            console.log(file.type)
             
             setUser(user => ({ ...user, [targetName]: e.target.files === null? Monkey1:file }))
         }   
@@ -93,11 +113,19 @@ const Register:FC = () => {
         if(e === null){
             return
         }
+        
 
         setUser(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
         e.preventDefault()
     }
+
+    // const fileToDataUri = (file) => new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.onload = (event) => {
+    //       resolve(event?.target?.result)
+    //     };
+    // })
     
     const onPickImage= (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
 
@@ -107,7 +135,15 @@ const Register:FC = () => {
 
         const pictureType = el.getAttribute("pic-type")
 
-        // console.log(pictureType)
+
+
+        console.log("pickimage: ",typeof src)
+        // console.log("pickimage: ",fileToDataUri(src))
+
+        setPreviewBlobs(prev => ({ ...prev, [pictureType]:{
+            src: src,
+            alt: src
+        }}));
 
 
         setUser(user => ({ ...user, [pictureType]:src }))
@@ -153,9 +189,17 @@ const Register:FC = () => {
 
         const { username, nickname, profile_pic_url, description, header_img_url, location, links, password, password2} = user
 
+        // console.log("profile_pic_url: ", profile_pic_url?.type?.split("/")[0])
+        // console.log("profile_pic_url === : ", profile_pic_url === "")
+        // console.log("profile_pic_url === : ", Object.keys(profile_pic_url).length === 0)
+        // console.log("header_img_url: ", header_img_url?.type?.split("/")[0])
+        // console.log("header_img_url === : ", header_img_url === "")
+        // console.log("header_img_url === : ", Object.keys(header_img_url).length === 0)
+
+        // if(password === password2 && (profile_pic_url?.type?.split("/")[0] === "image") && ( header_img_url?.type?.split("/")[0] === "image")){
         if(password === password2){
 
-            await fetch('http://localhost:3001/register', {
+            const testid = await fetch('http://localhost:3001/register', {
     
                 method: "post",
                 headers: { "Content-Type": "application/json"},
@@ -179,32 +223,8 @@ const Register:FC = () => {
     
                 if(user.id){
 
-                    console.log("user.id: ",user.id)
-    
-                    const formData = new FormData()
 
-                    formData.append('image', profile_pic_url)
-                    formData.append('image', header_img_url)
-                    formData.append('user_id', user.id)
-            
-                   return (async () => await fetch(`http://localhost:3001/api/image/profile/header/`, {
-            
-                        method: 'POST',
-                        body: formData,
-                        headers:{
-                            'Accept': 'multipart/form-data',
-                        },
-                        credentials: 'include',
-                    })
-                    .then(res => res.json())
-                    .then(res => {
-            
-                        // setUploadStatus(res.msg)
-
-                    })
-                    .catch( err => console.error(err)))()
-
-                    
+                    return user.id
     
                 }
                 else{
@@ -213,6 +233,55 @@ const Register:FC = () => {
                 }
     
             }).catch((err)=> console.log(err))
+
+            // console.log("user.id: ",user.id)
+    
+            // const formDataProfile = new FormData()
+            // const formDataHeader = new FormData()
+
+            console.log("typeof test: ",typeof profile_pic_url)
+
+            console.log("user_id: ", testid)
+            if(typeof profile_pic_url === "string"){
+
+                console.log("inside string: ",profile_pic_url)
+
+                // formData.append('image', header_img_url)
+                // formDataProfile.append('profile_pic_url', profile_pic_url)
+    
+                // // formData.append('header_img_url', header_img_url)
+                // formDataProfile.append('user_id', user.id)
+
+
+                await fetch(`http://localhost:3001/api/profile/update/default/`, {
+         
+                    method: "post",
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        
+                        profile_pic_url: profile_pic_url,
+                        id: testid
+                    
+                        })
+                 })
+                 .then(res => res.json())
+                 .then(res => {
+         
+                     // setUploadStatus(res.msg)
+
+                 })
+                 .catch( err => console.error(err))
+            }
+            else if(typeof profile_pic_url === "object"){
+
+                const formDataProfile = new FormData()
+
+                formDataProfile.append('image', profile_pic_url)
+
+
+                console.log(typeof profile_pic_url)
+            }
+    
 
             await fetch('http://localhost:3001/signin2', {
 
@@ -444,10 +513,10 @@ const Register:FC = () => {
 
                     <div className="flexRowContainer profile_image_container">
                         <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey1} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={"../../users/default/Monkey_2.svg"} alt="Monkey"  />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey2} alt="Monkey"  />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey3} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="profile_pic_url" src={Monkey4} alt="Monkey" />
-                        <img onClick={ onPickImage } src={test} className="round profileImage" pic-type="profile_pic_url" alt="Profile Preveiw" />
+                        <img onClick={ onPickImage } src={header1} className="round profileImage" pic-type="profile_pic_url" alt="Profile Preveiw" />
                        
                     </div>
 
@@ -457,7 +526,7 @@ const Register:FC = () => {
                        
 
                         <div className="form__img-input-container">
-                            <img src={user.profile_pic_url} alt={alt} className="round profileImage"/>
+                            <img src={previewBlobs?.profile_pic_url?.src? previewBlobs.profile_pic_url.src: ""} alt={alt} className="round profileImage"/>
                         </div>
 
                     </div>
@@ -512,10 +581,10 @@ const Register:FC = () => {
 
                     <div className="flexRowContainer profile_image_container">
                         <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey1} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={"../../users/default/Monkey_2.svg"} alt="Monkey" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey2} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey3} alt="Monkey" />
                         <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey4} alt="Monkey" />
-                        <img onClick={ onPickImage } src={test} className="round profileImage"pic-type="header_img_url" alt="Profile Preveiw" />
+                        <img onClick={ onPickImage } src={header1} className="round profileImage"pic-type="header_img_url" alt="Profile Preveiw" />
                     
                     </div>
 
@@ -525,7 +594,7 @@ const Register:FC = () => {
                     
 
                         <div className="form__img-input-container">
-                            <img src={user.header_img_url} alt={alt} className="round profileImage"/>
+                            <img src={previewBlobs?.header_img_url?.src? previewBlobs.header_img_url.src: ""} alt={alt} className="round profileImage"/>
                         </div>
 
                     </div>

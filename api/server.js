@@ -33,7 +33,7 @@ import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/ge
 import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 
-import {  handleUploadImage, handleUploadProfileImage, handleUploadProfileHeaderImage } from "./controllers/images/uploadImage.js";
+import {  handleUploadImage, handleUploadProfileImage, handleUploadProfileHeaderImage, handleUpdateProfileWithDefault, handleUpdateHeaderWithDefault } from "./controllers/images/uploadImage.js";
 
 // import { handleAddResponse } from './controllers/responses/addResponse.js';
 
@@ -267,6 +267,18 @@ app.post("/api/image/profile/", upload.single('image'), (req, res) => {
 app.post("/api/image/profile/header/",  upload.array('image'), (req, res) => {
 
   handleUploadProfileHeaderImage(req, res, db)
+
+})
+
+app.post("/api/profile/update/default/", (req, res) => {
+
+  handleUpdateProfileWithDefault(req, res, db)
+
+})
+
+app.post("/api/header/update/default/",  (req,res) => {
+
+  handleUpdateHeaderWithDefault(req, res, db)
 
 })
 
