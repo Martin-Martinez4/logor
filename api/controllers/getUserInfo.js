@@ -85,3 +85,23 @@ export const handleGetGetMiniProfileInfo = (req, res, db) => {
 
 }
 
+export const  handleGetLoggedinUserInfo = (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    db.select("*").from('users')
+    .join('user_headers', 'users.id', 'user_headers.user_id')
+    .where("users.id", "=", `${user_id}`)
+    .then((user) => {
+        
+        res.json(user)
+    })
+    .catch(err => {
+        console.log(err)
+        res.json([])
+    })
+
+
+
+}
+

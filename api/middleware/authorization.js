@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 
 export const authenticateToken = (req, res, next) => {
 
+    // console.log("suthtoken req.file: ",req.file)
     
     const token  = req.cookies.refresh_token;
     // console.log("token: ", token)

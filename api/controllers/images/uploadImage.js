@@ -125,86 +125,86 @@ export const handleUploadProfileImage = (req, res, db) => {
 
 }
 
-export const handleUpdateProfileWithDefault = async (req, res, db) => {
+// export const handleUpdateProfileWithDefault = async (req, res, db) => {
 
-    const id = req.body.id;
+//     const id = req.user_id;
 
-    console.log("req.body: ",req.body)
-
-    
-    if(typeof req?.body?.profile_pic_url === "string"){
-
-        const profileImageNameString = req.body.profile_pic_url.split("/").pop()
-
-        console.log(profileImageNameString)
-
-        const profileFilepathString = '/profiles/'+ profileImageNameString
-
-        console.log(req.body.profile_pic_url)
-
-        db("users").where({
-            id: id
-        })
-        .update({
-
-            profile_pic_url: profileFilepathString,
-    
-        })
-        .then(data => {
-
-            res.json(id)
-
-        })
-        .catch(err => {
-
-            console.log(err)
-            res.json({
-                msg: err
-            })
-        });
-
-
-
-    }
-
-}
-
-export const handleUpdateHeaderWithDefault = async (req, res, db) => {
-
-    const id = req.body.user_id;
+//     console.log("req.body: ",req.body)
 
     
-    if(typeof req?.body?.profile_pic_url === "string"){
+//     if(typeof req?.body?.profile_pic_url === "string"){
 
-        const headerImageNameString = req.body.header_img_url.split("/").pop()
+//         const profileImageNameString = req.body.profile_pic_url.split("/").pop()
 
-        const headerFilepathString = '/headers/'+ headerImageNameString
+//         console.log(profileImageNameString)
 
-        console.log(req.body.profile_pic_url)
+//         const profileFilepathString = '/profiles/'+ profileImageNameString
 
-        db("user_headers").where({
-            user_id: id
-        })
-        .update({
+//         console.log(req.body.profile_pic_url)
 
-            header_img_url: headerFilepathString,
+//         db("users").where({
+//             id: id
+//         })
+//         .update({
+
+//             profile_pic_url: profileFilepathString,
     
-        })
-        .then(data => {
+//         })
+//         .then(data => {
 
-            res.json(id)
+//             res.json(id)
 
-        })
-        .catch(err => {
+//         })
+//         .catch(err => {
 
-            console.log(err)
-            res.json({
-                msg: err
-            })
-        })
+//             console.log(err)
+//             res.json({
+//                 msg: err
+//             })
+//         });
 
-    }
-}
+
+
+//     }
+
+// }
+
+// export const handleUpdateHeaderWithDefault = async (req, res, db) => {
+
+//     const id = req.user_id;
+
+    
+//     if(typeof req?.body?.profile_pic_url === "string"){
+
+//         const headerImageNameString = req.body.header_img_url.split("/").pop()
+
+//         const headerFilepathString = '/headers/'+ headerImageNameString
+
+//         console.log(req.body.profile_pic_url)
+
+//         db("user_headers").where({
+//             user_id: id
+//         })
+//         .update({
+
+//             header_img_url: headerFilepathString,
+    
+//         })
+//         .then(data => {
+
+//             res.json(id)
+
+//         })
+//         .catch(err => {
+
+//             console.log(err)
+//             res.json({
+//                 msg: err
+//             })
+//         })
+
+//     }
+// }
 
 export const handleUploadProfileHeaderImage = async (req, res, db) => {
 

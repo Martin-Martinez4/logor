@@ -11,6 +11,8 @@ import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+import bodyParser from 'body-parser'; 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -28,12 +30,13 @@ import responses from "./responses.js";
 
 import simpleSearch from "./simpleSearch.js"
 
-import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetGetMiniProfileInfo } from './controllers/getUserInfo.js';
+import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetGetMiniProfileInfo, handleGetLoggedinUserInfo } from './controllers/getUserInfo.js';
 import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/getIDs.js';
 import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 
-import {  handleUploadImage, handleUploadProfileImage, handleUploadProfileHeaderImage, handleUpdateProfileWithDefault, handleUpdateHeaderWithDefault } from "./controllers/images/uploadImage.js";
+import {  handleUploadImage, handleUploadProfileImage, handleUploadProfileHeaderImage } from "./controllers/images/uploadImage.js";
+import {  handleUpdateHeaderWithDefault, handleUpdateProfileWithDefault, handleUpdateHeaderImage } from "./controllers/profileAndHeader/profileAndHeader.js"
 
 // import { handleAddResponse } from './controllers/responses/addResponse.js';
 
@@ -89,8 +92,10 @@ const options = {
 
 };
 
-// Then pass these options to cors:
-app.use(express.json());
+// Then pass these options to cors:           
+// app.use(bodyParser.json({limit:'50mb'})); 
+app.use(bodyParser.urlencoded({extended:true, limit:'50mb'})); 
+app.use(express.json({limit:'50mb'}));
 app.use(cors(options));
 app.use(cookieParser())
 
@@ -115,7 +120,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({
 
-  storage: storage
+  storage: storage,
+  // limits: { fileSize: 1 * 1024 * 1024 }
 })
 
 //=================Image Get=================
@@ -203,6 +209,12 @@ app.get("/usersInfo/:id", (req, res) => {
   
 })
 
+app.get("/loggedin/user/info/", authenticateToken, (req, res) => {
+
+  handleGetLoggedinUserInfo(req, res, db)
+  
+})
+
 app.get("/usersInfo/byNickname/:nickname", (req, res) => {
 
   handleGetUserInfoByNickname(req, res, db);
@@ -270,15 +282,27 @@ app.post("/api/image/profile/header/",  upload.array('image'), (req, res) => {
 
 })
 
-app.post("/api/profile/update/default/", (req, res) => {
+app.post("/profile/update/default/", authenticateToken,(req, res) => {
 
   handleUpdateProfileWithDefault(req, res, db)
 
 })
 
-app.post("/api/header/update/default/",  (req,res) => {
+// app.post("/profile/update/", authenticateToken,(req, res) => {
+
+//   handleUpdateProfile(req, res, db)
+
+// })
+
+app.post("/header/update/default/", authenticateToken, (req,res) => {
 
   handleUpdateHeaderWithDefault(req, res, db)
+
+})
+
+app.post("/header/update/", [ authenticateToken, upload.single('image')], (req,res) => {
+
+  handleUpdateHeaderImage(req, res, db)
 
 })
 

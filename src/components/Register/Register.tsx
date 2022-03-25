@@ -234,55 +234,6 @@ const Register:FC = () => {
     
             }).catch((err)=> console.log(err))
 
-            // console.log("user.id: ",user.id)
-    
-            // const formDataProfile = new FormData()
-            // const formDataHeader = new FormData()
-
-            console.log("typeof test: ",typeof profile_pic_url)
-
-            console.log("user_id: ", testid)
-            if(typeof profile_pic_url === "string"){
-
-                console.log("inside string: ",profile_pic_url)
-
-                // formData.append('image', header_img_url)
-                // formDataProfile.append('profile_pic_url', profile_pic_url)
-    
-                // // formData.append('header_img_url', header_img_url)
-                // formDataProfile.append('user_id', user.id)
-
-
-                await fetch(`http://localhost:3001/api/profile/update/default/`, {
-         
-                    method: "post",
-                    headers: { "Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        
-                        profile_pic_url: profile_pic_url,
-                        id: testid
-                    
-                        })
-                 })
-                 .then(res => res.json())
-                 .then(res => {
-         
-                     // setUploadStatus(res.msg)
-
-                 })
-                 .catch( err => console.error(err))
-            }
-            else if(typeof profile_pic_url === "object"){
-
-                const formDataProfile = new FormData()
-
-                formDataProfile.append('image', profile_pic_url)
-
-
-                console.log(typeof profile_pic_url)
-            }
-    
-
             await fetch('http://localhost:3001/signin2', {
 
                 method: "post",
@@ -313,42 +264,8 @@ const Register:FC = () => {
     
                         return { user_id: user.user_id, access_token:user.access_token }
                     });
-    
-    
-                          return fetch(`http://localhost:3001/usersInfo/${user.user_id}`, {
-    
-                            method: "get",
-                            headers: {
-                                
-                                'Content-Type': 'application/json',
-                            },
-                        })
-                        .then(res => res.json())
-                        .then(user => {
-                            console.log("user:",user[0])
-    
-                            try{
-    
-                                loadUser(user[0]) 
-                                
-                                const from = location.state?.from?.pathname || `/home/${user[0].id}`;
-    
-                                // console.log(showModal)
-    
-                                if(showModal){
-    
-                                    toggleModal();
-                                }
-                                
-                                navigate(`/home/${user[0].id}`)
-                                
-                            }
-                            catch(err){
-    
-                                console.error(err)
-                            }
-                        
-                        })
+
+                    return user.user_id
     
                        
                 }
@@ -359,13 +276,193 @@ const Register:FC = () => {
     
             }).catch((err)=> console.log(err))
 
+            // console.log("user.id: ",user.id)
+    
+            // const formDataProfile = new FormData()
+            // const formDataHeader = new FormData()
+
+            console.log("typeof test: ",typeof profile_pic_url)
+
+            console.log("user_id: ", testid)
+            if(typeof profile_pic_url === "string"){
+
+                console.log("inside string: ",profile_pic_url)
+
+                // formData.append('image', header_img_url)
+                // formDataProfile.append('profile_pic_url', profile_pic_url)
+    
+                // // formData.append('header_img_url', header_img_url)
+                // formDataProfile.append('user_id', user.id)
+
+
+                await fetch(`http://localhost:3001/profile/update/default/`, {
+         
+                    method: "post",
+                    credentials:'include',
+                    cache:'no-cache',
+                    headers: {
+                    
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        
+                        profile_pic_url: profile_pic_url,
+                    
+                        })
+                 })
+                 .then(res => res.json())
+                 .then(resonse => {
+         
+                     // setUploadStatus(res.msg)
+                     
+                    return resonse
+
+                 })
+                 .catch( err => console.error(err))
+            }
+            else if(typeof profile_pic_url === "object"){
+
+                const formDataProfile = new FormData()
+
+                formDataProfile.append('image', profile_pic_url)
+
+                console.log(typeof profile_pic_url)
+
+                await fetch(`http://localhost:3001/profile/update/`, {
+         
+                    method: "post",
+                    credentials:'include',
+                    cache:'no-cache',
+                    headers: {
+                    
+                        'Content-Type': 'application/json',
+                    },
+                    body: formDataProfile
+                })
+                 .then(res => res.json())
+                 .then(resonse => {
+         
+                    // setUploadStatus(res.msg)
+                    
+                   return resonse
+
+                })
+                 .catch( err => console.error(err))
+            }
+    
+            if(typeof header_img_url === "string"){
+
+                console.log("inside string: ",header_img_url)
+
+                // formData.append('image', header_img_url)
+                // formDataProfile.append('profile_pic_url', profile_pic_url)
+    
+                // // formData.append('header_img_url', header_img_url)
+                // formDataProfile.append('user_id', user.id)
+
+
+                await fetch(`http://localhost:3001/header/update/default/`, {
+         
+                    method: "post",
+                    credentials:'include',
+                    cache:'no-cache',
+                    headers: {
+                    
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        
+                        header_img_url: header_img_url,
+                    
+                    })
+                 })
+                 .then(res => res.json())
+                 .then(resonse => {
+         
+                    // setUploadStatus(res.msg)
+                    
+                   return resonse
+
+                })
+                 .catch( err => console.error(err))
+            }
+            else if(typeof header_img_url === "object"){
+
+                const formDataHeader = new FormData()
+
+                formDataHeader.append('image', header_img_url)
+
+                console.log("header_img_url")
+                console.log(typeof header_img_url)
+                console.log(header_img_url)
+                console.log("formdataheader:  ", ...formDataHeader)
+
+                await fetch(`http://localhost:3001/header/update/`, {
+         
+                    method: "post",
+                    credentials:'include',
+                    // cache:'no-cache',
+                    // headers: {
+                    
+                    //     'Content-Type': 'form-data',
+                    // },
+                    body: formDataHeader,
+                })
+                 .then(res => res.json())
+                 .then(resonse => {
+         
+                    // setUploadStatus(res.msg)
+                    
+                   return resonse
+
+                })
+                 .catch( err => console.error(err))
+            }
+    
+
+            console.log("gets to login call")
+            await fetch(`http://localhost:3001/loggedin/user/info/`, {
+    
+                method: "get",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                    
+                    'Content-Type': 'application/json',
+                    },
+            })
+            .then(res => res.json())
+            .then(user => {
+                console.log("user:",user[0])
+
+                try{
+
+                    loadUser(user[0]) 
+                    
+                    const from = location.state?.from?.pathname || `/home/${user[0].id}`;
+
+                    // console.log(showModal)
+
+                    if(showModal){
+
+                        toggleModal();
+                    }
+                    
+                    navigate(`/home/${user[0].id}`)
+                    
+                }
+                catch(err){
+
+                    console.error(err)
+                }
+            
+            })
+
+
         }else{
 
             console.log("validation Error");
         }
-
-
-
 
     }
 
