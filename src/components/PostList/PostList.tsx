@@ -45,6 +45,8 @@ const PostList: FC = () => {
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
 
+
+
     const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
 
     // console.log("loggedinUser: ", loggedInUser)

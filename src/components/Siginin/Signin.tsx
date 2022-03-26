@@ -1,7 +1,7 @@
 
 import React, { FC, useState, useContext } from "react";
 
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import useSigninModal from "../hooks/useModal";
 
@@ -9,7 +9,7 @@ import useAuth from "../hooks/useAuth";
 // import useUserInfo from "../hooks/useUserInfo";
 import UserInfoContext from "../context/UserInfoProvider";
 
-const Signin:FC = () => {
+const Signin:FC = ({ reDirect }) => {
 
     const { showModal, toggleModal } = useSigninModal();
 
@@ -20,7 +20,6 @@ const Signin:FC = () => {
     const { auth, setAuth } = useAuth();
 
     const navigate = useNavigate();
-    const location = useLocation();
 
 
     
@@ -90,9 +89,10 @@ const Signin:FC = () => {
 
             console.log(user)
 
-            // console.log(user.access_token)
+            console.log("signin access token: ",user.access_token)
             if(user.access_token){
 
+                console.log("signin access token: ",user.access_token)
 
                 // token stuff
 
@@ -124,7 +124,7 @@ const Signin:FC = () => {
 
                             loadUser(user[0]) 
                             
-                            const from = location.state?.from?.pathname || `/home/${user[0].id}`;
+                            // const from = location.state?.from?.pathname || `/home/${user[0].id}`;
 
                             // console.log(showModal)
 
@@ -132,8 +132,12 @@ const Signin:FC = () => {
 
                                 toggleModal();
                             }
+
+                            if(reDirect){
+
+                                navigate(`/home/${user[0].id}`)
+                            }
                             
-                            navigate(`/home/${user[0].id}`)
                             
                         }
                         catch(err){
@@ -160,39 +164,7 @@ const Signin:FC = () => {
 
         }).catch((err)=> console.log(err))
 
-        // await fetch(`http://localhost:3001/usersInfo/${auth.user_id}`, {
-
-        //     method: "get",
-        //     headers: {
-                
-        //         'Content-Type': 'application/json',
-        //       },
-        // })
-        // .then(res => res.json())
-        // .then(user => {
-        //     console.log("user:",user[0])
-
-        //     try{
-
-        //         loadUser(user[0]) 
-                
-        //         const from = location.state?.from?.pathname || "/";
-                
-        //         navigate(from, { replace: true });
-        //         // navigate(`/home/${user[0].id}`)
-        //     }
-        //     catch(err){
-
-        //         console.error(err)
-        //     }
         
-        // })
-
-        // if(auth?.user_id){
-
-        //     const from = location.state?.from?.pathname || `/home/${user.user_id}`;
-        //     navigate(from, { replace:true });
-        // }
 
     }
             

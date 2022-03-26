@@ -25,11 +25,6 @@ const ProfileHeader:FC = () =>{
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
-    // const [pictures, setPictures] = useState({
-
-    //     headerImage:"",
-    //     profileImage:""
-    // })
 
     useEffect(() => {
         

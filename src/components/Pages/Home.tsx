@@ -12,21 +12,7 @@ import useModal from "../hooks/useModal";
 
 
 
-const Homepage:FC = ({  loadUser}) => {
-
-    // const { auth, setAuth } = useAuth();
-      // eslint-disable-next-line
-    //   const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
-
-
-    // useEffect(() => {
-
-    //     console.log()
-
-    // }, [loggedInUser])
-
-    const { showModal, toggleModal } = useModal();
-
+const Homepage:FC = () => {
 
 
     return(

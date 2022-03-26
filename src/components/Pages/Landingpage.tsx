@@ -23,7 +23,7 @@ const Landingpage = ({ loadUser }):ReactElement => {
                     <div className="image landingImage" ></div>
                 </div>
 
-                    <Signin loadUser={loadUser} />
+                    <Signin reDirect={true} />
 
             </div>
             <BottomBar />

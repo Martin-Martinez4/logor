@@ -51,7 +51,7 @@ const  SigininModal = ({ showModal, hide, children }) => {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <Signin />
+          <Signin reDirect={false} />
          
             
         </div>

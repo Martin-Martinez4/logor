@@ -29,6 +29,14 @@ export const HeartIcon2 = ({ comment_id }) => {
 
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
+    useEffect(() => {
+
+        // console.log("hgeart loggedinuser: ", loggedInUser)
+        
+    }, [loggedInUser])
+
+    let isMounted = true; 
+
     const loggedInId = loggedInUser.id
 
     const mountedRef = useRef(true)
@@ -89,7 +97,7 @@ export const HeartIcon2 = ({ comment_id }) => {
 
     useEffect(() => {
 
-        let isMounted = true; 
+        // let isMounted = true; 
 
         (async (comment_id, setNumberOfLikes, isMounted) => {
 
@@ -124,7 +132,11 @@ export const HeartIcon2 = ({ comment_id }) => {
     
                     tempLiked = await userLiked(comment_id );
                     
-                    if (!mountedRef.current) return null
+                    if (!mountedRef.current){
+                        
+                        setAnimateClass(tempLiked)
+                        return null
+                    }
 
                     if(tempLiked){  
     
@@ -146,15 +158,15 @@ export const HeartIcon2 = ({ comment_id }) => {
             
         })(comment_id, loggedInId, userLiked, isMounted);
         
-        return () => { isMounted = false };
 
-    },[loggedInId])
+    },[loggedInUser])
 
     useEffect(() => {
 
         // console.log(animateClass);
 
     }, [animateClass])
+
 
     useEffect(() => {
         return () => { 

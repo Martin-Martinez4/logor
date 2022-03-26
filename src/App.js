@@ -3,6 +3,7 @@ import './App.css';
 import {
   Routes,
   Route,
+  Navigate
  
 } from "react-router-dom";
 import { useContext } from 'react';
@@ -80,13 +81,13 @@ function App() {
             <Route element={<RequireAuth />} >
     
                 {/* <Route  path="/home/:id" element={<Home loadUser={loadUser}/>} /> */}
-                <Route  path="/home/:id" element={<Home />} />
+                <Route  path="/home/" element={<Home />} />
                 {/* <Route path="/loading/user/:id" element={<LoadingUser loadUser={loadUser}/>} /> */}
+                <Route path="/home/*" element={<Navigate replace to="/home/" />} />
+
 
 
             </Route>
-          </Route> 
-
       
                     
           
@@ -106,6 +107,9 @@ function App() {
 
         {/* <Route path="/test" element={<VisitorPage/>}/> */}
         <Route path="*" element={<PageNotFound />} />
+
+        </Route> 
+
         <Route path="/test/file/upload/" element={<Fileupload/>}></Route>
       </ Routes>
 

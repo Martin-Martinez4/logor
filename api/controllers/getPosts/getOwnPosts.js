@@ -4,8 +4,6 @@ export const handleGetComments = (req, res, db) => {
 
     const id = req.user_id
 
-    // const {id } = req.params
-
     db.distinct('*').from('comments').where('user_id', '=', id).orderBy('created_at', 'desc')
     .then(data => {
 

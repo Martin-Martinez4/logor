@@ -38,6 +38,12 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
      // eslint-disable-next-line
      const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
+     useEffect(() => {
+
+        console.log("postlist loggedInUser: ",loggedInUser)
+
+    }, [loggedInUser])
+
  
      const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
  

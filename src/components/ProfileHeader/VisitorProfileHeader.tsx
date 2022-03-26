@@ -56,6 +56,10 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
 
     useEffect(() => {
 
+    }, [loggedInUser])
+
+    useEffect(() => {
+
         const fetchUserData = async (userOrTagID, setVisiteeUser) => {
 
 
