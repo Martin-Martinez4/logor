@@ -1,5 +1,5 @@
 
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import {
     Routes,
@@ -17,9 +17,50 @@ import ShareIcon from "../../assets/ShareIcon.svg";
 import PoundSign from "../../assets/PoundSign.svg";
 import HeartIcon from "../../assets/HeartIcon.svg";
 
+import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
+import { createMiniProfiles } from "../utils/createMiniprofilesArray";
+
 import"./contentArea.css";
 
 const VisitorContentArea:FC = ({ userOrTagID }) => {
+
+    const [ suggestedProfiles, setSuggestedProfiles ] = useState();
+
+    let miniprofilesArray = [];
+
+    // get three random user_ids
+    useEffect(() => {
+
+        (async (setSuggestedProfiles) => {
+
+            const featuredUsers = await getRandomUserIDs(3);
+
+            // console.log("featueredUsers: ", featuredUsers)
+
+            setSuggestedProfiles(featuredUsers)
+
+            // console.log("setSuggestedProfiles: ", suggestedProfiles)
+            
+        })(setSuggestedProfiles)
+        
+        // console.log("setSuggestedProfiles: ", suggestedProfiles)
+        
+    }, [])
+    
+    useEffect(() => {
+        
+        // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
+
+        miniprofilesArray = createMiniProfiles(suggestedProfiles);
+
+        // console.log("miniprofilesArray2: ", miniprofilesArray)
+
+
+
+    }, [suggestedProfiles])
+
+
+    miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
 
     return (
@@ -74,9 +115,8 @@ const VisitorContentArea:FC = ({ userOrTagID }) => {
 
                
                 <div className="rightSide_content featured_content">
-                    <MiniProfile></MiniProfile>
-                    <MiniProfile></MiniProfile>
-                    <MiniProfile></MiniProfile>
+                    
+                    {miniprofilesArray}
                 </div>
                        
             </SideCard> 

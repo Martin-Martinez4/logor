@@ -152,6 +152,7 @@
 .post_user_image{
 
     width: 4rem;
+    border-radius: 100%;
 
 }
 

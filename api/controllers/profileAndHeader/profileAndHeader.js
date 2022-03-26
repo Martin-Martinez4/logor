@@ -172,8 +172,7 @@ export const handleUpdateHeaderImage = async (req, res, db) => {
         )
         .jpeg({ quality: 90 })
         .toFile(
-            // path.resolve(req.files[1].destination,'temp','resized','headers', req.files[1].filename.split("/").pop())
-            // path.resolve(req.files[1].path)
+            
             resizedHeader
         ).catch(err => {
             
@@ -186,10 +185,6 @@ export const handleUpdateHeaderImage = async (req, res, db) => {
 
         await fs.remove(oldHeaderpath)
 
-        // const image = req.file.filename;
-        // console.log(req.file.filename.split("/").pop())
-        // const imageName = req.file.filename.split("/").pop()
-        // JSON.parse(req.body.data).directory
         const id = req.user_id;
 
         const newFilepath = '/' + 'headers/'+headerImageName;

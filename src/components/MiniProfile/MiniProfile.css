@@ -13,6 +13,8 @@
     width: 3rem;
     margin-bottom: 2rem;
     margin-top: .5rem;
+
+    border-radius: 100%;
 }
 
 .miniProfile> .profileName{

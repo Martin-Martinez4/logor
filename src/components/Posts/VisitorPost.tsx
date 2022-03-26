@@ -2,6 +2,9 @@
 import React, { FC, useEffect, useState, useContext } from "react";
 import { Link, Route, BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 
+import { serverAddressString } from "../utils/exportGetImage"; 
+
+
 import Card from "../Card/Card";
 import "./Posts.css";
 
@@ -192,7 +195,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
             <>
             {console.log(status[0])}
             <div className="post user_image">
-                <img src={user_profile} alt="profile" className="post_user_image "></img>
+                <img src={`${serverAddressString}${user_profile}`} alt="profile" className="post_user_image "></img>
                
             </div>
             <div className="post user_content">

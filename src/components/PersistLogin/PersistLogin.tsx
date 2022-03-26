@@ -30,7 +30,11 @@ const PersistLogin = () => {
 
         !auth?.access_token ? verifyRefreshToken() : setIsLoading(false);
 
-        return () => isMounted = false;
+        return () => {
+
+            isMounted = false
+            setIsLoading(false)
+        };
 
     }, [])
 

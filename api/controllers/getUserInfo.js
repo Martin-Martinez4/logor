@@ -1,5 +1,4 @@
 
-import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode"
 
 
@@ -32,6 +31,8 @@ export const handleGetUserInfoByNickname = (req, res , db) => {
     .join('user_headers', 'users.id', 'user_headers.user_id')
     .where("users.nickname", "=", `${tagNickanme}`)
     .then((user) => {
+
+        // console.log(user)
         
         res.json(user)
     })
@@ -39,49 +40,36 @@ export const handleGetUserInfoByNickname = (req, res , db) => {
 
 }
 
-export const handleGetUserInfoByToken = (req, res, db) => {
-
-    // get token from body,
-    // If token expired, refresh 
-    // decode id from token
-
-    if (req.headers && req.headers.authorization) {
-
-        // const authorization = req.headers.authorization;
-        const authorization = req.headers.authorization.split(' ')[1];
-
-        // console.log("req headers:", authorization)
-
-        try {
-
-            console.log( "try")
-            console.log("decode: ",jwt_decode(authorization))
-
-
-        } catch (e) {
-            return res.status(401).send('unauthorized');
-        }
-    }
-
-
-}
-
 export const handleGetGetMiniProfileInfo = (req, res, db) => {
 
-    const user_id = req.params.id;
+    try{
 
-    // console.log(user_id)
+        const user_id = req.params.id;
+    
+        // console.log(user_id)
+    
+        db.select("*").from("users")
+        .where({
+    
+            id: user_id
+        })
+        .then(userInfo => {
+    
+            res.json(userInfo)
+        })
+        .catch(err => {
+            console.log("error handleGetGetMiniProfileInfo ")
+            console.log(err)
+            res.json({})
+        
+        })
 
-    db.select("*").from("users")
-    .where({
+    }catch{
+        console.log("error handleGetGetMiniProfileInfo ")
+        res.json({})
 
-        id: user_id
-    })
-    .then(userInfo => {
+    }
 
-        res.json(userInfo)
-    })
-    .catch(err => console.log(err))
 
 }
 
@@ -97,6 +85,7 @@ export const  handleGetLoggedinUserInfo = (req, res, db) => {
         res.json(user)
     })
     .catch(err => {
+        console.log("get info error")
         console.log(err)
         res.json([])
     })

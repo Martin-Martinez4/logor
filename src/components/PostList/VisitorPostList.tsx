@@ -3,6 +3,9 @@ import { FC, useContext, useState, useEffect } from "react";
 
 import { Location, useLocation } from "react-router-dom";
 
+import { createMiniProfiles } from "../utils/createMiniprofilesArray";
+import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
+
 import Scroll from "../Scroll/Scroll";
 
 import UserNotFound from "../UserNotFound/UserNotFound";
@@ -164,6 +167,45 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
         return () => { isMounted = false };
  
      }, [])
+
+     const [ suggestedProfiles, setSuggestedProfiles ] = useState();
+
+     let miniprofilesArray = [];
+ 
+     // get three random user_ids
+     useEffect(() => {
+ 
+         (async (setSuggestedProfiles) => {
+ 
+             const featuredUsers = await getRandomUserIDs(4);
+ 
+             // console.log("featueredUsers: ", featuredUsers)
+ 
+             setSuggestedProfiles(featuredUsers)
+ 
+             // console.log("setSuggestedProfiles: ", suggestedProfiles)
+             
+         })(setSuggestedProfiles)
+         
+         // console.log("setSuggestedProfiles: ", suggestedProfiles)
+         
+     }, [])
+     
+     useEffect(() => {
+         
+         // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
+         // create the miniProfile  element list here
+ 
+         miniprofilesArray = createMiniProfiles(suggestedProfiles);
+ 
+         // console.log("miniprofilesArray2: ", miniprofilesArray)
+ 
+ 
+ 
+     }, [suggestedProfiles])
+ 
+     miniprofilesArray = createMiniProfiles(suggestedProfiles);
+ 
  
      
     //  let posts = userPosts
@@ -189,12 +231,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
                     </div>
                     <p>Featured</p>
                     <div className="features">
-                        <MiniProfile></MiniProfile>
-
-                        <MiniProfile></MiniProfile>
-                        <MiniProfile></MiniProfile>
-
-                        <MiniProfile></MiniProfile>
+                        {miniprofilesArray}
 
                     </div>
                 </Card>

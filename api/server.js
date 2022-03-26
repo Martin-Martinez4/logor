@@ -35,13 +35,8 @@ import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/ge
 import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 
-import {  handleUploadImage, handleUploadProfileHeaderImage } from "./controllers/images/uploadImage.js";
+import {  handleUploadImage } from "./controllers/images/uploadImage.js";
 import {  handleUpdateHeaderWithDefault, handleUpdateProfileWithDefault, handleUpdateHeaderImage, handleUploadProfileImage } from "./controllers/profileAndHeader/profileAndHeader.js"
-
-// import { handleAddResponse } from './controllers/responses/addResponse.js';
-
-
-// import { handleGetCommentsByUserNickname, handleGetCommentsByUserID, handleGetCommentsByTag } from './controllers/getPosts/getOtherPosts.js';
 
 import { authenticateToken } from './middleware/authorization.js';
 
@@ -149,9 +144,8 @@ app.get('/temp/', async (req, res) => {
       root: path.join(__dirname, 'temp')
   };
   
-    // let p = path.join(__dirname, `${fileQuery}`);
    
-      // send a png file
+    // send a png file
     // res.sendFile(p);
   
       res.sendFile(fileQuery, options, function (err) {
@@ -270,17 +264,6 @@ app.post("/api/image/", upload.single('image'), (req, res) => {
 
 })
 
-app.post("/api/image/profile/", upload.single('image'), (req, res) => {
-
-  handleUploadProfileImage(req, res, db)
-
-})
-
-app.post("/api/image/profile/header/",  upload.array('image'), (req, res) => {
-
-  handleUploadProfileHeaderImage(req, res, db)
-
-})
 
 app.post("/profile/update/default/", authenticateToken,(req, res) => {
 

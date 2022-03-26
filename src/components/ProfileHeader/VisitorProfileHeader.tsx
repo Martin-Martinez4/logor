@@ -1,4 +1,6 @@
 
+import { serverAddressString } from "../utils/exportGetImage";
+
 import React, { FC, useContext, useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -180,8 +182,8 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
             {undefUser? <UserNotFound />
             :
                 <>
-                <div className="profile_header_background" style={{backgroundImage: `url('${visiteeUser.header_img_url}')`}} >
-                    <img src={ visiteeUser.profile_pic_url } alt="profile" className="profile_header_image "></img>
+                <div className="profile_header_background" style={{backgroundImage: `url('${serverAddressString}${visiteeUser.header_img_url}')`}} >
+                    <img src={ `${serverAddressString}${visiteeUser.profile_pic_url}` } alt="profile" className="profile_header_image "></img>
                 </div>
 
                 <div className="profile_header_container">
