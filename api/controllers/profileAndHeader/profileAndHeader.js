@@ -51,70 +51,95 @@ export const handleUpdateProfileWithDefault = async (req, res, db) => {
 
 }
 
-export const handleUploadProfileImage = (req, res, db) => {
+export const handleUploadProfileImage = async (req, res, db) => {
+
+    console.log("gets to profile update")
 
     const fileTypeRegexp = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/;
 
-    if(!req?.file?.originalname.match(fileTypeRegexp)){
+    console.log("profile req.file: ", req?.file)
+    // console.log("header req: ", req)
+
+    if(!req?.file?.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/)){
 
         res.send({msg: 'Only png, gif, jpeg, and svg ar allowed!'})
 
     }else{
 
-        
+        // const headerImageArray = req.file.filename.split("/");
+
+        const profileImageName = path.basename(req.file.filename)
+
+        console.log("top imageImage: ",profileImageName)
+
+        const resizedprofile = path.resolve(req.file.destination,'temp','profiles', profileImageName)
+
+        await sharp(req.file.path)
+        .resize(260 , 260,
+        {
+            kernel: sharp.kernel.nearest,
+            fit: 'fill',
+      
+        }
+        )
+        .jpeg({ quality: 90 })
+        .toFile(
+            // path.resolve(req.files[1].destination,'temp','resized','headers', req.files[1].filename.split("/").pop())
+            // path.resolve(req.files[1].path)
+            resizedprofile
+        ).catch(err => {
+            
+            console.log("sharp error")
+            console.error(err)
+        })
+
+        const oldProfilepath = path.resolve('.','temp', profileImageName);
+
+
+        await fs.remove(oldProfilepath)
+
         const image = req.file.filename;
-        // console.log(req.file.filename.split("/").pop())
+
         const imageName = req.file.filename.split("/").pop()
-        // JSON.parse(req.body.data).directory
-        const id = req.body.user_id;
 
-        // const dir = req.body.directory
+        const id = req.user_id;
 
-        const newFilepath = './temp' + "/"+`${id}`+ '/' + 'profile/'+ imageName
+        const newFilepath = '/' + 'profiles/'+profileImageName;
 
-        console.log(newFilepath)
+        console.log("newFilePath: ",newFilepath)
         
-        fs.move(image, './temp' + "/"+`${id}`+ '/' + imageName, function (err) {
-            if (err) {
-                return console.error(err);
-            }
-            
-            console.log(newFilepath)
-            // res.json({});
+        console.log("id upload: ", id)
+    
+        db("users").where({
+            id: id
+        })
+        .update({
 
-            console.log("id upload: ", id)
-            
-                db("users").where({
-                    id: id
-                })
-                .update({
-        
-                    profile_pic_url: newFilepath,
-            
-                })
-                .then(data => {
-        
-        
-                    res.json({
-                        data: data,
-                        msg: "Image has been updated"
-                    })
-                })
-                .catch(err => {
-        
-                    console.log(err)
-                    res.json({
-                        msg: err
-                    })
-                })
-        });
+            profile_pic_url: newFilepath,
+    
+        })
+        .then(data => {
+
+
+            res.json({
+                data: data,
+                msg: "Image has been updated"
+            })
+        })
+        .catch(err => {
+
+            console.log(err)
+            res.json({
+                msg: err
+            })
+        })
     
 
     }
 
 }
 
-export const handleUpdateHeaderImage = (req, res, db) => {
+export const handleUpdateHeaderImage = async (req, res, db) => {
 
     console.log("gets to header update")
 
@@ -129,31 +154,51 @@ export const handleUpdateHeaderImage = (req, res, db) => {
 
     }else{
 
-        
-        const image = req.file.filename;
+        const headerImageArray = req.file.filename.split("/");
+
+        const headerImageName = path.basename(req.file.filename)
+
+        console.log("top imageImage: ",headerImageName)
+
+        const resizedHeader = path.resolve(req.file.destination,'temp','headers', headerImageName)
+
+        await sharp(req.file.path)
+        .resize(1080 , 360,
+        {
+            kernel: sharp.kernel.nearest,
+            fit: 'fill',
+      
+        }
+        )
+        .jpeg({ quality: 90 })
+        .toFile(
+            // path.resolve(req.files[1].destination,'temp','resized','headers', req.files[1].filename.split("/").pop())
+            // path.resolve(req.files[1].path)
+            resizedHeader
+        ).catch(err => {
+            
+            console.log("sharp error")
+            console.error(err)
+        })
+
+        const oldHeaderpath = path.resolve('.','temp', headerImageName);
+
+
+        await fs.remove(oldHeaderpath)
+
+        // const image = req.file.filename;
         // console.log(req.file.filename.split("/").pop())
-        const imageName = req.file.filename.split("/").pop()
+        // const imageName = req.file.filename.split("/").pop()
         // JSON.parse(req.body.data).directory
         const id = req.user_id;
 
+        const newFilepath = '/' + 'headers/'+headerImageName;
 
-        // const dir = req.body.directory
-
-        const newFilepath = '/headers/'+ imageName
-
-        console.log(newFilepath)
-        
-        fs.move(image, './temp' + newFilepath, function (err) {
-            if (err) {
-                return console.error(err);
-            }
-            
-            console.log(newFilepath)
-            // res.json({});
+        console.log("newFilePath: ",newFilepath)
 
             console.log("id upload: ", id)
             
-                db("user_headers").where({
+                await db("user_headers").where({
                     user_id: id
                 })
                 .update({
@@ -175,8 +220,8 @@ export const handleUpdateHeaderImage = (req, res, db) => {
                     res.json({
                         msg: err
                     })
-                })
-        });
+                }).catch(err => console.error(err))
+        // });
     
 
     }

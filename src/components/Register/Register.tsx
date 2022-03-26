@@ -333,10 +333,10 @@ const Register:FC = () => {
                     method: "post",
                     credentials:'include',
                     cache:'no-cache',
-                    headers: {
+                    // headers: {
                     
-                        'Content-Type': 'application/json',
-                    },
+                    //     'Content-Type': 'form-data',
+                    // },
                     body: formDataProfile
                 })
                  .then(res => res.json())

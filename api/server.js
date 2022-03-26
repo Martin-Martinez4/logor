@@ -35,8 +35,8 @@ import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/ge
 import { handleSignin, handleSignin2} from './controllers/signin.js';
 import { handleRegister } from './controllers/register.js';
 
-import {  handleUploadImage, handleUploadProfileImage, handleUploadProfileHeaderImage } from "./controllers/images/uploadImage.js";
-import {  handleUpdateHeaderWithDefault, handleUpdateProfileWithDefault, handleUpdateHeaderImage } from "./controllers/profileAndHeader/profileAndHeader.js"
+import {  handleUploadImage, handleUploadProfileHeaderImage } from "./controllers/images/uploadImage.js";
+import {  handleUpdateHeaderWithDefault, handleUpdateProfileWithDefault, handleUpdateHeaderImage, handleUploadProfileImage } from "./controllers/profileAndHeader/profileAndHeader.js"
 
 // import { handleAddResponse } from './controllers/responses/addResponse.js';
 
@@ -94,8 +94,8 @@ const options = {
 
 // Then pass these options to cors:           
 // app.use(bodyParser.json({limit:'50mb'})); 
-app.use(bodyParser.urlencoded({extended:true, limit:'50mb'})); 
-app.use(express.json({limit:'50mb'}));
+app.use(bodyParser.urlencoded({extended:true, limit:'4mb'})); 
+app.use(express.json({limit:'4mb'}));
 app.use(cors(options));
 app.use(cookieParser())
 
@@ -121,7 +121,7 @@ const storage = multer.diskStorage({
 const upload = multer({
 
   storage: storage,
-  // limits: { fileSize: 1 * 1024 * 1024 }
+  limits: { fileSize: 1 * 1024 * 1024 }
 })
 
 //=================Image Get=================
@@ -288,11 +288,11 @@ app.post("/profile/update/default/", authenticateToken,(req, res) => {
 
 })
 
-// app.post("/profile/update/", authenticateToken,(req, res) => {
+app.post("/profile/update/", [ authenticateToken, upload.single('image')],(req, res) => {
 
-//   handleUpdateProfile(req, res, db)
+  handleUploadProfileImage(req, res, db)
 
-// })
+})
 
 app.post("/header/update/default/", authenticateToken, (req,res) => {
 

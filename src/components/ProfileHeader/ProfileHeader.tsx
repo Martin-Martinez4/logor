@@ -32,20 +32,14 @@ const ProfileHeader:FC = () =>{
     // })
 
     useEffect(() => {
-
-        // console.log(getProfileImage(loggedInUser["profile_pic_url"]))
-    //    ( async (getProfileImage, setPictures) => {
-
-    //         const profileBlob = await getProfileImage(loggedInUser["profile_pic_url"])
-
-    //         console.log("profileBlob: ", profileBlob)
-    //         setPictures(prev => ({...prev, profileImage: profileBlob}))
-    //     })(getProfileImage, setPictures)
         
     }, [loggedInUser])
 
     const backgroundImageStyle = {
-        background: `url(${serverAddressString}${loggedInUser["header_img_url"]}) no-repeat cover center`
+        background: `url(${serverAddressString}${loggedInUser["header_img_url"]})`,
+        backgroundRepeat:" noRepeat",
+        backgroundSize: "100%",
+        backgroundPosition: "center"
     }
 
 
@@ -58,8 +52,12 @@ const ProfileHeader:FC = () =>{
                 <img src={ `${getImageString}${loggedInUser["profile_pic_url"]}` } alt="profile" className="profile_header_image "></img>
             </div> */}
          <div className="profile_header_background" style={{
-        background: `url(${serverAddressString}${loggedInUser["header_img_url"]}) no-repeat center`
+        backgroundImage: `url(${serverAddressString}${loggedInUser["header_img_url"]})`,
+        backgroundRepeat:" no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center"
     }} >
+
                 <img src={ `${serverAddressString}${loggedInUser["profile_pic_url"]}`} alt="profile" className="profile_header_image "></img>
             </div>
 
