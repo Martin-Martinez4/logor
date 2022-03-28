@@ -9,6 +9,8 @@ import UserInfoContext from "../context/UserInfoProvider";
 import { getMiniProfileInfo } from "../utils/fetchMiniprofileInfo";
 import { loggedIsFollower } from "../utils/fetchFollowers";
 
+import Follow from "../Follow/Follow";
+
 
 const MiniProfile:FC = ({ user_id }) => {
 
@@ -66,12 +68,14 @@ const MiniProfile:FC = ({ user_id }) => {
                     <p><strong>{miniProfileUser?.username}</strong></p>
                     <p><em>{miniProfileUser?.nickname}</em></p>
                 </a>
-                {isFollower
+                {/* {isFollower
                     ?
                     < button type="button" className="button red" title="Click to follow">Unfollow</button>
                     : 
                     < button type="button" className="button primary" title="Click to follow">Follow</button>
-                }
+                } */}
+
+                <Follow visiteeUser={{id: user_id}} buttonClasses={"profileName__button"} followCountClass={"hidden"}/>
             </div>
             {/* < button type="button" className="button" title="Click to move to next Step">Follow</button> */}
         </div>

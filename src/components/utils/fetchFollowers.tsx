@@ -87,10 +87,10 @@ export const loggedIsFollower = async (followee_id) => {
         headers: {
             
             'Content-Type': 'application/json',
-          },
+            },
         body: JSON.stringify({
-            followee_id: followee_id,           
-        })
+                followee_id: followee_id,           
+            })
         })
         .then(data =>  {
         

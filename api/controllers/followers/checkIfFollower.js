@@ -4,10 +4,11 @@
 // visited = follower, logged in user = followee: check if user logged in is being followed
 export const handleCheckIfFollower = (req, res ,db) => {
 
-    const {follower_id, followee_id} = req.body
+    const { followee_id} = req.body
+    const follower_id = req.user_id
 
 
-    db("followee_follower").count("*").where({
+    db("follower_followee").count("*").where({
 
         follower_id: `${follower_id}`,
         followee_id: `${followee_id}`
@@ -39,10 +40,12 @@ export const handleCheckIfLoggedInFollower = (req, res ,db) => {
 
     const {followee_id} = req.body
 
-    const { follower_id } = req.user_id
+    const follower_id = req.user_id
+
+    // console.log(followee_id, follower_id)
 
 
-    db("followee_follower").count("*").where({
+    db("follower_followee").count("*").where({
 
         follower_id: `${follower_id}`,
         followee_id: `${followee_id}`
@@ -73,10 +76,10 @@ export const handleCheckIfLoggedInFollower = (req, res ,db) => {
 export const handleCheckIfLoggedInFollowee = (req, res ,db) => {
 
     const { followee_id } = req.user_id
-    const { follower_id } = req.body
+    const follower_id  = req.body
 
 
-    db("followee_follower").count("*").where({
+    db("follower_followee").count("*").where({
 
         follower_id: `${follower_id}`,
         followee_id: `${followee_id}`

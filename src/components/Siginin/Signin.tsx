@@ -108,13 +108,15 @@ const Signin:FC = ({ reDirect }) => {
                 // login().then(() => {
                         
                     // loadUser(user);
-                      return fetch(`http://localhost:3001/usersInfo/${user.user_id}`, {
+                      return fetch(`http://localhost:3001/loggedin/user/info/`, {
 
                         method: "get",
+                        credentials:'include',
+                        cache:'no-cache',
                         headers: {
                             
                             'Content-Type': 'application/json',
-                        },
+                          },
                     })
                     .then(res => res.json())
                     .then(user => {

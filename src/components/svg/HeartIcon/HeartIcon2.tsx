@@ -25,13 +25,14 @@ export const HeartIcon2 = ({ comment_id }) => {
     });
 
     const { showModal, toggleModal } = useSigninModal();
+
     const { auth, setAuth } = useAuth();
 
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
     useEffect(() => {
 
-        // console.log("hgeart loggedinuser: ", loggedInUser)
+        console.log("hgeart loggedinuser: ", loggedInUser)
         
     }, [loggedInUser])
 
@@ -104,7 +105,10 @@ export const HeartIcon2 = ({ comment_id }) => {
 
                 let numLikes = await getLikesCount(comment_id)
 
-                if (!mountedRef.current) return null
+                if (!mountedRef.current) {
+                    setNumberOfLikes(numLikes)
+                    return null
+                }
                 if(isMounted){
 
                     setNumberOfLikes(numLikes)
@@ -131,6 +135,8 @@ export const HeartIcon2 = ({ comment_id }) => {
                 }else{
     
                     tempLiked = await userLiked(comment_id );
+
+                    console.log("temp liked: ", tempLiked)
                     
                     if (!mountedRef.current){
                         
@@ -159,7 +165,7 @@ export const HeartIcon2 = ({ comment_id }) => {
         })(comment_id, loggedInId, userLiked, isMounted);
         
 
-    },[loggedInUser])
+    },[,loggedInUser])
 
     useEffect(() => {
 

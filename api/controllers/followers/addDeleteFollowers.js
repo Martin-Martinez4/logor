@@ -16,7 +16,7 @@ export const handleAddFollower = (req, res, db) => {
     .onConflict(["followee_id", "follower_id"])
     .ignore()
     .returning("follower_id")
-    .then(data => res.json(data))
+    .then(data => res.json("success"))
     .catch(err => {
 
         console.log(err)
@@ -41,7 +41,7 @@ export const handleDeleteFollower = (req, res, db) => {
     .onConflict()
     .ignore()
     .returning("follower_id")
-    .then(data => res.json(data))
+    .then(data => res.json("success"))
     .catch(err => {
 
         console.log(err)

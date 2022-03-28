@@ -62,14 +62,14 @@ router.post("/user/is/followee/", authenticateToken, (req, res) => {
 })
 
 // authenticateToken
-router.post("/user/create/following/", authenticateToken, (req, res) => {
+router.post("/following/create/", authenticateToken, (req, res) => {
 
   handleAddFollower(req, res, db)
   
 })
 
 // authenticateToken
-router.delete("/user/delete/following/", authenticateToken, (req, res) => {
+router.delete("/following/delete/", authenticateToken, (req, res) => {
 
   handleDeleteFollower(req, res, db)
   

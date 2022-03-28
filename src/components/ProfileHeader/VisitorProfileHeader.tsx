@@ -21,12 +21,10 @@ import { getFollowersCount, getFollowingCount } from "../utils/fetchFollowers";
 
 import Follow from "../Follow/Follow";
 
-
 // import ProfileImage from "../../assets/Monkey_1.svg";
 import LocationIcon from "../../assets/LocationIcon.svg"
 import LinkIcon from "../../assets/LinkIcon.svg"
 import CalenderIcon from "../../assets/CalenderIcon.svg"
-
 
 const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
 

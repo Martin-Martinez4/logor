@@ -12,20 +12,15 @@ import UserNotFound from "../UserNotFound/UserNotFound";
 
 import Card from "../Card/Card";
 import VisitorPost from "../Posts/VisitorPost";
-import DeletedPost from "../Posts/DeletedPost";
 
 import VisitorProfileHeader from "../ProfileHeader/VisitorProfileHeader";
-import MiniProfile from "../MiniProfile/MiniProfile";
 
 import NoPosts from "../NoPosts/NoPosts";
 
 import UserInfoContext from "../context/UserInfoProvider";
 
-import sortedComments from "../../tempStaticData/sortedComments.json";
-
 
 import "./postlist.css"
-import ProfileHeader from "../ProfileHeader/ProfileHeader";
 
 const VisitorPostList: FC = ({ userOrTagID }) => {
 
