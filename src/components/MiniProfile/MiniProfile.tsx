@@ -1,16 +1,38 @@
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useContext } from "react";
 
 import "./MiniProfile.css";
 import { serverAddressString } from "../utils/exportGetImage"; 
-// import Monkey2 from "../../assets/Monkey_2.svg";
+
+import UserInfoContext from "../context/UserInfoProvider";
 
 import { getMiniProfileInfo } from "../utils/fetchMiniprofileInfo";
+import { loggedIsFollower } from "../utils/fetchFollowers";
 
 
 const MiniProfile:FC = ({ user_id }) => {
 
     const [ miniProfileUser, setMiniProfileUser] = useState()
+
+    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
+    const [ isFollower, setIsFollower ] = useState();
+
+    useEffect(() => {
+
+        (async (user_id, setIsFollower) => {
+
+            const isFollower = await loggedIsFollower(user_id);
+
+            console.log("isFollower: ",isFollower)
+
+            setIsFollower(isFollower)
+
+        })(user_id, setIsFollower)
+        
+
+        
+    },[loggedInUser])
 
     useEffect(() => {
 
@@ -44,7 +66,12 @@ const MiniProfile:FC = ({ user_id }) => {
                     <p><strong>{miniProfileUser?.username}</strong></p>
                     <p><em>{miniProfileUser?.nickname}</em></p>
                 </a>
-                < button type="button" className="button" title="Click to follow">Follow</button>
+                {isFollower
+                    ?
+                    < button type="button" className="button red" title="Click to follow">Unfollow</button>
+                    : 
+                    < button type="button" className="button primary" title="Click to follow">Follow</button>
+                }
             </div>
             {/* < button type="button" className="button" title="Click to move to next Step">Follow</button> */}
         </div>

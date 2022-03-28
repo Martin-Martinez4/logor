@@ -44,7 +44,7 @@
     margin: 0;
     margin-top: .5rem;
     line-height: 1rem;
-    background-color: var(--Primary);
+    /* background-color: var(--Primary); */
     font-size: .75rem;
 
     align-self: flex-start;

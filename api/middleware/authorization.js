@@ -8,7 +8,6 @@ export const authenticateToken = (req, res, next) => {
 
     try{
 
-        
 
         const token  = req.cookies.refresh_token;
         // console.log("token: ", token)

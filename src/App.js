@@ -39,28 +39,6 @@ import UserInfoContext from "./components/context/UserInfoProvider";
 
 function App() {
 
-  // eslint-disable-next-line
-  // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
-
-  // const loadUser = (data) => {
-
-  //   // const [id, username, joined, nickname, profile_pic_url, description, header_img_url, location, links] = data;
-
-  //   setloggedInUser({
-        
-  //           id: data.id,
-  //           username: data.username,
-  //           joined_date: data.joined_date,
-  //           nickname: data.nickname,
-  //           profile_pic_url: data.profile_pic_url,
-  //           description: data.description,
-  //           header_img_url: data.header_img_url,
-  //           location: data.location,
-  //           links: data.links,
-  //   })
-
-  // }
-
   return (
     <div className="App container">
 
@@ -105,8 +83,8 @@ function App() {
             <Route path="/comment/thread/:id" element={<VisitorPage/>} />
 
 
-        {/* <Route path="/test" element={<VisitorPage/>}/> */}
-        <Route path="*" element={<PageNotFound />} />
+            {/* <Route path="/test" element={<VisitorPage/>}/> */}
+            <Route path="*" element={<PageNotFound />} />
 
         </Route> 
 

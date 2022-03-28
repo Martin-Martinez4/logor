@@ -13,9 +13,13 @@ import PageNotFound from "../404Page/PageNotFound";
 
 import UserNotFound from "../UserNotFound/UserNotFound";
 
+import { formatDateMonthDayYear } from "../utils/formatDate";
+
 import { getUserIdByNickname } from "../utils/fetchUserData";
 
 import { getFollowersCount, getFollowingCount } from "../utils/fetchFollowers";
+
+import Follow from "../Follow/Follow";
 
 
 // import ProfileImage from "../../assets/Monkey_1.svg";
@@ -40,6 +44,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
      const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
     const [visiteeUser, setVisiteeUser] = useState({
+        id: "",
         username:"",
         nickname:"",
         profile_pic_url:"",
@@ -86,6 +91,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
 
                          setVisiteeUser((prev) => 
                                 ({...prev, 
+                                id: userInfo[0].id,
                                 username:userInfo[0].username,
                                 nickname:userInfo[0].nickname,
                                 profile_pic_url:userInfo[0].profile_pic_url,
@@ -147,6 +153,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
 
                     setVisiteeUser((prev) => 
                             ({...prev, 
+                            id: userInfo[0].id,
                             username:userInfo[0].username,
                             nickname:userInfo[0].nickname,
                             profile_pic_url:userInfo[0].profile_pic_url,
@@ -214,16 +221,17 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                             <p><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><a href={ visiteeUser.links }><em>{ visiteeUser.links}</em></a></p>
                         }
 
-                        <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{ visiteeUser.joined_date }</em></p>
+                        <p><img src={CalenderIcon} alt="profile" className="profile_icon"></img><em>{ formatDateMonthDayYear(visiteeUser.joined_date) }</em></p>
 
                     </div>
 
                     <div className="profile_other profile_following">
-                        <p><a href="">Followers: </a><em>{visiteeUser.followers}</em></p> <p><a href="">Followers: </a><em>{visiteeUser.following}</em></p>
+                        {/* <p><a href="">Followers: </a><em>{visiteeUser.followers}</em></p> <p><a href="">Followers: </a><em>{visiteeUser.following}</em></p>
                         <div> 
                             <button type="button" className="button primary" title="Follow Status">Follow</button>
                             <button type="button" className="button red" title="Follow Status">Unfollow</button>
-                        </div>
+                        </div> */}
+                        <Follow visiteeUser={visiteeUser} />
                     </div>
 
 

@@ -11,7 +11,7 @@ import { handleCountFollowersByUserID } from './controllers/followers/countFollo
 import { handleCountFollowingByUserID } from './controllers/followers/countFollowing.js';
 
 import { handleAddFollower, handleDeleteFollower } from './controllers/followers/addDeleteFollowers.js';
-import { handleCheckIfFollower } from './controllers/followers/checkIfFollower.js';
+import { handleCheckIfFollower, handleCheckIfLoggedInFollower, handleCheckIfLoggedInFollowee } from './controllers/followers/checkIfFollower.js';
 
 const db = knex({
     client: 'pg',
@@ -43,9 +43,21 @@ router.get("/user/number/following/:user_id", (req, res) => {
 
 })
 
-router.post("/user/is/follower/", (req, res) => {
+router.post("/is/follower/", (req, res) => {
 
   handleCheckIfFollower(req, res, db)
+
+})
+
+router.post("/user/is/follower/", authenticateToken, (req, res) => {
+
+  handleCheckIfLoggedInFollower(req, res, db)
+
+})
+
+router.post("/user/is/followee/", authenticateToken, (req, res) => {
+
+  handleCheckIfLoggedInFollowee(req, res, db)
 
 })
 

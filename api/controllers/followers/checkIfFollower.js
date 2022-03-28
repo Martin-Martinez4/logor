@@ -35,5 +35,74 @@ export const handleCheckIfFollower = (req, res ,db) => {
 
 }
 
+export const handleCheckIfLoggedInFollower = (req, res ,db) => {
+
+    const {followee_id} = req.body
+
+    const { follower_id } = req.user_id
+
+
+    db("followee_follower").count("*").where({
+
+        follower_id: `${follower_id}`,
+        followee_id: `${followee_id}`
+
+    }) 
+    .limit(1)
+    .then(count => {
+
+        // console.log(count)
+        if(count[0]["count"] >= 1){
+            
+            res.json(true)
+        }else{
+            
+            res.json(false)
+        }
+        
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json(false)
+    })
+
+
+}
+
+export const handleCheckIfLoggedInFollowee = (req, res ,db) => {
+
+    const { followee_id } = req.user_id
+    const { follower_id } = req.body
+
+
+    db("followee_follower").count("*").where({
+
+        follower_id: `${follower_id}`,
+        followee_id: `${followee_id}`
+
+    }) 
+    .limit(1)
+    .then(count => {
+
+        // console.log(count)
+        if(count[0]["count"] >= 1){
+            
+            res.json(true)
+        }else{
+            
+            res.json(false)
+        }
+        
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json(false)
+    })
+
+
+}
+
 
 
