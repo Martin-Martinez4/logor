@@ -1,6 +1,4 @@
 
-import useAuth from "../hooks/useAuth";
-import useModal from "../hooks/useModal";
 import SigininModal from "../SigninModal/SigninModal";
 import useSigninModal from "../hooks/useModal";
 

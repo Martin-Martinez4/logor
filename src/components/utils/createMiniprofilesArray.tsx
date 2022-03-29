@@ -5,8 +5,6 @@ import MiniProfile from "../MiniProfile/MiniProfile"
 
     let profilesArray = []
 
-    // console.log("inside function: ",suggestedProfiles)
-
     for(let i = 0; i < suggestedProfiles?.length?suggestedProfiles.length:0; i++){
 
         // console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])

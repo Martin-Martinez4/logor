@@ -1,6 +1,6 @@
 
 import React, { FC, useEffect, useState, useContext } from "react";
-import { Link, Route, BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { serverAddressString } from "../utils/exportGetImage"; 
 
@@ -8,7 +8,7 @@ import { serverAddressString } from "../utils/exportGetImage";
 import Card from "../Card/Card";
 import "./Posts.css";
 
-import useUserInfo from "../hooks/useUserInfo";
+// import useUserInfo from "../hooks/useUserInfo";
 
 
 import formatDate, { formatDateAgo } from "../utils/formatDate";
@@ -16,16 +16,11 @@ import formatDate, { formatDateAgo } from "../utils/formatDate";
 import useAuth from "../hooks/useAuth";
 import useModal from "../hooks/useModal";
 import SigininModal from "../SigninModal/SigninModal";
-import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
 import getTagsMentionsLinks from "../utils/getTagsMentionsLinks";
 import addLinkTags from "../utils/addLinkTags";
 
 import UserInfoContext from "../context/UserInfoProvider";
-
-
-
-import { tagsMentionsEdit } from "../utils/tagMentions";
 
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
@@ -37,10 +32,9 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     const { auth, setAuth } = useAuth();
     const { showModal, toggleModal } = useModal();
-    const location = useLocation();  
-    const navigate = useNavigate();
 
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+
+    const { loggedInUser } = useContext( UserInfoContext);
 
     const [postInformation, setPostInfomration] = useState({
 
@@ -55,11 +49,8 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
         treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
 
-        // console.log("treated" ,treatedText)
     }, [postInformation.status, postInformation.text_content])
 
-
-    const readableDate:String = (new Date(date_posted).toString());
 
     let lastEditedReadable: String;
     
@@ -89,25 +80,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
         setDropdownVisible(!dropdownVisible);
 
     }
-
-    const toggleDeleteConfirmationVisible = () => {
-
-        
-        setDeleteConfirmationVisible(!deleteConfirmationVisible);
-
-        if(editMode.visible){
-
-            let tempVisible:boolean = false;
-    
-            setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
-
-            // setCharsLeft(maxChars - postInformation.text_content.length);
-        }
-
-    }
-
-
-        
+ 
     useEffect(() => {
 
         const handleClickOutside = (e) => {
@@ -188,12 +161,10 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
             status[0] === "Deleted"
             ?
             <>
-            {console.log(status[0])}
             <p className="post_body_text">This Post was Deleted by the user</p>
             </> 
             :
             <>
-            {console.log(status[0])}
             <div className="post user_image">
                 <img src={`${serverAddressString}${user_profile}`} alt="profile" className="post_user_image "></img>
                
@@ -240,11 +211,10 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
                         <div> </div> :
                         <React.Fragment>
                            <div className="post__icons">
-                            {console.log("visitorPOst: ",loggedInUser.id === "")}
                             <HeartIcon comment_id={uuid} loggedInUserId={loggedInUser.id}></HeartIcon>
                             <CheckmarkIcon></CheckmarkIcon>
                             <ShareIcon2></ShareIcon2>
-                            <ShareIcon2></ShareIcon2>
+                            {/* <ShareIcon2></ShareIcon2> */}
                         </div>
                         <div className="post__lastEdited">
                         {postInformation.status[0] === "Edited"? (<React.Fragment><p>Lasted Edited on: </p><p> {lastEditedReadable}</p></React.Fragment>):<p></p>}

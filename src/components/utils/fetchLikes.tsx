@@ -22,6 +22,8 @@ export const getLikesCount = async (comment_id) => {
 
 export const userLiked = async (comment_id ) => {
 
+    
+
     const userLiked = await fetch(`http://localhost:3001/user/liked/comment/`, {
 
         method: "post",
@@ -39,7 +41,13 @@ export const userLiked = async (comment_id ) => {
     })
     .then(isLiked => {
 
+        // return isLiked.json()
         return isLiked.json()
+    })
+    .catch(err => {
+
+        return
+
     })
     
 

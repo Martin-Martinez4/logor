@@ -1,9 +1,6 @@
 
 import React, { FC, useEffect, useState, useContext } from "react";
-import { Link, Route, BrowserRouter, Navigate, useLocation, useNavigate } from 'react-router-dom';
-
-
-import useUserInfo from "../hooks/useUserInfo";
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getImageString } from "../utils/exportGetImage";
 import Card from "../Card/Card";
@@ -16,7 +13,6 @@ import addLinkTags from "../utils/addLinkTags";
 
 import { tagsMentionsEdit } from "../utils/tagMentions";
 import useAuth from "../hooks/useAuth";
-import useModal from "../hooks/useModal";
 import SigininModal from "../SigninModal/SigninModal";
 import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
@@ -36,12 +32,11 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     // const { showModal, toggleModal } = useModal();
     const { showModal, toggleModal } = useSigninModal();
 
-    const location = useLocation();  
-    const navigate = useNavigate();
+  
 
     
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loggedInUser } = useContext( UserInfoContext);
 
 
     const [postInformation, setPostInfomration] = useState({
@@ -399,7 +394,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                                 <HeartIcon comment_id={uuid} loggedInId={loggedInUser.id}></HeartIcon>
                                 <CheckmarkIcon></CheckmarkIcon>
                                 <ShareIcon2></ShareIcon2>
-                                <ShareIcon2></ShareIcon2>
+                                {/* <ShareIcon2></ShareIcon2> */}
                             </div>
                             <div className="post__lastEdited">
                             {postInformation.status[0] === "Edited"? (<React.Fragment><p>Lasted Edited on: </p><p> {lastEditedReadable}</p></React.Fragment>):<p></p>}

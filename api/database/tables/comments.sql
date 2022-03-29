@@ -45,6 +45,8 @@ CREATE TABLE mentions(
     comment_id UUID NOT NULL,
     FOREIGN KEY (comment_id) REFERENCES comments(comment_id),
 
+    seen BOOLEAN DEFAULT FALSE,
+
     PRIMARY KEY (user_id, comment_id)
 );
 

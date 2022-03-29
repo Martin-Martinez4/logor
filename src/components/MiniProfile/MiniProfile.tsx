@@ -1,5 +1,5 @@
 
-import { FC, useEffect, useState, useContext } from "react";
+import { FC, useEffect, useState, useContext, useRef } from "react";
 
 import "./MiniProfile.css";
 import { serverAddressString } from "../utils/exportGetImage"; 
@@ -14,9 +14,11 @@ import Follow from "../Follow/Follow";
 
 const MiniProfile:FC = ({ user_id }) => {
 
+    const mountedRef = useRef(true)
+
     const [ miniProfileUser, setMiniProfileUser] = useState()
 
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loggedInUser } = useContext( UserInfoContext);
 
     const [ isFollower, setIsFollower ] = useState();
 
@@ -26,39 +28,44 @@ const MiniProfile:FC = ({ user_id }) => {
 
             const isFollower = await loggedIsFollower(user_id);
 
-            console.log("isFollower: ",isFollower)
-
             setIsFollower(isFollower)
 
         })(user_id, setIsFollower)
         
 
         
-    },[loggedInUser])
+    },[,loggedInUser])
 
     useEffect(() => {
 
         
         (async (setMiniProfileUser, user_id) => {
 
-            const userMiniprofileInfo  = await getMiniProfileInfo(user_id)
+            if(mountedRef.current){
 
-            // console.log("userMiniprofileInfo22222222: ", userMiniprofileInfo )
+                const userMiniprofileInfo  = await getMiniProfileInfo(user_id)
+    
+                // console.log("userMiniprofileInfo22222222: ", userMiniprofileInfo )
+    
+                setMiniProfileUser(userMiniprofileInfo[0]);
+            }
+            else{
 
-            setMiniProfileUser(userMiniprofileInfo[0]);
+                return
+            }
+
 
         //    setMiniProfileUser(prev => ({...prev, toLink: "/users/nickname/" + userMiniprofileInfo[0]?.nickname})) 
         })(setMiniProfileUser, user_id)
 
-    }, [])
-
-    useEffect(() => {
+    }, [user_id])
 
    
-        // console.log("miniProfileUser: ", miniProfileUser)
-
-
-    }, [miniProfileUser])
+    useEffect(() => {
+        return () => { 
+          mountedRef.current = false
+        }
+      }, [])
 
     return(
         <div className="miniProfile">

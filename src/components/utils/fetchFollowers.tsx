@@ -24,6 +24,26 @@ export const getFollowersCount = async (user_id) => {
     
 }
 
+export const getFollowers = async (user_id) => {
+
+    const followers = await fetch(`http://localhost:3001/user/followers?user_id=${user_id}`, {
+
+        method: "get",
+        headers: { "Content-Type": "application/json"},
+
+    })
+    .then(users => {
+
+        return users.json();
+    })
+    .catch(err => {
+
+        return "Error"
+    });
+
+    return followers
+}
+
 export const getFollowingCount = async (user_id) => {
 
     const followingCount = await fetch(`http://localhost:3001/user/number/following/${user_id}`, {
@@ -45,6 +65,28 @@ export const getFollowingCount = async (user_id) => {
 
     return followingCount
 
+}
+
+export const getFollowees = async (user_id) => {
+
+    console.log("getFollowees: ",user_id)
+
+    const followees = await fetch(`http://localhost:3001/user/following?user_id=${user_id}`, {
+
+        method: "get",
+        headers: { "Content-Type": "application/json"},
+
+    })
+    .then(users => {
+
+        return users.json();
+    })
+    .catch(err => {
+
+        return "Error"
+    });
+
+    return followees
 }
 
 export const isAFollowerOfB = async (follower_id, followee_id) => {

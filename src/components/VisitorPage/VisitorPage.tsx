@@ -2,9 +2,6 @@
 
 import React, { FC } from "react";
 import {
-    Routes,
-    Route,
-    Navigate,
     useParams
   } from "react-router-dom";
 import TopBar from "../TopandBottom/TopBar";

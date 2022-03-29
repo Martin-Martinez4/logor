@@ -22,9 +22,9 @@
 .profile_header_image{
 
     border-radius: 100%;
-
-
-    border: 2px solid var(--Tertiary1);
+    box-shadow: -1px -1px 10px var(--Tertiary3);
+    box-sizing: border-box;
+    /* border: 1px solid var(--UIWhite); */
 
     width: 7rem;
     height: 7rem;

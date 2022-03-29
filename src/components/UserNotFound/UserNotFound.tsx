@@ -1,9 +1,5 @@
 
-import { FC, useContext, useState, useEffect } from "react";
-
-import { Location, useLocation } from "react-router-dom";
-
-import Scroll from "../Scroll/Scroll";
+import { FC } from "react";
 
 import Card from "../Card/Card";
 

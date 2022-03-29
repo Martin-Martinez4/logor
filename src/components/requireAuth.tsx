@@ -1,7 +1,6 @@
 import { useEffect, useContext } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
-import LoadingUser from "./LoadingUser/LoadingUser";
 import UserInfoContext from "./context/UserInfoProvider";
 
 
@@ -9,12 +8,12 @@ const RequireAuth = () => {
     
     const { auth } = useAuth();
     const location = useLocation();
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loadUser } = useContext( UserInfoContext);
   
     
     useEffect(() => {
 
-        ( async (user_id, loadUser) => {
+        const fetchLoadUSer  = async (user_id, loadUser) => {
 
             await fetch(`http://localhost:3001/usersInfo/${user_id}`, {
             
@@ -41,9 +40,12 @@ const RequireAuth = () => {
              )
                  
              
-             }
-             )(auth.user_id, loadUser);
-    }, [])
+        }
+
+        fetchLoadUSer(auth.user_id, loadUser);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [auth])
                 
 
 

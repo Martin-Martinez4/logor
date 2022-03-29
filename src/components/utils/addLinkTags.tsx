@@ -18,14 +18,12 @@ const addLinkTags = (treatedArray) => {
             }
             else if (treatedArray[i][0].startsWith("@")){
                 
-                console.log("hash: ", treatedArray[i][0]);
                 linkTagsAdded.push(<a href={`/users/nickname/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
             }
             else{
 
-                console.log("link: ", treatedArray[i][0]);
                 // need to check for https:// at the begining or else ad it 
-                linkTagsAdded.push(<a target="_blank" href={`${treatedArray[i][0]}`}>{treatedArray[i]}</a>)
+                linkTagsAdded.push(<a target="_blank" rel="noreferrer" href={`${treatedArray[i][0]}`}>{treatedArray[i]}</a>)
             }
 
             
@@ -36,7 +34,6 @@ const addLinkTags = (treatedArray) => {
         }
         else{
             
-            // console.log(pattern.test(treatedArray[i][0]))
             linkTagsAdded.push(<span>{treatedArray[i]}</span>);
         }
     }

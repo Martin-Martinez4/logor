@@ -24,7 +24,7 @@ const PersistLogin = () => {
                 
                 await refresh();
 
-                fetch(`http://localhost:3001/loggedin/user/info/`, {
+                await fetch(`http://localhost:3001/loggedin/user/info/`, {
 
                     method: "get",
                     credentials:'include',
@@ -36,7 +36,7 @@ const PersistLogin = () => {
                 })
                 .then(res => res.json())
                 .then(user => {
-                    console.log("user:",user[0])
+                    // console.log("user:",user[0])
 
                     try{
 

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 
 import "./HeartIcon2.css";
 
@@ -18,25 +18,18 @@ import UserInfoContext from "../../context/UserInfoProvider";
 
 export const HeartIcon2 = ({ comment_id }) => {
 
-    const [loginError, setLoginError] = useState({
-
-        inputError:false,
-        flagTripped: false
-    });
-
-    const { showModal, toggleModal } = useSigninModal();
+    const { toggleModal } = useSigninModal();
 
     const { auth, setAuth } = useAuth();
 
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loggedInUser } = useContext( UserInfoContext);
 
     useEffect(() => {
 
-        console.log("hgeart loggedinuser: ", loggedInUser)
+        // console.log("hgeart loggedinuser: ", loggedInUser)
         
     }, [loggedInUser])
 
-    let isMounted = true; 
 
     const loggedInId = loggedInUser.id
 
@@ -72,8 +65,12 @@ export const HeartIcon2 = ({ comment_id }) => {
                 }
                 
                 let tempLiked = await userLiked(comment_id );
+
+                // console.log("comment_id: ", comment_id)
         
                 let numLikes = await getLikesCount(comment_id)
+
+                console.log("numLikes: ",numLikes)
         
                 setNumberOfLikes(numLikes)
         
@@ -100,16 +97,16 @@ export const HeartIcon2 = ({ comment_id }) => {
 
         // let isMounted = true; 
 
-        (async (comment_id, setNumberOfLikes, isMounted) => {
+        (async (comment_id, setNumberOfLikes) => {
 
 
                 let numLikes = await getLikesCount(comment_id)
 
                 if (!mountedRef.current) {
-                    setNumberOfLikes(numLikes)
+                    // setNumberOfLikes(numLikes)
                     return null
                 }
-                if(isMounted){
+                if(mountedRef.current){
 
                     setNumberOfLikes(numLikes)
                 }
@@ -119,12 +116,12 @@ export const HeartIcon2 = ({ comment_id }) => {
     
 
 
-        })(comment_id, setNumberOfLikes, isMounted);
+        })(comment_id, setNumberOfLikes);
 
 
-        (async (comment_id, loggedInId, userLiked, isMounted) => {
+        (async (comment_id, loggedInId, userLiked) => {
 
-            if(isMounted){
+            if(mountedRef.current){
 
                 let tempLiked;
     
@@ -136,11 +133,11 @@ export const HeartIcon2 = ({ comment_id }) => {
     
                     tempLiked = await userLiked(comment_id );
 
-                    console.log("temp liked: ", tempLiked)
+                    // console.log("temp liked: ", tempLiked)
                     
                     if (!mountedRef.current){
                         
-                        setAnimateClass(tempLiked)
+                        // setAnimateClass(tempLiked)
                         return null
                     }
 
@@ -162,10 +159,10 @@ export const HeartIcon2 = ({ comment_id }) => {
            
 
             
-        })(comment_id, loggedInId, userLiked, isMounted);
+        })(comment_id, loggedInId, userLiked);
         
 
-    },[,loggedInUser])
+    },[loggedInUser, comment_id, loggedInId])
 
     useEffect(() => {
 

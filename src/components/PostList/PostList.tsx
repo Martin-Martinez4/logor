@@ -38,16 +38,14 @@ const PostList: FC = () => {
     const [ postlistLoading, setPostlistLoading ] = useState();
 
 
-    const location = useLocation();
-
     // eslint-disable-next-line
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loggedInUser } = useContext( UserInfoContext);
 
 
 
 
-    const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
+    // const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
 
     // console.log("loggedinUser: ", loggedInUser)
 
@@ -110,7 +108,7 @@ const PostList: FC = () => {
 
 
 
-    }, [loggedInUser])
+    }, [loggedInUser.id])
 
     
     let posts = userPosts

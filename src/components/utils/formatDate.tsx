@@ -21,7 +21,7 @@ export function formatDateMonthDayYear(UTCDate){
 
     const newDate = new Date(UTCDate);
 
-    const time = newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second:'numeric',  hour12: true })
+    // const time = newDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second:'numeric',  hour12: true })
 
     const monthsArray:string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
 
@@ -48,7 +48,7 @@ export function formatDateAgo(UTCDate){
         // after just do format date
 
         let formattedDate;
-        let dateDays;
+        // let dateDays;
         let dateHours;
         let dateMinutes;
         let dateSeconds;

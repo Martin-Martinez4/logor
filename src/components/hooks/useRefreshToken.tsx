@@ -7,7 +7,7 @@ const useRefreshToken = () => {
     const refresh = async () => {
 
         // get refresh token like in siginin
-        const response = await fetch('http://localhost:3001/token/refresh/', {
+        await fetch('http://localhost:3001/token/refresh/', {
 
             method: "get",
             credentials:'include',
@@ -20,18 +20,8 @@ const useRefreshToken = () => {
         .then((response) => response.json())
         .then((user) => {
             
-
-            // console.log(user)
-
-            // console.log(user.access_token)
+            
             if(user.access_token){
-
-                // const from = location.state?.from?.pathname || `/user/1`;
-
-                // console.log(user.access_token)
-                // token stuff
-
-                // setAuth({ user_id: user.user_id, access_token:user.access_token });
 
                 setAuth(prev => {
                     return { 

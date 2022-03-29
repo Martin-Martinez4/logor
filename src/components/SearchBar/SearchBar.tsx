@@ -1,6 +1,5 @@
 
 import React, { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import MiniProfile from "../MiniProfile/MiniProfile";
 
 import { userSearch, tagSearch } from "../utils/fetchSearchQuery";
@@ -13,7 +12,7 @@ import "./searchbar.css";
 
 // Make autocom appear only after something has been typed into the search bar
 
-const SearchBar = () => {
+const SearchBar:FC = () => {
 
     const [searchState, setSearchState] = useState({
 
@@ -29,7 +28,7 @@ const SearchBar = () => {
     const [ autocomIsLoading, setAutocomIsLoading ] = useState();
 
 
-    const [throttle, setThrottle] = useState(false);
+    // const [throttle, setThrottle] = useState(false);
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -50,13 +49,13 @@ const SearchBar = () => {
         // in timeout, set throttle true api call
         
 
-            setThrottle(true)
+            // setThrottle(true)
 
             setAutocomIsLoading(true)
 
             setTimeout(async () => {
     
-                setThrottle(false);
+                // setThrottle(false);
 
                 let usersResult = []
                 let tagsResult = []

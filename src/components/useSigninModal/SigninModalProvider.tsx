@@ -1,8 +1,6 @@
 
 import { createContext, useState } from "react";
 
-import { refreshTokenBool } from "../utils/tokenRefreshedBool";
-
 const SigninModalContext = createContext(false);
 
 export const SigninModalProvider = ({ children }) => {

@@ -1,14 +1,11 @@
 
-import React, { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext  } from "react";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
-import { getImageString, serverAddressString } from "../utils/exportGetImage"; 
+import { serverAddressString } from "../utils/exportGetImage"; 
 import UserInfoContext from "../context/UserInfoProvider";
 
-
-
-import useUserInfo from "../hooks/useUserInfo";
-
+import Follow from "../Follow/Follow";
 
 import { formatDateMonthDayYear } from "../utils/formatDate";
 
@@ -23,20 +20,9 @@ const ProfileHeader:FC = () =>{
     
      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loggedInUser } = useContext(UserInfoContext);
 
-
-    useEffect(() => {
-        
-    }, [loggedInUser])
-
-    const backgroundImageStyle = {
-        background: `url(${serverAddressString}${loggedInUser["header_img_url"]})`,
-        backgroundRepeat:" noRepeat",
-        backgroundSize: "100%",
-        backgroundPosition: "center"
-    }
-
+    // const followerComponent2 = followerComponent
 
     return(
 
@@ -46,12 +32,12 @@ const ProfileHeader:FC = () =>{
          {/* <div className="profile_header_background" style={{backgroundImage: `url('${getImageString}${loggedInUser["header_img_url"]}')`}} >
                 <img src={ `${getImageString}${loggedInUser["profile_pic_url"]}` } alt="profile" className="profile_header_image "></img>
             </div> */}
-         <div className="profile_header_background" style={{
-        backgroundImage: `url(${serverAddressString}${loggedInUser["header_img_url"]})`,
-        backgroundRepeat:" no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center"
-    }} >
+            <div className="profile_header_background" style={{
+                backgroundImage: `url(${serverAddressString}${loggedInUser["header_img_url"]})`,
+                backgroundRepeat:" no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+            }} >
 
                 <img src={ `${serverAddressString}${loggedInUser["profile_pic_url"]}`} alt="profile" className="profile_header_image "></img>
             </div>
@@ -85,7 +71,10 @@ const ProfileHeader:FC = () =>{
                 </div>
 
                 <div className="profile_other profile_following">
-                    <p>Followers: <em>{loggedInUser.followers}</em></p> <p>Following: <em>{loggedInUser.following}</em></p>
+                    {/* <p>Followers: <em>{loggedInUser.followers}</em></p> 
+                    <p>Following: <em>{loggedInUser.following}</em></p> */}
+                    <Follow visiteeUser={loggedInUser} buttonClasses={"hidden"} ></Follow>
+                    {/* <FollowersPage user_id={loggedInUser["id"]} /> */}
                 </div>
 
             </div>

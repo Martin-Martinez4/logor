@@ -2,7 +2,6 @@
 import React, { FC, useEffect } from "react";
 import TopBar from "../TopandBottom/TopBar";
 import ContentArea from "../ContentArea/ContentArea";
-import useRefreshToken from "../hooks/useRefreshToken";
 
 import useAuth from "../hooks/useAuth";
 
@@ -11,13 +10,9 @@ const Homepage:FC = () => {
     // user should be set here in  use effect
     const { auth, setAuth } = useAuth();
 
-    const refresh = useRefreshToken();
-
 
 
     useEffect(() => {
-
-        // refresh()
 
         (() => {
 
@@ -65,6 +60,7 @@ const Homepage:FC = () => {
 
         })()
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return(

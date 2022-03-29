@@ -1,9 +1,9 @@
 
 import { serverAddressString } from "../utils/exportGetImage";
 
-import React, { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Card from "../Card/Card";
 import "./ProfileHeader.css";
 
@@ -30,16 +30,13 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
 
     const location = useLocation();
 
-    const navigate = useNavigate();
 
-    const navigate404 = () => {
-        navigate('/404');
-        }
+   
 
     const [undefUser, setUndefUser] = useState(false)
     
      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+     const { loggedInUser } = useContext( UserInfoContext);
 
     const [visiteeUser, setVisiteeUser] = useState({
         id: "",
@@ -182,6 +179,7 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
     
     fetchUserData(userOrTagID, setVisiteeUser)
 
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
     },[])
 
     return(

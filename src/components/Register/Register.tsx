@@ -1,9 +1,6 @@
 
 import React, {useState, useEffect, useContext, FC } from "react";
-import {useNavigate, useLocation, Link} from 'react-router-dom';
-
-// import useAuth from "../useAuth/useAuth";
-import createNewUser from "../createNewUser/createNewUser";
+import {useNavigate, Link} from 'react-router-dom';
 
 import useSigninModal from "../hooks/useModal";
 
@@ -16,14 +13,6 @@ import UserInfoContext from "../context/UserInfoProvider";
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
 
-// import Monkey1 from "../../assets/Monkey_1.svg";
-// import Monkey2 from "../../assets/Monkey_2.svg";
-// import Monkey3 from "../../assets/Monkey_3.svg";
-// import Monkey4 from "../../assets/Monkey_4.svg";
-
-import background1 from "../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplash__mobile2.jpg"
-
-import test from "../../assets/ryunosuke-kikuno-RKwivgSTXVI-unsplashBig.jpg"
 
 import "./Register.css";
 // import { userInfo } from "os";
@@ -39,14 +28,13 @@ const Register:FC = () => {
 
     const { showModal, toggleModal } = useSigninModal();
 
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loadUser } = useContext( UserInfoContext);
 
     // const { loadUser } = useUserInfo();
 
-    const { auth, setAuth } = useAuth();
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
-    const location = useLocation();
     
     const [user, setUser] = useState({
 
@@ -120,12 +108,7 @@ const Register:FC = () => {
         e.preventDefault()
     }
 
-    // const fileToDataUri = (file) => new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.onload = (event) => {
-    //       resolve(event?.target?.result)
-    //     };
-    // })
+  
     
     const onPickImage= (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
 
@@ -189,14 +172,7 @@ const Register:FC = () => {
 
         const { username, nickname, profile_pic_url, description, header_img_url, location, links, password, password2} = user
 
-        // console.log("profile_pic_url: ", profile_pic_url?.type?.split("/")[0])
-        // console.log("profile_pic_url === : ", profile_pic_url === "")
-        // console.log("profile_pic_url === : ", Object.keys(profile_pic_url).length === 0)
-        // console.log("header_img_url: ", header_img_url?.type?.split("/")[0])
-        // console.log("header_img_url === : ", header_img_url === "")
-        // console.log("header_img_url === : ", Object.keys(header_img_url).length === 0)
-
-        // if(password === password2 && (profile_pic_url?.type?.split("/")[0] === "image") && ( header_img_url?.type?.split("/")[0] === "image")){
+      
         if(password === password2){
 
             const testid = await fetch('http://localhost:3001/register', {
@@ -439,7 +415,7 @@ const Register:FC = () => {
 
                     loadUser(user[0]) 
                     
-                    const from = location.state?.from?.pathname || `/home/${user[0].id}`;
+                    // const from = location.state?.from?.pathname || `/home/${user[0].id}`;
 
                     // console.log(showModal)
 

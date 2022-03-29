@@ -300,7 +300,7 @@ button.button, input[type=file]::file-selector-button, input::-webkit-file-uploa
 
   button.button, input[type=file]::file-selector-button, input::-webkit-file-upload-button, a.button{
 
-    width: 4rem;
+    width: 5rem;
   }
 }
 

@@ -17,8 +17,8 @@ export const createFollow = async (followee_id) => {
 
             return response.json()
         })
-        .catch(err => err.json())
-
+        .catch(err => console.log(err))
+        
     return followResponse
 }
 
@@ -39,7 +39,7 @@ export const deleteFollow = async (followee_id) => {
 
         return response.json()
     })
-    .catch(err => err.json())
+    .catch(err => console.log(err))
 
 return followResponse
 

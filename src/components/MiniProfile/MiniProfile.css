@@ -15,6 +15,9 @@
     margin-top: .5rem;
 
     border-radius: 100%;
+    box-shadow: -1px -1px 10px var(--Tertiary3);
+    box-sizing: border-box;
+    /* border: 1px solid var(--UIWhite); */
 }
 
 .miniProfile> .profileName{

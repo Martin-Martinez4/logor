@@ -6,7 +6,6 @@ import {
   Navigate
  
 } from "react-router-dom";
-import { useContext } from 'react';
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import RequireAuth from "./components/requireAuth";
 // import useAuth from "./components/useAuth/useAuth";
@@ -24,7 +23,6 @@ import PersistLogin from './components/PersistLogin/PersistLogin';
 import Fileupload from './testcomponents/Fileupload';
 // import LoadingUser from './components/LoadingUser/LoadingUser';
 
-import UserInfoContext from "./components/context/UserInfoProvider";
 
 // function RequireAuth({ children, redirectTo }) {
 //   let isAuthenticated = useAuth();

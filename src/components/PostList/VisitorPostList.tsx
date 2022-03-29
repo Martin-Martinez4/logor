@@ -24,18 +24,15 @@ import "./postlist.css"
 
 const VisitorPostList: FC = ({ userOrTagID }) => {
 
-    console.log("postlist: ", userOrTagID  )
 
      const location = useLocation();
 
-     console.log(location.pathname);
  
      // eslint-disable-next-line
      const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
      useEffect(() => {
 
-        console.log("postlist loggedInUser: ",loggedInUser)
 
     }, [loggedInUser])
 
@@ -51,15 +48,14 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
          
          let posts = []
  
-        //  console.log(commentsArray)
  
          for(let i = 0; i < commentsArray.length; i++ ){
  
              let loggedInComments = commentsArray[i] 
 
-            //  console.log(loggedInComments)
              
-             const {comment_id, text_content, created_at, status, likes, nickname, profile_pic_url} = loggedInComments
+             const {username, comment_id, text_content, created_at, status, likes, nickname, profile_pic_url} = loggedInComments
+
                  
                  
              if(loggedInComments.hasOwnProperty("comment_id")){
@@ -87,14 +83,12 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
             // fetch data from tags table with id after /tags/
             //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
 
-            console.log("tags/name: ", userOrTagID)
 
             fetch(`http://localhost:3001/tags/byName/${userOrTagID}`, {
                 method: "get",
                 headers:  {"Content-Type": "application/json"},
             }).then(response => response.json())
             .then(comments => {
-                console.log("comments tags/name: ",  comments)
                 if (isMounted){
 
                     setUserPosts(createPosts(comments))
@@ -105,13 +99,13 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
     
         else if(location.pathname.includes("/users/nickname/")){
 
-            console.log("by nickname")
 
             fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
                 method: "get",
                 headers:  {"Content-Type": "application/json"},
             }).then(response => response.json())
             .then(comments => {
+
              
 
                     setUserPosts(createPosts(comments))
@@ -126,7 +120,6 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
                 headers:  {"Content-Type": "application/json"},
             }).then(response => response.json())
             .then(comments => {
-                console.log("comments: ",  comments)
                 if (isMounted){
 
                     setUserPosts(createPosts(comments))
@@ -140,14 +133,12 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
             // fetch data from tags table with id after /tags/
             //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
 
-            console.log("/tags/id")
 
             fetch(`http://localhost:3001/tags/${userOrTagID}`, {
                 method: "get",
                 headers:  {"Content-Type": "application/json"},
             }).then(response => response.json())
             .then(comments => {
-                console.log("comments: ",  comments)
                 if (isMounted){
 
                     setUserPosts(createPosts(comments))
@@ -180,26 +171,21 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
  
              const featuredUsers = await getRandomUserIDs(4);
  
-             // console.log("featueredUsers: ", featuredUsers)
  
              setSuggestedProfiles(featuredUsers)
  
-             // console.log("setSuggestedProfiles: ", suggestedProfiles)
              
          })(setSuggestedProfiles)
          
-         // console.log("setSuggestedProfiles: ", suggestedProfiles)
          
      }, [])
      
      useEffect(() => {
          
-         // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
          // create the miniProfile  element list here
  
          miniprofilesArray = createMiniProfiles(suggestedProfiles);
  
-         // console.log("miniprofilesArray2: ", miniprofilesArray)
  
  
  
@@ -214,10 +200,8 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
         return(
             
             <div className="postlist_horizontal" >
-                {console.log(userOrTagID)}
             <Scroll>
 
-                {console.log("userpost: ",userPosts)}
                 {location.pathname.includes("/users/")?
                 <VisitorProfileHeader userOrTagID={userOrTagID} />:""
                 }
@@ -236,7 +220,6 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
                     </div>
                 </Card>
-                {console.log("undef: ", userPosts === undefined?"undef:":userPosts.length)}
                 {userPosts === undefined?<UserNotFound/>:userPosts.length > 0?userPosts: <NoPosts />}
                
                 {/* White  space at the end of the scroll section */}

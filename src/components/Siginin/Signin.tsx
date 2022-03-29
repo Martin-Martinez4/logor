@@ -13,11 +13,11 @@ const Signin:FC = ({ reDirect }) => {
 
     const { showModal, toggleModal } = useSigninModal();
 
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loadUser } = useContext( UserInfoContext);
 
     // const { loadUser } = useUserInfo();
 
-    const { auth, setAuth } = useAuth();
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const Signin:FC = ({ reDirect }) => {
         inputError:false,
         flagTripped: false
     });
-    const [hasLoaded, sethasLoaded] = useState(false);
+    // const [hasLoaded, sethasLoaded] = useState(false);
   
     const [userCreds, setUserCreds] = useState({
 

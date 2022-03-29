@@ -153,6 +153,9 @@
 
     width: 4rem;
     border-radius: 100%;
+    border-radius: 100%;
+    box-shadow: -1px -1px 10px var(--Tertiary3);
+    box-sizing: border-box;
 
 }
 
