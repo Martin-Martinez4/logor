@@ -30,6 +30,7 @@ export const handleCreatePost = (req, res, db) => {
         .then(() => {
 
             db.select('*').from('comments')
+            .join("users", "comments.user_id", "users.id")
                 .where('comments.user_id', '=', user_id).orderBy('created_at', 'desc')
                 .then((comments) => {
                     

@@ -43,18 +43,14 @@ const PostList: FC = () => {
     const { loggedInUser } = useContext( UserInfoContext);
 
 
-
-
-    // const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
-
-    // console.log("loggedinUser: ", loggedInUser)
-
-    // let loggedInComments = sortedComments[id];
-
     const [userPosts, setUserPosts] = useState();
 
+    const [postsArray, setPostsArray] = useState();
+
+    const [lastPostShown , setLastPostShown] = useState(10)
+
     // Get user comments
-    const createPosts = (commentsArray) => {
+    const createPosts = (commentsArray, loggedInUser) => {
         
         let posts = []
 
@@ -64,10 +60,8 @@ const PostList: FC = () => {
 
             let loggedInComments = commentsArray[i] 
             
-            const {comment_id, text_content, created_at, status, likes, user_id} = loggedInComments;
-            const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
-
-            // console.log("username: ",username)
+            const {comment_id, text_content, created_at, status, likes, user_id, username, nickname, profile_pic_url} = loggedInComments;
+            // const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
                 
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
@@ -86,29 +80,52 @@ const PostList: FC = () => {
     
     useEffect(() => {
 
-        setPostlistLoading(true)
+        const setInitPosts = async() => {
 
-        fetch(`http://localhost:3001/home/`, {
-                method: "get",
-                credentials:'include',
-                    cache:'no-cache',
-                    headers: {
-                        
-                        'Content-Type': 'application/json',
-                      },
-            }).then(response => response.json())
-            .then(comments => {
+            setPostlistLoading(true)
+    
+            await fetch(`http://localhost:3001/home/`, {
+                    method: "get",
+                    credentials:'include',
+                        cache:'no-cache',
+                        headers: {
+                            
+                            'Content-Type': 'application/json',
+                          },
+                }).then(response => response.json())
+                .then(comments => {
+    
+                    // console.log(comments)
+                    // console.log("running")
 
-                // console.log(comments)
-                // console.log("running")
-                setUserPosts(createPosts(comments))
+                    console.log("comments: ", comments)
+    
+                    setPostsArray(createPosts(comments, loggedInUser))
 
-                setPostlistLoading(false)
-            })
+                    console.log("postArray: ", postsArray)
+    
+                    let start = 0;
+                    let howMany = 10;
+    
+                    let extractedArr = postsArray?.filter((item, index)=>{
+                        return index >= start && index < howMany + start ;
+                    })
+
+                    console.log("extrated: ",extractedArr)
+    
+                    setUserPosts(extractedArr)
+                    setLastPostShown(10)
+    
+                    setPostlistLoading(false)
+                })
+        }
+
+        setInitPosts()
 
 
 
-    }, [loggedInUser.id])
+
+    }, [loggedInUser])
 
     
     let posts = userPosts
@@ -160,6 +177,64 @@ const PostList: FC = () => {
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
+    const seeMorePosts = async () => {
+
+        await fetch(`http://localhost:3001/home/`, {
+            method: "get",
+            credentials:'include',
+                cache:'no-cache',
+                headers: {
+                    
+                    'Content-Type': 'application/json',
+                  },
+        }).then(response => response.json())
+        .then(comments => {
+
+            // console.log("running")
+            setPostsArray(createPosts(comments, loggedInUser))
+
+            // console.log(postsArray)
+
+            if(lastPostShown < postsArray?.length ){
+                const increment = 10;
+        
+                const lastNewPostIndex = lastPostShown? lastPostShown + increment: increment
+
+                console.log(lastNewPostIndex)
+        
+
+                setLastPostShown(lastNewPostIndex)
+        
+                setUserPosts(postsArray?.slice(0,lastNewPostIndex))
+
+            
+        }
+            else{
+                
+                
+                
+            }
+            setPostlistLoading(false)
+        })
+
+        
+
+
+
+    }
+
+    useEffect(() => {
+
+    
+        // setUserPosts(postsArray?.slice(0,lastPostShown))
+
+        console.log("postsArray: ",postsArray)
+        setUserPosts(postsArray?.slice(0,lastPostShown))
+
+
+
+    }, [postsArray])
+
     // console.log("miniprofilesArray: ", miniprofilesArray)
 
     
@@ -192,13 +267,16 @@ const PostList: FC = () => {
                 
                 <SigninModalHOC>
 
-                    <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts}  ></CommentBox>
+                    <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts} setPostsArray={setPostsArray} ></CommentBox>
                 </SigninModalHOC>
                     
                 <LoaderHOC loading={postlistLoading}>
-
-                {userPosts}
+                    <>
+                        {userPosts}
+                        <a onClick={seeMorePosts} className={lastPostShown >= postsArray?.length? "hidden" : ""}>See More</a>
+                    </>
                 </LoaderHOC>
+
                
                 {/* White  space at the end of the scroll section */}
                 <div className="empty"></div>

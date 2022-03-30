@@ -20,7 +20,7 @@ import UserInfoContext from "../context/UserInfoProvider";
 
 
 
-const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments }) => {
+const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments, setPostsArray }) => {
 
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
@@ -88,13 +88,10 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
     const addPostToList = async () => {
 
-        try{
-
-            if(await refreshTokenBool(auth, setAuth)){
-        
+        // try{
                 const comment_id = uuidv4();
         
-                fetch(`http://localhost:3001/home/create/comments`, {
+                await fetch(`http://localhost:3001/home/create/comments`, {
         
                     method: "post",
                     credentials:'include',
@@ -109,44 +106,56 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
                         newComment_id: comment_id
                     })
                 })
-                .then((response) => {
-        
-                    tagsMentionsCreate(comment_id, newPost["commentBox"])
-                    return response.json()
-        
-        
-        
-                }).then((comments) => {
-        
-                    setUserPosts(createPosts(comments))
-                })
-        
-        
-        
-                clearInput("commentBox", setNewPost);
-        
-                setCharsLeft(maxChars);
+                .then((comment) => {
 
-
-
-            }else{
-
-                toggleModal()
-                // setShowModal(true)
-
-
-            }
+                    return comment.json()
+                    
+                    // comments.then(com => {
+                        
+                    //     tagsMentionsCreate(comment_id, newPost["commentBox"])
+                    //     // return response.json()
             
+                    //     setPostsArray(createPosts(com, loggedInUser))
+                    //     clearInput("commentBox", setNewPost);
+                
+                    //     setCharsLeft(maxChars);
+                    // })
+        
+                })
+                .then(com => {
+                        
+                        tagsMentionsCreate(comment_id, newPost["commentBox"])
+                        // return response.json()
+            
+                        setPostsArray(createPosts(com, loggedInUser))
+                        clearInput("commentBox", setNewPost);
+                
+                        setCharsLeft(maxChars);
+                    })
+                .catch((error) => {
+                    console.log("error")
+                    toggleModal()
+                    console.error(error);
 
-        }
-        catch{
+                });
+        
+        
+        
+                
+                
+                
+                
+                
+                
+        //     }
+        //     catch{
+                
+        //     toggleModal()
+        //     // setShowModal(true)
 
-            toggleModal()
-            // setShowModal(true)
 
 
-
-        }
+        // }
 
     }
 

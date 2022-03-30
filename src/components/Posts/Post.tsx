@@ -48,6 +48,9 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const [charsLeft, setCharsLeft] = useState(maxChars - (postInformation.text_content?.length? postInformation.text_content.length:0));
 
+    useEffect(() => {
+
+    }, [user_profile])
 
     useEffect(() => {
 
