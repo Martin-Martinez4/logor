@@ -50,7 +50,7 @@ const PostList: FC = () => {
     const [lastPostShown , setLastPostShown] = useState(10)
 
     // Get user comments
-    const createPosts = (commentsArray, loggedInUser) => {
+    const createPosts = (commentsArray) => {
         
         let posts = []
 
@@ -100,7 +100,7 @@ const PostList: FC = () => {
 
                     console.log("comments: ", comments)
     
-                    setPostsArray(createPosts(comments, loggedInUser))
+                    setPostsArray(createPosts(comments))
 
                     console.log("postArray: ", postsArray)
     
@@ -191,7 +191,7 @@ const PostList: FC = () => {
         .then(comments => {
 
             // console.log("running")
-            setPostsArray(createPosts(comments, loggedInUser))
+            setPostsArray(createPosts(comments))
 
             // console.log(postsArray)
 
@@ -273,7 +273,7 @@ const PostList: FC = () => {
                 <LoaderHOC loading={postlistLoading}>
                     <>
                         {userPosts}
-                        <a onClick={seeMorePosts} className={lastPostShown >= postsArray?.length? "hidden" : ""}>See More</a>
+                        <div onClick={seeMorePosts}className={lastPostShown >= postsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
                     </>
                 </LoaderHOC>
 

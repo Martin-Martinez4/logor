@@ -29,7 +29,65 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
  
      // eslint-disable-next-line
-     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+     const { loggedInUser } = useContext( UserInfoContext);
+
+
+     const [userPosts, setUserPosts] = useState();
+
+     const [postsArray, setPostsArray] = useState();
+
+     const postIncrement = 10
+ 
+     const [lastPostShown , setLastPostShown] = useState(postIncrement)
+
+     const CreatePostList = (comments, postIncrement) => {
+
+        console.log("comments: ",createPosts(comments))
+                    
+                    
+        setPostsArray(createPosts(comments))
+
+        // console.log("postArray: ", postsArray)
+
+        let start = 0;
+        let howMany = postIncrement;
+
+        let extractedArr = postsArray?.filter((item, index)=>{
+            return index >= start && index < howMany + start ;
+        })
+
+
+        setUserPosts(extractedArr)
+        setLastPostShown(postIncrement)
+
+     }
+
+     const addMorePostsToUserPosts = (comments, incrementBY) => {
+
+        setPostsArray(createPosts(comments))
+    
+        // console.log(postsArray)
+
+        if(lastPostShown < postsArray?.length ){
+            // const increment = 10;
+    
+            const lastNewPostIndex = lastPostShown? lastPostShown + incrementBY: incrementBY
+
+            console.log(lastNewPostIndex)
+    
+            setLastPostShown(lastNewPostIndex)
+    
+            setUserPosts(postsArray?.slice(0,lastNewPostIndex))
+
+        
+        }
+        else{
+            
+            return
+            
+        }
+
+     }
 
      useEffect(() => {
 
@@ -39,9 +97,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
  
      const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
  
-     // let loggedInComments = sortedComments[id];
  
-     const [userPosts, setUserPosts] = useState();
  
      // Get user comments
      const createPosts = (commentsArray) => {
@@ -74,56 +130,154 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
      useEffect(() => {
 
-        setUserPosts(undefined)
+        //  setUserPosts(undefined)
+         
+         let isMounted = true;   
+         const setVisitorPosts = async () => {
 
-        let isMounted = true;   
+            
+            if (location.pathname.includes("/tags/name/")){
+    
+                // fetch data from tags table with id after /tags/
+                //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
+    
+    
+                fetch(`http://localhost:3001/tags/byName/${userOrTagID}`, {
+                    method: "get",
+                    headers:  {"Content-Type": "application/json"},
+                }).then(response => response.json())
+                .then(comments => {
+                    if (isMounted){
+    
+                        // setUserPosts(createPosts(comments))
+                        CreatePostList(comments, 10)
+                    }
+                })
+            }
+    
         
-        if (location.pathname.includes("/tags/name/")){
+            else if(location.pathname.includes("/users/nickname/")){
+    
+    
+                await fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
+                    method: "get",
+                    headers:  {"Content-Type": "application/json"},
+                }).then(response => response.json())
+                .then(comments => {
 
-            // fetch data from tags table with id after /tags/
-            //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
-
-
-            fetch(`http://localhost:3001/tags/byName/${userOrTagID}`, {
-                method: "get",
-                headers:  {"Content-Type": "application/json"},
-            }).then(response => response.json())
-            .then(comments => {
-                if (isMounted){
-
-                    setUserPosts(createPosts(comments))
-                }
-            })
+                    CreatePostList(comments, 10)
+    
+                })
+            }
+            else if(location.pathname.includes("/users/")){
+    
+             
+    
+                fetch(`http://localhost:3001/users/${userOrTagID}`, {
+                    method: "get",
+                    headers:  {"Content-Type": "application/json"},
+                }).then(response => response.json())
+                .then(comments => {
+                    if (isMounted){
+    
+                        setUserPosts(createPosts(comments))
+                    }
+                })
+    
+    
+            }
+            else if (location.pathname.includes("/tags/")){
+    
+                // fetch data from tags table with id after /tags/
+                //  SELECT * FROM tag_comment JOIN comments ON comments.comment_id = tag_comment.comment_id jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
+    
+    
+                fetch(`http://localhost:3001/tags/${userOrTagID}`, {
+                    method: "get",
+                    headers:  {"Content-Type": "application/json"},
+                }).then(response => response.json())
+                .then(comments => {
+                    if (isMounted){
+    
+                        setUserPosts(createPosts(comments))
+                    }
+                })
+    
+    
+            }
+            else if (location.pathname.includes("/comment/thread/")){
+    
+                // recursive fetch
+                // .then => setUserpost(createPosts(comments))
+    
+                
+    
+            }
+     
         }
+
+        
+        setVisitorPosts()
+        return () => { isMounted = false };
+ 
+     }, [userOrTagID])
+
+     useEffect(() => {
 
     
-        else if(location.pathname.includes("/users/nickname/")){
+        // setUserPosts(postsArray?.slice(0,lastPostShown))
+
+        console.log("postsArray: ",postsArray)
+        setUserPosts(postsArray?.slice(0,lastPostShown))
 
 
-            fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
+
+    }, [postsArray])
+
+     const [ suggestedProfiles, setSuggestedProfiles ] = useState();
+
+     let miniprofilesArray = [];
+ 
+     const seeMorePosts = async () => {
+
+        if (location.pathname.includes("/tags/name/")){
+
+            await fetch(`http://localhost:3001/tags/byName/${userOrTagID}`, {
                 method: "get",
                 headers:  {"Content-Type": "application/json"},
             }).then(response => response.json())
             .then(comments => {
 
-             
-
-                    setUserPosts(createPosts(comments))
+                    addMorePostsToUserPosts(comments, 10)
             })
         }
+        else if(location.pathname.includes("/users/nickname/")){
+
+    
+            await fetch(`http://localhost:3001/users/byNickname/${userOrTagID}`, {
+                method: "get",
+                headers:  {"Content-Type": "application/json"},
+            })
+            .then(response => response.json())
+            .then(comments => {
+                
+                addMorePostsToUserPosts(comments, 10)
+               
+            
+            })
+
+        }
         else if(location.pathname.includes("/users/")){
-
-         
-
+    
+             
+    
             fetch(`http://localhost:3001/users/${userOrTagID}`, {
                 method: "get",
                 headers:  {"Content-Type": "application/json"},
             }).then(response => response.json())
             .then(comments => {
-                if (isMounted){
-
-                    setUserPosts(createPosts(comments))
-                }
+                
+                addMorePostsToUserPosts(comments, 10)
             })
 
 
@@ -139,31 +293,16 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
                 headers:  {"Content-Type": "application/json"},
             }).then(response => response.json())
             .then(comments => {
-                if (isMounted){
+               
+                addMorePostsToUserPosts(comments, 10)
 
-                    setUserPosts(createPosts(comments))
-                }
+
             })
 
-
         }
-        else if (location.pathname.includes("/comment/thread/")){
+    }
 
-            // recursive fetch
-            // .then => setUserpost(createPosts(comments))
 
-            
-
-        }
- 
-        return () => { isMounted = false };
- 
-     }, [])
-
-     const [ suggestedProfiles, setSuggestedProfiles ] = useState();
-
-     let miniprofilesArray = [];
- 
      // get three random user_ids
      useEffect(() => {
  
@@ -190,6 +329,10 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
  
  
      }, [suggestedProfiles])
+
+     useEffect(() => {
+
+     }, [userPosts])
  
      miniprofilesArray = createMiniProfiles(suggestedProfiles);
  
@@ -221,6 +364,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
                     </div>
                 </Card>
                 {userPosts === undefined?<UserNotFound/>:userPosts.length > 0?userPosts: <NoPosts />}
+                <div onClick={seeMorePosts}className={lastPostShown >= postsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
                
                 {/* White  space at the end of the scroll section */}
                 <div className="empty"></div>

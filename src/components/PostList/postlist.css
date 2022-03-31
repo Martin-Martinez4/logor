@@ -158,10 +158,25 @@
 
 }
 
-/* .commentBox--buttonArea--button{
-    justify-self: flex-end;
-    border: 1px solid blue;
-} */
+.posts-see_more{
+
+    cursor: pointer;
+
+    color: var(--Secondary);
+
+    margin-top: 1rem;
+    width: 100%;
+    text-align: center;
+
+    text-decoration: underline;
+}
+
+.posts-see_more:hover{
+
+    /* cursor: pointer; */
+
+    color: var(--Secondary1);
+}
 
 
 
