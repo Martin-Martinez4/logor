@@ -50,14 +50,13 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     useEffect(() => {
 
-    }, [user_profile])
+    }, [user_profile, postInformation])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
+    //     treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
 
-        // console.log("treated" ,treatedText)
-    }, [postInformation.status, postInformation.text_content])
+    // }, [postInformation.status, postInformation.text_content])
 
 
     
@@ -128,13 +127,14 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const toggleEditMode = async () => {
 
+        
         try{
-
+            
             if(await refreshTokenBool(auth, setAuth)){
-    
-        
+                
+                
                 let tempVisible:boolean = !(editMode.visible);
-        
+                
                 setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
         
                 if(deleteConfirmationVisible){
@@ -193,11 +193,11 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }, [dropdownVisible, deleteConfirmationVisible, editMode, status,  cancelButton, dropdownContainer]);
 
-    const handleDelete = (e) => {
+    const handleDelete =async (e) => {
 
         e.preventDefault();
 
-        fetch(`http://localhost:3001/home/delete/${uuid}`, {
+        await fetch(`http://localhost:3001/home/delete/${uuid}`, {
     
             method: "post",
             credentials:'include',
@@ -212,11 +212,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         )
         .then( (comment) => {
 
-            // setUser(user => ({ ...user, [pictureType]:src }))
-            // console.log("comment", comment["status"])
+          
             setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
         })
         .catch(console.log)
+
+
 
     }
 
@@ -241,9 +242,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         toggleEditMode()
 
-        // console.log(editMode.textContent)
 
-        fetch(`http://localhost:3001/home/update/${uuid}`, {
+        await fetch(`http://localhost:3001/home/update/${uuid}`, {
     
             method: "post",
             credentials:'include',
@@ -261,8 +261,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         )
         .then( (comment) => {
 
-            // setUser(user => ({ ...user, [pictureType]:src }))
-            // console.log("edit comment", comment["status"], " ", comment["text_content"])
             setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
         })
         .catch(console.log)
@@ -315,12 +313,10 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                 status[0] === "Deleted"
                 ?
                 <>
-                {/* {console.log(status[0])} */}
                 <p className="post_body_text">This Post was Deleted by the user</p>
                 </> 
                 :
                 <>
-                {/* {console.log(status[0])} */}
                 <div className="post user_image">
                     <img src={`${getImageString}${user_profile}`} alt="profile" className="post_user_image "></img>
                    

@@ -1,16 +1,13 @@
 
 import Card from "../Card/Card";
-import SigninModalHOC from "../SigninModal/SigninModalHOC";
-import Scroll from "../Scroll/Scroll";
 import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
-import UserInfoContext from "../context/UserInfoProvider";
 
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
 
 import { getFollowers, getFollowees } from "../utils/fetchFollowers";
 
-import { FC, useEffect, useState, useContext } from "react"
+import { FC, useEffect, useState } from "react"
 
 const FollowersPage: FC = ({ user_id }) => {
 
@@ -22,7 +19,6 @@ const FollowersPage: FC = ({ user_id }) => {
         followees:[]
     });
 
-    // const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
 
     useEffect(() => {
 
@@ -35,13 +31,8 @@ const FollowersPage: FC = ({ user_id }) => {
                 setFollowersPageIsLoading(true);
     
                 const followersArray = await getFollowers(user_id);
-                // console.log("followersArray: ",followersArray)
     
                 const followersMiniProfiles = createMiniProfiles(followersArray)
-    
-                // console.log("followersMiniProfiles: ",followersMiniProfiles)
-    
-    
     
                 const followeesArray = await getFollowees(user_id);
     
@@ -59,15 +50,12 @@ const FollowersPage: FC = ({ user_id }) => {
         })(user_id, setFollowersPageIsLoading, getFollowers, getFollowees, createMiniProfiles)
 
 
-
-
-
     }, [ user_id, ])
 
     return (
 
         <div className="postlist_horizontal" >
-        <Scroll>
+        {/* <Scroll> */}
             
             <Card classes="content med_suggestion">
                 <p>Suggestions</p>
@@ -83,12 +71,9 @@ const FollowersPage: FC = ({ user_id }) => {
 
                 </div>
             </Card>
-            
-            <SigninModalHOC>
-
-            </SigninModalHOC>
                 
             <LoaderHOC loading={followersPageIsLoading}>
+
 
                 <div>
                     <p>Followers</p>
@@ -101,11 +86,11 @@ const FollowersPage: FC = ({ user_id }) => {
 
                 </div>
 
+
             </LoaderHOC>
            
-            {/* White  space at the end of the scroll section */}
             <div className="empty"></div>
-        </Scroll>
+        {/* </Scroll> */}
           
         </div>
 

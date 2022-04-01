@@ -65,7 +65,7 @@ export const handleSlateForDeletion = (req, res, db) => {
 
     const user_id = req.user_id;
 
-    console.log("user_id: ", user_id)
+    // console.log("user_id: ", user_id)
 
     const text_content = null;
     const newDate = new Date((new Date().getTime())).toUTCString();
@@ -75,6 +75,7 @@ export const handleSlateForDeletion = (req, res, db) => {
     db.transaction(trx => {
 
         trx('comments')
+        .returning("*")
         .where({ comment_id: comment_id,
                 user_id: user_id 
         })
@@ -83,20 +84,13 @@ export const handleSlateForDeletion = (req, res, db) => {
             text_content: text_content,
             status: status
         })
-    
-        .then(() => {
+        .then((comment) => {
+        
+            // console.log(comment[0])
+            res.json(comment[0])
+        })
+               
 
-            db.select('*').from('comments')
-                .where({
-                    comment_id: comment_id,
-                })
-                .then((comment) => {
-                    
-                    // console.log(comment[0])
-                    res.json(comment[0])
-                })
-                .catch((err) => console.log(err))
-            })
         .then(trx.commit)
         .catch(trx.rollback)
     })

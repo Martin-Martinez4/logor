@@ -1,14 +1,10 @@
 
 import React, { FC, useEffect, useState, useContext } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { serverAddressString } from "../utils/exportGetImage"; 
 
-
 import Card from "../Card/Card";
 import "./Posts.css";
-
-// import useUserInfo from "../hooks/useUserInfo";
 
 
 import formatDate, { formatDateAgo } from "../utils/formatDate";
@@ -26,7 +22,7 @@ import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 
-const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, userPosts, posts, status, setUserPosts, createPosts, loggedInComments }) => {
+const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
 
     const maxChars = 920;
 
@@ -43,13 +39,6 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
     });
 
     const [charsLeft, setCharsLeft] = useState(maxChars - postInformation.text_content.length);
-
-
-    useEffect(() => {
-
-        treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
-
-    }, [postInformation.status, postInformation.text_content])
 
 
     let lastEditedReadable: String;

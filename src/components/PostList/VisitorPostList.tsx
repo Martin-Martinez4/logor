@@ -69,7 +69,6 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
         // console.log(postsArray)
 
         if(lastPostShown < postsArray?.length ){
-            // const increment = 10;
     
             const lastNewPostIndex = lastPostShown? lastPostShown + incrementBY: incrementBY
 
@@ -107,8 +106,8 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
  
          for(let i = 0; i < commentsArray.length; i++ ){
  
-             let loggedInComments = commentsArray[i] 
-
+             let loggedInComments = commentsArray[i]
+             
              
              const {username, comment_id, text_content, created_at, status, likes, nickname, profile_pic_url} = loggedInComments
 

@@ -1,14 +1,11 @@
 
-import { FC, useContext, useState, useEffect } from "react";
-
-import { Location, useLocation } from "react-router-dom";
+import { FC, useContext, useState, useEffect, lazy, Suspense } from "react";
 
 import Scroll from "../Scroll/Scroll";
 
 import Card from "../Card/Card";
 import Post from "../Posts/Post";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
-import MiniProfile from "../MiniProfile/MiniProfile";
 import CommentBox from "../CommentBox/CommentBox";
 
 import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
@@ -20,15 +17,13 @@ import UserInfoContext from "../context/UserInfoProvider";
 
 import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
-import useUserInfo from "../hooks/useUserInfo";
-
+import Loader1 from "../svg/Loader1/Loader1"
 
 import useAuth from "../hooks/useAuth";
 
-
-
-
 import "./postlist.css"
+
+const FollowersPage = lazy(() => import("../FollowersPage/FollowersPage"));
 
 const PostList: FC = () => {
 
@@ -36,6 +31,8 @@ const PostList: FC = () => {
     const { auth, setAuth } = useAuth();
 
     const [ postlistLoading, setPostlistLoading ] = useState();
+
+    const [ tabState, setTabState ] = useState("posts")
 
 
     // eslint-disable-next-line
@@ -54,20 +51,15 @@ const PostList: FC = () => {
         
         let posts = []
 
-        // console.log(commentsArray)
-
         for(let i = 0; i < commentsArray.length; i++ ){
 
             let loggedInComments = commentsArray[i] 
             
-            const {comment_id, text_content, created_at, status, likes, user_id, username, nickname, profile_pic_url} = loggedInComments;
-            // const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
-                
+            const {comment_id, text_content, created_at, status, likes, user_id, username, nickname, profile_pic_url} = loggedInComments;                
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
 
-
-                    posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
+                posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
 
                 
             }
@@ -95,14 +87,9 @@ const PostList: FC = () => {
                 }).then(response => response.json())
                 .then(comments => {
     
-                    // console.log(comments)
-                    // console.log("running")
-
-                    console.log("comments: ", comments)
     
                     setPostsArray(createPosts(comments))
 
-                    console.log("postArray: ", postsArray)
     
                     let start = 0;
                     let howMany = 10;
@@ -111,7 +98,6 @@ const PostList: FC = () => {
                         return index >= start && index < howMany + start ;
                     })
 
-                    console.log("extrated: ",extractedArr)
     
                     setUserPosts(extractedArr)
                     setLastPostShown(10)
@@ -123,9 +109,7 @@ const PostList: FC = () => {
         setInitPosts()
 
 
-
-
-    }, [loggedInUser])
+    }, [loggedInUser.id])
 
     
     let posts = userPosts
@@ -150,26 +134,20 @@ const PostList: FC = () => {
 
             const featuredUsers = await getRandomUserIDs(4);
 
-            // console.log("featueredUsers: ", featuredUsers)
-
             setSuggestedProfiles(featuredUsers)
 
-            // console.log("setSuggestedProfiles: ", suggestedProfiles)
             
         })(setSuggestedProfiles)
         
-        // console.log("setSuggestedProfiles: ", suggestedProfiles)
         
     }, [])
     
     useEffect(() => {
         
-        // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
         // create the miniProfile  element list here
 
         miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
-        // console.log("miniprofilesArray2: ", miniprofilesArray)
 
 
 
@@ -190,17 +168,13 @@ const PostList: FC = () => {
         }).then(response => response.json())
         .then(comments => {
 
-            // console.log("running")
             setPostsArray(createPosts(comments))
 
-            // console.log(postsArray)
 
             if(lastPostShown < postsArray?.length ){
                 const increment = 10;
         
                 const lastNewPostIndex = lastPostShown? lastPostShown + increment: increment
-
-                console.log(lastNewPostIndex)
         
 
                 setLastPostShown(lastNewPostIndex)
@@ -223,19 +197,26 @@ const PostList: FC = () => {
 
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
     
-        // setUserPosts(postsArray?.slice(0,lastPostShown))
-
-        console.log("postsArray: ",postsArray)
-        setUserPosts(postsArray?.slice(0,lastPostShown))
+    //     setUserPosts(postsArray?.slice(0,lastPostShown))
 
 
 
-    }, [postsArray])
+    // }, [postsArray])
 
-    // console.log("miniprofilesArray: ", miniprofilesArray)
+    const onChangeTab = (e) => {
+        e.preventDefault();
+
+        const tabName = e.target.getAttribute('tabName');
+
+        setTabState(tabName);
+
+
+
+    }
+
 
     
         return(
@@ -255,12 +236,7 @@ const PostList: FC = () => {
                     <p>Featured</p>
                     <div className="features">
                         {miniprofilesArray}
-                        {/* <MiniProfile></MiniProfile>
-
-                        <MiniProfile></MiniProfile>
-                        <MiniProfile></MiniProfile>
-
-                        <MiniProfile></MiniProfile> */}
+                     
 
                     </div>
                 </Card>
@@ -269,16 +245,36 @@ const PostList: FC = () => {
 
                     <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts} setPostsArray={setPostsArray} ></CommentBox>
                 </SigninModalHOC>
+         
                     
-                <LoaderHOC loading={postlistLoading}>
-                    <>
-                        {userPosts}
-                        <div onClick={seeMorePosts}className={lastPostShown >= postsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
-                    </>
-                </LoaderHOC>
+                    <div className="postlist-tabs">
+                        <li className={tabState === "posts"? "tab_active": ""} tabName="posts" onClick={onChangeTab} >Posts</li>
+                        <li className={tabState === "mentions"? "tab_active": ""} tabName="mentions" onClick={onChangeTab} >Mentions</li>
+                        <li className={tabState === "followers"? "tab_active": ""} tabName="followers" onClick={onChangeTab} >Followers</li>
+                      
+                    </div>
 
-               
-                {/* White  space at the end of the scroll section */}
+                <LoaderHOC loading={postlistLoading}>
+                    <Suspense fallback={<Loader1 />}>
+
+                        {/* {whatToRender(tabState)} */}
+                        {tabState === "posts"? 
+                            <>
+                                {userPosts}
+                                <div onClick={seeMorePosts}className={lastPostShown >= postsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
+
+                            </>
+                            :tabState === "mentions"
+                            ? <div>Mentions</div>
+                            :tabState === "followers"
+                            ? <FollowersPage user_id={loggedInUser.id}></FollowersPage>
+                            :""
+                        }
+                      
+                    </ Suspense>
+                    
+                </LoaderHOC>
+                
                 <div className="empty"></div>
             </Scroll>
               
