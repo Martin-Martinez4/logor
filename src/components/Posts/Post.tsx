@@ -369,8 +369,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                             :
                             <p className="post_body_text">
 
-                           {/* {addLinkTags(getTags(postInformation.text_content))} */}
-                           {treatedText}
+                                {treatedText}
                             </p>
                             }
                     </div>

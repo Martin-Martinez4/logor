@@ -24,6 +24,7 @@ import useAuth from "../hooks/useAuth";
 import "./postlist.css"
 
 const FollowersPage = lazy(() => import("../FollowersPage/FollowersPage"));
+const MentionsPage = lazy(() => import("../MentionsPage/MentionsPage"));
 
 const PostList: FC = () => {
 
@@ -114,14 +115,14 @@ const PostList: FC = () => {
     
     let posts = userPosts
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        setPostlistLoading(true)
+    //     setPostlistLoading(true)
 
-        return (() => { setPostlistLoading(false)})
+    //     return (() => { setPostlistLoading(false)})
 
 
-    }, [auth.user_id])
+    // }, [auth.user_id])
 
     const [ suggestedProfiles, setSuggestedProfiles ] = useState();
 
@@ -197,19 +198,20 @@ const PostList: FC = () => {
 
     }
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    
-    //     setUserPosts(postsArray?.slice(0,lastPostShown))
+        console.log("postsArray: ",postsArray)
+        setUserPosts(postsArray?.slice(0,lastPostShown))
 
 
+    }, [postsArray])
 
-    // }, [postsArray])
+ 
 
     const onChangeTab = (e) => {
         e.preventDefault();
 
-        const tabName = e.target.getAttribute('tabName');
+        const tabName = e.target.getAttribute('tabname');
 
         setTabState(tabName);
 
@@ -248,9 +250,10 @@ const PostList: FC = () => {
          
                     
                     <div className="postlist-tabs">
-                        <li className={tabState === "posts"? "tab_active": ""} tabName="posts" onClick={onChangeTab} >Posts</li>
-                        <li className={tabState === "mentions"? "tab_active": ""} tabName="mentions" onClick={onChangeTab} >Mentions</li>
-                        <li className={tabState === "followers"? "tab_active": ""} tabName="followers" onClick={onChangeTab} >Followers</li>
+                        <li className={tabState === "posts"? "tab_active": ""} tabname="posts" onClick={onChangeTab} >Posts</li>
+                        <li className={tabState === "mentions"? "tab_active": ""} tabname="mentions" onClick={onChangeTab} >Mentions</li>
+                        <li className={tabState === "feed"? "tab_active": ""} tabname="feed" onClick={onChangeTab} >Feed</li>
+                        <li className={tabState === "followers"? "tab_active": ""} tabname="followers" onClick={onChangeTab} >Followers</li>
                       
                     </div>
 
@@ -265,7 +268,7 @@ const PostList: FC = () => {
 
                             </>
                             :tabState === "mentions"
-                            ? <div>Mentions</div>
+                            ? <MentionsPage  user={"yeas"}></MentionsPage>
                             :tabState === "followers"
                             ? <FollowersPage user_id={loggedInUser.id}></FollowersPage>
                             :""

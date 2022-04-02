@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { handleGetComments } from './controllers/getPosts/getOwnPosts.js';
 import { handleCreatePost } from './controllers/post/createPost.js';
 import { handleSlateForDeletion, handleUpdatePost} from './controllers/post/updatePost.js';
+import { handleGetPostsThatMentionUser } from './controllers/mentions/getPostsThatMentionUser.js';
 
 
 import { authenticateToken } from './middleware/authorization.js';
@@ -50,6 +51,12 @@ router.post("/home/delete/:comment_id", authenticateToken, (req, res) => {
 router.post("/home/update/:comment_id", authenticateToken, (req, res) => {
 
     handleUpdatePost(req, res, db)
+
+})
+
+router.get("/home/posts/mentions/",  authenticateToken, (req, res) => {
+
+    handleGetPostsThatMentionUser(req, res, db)
 
 })
 

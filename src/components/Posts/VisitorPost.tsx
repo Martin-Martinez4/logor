@@ -26,7 +26,6 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     const maxChars = 920;
 
-    const { auth, setAuth } = useAuth();
     const { showModal, toggleModal } = useModal();
 
 
@@ -102,28 +101,9 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     }, [dropdownVisible, deleteConfirmationVisible, editMode, status,  cancelButton, dropdownContainer]);
 
-    
-
-    const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-        if(e === null){
-            return
-        }
-
-        setEdiMode(prev => ({ ...prev, [e.target.name]: e.target.value }))
-
-        setCharsLeft(maxChars - e.target.value.length)
-
-        e.preventDefault()
-    }
-
-
-
 
     let treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
 
- 
- 
 
     return(
 
@@ -147,83 +127,83 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
         <Card classes="content post">
 
             {
-            status[0] === "Deleted"
+                status[0] === "Deleted"
             ?
-            <>
-            <p className="post_body_text">This Post was Deleted by the user</p>
-            </> 
+                <>
+                    <p className="post_body_text">This Post was Deleted by the user</p>
+                </> 
             :
-            <>
-            <div className="post user_image">
-                <img src={`${serverAddressString}${user_profile}`} alt="profile" className="post_user_image "></img>
-               
-            </div>
-            <div className="post user_content">
-                <div className="post user_info">
-                    <div className="userNameArea">
-
-                        <strong>{userName} </strong>
-
-                        {/* Small Screen option dots */}
-                        <span className="option_dots on_750px" onClick={toggleDropDownVisible} >
-                            <div className="dot"></div>
-                            <div className="dot"></div>
-                            <div className="dot"></div>
-                            <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
-
-                                <p>Embed</p>
-                                <p>Other Option</p>
-                          
-                            </span>
-                        </span>
+                <>
+                    <div className="post user_image">
+                        <img src={`${serverAddressString}${user_profile}`} alt="profile" className="post_user_image "></img>
+                    
                     </div>
-                        <em>{nickname}</em>
-                        <span className="user_info__pipe on_Gthan750px"> | </span>
-                        <em className="datePosted on_Gthan750px"> {formatDateAgo(new Date(new Date(date_posted).toUTCString()).getTime())}</em>
-                        
-                        <span className="user_info__pipe on_750px"><em className="datePosted"> ○ {formatDateAgo(date_posted)}</em></span>
-                        
+                    <div className="post user_content">
+                        <div className="post user_info">
+                            <div className="userNameArea">
 
-            </div>
-               <div>
-                    <p className="post_body_text">
+                                <strong>{userName} </strong>
 
-                        {treatedText}
-                    </p> 
-                </div>
+                                {/* Small Screen option dots */}
+                                <span className="option_dots on_750px" onClick={toggleDropDownVisible} >
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <div className="dot"></div>
+                                    <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
 
-             
+                                        <p>Embed</p>
+                                        <p>Other Option</p>
+                                
+                                    </span>
+                                </span>
+                            </div>
+                                <em>{nickname}</em>
+                                <span className="user_info__pipe on_Gthan750px"> | </span>
+                                <em className="datePosted on_Gthan750px"> {formatDateAgo(new Date(new Date(date_posted).toUTCString()).getTime())}</em>
+                                
+                                <span className="user_info__pipe on_750px"><em className="datePosted"> ○ {formatDateAgo(date_posted)}</em></span>
+                                
 
-                <div className="post__bottomArea">
-                    {
-                        (deleteConfirmationVisible|| editMode.visible)? 
-                        <div> </div> :
-                        <React.Fragment>
-                           <div className="post__icons">
-                            <HeartIcon comment_id={uuid} loggedInUserId={loggedInUser.id}></HeartIcon>
-                            <CheckmarkIcon></CheckmarkIcon>
-                            <ShareIcon2></ShareIcon2>
-                            {/* <ShareIcon2></ShareIcon2> */}
+                    </div>
+                    <div>
+                            <p className="post_body_text">
+
+                                {treatedText}
+                            </p> 
                         </div>
-                        <div className="post__lastEdited">
-                        {postInformation.status[0] === "Edited"? (<React.Fragment><p>Lasted Edited on: </p><p> {lastEditedReadable}</p></React.Fragment>):<p></p>}
+
+                    
+
+                        <div className="post__bottomArea">
+                            {
+                                (deleteConfirmationVisible|| editMode.visible)? 
+                                <div> </div> :
+                                <React.Fragment>
+                                <div className="post__icons">
+                                    <HeartIcon comment_id={uuid} loggedInUserId={loggedInUser.id}></HeartIcon>
+                                    <CheckmarkIcon></CheckmarkIcon>
+                                    <ShareIcon2></ShareIcon2>
+                                    {/* <ShareIcon2></ShareIcon2> */}
+                                </div>
+                                <div className="post__lastEdited">
+                                {postInformation.status[0] === "Edited"? (<React.Fragment><p>Lasted Edited on: </p><p> {lastEditedReadable}</p></React.Fragment>):<p></p>}
+                                </div>
+
+                                </React.Fragment>
+                            }
+
                         </div>
-
-                        </React.Fragment>
-                    }
-
-                </div>
-            </div>
-            <span className="option_dots on_Gthan750px" onClick={toggleDropDownVisible}>
-                <div className="dot"></div>
-                <div className="dot"></div>
-                <div className="dot"></div>
-                <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
-                    <p>Embed</p>
-                 
-                </span>
-            </span> 
-            </>
+                    </div>
+                    <span className="option_dots on_Gthan750px" onClick={toggleDropDownVisible}>
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                        <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
+                            <p>Embed</p>
+                        
+                        </span>
+                    </span> 
+                </>
      }
         </Card>
     }

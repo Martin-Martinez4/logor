@@ -29,14 +29,7 @@ export const UserInfoProvider = ({ children }) => {
 
             const followersCount =  await getFollowersCount(data.id)
             const followingCount =  await getFollowingCount(data.id)
-
-                // console.log("followers: ", followersCount, " Following: ", followingCount)
-
-                // setVisiteeUser((prev) => 
-                //         ({...prev, 
-                //       followers: followersCount,
-                //       following: followingCount
-                // }))
+            
 
             setloggedInUser({
                 

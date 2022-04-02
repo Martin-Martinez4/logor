@@ -127,7 +127,7 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
                         tagsMentionsCreate(comment_id, newPost["commentBox"])
                         // return response.json()
             
-                        setPostsArray(createPosts(com, loggedInUser))
+                        setPostsArray(createPosts(com))
                         clearInput("commentBox", setNewPost);
                 
                         setCharsLeft(maxChars);

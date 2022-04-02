@@ -10,7 +10,7 @@ const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
     const { auth } = useAuth();
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loadUser  } = useContext( UserInfoContext);
 
 
     useEffect(() => {
