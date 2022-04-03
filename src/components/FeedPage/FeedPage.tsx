@@ -1,24 +1,31 @@
 
-import { FC, useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from "react";
 
-import UserInfoContext from '../context/UserInfoProvider';
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
-import Loader1 from '../svg/Loader1/Loader1';
+import Loader1 from "../svg/Loader1/Loader1";
 
-import VisitorPost from '../Posts/VisitorPost';
-const MentionsPage:FC = ({ user }) => {
+import UserInfoContext from "../context/UserInfoProvider";
 
-    const [mentionsArray, setMentionsArray] = useState();
+import VisitorPost from "../Posts/VisitorPost";
+
+const FeedPage = () => {
+    // Use logged in user through jwt verification
+
+    
+    const [feedArray, setFeedArray] = useState();
 
     const { loggedInUser } = useContext( UserInfoContext);
     
     const [ postlistLoading, setPostlistLoading ] = useState();
 
+    const [seeMoreLoading,  setSeeMoreLoading] = useState();
 
-    const [userMentions, setUserMentions] = useState();
+
+    const [userFeed, setUserFeed] = useState();
 
 
-    const [lastMentionShown , setLastMentionShown] = useState(10)
+    const [lastFeedShown , setLastFeedShown] = useState(10)
 
     const createPosts = (commentsArray) => {
         
@@ -45,9 +52,11 @@ const MentionsPage:FC = ({ user }) => {
 
     useEffect(() => {
 
-        const getMentionPost = async () => {
+        const setInitFeed = async () => {
+            setPostlistLoading(true)
 
-            await fetch(`http://localhost:3001/home/posts/mentions/`, {
+
+            await fetch(`http://localhost:3001/home/posts/feed/`, {
                 method: "get",
                 credentials:'include',
                     cache:'no-cache',
@@ -58,31 +67,34 @@ const MentionsPage:FC = ({ user }) => {
             }).then(response => response.json())
             .then(comments => {
 
-                setMentionsArray(createPosts(comments))
+                setFeedArray(createPosts(comments))
 
 
                 let start = 0;
                 let howMany = 10;
 
-                let extractedArr = mentionsArray?.filter((item, index)=>{
+                let extractedArr = feedArray?.filter((item, index)=>{
                     return index >= start && index < howMany + start ;
                 })
                 
-                setUserMentions(extractedArr)
-                setLastMentionShown(10)
+                setUserFeed(extractedArr)
+                setLastFeedShown(10)
 
-                setPostlistLoading(false)
+                // setPostlistLoading(false)
             })
+            
+            setPostlistLoading(false)
         }
+        
+        setInitFeed()
 
-        getMentionPost()
+    }, [])
 
-    }, [loggedInUser.id])
-
-    
     const seeMorePosts = async () => {
 
-        await fetch(`http://localhost:3001/home/posts/mentions/`, {
+        setSeeMoreLoading(true)
+
+        await fetch(`http://localhost:3001/home/posts/feed/`, {
             method: "get",
             credentials:'include',
                 cache:'no-cache',
@@ -93,18 +105,18 @@ const MentionsPage:FC = ({ user }) => {
         }).then(response => response.json())
         .then(comments => {
 
-            setMentionsArray(createPosts(comments))
+            setFeedArray(createPosts(comments))
 
 
-            if(lastMentionShown < mentionsArray?.length ){
+            if(lastFeedShown < feedArray?.length ){
                 const increment = 10;
         
-                const lastNewPostIndex = lastMentionShown? lastMentionShown + increment: increment
+                const lastNewPostIndex = lastFeedShown? lastFeedShown + increment: increment
         
 
-                setLastMentionShown(lastNewPostIndex)
+                setLastFeedShown(lastNewPostIndex)
         
-                setUserMentions(mentionsArray?.slice(0,lastNewPostIndex))
+                setUserFeed(feedArray?.slice(0,lastNewPostIndex))
 
             
         }
@@ -113,7 +125,7 @@ const MentionsPage:FC = ({ user }) => {
                 
                 
             }
-            setPostlistLoading(false)
+            setSeeMoreLoading(false)
         })
 
         
@@ -122,31 +134,36 @@ const MentionsPage:FC = ({ user }) => {
 
     }
 
+
     useEffect(() => {
 
-        setUserMentions(mentionsArray?.slice(0,lastMentionShown))
+        setPostlistLoading(true)
+
+        setUserFeed(feedArray?.slice(0,lastFeedShown))
+        setPostlistLoading(false)
 
 
-    }, [mentionsArray])
-
+    }, [feedArray])
 
     return(
+
         <>
-             {
-                userMentions === undefined
-                ? <Loader1></Loader1>
-                : userMentions
+                {
+                    userFeed === undefined
+                    ? <Loader1></Loader1>
+                    : userFeed
                 
-            }
+                }
 
-            <div onClick={seeMorePosts}className={lastMentionShown >= mentionsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
-
+                <LoaderHOC loading={seeMoreLoading}>
+                    <div onClick={seeMorePosts}className={lastFeedShown >= feedArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
+                </LoaderHOC>
         </>
+
+
     )
-    
 
 }
 
-export default MentionsPage;
 
-
+export default FeedPage

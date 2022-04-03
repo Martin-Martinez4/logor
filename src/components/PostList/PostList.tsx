@@ -25,6 +25,7 @@ import "./postlist.css"
 
 const FollowersPage = lazy(() => import("../FollowersPage/FollowersPage"));
 const MentionsPage = lazy(() => import("../MentionsPage/MentionsPage"));
+const FeedPage = lazy(() => import("../FeedPage/FeedPage"));
 
 const PostList: FC = () => {
 
@@ -149,9 +150,6 @@ const PostList: FC = () => {
 
         miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
-
-
-
     }, [suggestedProfiles])
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
@@ -211,9 +209,14 @@ const PostList: FC = () => {
     const onChangeTab = (e) => {
         e.preventDefault();
 
+        setPostlistLoading(true)
+
         const tabName = e.target.getAttribute('tabname');
 
         setTabState(tabName);
+
+        setPostlistLoading(false)
+
 
 
 
@@ -268,9 +271,11 @@ const PostList: FC = () => {
 
                             </>
                             :tabState === "mentions"
-                            ? <MentionsPage  user={"yeas"}></MentionsPage>
+                            ? <MentionsPage></MentionsPage>
                             :tabState === "followers"
-                            ? <FollowersPage user_id={loggedInUser.id}></FollowersPage>
+                            ? <FollowersPage user_id={loggedInUser.id} ></FollowersPage>
+                            :tabState === "feed"
+                            ? <FeedPage></FeedPage>
                             :""
                         }
                       

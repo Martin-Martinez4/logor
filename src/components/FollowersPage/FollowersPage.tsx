@@ -1,5 +1,5 @@
 
-import Card from "../Card/Card";
+import "./followersPage.css";
 import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
 
@@ -26,9 +26,9 @@ const FollowersPage: FC = ({ user_id }) => {
 
             let isMounted = true;
 
+            setFollowersPageIsLoading(true);
             if(isMounted){
 
-                setFollowersPageIsLoading(true);
     
                 const followersArray = await getFollowers(user_id);
     
@@ -38,10 +38,10 @@ const FollowersPage: FC = ({ user_id }) => {
     
                 const followeesMiniProfiles = createMiniProfiles(followeesArray)
     
-                setFollowersFollowees(prev => ({...prev, followees: followersMiniProfiles, followers: followeesMiniProfiles }))
+                setFollowersFollowees(prev => ({...prev, followees: followeesMiniProfiles, followers: followersMiniProfiles }))
     
-                setFollowersPageIsLoading(false);
             }
+            setFollowersPageIsLoading(false);
             return () => { isMounted = false };
 
 
@@ -57,7 +57,7 @@ const FollowersPage: FC = ({ user_id }) => {
         <div className="postlist_horizontal" >
         {/* <Scroll> */}
             
-            <Card classes="content med_suggestion">
+            {/* <Card classes="content med_suggestion">
                 <p>Suggestions</p>
                 <div className="suggestions">
 
@@ -70,21 +70,22 @@ const FollowersPage: FC = ({ user_id }) => {
               
 
                 </div>
-            </Card>
+            </Card> */}
                 
             <LoaderHOC loading={followersPageIsLoading}>
 
-
-                <div>
-                    <p>Followers</p>
-                    {followersFollowees.followers}
-
-                </div>
-                <div>
+                <div  className="followers-column">
                     <p>Following</p>
                     {followersFollowees.followees}
 
                 </div>
+
+                <div className="followers-column">
+                    <p>Followers</p>
+                    {followersFollowees.followers}
+
+                </div>
+                {/* </Card> */}
 
 
             </LoaderHOC>
