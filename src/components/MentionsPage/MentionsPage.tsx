@@ -3,6 +3,8 @@ import { FC, useEffect, useState, useContext } from 'react';
 
 import UserInfoContext from '../context/UserInfoProvider';
 
+import LoaderHOC from '../LoaderHOC/LoaderHOC';
+
 import Loader1 from '../svg/Loader1/Loader1';
 
 import VisitorPost from '../Posts/VisitorPost';
@@ -13,6 +15,8 @@ const MentionsPage:FC = ({ user }) => {
     const { loggedInUser } = useContext( UserInfoContext);
     
     const [ postlistLoading, setPostlistLoading ] = useState();
+    const [seeMoreLoading,  setSeeMoreLoading] = useState();
+
 
 
     const [userMentions, setUserMentions] = useState();
@@ -82,6 +86,8 @@ const MentionsPage:FC = ({ user }) => {
     
     const seeMorePosts = async () => {
 
+        setSeeMoreLoading(true)
+
         await fetch(`http://localhost:3001/home/posts/mentions/`, {
             method: "get",
             credentials:'include',
@@ -113,7 +119,7 @@ const MentionsPage:FC = ({ user }) => {
                 
                 
             }
-            setPostlistLoading(false)
+            setSeeMoreLoading(false)
         })
 
         
@@ -139,7 +145,10 @@ const MentionsPage:FC = ({ user }) => {
                 
             }
 
-            <div onClick={seeMorePosts}className={lastMentionShown >= mentionsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
+            <LoaderHOC loading={seeMoreLoading}>
+
+                <div onClick={seeMorePosts}className={lastMentionShown >= mentionsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
+            </LoaderHOC>
 
         </>
     )
