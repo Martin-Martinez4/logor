@@ -7,11 +7,13 @@ import useSigninModal from "../hooks/useModal";
 import { serverAddressString } from "../utils/exportGetImage";
 
 import useAuth from "../hooks/useAuth";
-// import useUserInfo from "../hooks/useUserInfo";
+
 import UserInfoContext from "../context/UserInfoProvider";
 
 import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
+
+import { validateEmail, validatePassword, validateUsername } from "../utils/validation";
 
 
 import "./Register.css";
@@ -20,6 +22,12 @@ import "./Register.css";
 const Register:FC = () => {
 
     // const Monkey1 = "../../users/default/Monkey_1.svg";
+
+    const usernameErrorMessage = "Username must be at least 4 cahracters long and only contain letters numbers and -._"
+    const nicknameErrorMessage = "Nickname must be at least 4 cahracters long and only contain letters numbers and -._"
+    const passwordErrorMessage = "Password be at least 8 characters and must include at least one: lowercase letter, uppercase letter,number, and special character(@#$%^&+=)"
+    const emailErrorMessage = "Please input a valid email address"
+
     const Monkey1 = `${serverAddressString}/profiles/Monkey_1.svg`;
     const Monkey2 = "../../users/default/Monkey_2.svg";
     const Monkey3 = "../../users/default/Monkey_3.svg";
@@ -31,6 +39,11 @@ const Register:FC = () => {
     const { loadUser } = useContext( UserInfoContext);
 
     // const { loadUser } = useUserInfo();
+
+    const [usernameValid, setUsernameValid] = useState();
+    const [nicknameValid, setNicknameValid] = useState();
+    const [emailValid, setEmailValid] = useState();
+    const [passwordValid, setPasswordValid] = useState();
 
     const { setAuth } = useAuth();
 
@@ -98,14 +111,14 @@ const Register:FC = () => {
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
+        e.preventDefault()
+
         if(e === null){
             return
         }
         
-
         setUser(prev => ({ ...prev, [e.target.name]: e.target.value }))
 
-        e.preventDefault()
     }
 
   
@@ -162,9 +175,6 @@ const Register:FC = () => {
     const navigateHome = () => {
         navigate('/');
         }
-    
-    // eslint-disable-next-line
-    // const { login, logout } = useAuth();
 
     const onAttemptRegister = async (user, e) => {
 
@@ -195,7 +205,6 @@ const Register:FC = () => {
             .then((response) => response.json())
             .then((user) => {
     
-                // console.log("response", user)
     
                 if(user.id){
 
@@ -227,10 +236,6 @@ const Register:FC = () => {
             .then((response) => response.json())
             .then((user) => {
                 
-    
-                console.log(user)
-    
-                // console.log(user.access_token)
                 if(user.access_token){
     
     
@@ -252,23 +257,8 @@ const Register:FC = () => {
     
             }).catch((err)=> console.log(err))
 
-            // console.log("user.id: ",user.id)
-    
-            // const formDataProfile = new FormData()
-            // const formDataHeader = new FormData()
-
-            console.log("typeof test: ",typeof profile_pic_url)
-
-            console.log("user_id: ", testid)
+  
             if(typeof profile_pic_url === "string"){
-
-                console.log("inside string: ",profile_pic_url)
-
-                // formData.append('image', header_img_url)
-                // formDataProfile.append('profile_pic_url', profile_pic_url)
-    
-                // // formData.append('header_img_url', header_img_url)
-                // formDataProfile.append('user_id', user.id)
 
 
                 await fetch(`http://localhost:3001/profile/update/default/`, {
@@ -328,15 +318,6 @@ const Register:FC = () => {
     
             if(typeof header_img_url === "string"){
 
-                console.log("inside string: ",header_img_url)
-
-                // formData.append('image', header_img_url)
-                // formDataProfile.append('profile_pic_url', profile_pic_url)
-    
-                // // formData.append('header_img_url', header_img_url)
-                // formDataProfile.append('user_id', user.id)
-
-
                 await fetch(`http://localhost:3001/header/update/default/`, {
          
                     method: "post",
@@ -367,11 +348,6 @@ const Register:FC = () => {
                 const formDataHeader = new FormData()
 
                 formDataHeader.append('image', header_img_url)
-
-                console.log("header_img_url")
-                console.log(typeof header_img_url)
-                console.log(header_img_url)
-                console.log("formdataheader:  ", ...formDataHeader)
 
                 await fetch(`http://localhost:3001/header/update/`, {
          
@@ -441,11 +417,49 @@ const Register:FC = () => {
         }
 
     }
+ 
+
+    const validateInput = (e, validateFunciton, setFunction, errorMessage) => {
+
+        e?.preventDefault()
+        
+
+        if(!validateFunciton(e.target.value) && e.target?.value?.length >= 4){
+
+            setFunction(errorMessage)
+        }
+        else{
+
+            setFunction()
+
+        }
+
+
+        oninputChange(e)
+
+    }
+
+    const validateOnBlur = (e, validateFunciton, setFunction, errorMessage) => {
+
+        e?.preventDefault()
+
+        if(!validateFunciton(e.target.value) && e.target.value.length > 0){
+
+            setFunction(errorMessage)
+            return
+        }
+        else{
+
+            return
+        }
+
+    }
 
 
     return (
         
     <form className="register flexColContainer" method="post">
+
 
 
         <Card classes={"register_card flexColContainer"}>
@@ -459,39 +473,78 @@ const Register:FC = () => {
             <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
                 
             </div>
+           
             <h3>Login Information</h3>
+
 
             <div className="inner">
                 <div className="flexColContainer">
 
+                        {
+                            <>
+                                <br/><span className="form_warning">{usernameValid}</span>
+                            </>
+                        }
                     <label htmlFor="uname" className="upperleft">
                         <h4 className="inputName">Username</h4>
-                    
-                        <input type="text" placeholder="Enter Username" name="username" onChange={oninputChange} value={user.username} required />
+         
+                        <input type="text" placeholder="Enter Username" name="username" 
+                            onChange={(e) => validateInput(e, validateUsername, setUsernameValid, usernameErrorMessage)} 
+                            onBlur={(e) =>  validateOnBlur(e, validateUsername, setUsernameValid, usernameErrorMessage)}
+                            value={user.username} 
+                            required />
                     </label>
 
+                        {
+                            <>
+                                <br/><span className="form_warning">{nicknameValid}</span>
+                            </>
+                        }
                     <label htmlFor="nickname" className="upperleft">
                         <h4 className="inputName">nickname</h4>
                     
-                        <input type="text" placeholder="Enter nickname" name="nickname" onChange={oninputChange} value={user.nickname} required />
+                        <input type="text" placeholder="Enter nickname" name="nickname" 
+                        onChange={(e) => validateInput(e, validateUsername, setNicknameValid, nicknameErrorMessage)} 
+                        onBlur={(e) =>  validateOnBlur(e, validateUsername, setNicknameValid, nicknameErrorMessage)}
+                        value={user.nickname} 
+                        required />
                     </label>
+
+                    {
+                            <>
+                                <br/><span className="form_warning">{emailValid}</span>
+                            </>
+                    }
 
                     <label htmlFor="email" className="upperleft">
                         <h4 className="inputName">Email</h4>
                     
-                        <input type="text" placeholder="Enter Email" name="email" onChange={oninputChange} value={user.email} required />
+                        <input type="email" placeholder="Enter Email" name="email" 
+                        onChange={(e) => validateInput(e, validateEmail, setEmailValid, emailErrorMessage)} 
+                        onBlur={(e) => validateOnBlur(e, validateEmail, setEmailValid, emailErrorMessage)} 
+                        value={user.email} 
+                        required />
                     </label>
 
+                    {
+                            <>
+                                <br/><span className="form_warning">{passwordValid}</span>
+                            </>
+                    }
                     <label htmlFor="password" className="upperleft">
                         <h4 className="inputName">Password</h4>
                     
-                        <input type="text" placeholder="Enter Password" name="password" onChange={oninputChange} value={user.password} required />
+                        <input type="password" placeholder="Enter Password" name="password" 
+                        onChange={(e) => validateInput(e, validatePassword, setPasswordValid, passwordErrorMessage)} 
+                        onBlur={(e) => validateOnBlur(e, validatePassword, setPasswordValid, passwordErrorMessage)} 
+                        value={user.password} 
+                        required />
                     </label>
                     
                     <label htmlFor="password2" className="upperleft">
                         <h4 className="inputName">Confirm Password</h4>
                     
-                        <input type="password2" placeholder="Confirm Password" name="password2" onChange={oninputChange} value={user.password2} required />
+                        <input type="password" placeholder="Confirm Password" name="password2" onChange={oninputChange} value={user.password2} required />
                     </label>
 
                     <div className="flexRowContainer margin1">

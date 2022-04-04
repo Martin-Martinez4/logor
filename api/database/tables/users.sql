@@ -3,8 +3,8 @@ BEGIN TRANSACTION;
 CREATE TABLE users (
 
     id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    username VARCHAR(50) NOT NULL,
-    nickname VARCHAR(50) NOT NULL ,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    nickname VARCHAR(50) NOT NULL UNIQUE,
     profile_pic_url VARCHAR(300) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -24,7 +24,7 @@ CREATE TABLE user_headers(
 
 CREATE TABLE login(
 
-    username VARCHAR(30) NOT NULL ,
+    username VARCHAR(30) NOT NULL UNIQUE,
     password VARCHAR(30) NOT NULL,
     user_id UUID,
     FOREIGN KEY(user_id) REFERENCES users(id)

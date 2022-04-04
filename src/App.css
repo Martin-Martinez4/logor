@@ -114,26 +114,29 @@ body, html {
 
 h1{
   font-size: var(--HeaderH1);
-  margin: .5rem;
+  /* margin: 2rem; */
 }
 
 
 h2{
   font-size: var(--HeaderH2);
-  margin: .5rem;
+  /* margin: 2rem; */
 
 }
 h3{
   font-size: var(--HeaderH3);
-  margin: .5rem;
+  /* margin: 2rem; */
+
 }
 h4{
   font-size: var(--HeaderH4);
-  margin: .5rem;
+  /* margin: 2rem; */
+
 }
 h5{
   font-size: var(--HeaderH5);
-  margin: .5rem;
+  /* margin: 2rem; */
+
 }
 
 .relative{
@@ -448,7 +451,7 @@ input:focus{
 
 
 label > input[type=checkbox] {
-  margin-right: .5em;
+  margin-right: .5rem;
   display: inline-block;
   width: auto;
   height: auto;
@@ -457,8 +460,8 @@ label > input[type=checkbox] {
 .inputName{
 
   line-height: 10px;
-  margin-top: 1.5em;
-  margin-bottom: .25em;
+  margin-top: 1.2rem;
+  margin-bottom: .25rem;
   margin-left: 0;
   margin-right: 0;
 

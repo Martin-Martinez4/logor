@@ -61,6 +61,14 @@
     }
 }
 
+@media (max-width: 991.98px) {
+
+    .form_warning{
+  
+      width: 45vw;
+    }
+  }
+
 
 
 
