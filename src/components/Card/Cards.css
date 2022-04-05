@@ -46,7 +46,7 @@
 .card.register_card{
 
     width:45vw;
-    height:80vh;
+    height: auto;
 }
 
 .card.coverPage{

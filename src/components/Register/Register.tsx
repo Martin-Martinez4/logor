@@ -481,7 +481,6 @@ const Register:FC = () => {
                     setFunction()
                 }
 
-                setFunction()
 
                 return
             }
@@ -556,9 +555,13 @@ const Register:FC = () => {
                 
             </div>
            
+            {   
+                <>
+                    <br/><span className="form_warning">{topValid}</span>
+                </>
+            }
             <h3>Login Information</h3>
 
-            {<span className="form_warning">{topValid}</span>}
 
             <div className="inner">
                 <div className="flexColContainer">
