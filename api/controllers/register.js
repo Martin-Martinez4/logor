@@ -1,4 +1,5 @@
 
+import { resourceUsage } from 'process';
 import { v4 as uuidv4 } from 'uuid';
 
 export const handleRegister = (req, res ,db) => {
@@ -80,6 +81,68 @@ export const handleRegister = (req, res ,db) => {
              
     })
     .catch(err => console.log(err));
+
+}
+
+export const handleUsernameExists = (req, res, db) => {
+
+    const username = req.query.username
+
+    db.count("username")
+    .from("users")
+    .where({
+        username: username
+    })
+    .then(countObject => {
+
+        const count = countObject[0]["count"]
+
+        if(count >= 1){
+
+            res.json(true)
+
+        }
+        else{
+
+            res.json(false)
+        }
+    })
+    .catch( err => {
+
+        console.log(err)
+    })
+
+} 
+
+export const handleNicknameExists = (req, res, db) => {
+
+    const nickname = '@'+req.query.nickname
+
+    db.count("username")
+    .from("users")
+    .where({
+
+        nickname: nickname
+    })
+    .then(countObject => {
+
+        const count = countObject[0]["count"]
+
+        if(count >= 1){
+
+            res.json(true)
+
+        }
+        else{
+
+            res.json(false)
+        }
+    })
+    .catch( err => {
+
+        console.log(err)
+    })
+
 
 }
 

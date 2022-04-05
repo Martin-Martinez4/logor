@@ -33,7 +33,7 @@ import simpleSearch from "./simpleSearch.js"
 import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetGetMiniProfileInfo, handleGetLoggedinUserInfo } from './controllers/getUserInfo.js';
 import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/getIDs.js';
 import { handleSignin, handleSignin2} from './controllers/signin.js';
-import { handleRegister } from './controllers/register.js';
+import { handleRegister, handleNicknameExists, handleUsernameExists } from './controllers/register.js';
 
 import {  handleUploadImage } from "./controllers/images/uploadImage.js";
 import {  handleUpdateHeaderWithDefault, handleUpdateProfileWithDefault, handleUpdateHeaderImage, handleUploadProfileImage } from "./controllers/profileAndHeader/profileAndHeader.js"
@@ -180,6 +180,18 @@ app.post('/register', (req, res) => {
   handleRegister(req, res, db ) 
 
 });
+
+app.get('/available/username/', (req, res) => {
+
+  handleUsernameExists(req, res, db)
+
+})
+
+app.get('/available/nickname/', (req, res) => {
+
+  handleNicknameExists(req, res, db)
+
+})
 
 //=================Signed In User=================
 

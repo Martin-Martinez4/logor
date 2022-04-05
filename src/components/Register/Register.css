@@ -67,7 +67,18 @@
   
       width: 45vw;
     }
-  }
+}
+
+.form_warning{
+
+    color: var(--UIWhite);
+
+    background-color: var(--Red1);
+    width: 60%;
+
+    font-size: .9rem;
+    text-align: center;
+}
 
 
 

@@ -14,6 +14,7 @@ import Card from "../Card/Card";
 import ProgressBarSingle from "../ProgressBar/ProgressBarSingle";
 
 import { validateEmail, validatePassword, validateUsername } from "../utils/validation";
+import { checkIfUsernameExists, checkIfNicknameExists } from "../utils/fetchDoesUsernameNicknameExist";
 
 
 import "./Register.css";
@@ -24,9 +25,14 @@ const Register:FC = () => {
     // const Monkey1 = "../../users/default/Monkey_1.svg";
 
     const usernameErrorMessage = "Username must be at least 4 cahracters long and only contain letters numbers and -._"
+    const usernameAvailabe = "Username has been taken"
     const nicknameErrorMessage = "Nickname must be at least 4 cahracters long and only contain letters numbers and -._"
+    const nicknameAvailable = "Nickname has been taken"
     const passwordErrorMessage = "Password be at least 8 characters and must include at least one: lowercase letter, uppercase letter,number, and special character(@#$%^&+=)"
+    const password2ErrorMessafe = "Passwords must match"
     const emailErrorMessage = "Please input a valid email address"
+
+    const genericErrorMessage = "Please fix issues to continue"
 
     const Monkey1 = `${serverAddressString}/profiles/Monkey_1.svg`;
     const Monkey2 = "../../users/default/Monkey_2.svg";
@@ -44,6 +50,8 @@ const Register:FC = () => {
     const [nicknameValid, setNicknameValid] = useState();
     const [emailValid, setEmailValid] = useState();
     const [passwordValid, setPasswordValid] = useState();
+    const [password2Valid, setPassword2Valid] = useState();
+    const [topValid, setTopVaild] = useState();
 
     const { setAuth } = useAuth();
 
@@ -130,11 +138,6 @@ const Register:FC = () => {
         const { src } = e.currentTarget;
 
         const pictureType = el.getAttribute("pic-type")
-
-
-
-        console.log("pickimage: ",typeof src)
-        // console.log("pickimage: ",fileToDataUri(src))
 
         setPreviewBlobs(prev => ({ ...prev, [pictureType]:{
             src: src,
@@ -292,8 +295,6 @@ const Register:FC = () => {
 
                 formDataProfile.append('image', profile_pic_url)
 
-                console.log(typeof profile_pic_url)
-
                 await fetch(`http://localhost:3001/profile/update/`, {
          
                     method: "post",
@@ -439,7 +440,23 @@ const Register:FC = () => {
 
     }
 
-    const validateOnBlur = (e, validateFunciton, setFunction, errorMessage) => {
+    const returnFalse = () => {
+
+        return false
+    }
+
+    const passwordsMatch = () => {
+
+        if(user.password === user.password2){
+
+            return true
+        }
+        else{
+            return false
+        }
+    }
+
+    const validateOnBlur = async (e, validateFunciton, setFunction, errorMessage, checkIfAvailable=false, ifAvailableFunction=returnFalse) => {
 
         e?.preventDefault()
 
@@ -450,8 +467,73 @@ const Register:FC = () => {
         }
         else{
 
+            if(checkIfAvailable){
+
+                const alreadyTaken = await ifAvailableFunction(e.target.value)
+
+
+                if(alreadyTaken){
+
+                    setFunction(`${e.target.name} already taken`)
+                }
+                else{
+                    
+                    setFunction()
+                }
+
+                setFunction()
+
+                return
+            }
+
+            setFunction()
+
+
             return
         }
+
+    }
+
+    const validateBeforePageTurn = async() => {
+
+        const emailValidate = validateEmail(user.email);
+        const usernameValidate = validateUsername(user.username);
+        const nicknameValidate = validateUsername(user.nickname);
+        const passwordValidate = validatePassword(user.password);
+
+        const usernameAvailable = !(await checkIfUsernameExists(user.username));
+        const nicknameAvailable = !(await checkIfNicknameExists(user.nickname));
+
+        const passwordsMatch = user.password === user.password2
+
+        // console.log("email:", emailValidate)
+        // console.log("username:", usernameValidate)
+        // console.log("nickanme:", nicknameValidate)
+        // console.log("passowrd:", passwordValidate)
+        // console.log("passowrdMatch:", passwordsMatch)
+
+        if(emailValidate && usernameValidate && nicknameValidate && passwordValidate && passwordsMatch && usernameAvailable && nicknameAvailable){
+
+            setTopVaild()
+
+            return setCurrentStepValue((currentStep + 1))
+        }
+        else{
+
+            // console.log("false")
+            // set error message on top
+
+            setTopVaild(genericErrorMessage)
+
+            setTimeout(() => {
+
+                setTopVaild()
+
+            }, 1200)
+
+            return
+        }
+
 
     }
 
@@ -476,6 +558,7 @@ const Register:FC = () => {
            
             <h3>Login Information</h3>
 
+            {<span className="form_warning">{topValid}</span>}
 
             <div className="inner">
                 <div className="flexColContainer">
@@ -490,7 +573,7 @@ const Register:FC = () => {
          
                         <input type="text" placeholder="Enter Username" name="username" 
                             onChange={(e) => validateInput(e, validateUsername, setUsernameValid, usernameErrorMessage)} 
-                            onBlur={(e) =>  validateOnBlur(e, validateUsername, setUsernameValid, usernameErrorMessage)}
+                            onBlur={(e) =>  validateOnBlur(e, validateUsername, setUsernameValid, usernameErrorMessage, true, checkIfUsernameExists)}
                             value={user.username} 
                             required />
                     </label>
@@ -503,9 +586,9 @@ const Register:FC = () => {
                     <label htmlFor="nickname" className="upperleft">
                         <h4 className="inputName">nickname</h4>
                     
-                        <input type="text" placeholder="Enter nickname" name="nickname" 
+                        <span>@</span><input type="text" placeholder="Enter nickname" name="nickname" 
                         onChange={(e) => validateInput(e, validateUsername, setNicknameValid, nicknameErrorMessage)} 
-                        onBlur={(e) =>  validateOnBlur(e, validateUsername, setNicknameValid, nicknameErrorMessage)}
+                        onBlur={(e) =>   validateOnBlur(e, validateUsername, setNicknameValid, nicknameErrorMessage, true, checkIfNicknameExists)}
                         value={user.nickname} 
                         required />
                     </label>
@@ -540,16 +623,25 @@ const Register:FC = () => {
                         value={user.password} 
                         required />
                     </label>
+
+                    {
+                            <>
+                                <br/><span className="form_warning">{password2Valid}</span>
+                            </>
+                    }
                     
                     <label htmlFor="password2" className="upperleft">
                         <h4 className="inputName">Confirm Password</h4>
                     
-                        <input type="password" placeholder="Confirm Password" name="password2" onChange={oninputChange} value={user.password2} required />
+                        <input type="password" placeholder="Confirm Password" name="password2" 
+                        onChange={(e) => validateInput(e, passwordsMatch, setPassword2Valid, password2ErrorMessafe) }
+                        onBlur={(e) => validateOnBlur(e, passwordsMatch, setPassword2Valid, password2ErrorMessafe)} 
+                        value={user.password2} required />
                     </label>
 
                     <div className="flexRowContainer margin1">
                         <button onClick={navigateHome} type="button"className="button red" title="Click to cancel registration">Cancel</button>
-                        <button onClick={() => setCurrentStepValue((currentStep + 1)) } type="button" className="button primary" title="Click to move to next Step"
+                        <button onClick={() => validateBeforePageTurn() } type="button" className="button primary" title="Click to move to next Step"
                             >Next</button>
                     </div>
                     
