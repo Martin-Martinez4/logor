@@ -135,10 +135,11 @@
     }
 
     .signin{
-        width: 50vw;
-        height: 80vh;
+        width: auto;
+        height: auto;
         background: var(--UIWhite);
-        padding: 1rem 2rem 1rem 2rem;
+        /* padding: 1rem 2rem 1rem 2rem; */
+        padding: 2rem;
 
        
     }
@@ -167,12 +168,21 @@
     
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (min-width: 700px) and (max-width: 991.98px){
 
     .signin{
 
-        width: 80vw;
+        padding: 4rem 2rem 4rem 2rem;
+
     }
+}
+
+@media screen and (max-width: 360px) {
+
+    /* .signin{
+
+        width: 80vw;
+    } */
 
     .signin>h1{
 

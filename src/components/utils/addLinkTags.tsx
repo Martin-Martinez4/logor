@@ -1,4 +1,7 @@
 
+import { v4 as uuidv4 } from 'uuid';
+
+
 const addLinkTags = (treatedArray) => {
 
     let linkTagsAdded = [];
@@ -13,17 +16,17 @@ const addLinkTags = (treatedArray) => {
 
             if(treatedArray[i][0].startsWith("#")){
 
-                linkTagsAdded.push(<a href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
+                linkTagsAdded.push(<a key={`tags_${uuidv4()}`} href={`/tags/name/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
                 
             }
             else if (treatedArray[i][0].startsWith("@")){
                 
-                linkTagsAdded.push(<a href={`/users/nickname/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
+                linkTagsAdded.push(<a key={`mentions_${uuidv4()}`} href={`/users/nickname/${treatedArray[i][0].substring(1)}`}>{treatedArray[i]}</a>)
             }
             else{
 
                 // need to check for https:// at the begining or else ad it 
-                linkTagsAdded.push(<a target="_blank" rel="noreferrer" href={`${treatedArray[i][0]}`}>{treatedArray[i]}</a>)
+                linkTagsAdded.push(<a key={`words_${uuidv4()}`} target="_blank" rel="noreferrer" href={`${treatedArray[i][0]}`}>{treatedArray[i]}</a>)
             }
 
             
@@ -34,7 +37,7 @@ const addLinkTags = (treatedArray) => {
         }
         else{
             
-            linkTagsAdded.push(<span>{treatedArray[i]}</span>);
+            linkTagsAdded.push(<span key={`span_${uuidv4()}`}>{treatedArray[i]}</span>);
         }
     }
 

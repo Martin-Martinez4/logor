@@ -3,11 +3,14 @@ import React, { FC, useState, useContext } from "react";
 
 import { useNavigate, Link } from "react-router-dom";
 
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
+
 import useSigninModal from "../hooks/useModal";
 
 import useAuth from "../hooks/useAuth";
-// import useUserInfo from "../hooks/useUserInfo";
 import UserInfoContext from "../context/UserInfoProvider";
+
+import "./Signin.css"
 
 const Signin:FC = ({ reDirect }) => {
 
@@ -15,7 +18,7 @@ const Signin:FC = ({ reDirect }) => {
 
     const { loadUser } = useContext( UserInfoContext);
 
-    // const { loadUser } = useUserInfo();
+    const [signinLoading, setSigninLoading] = useState()
 
     const { setAuth } = useAuth();
 
@@ -40,8 +43,6 @@ const Signin:FC = ({ reDirect }) => {
 
     const oninputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        // console.log(e.target.name, e.target.value)
-        // console.log(TestData["login"]["1"]["username"])
 
         setUserCreds(userCreds => ({...userCreds, [e.target.name]: (e.target.value).toString()}))
 
@@ -65,8 +66,9 @@ const Signin:FC = ({ reDirect }) => {
 
         
         e.preventDefault();
+
+        setSigninLoading(true)
         
-        console.log("test") 
         const {username, password} = userCreds
 
         await fetch('http://localhost:3001/signin2', {
@@ -86,13 +88,8 @@ const Signin:FC = ({ reDirect }) => {
         .then((response) => response.json())
         .then((user) => {
             
-
-            console.log(user)
-
-            console.log("signin access token: ",user.access_token)
             if(user.access_token){
 
-                console.log("signin access token: ",user.access_token)
 
                 // token stuff
 
@@ -120,15 +117,11 @@ const Signin:FC = ({ reDirect }) => {
                     })
                     .then(res => res.json())
                     .then(user => {
-                        console.log("user:",user[0])
 
                         try{
 
                             loadUser(user[0]) 
                             
-                            // const from = location.state?.from?.pathname || `/home/${user[0].id}`;
-
-                            // console.log(showModal)
 
                             if(showModal){
 
@@ -139,32 +132,41 @@ const Signin:FC = ({ reDirect }) => {
 
                                 navigate(`/home/${user[0].id}`)
                             }
+
+                            setSigninLoading(false)
+
                             
                             
                         }
                         catch(err){
 
                             console.error(err)
+                            setSigninLoading(false)
+
                         }
                     
                     })
 
-                    // if(auth?.user_id){
-
-                    //     const from = location.state?.from?.pathname || `/home/${user.user_id}`;
-                    //     navigate(from, { replace:true });
-                    // }
-                                
-                
-
+                 
                    
             }
             else{
 
+                setSigninLoading(false)
+
+
                 errorMessageTimeout(3000);
             }
 
-        }).catch((err)=> console.log(err))
+        }).catch((err)=> {
+            
+            setSigninLoading(false)
+
+            console.log(err)
+        })
+
+        setSigninLoading(false)
+
 
         
 
@@ -177,10 +179,12 @@ const Signin:FC = ({ reDirect }) => {
         
     <form className="signin flexColContainer">
 
-        <h2> Welcome!</h2>
-        <h3>Login!</h3>
+
+        <h2 className="signin__title"> Welcome!</h2>
+        <h3 className="signin__title">Login!</h3>
 
         <div className=" flexColContainer inner">
+        <LoaderHOC loading={signinLoading}>
             <div className="flexColContainer">
 
                 <span className={`${loginError.inputError?"errorBackground":loginError.flagTripped?"fadeOut":"hdden"}`} >incorrect username and/or password</span>
@@ -212,7 +216,9 @@ const Signin:FC = ({ reDirect }) => {
                 <span >Forgot your password?  <Link to="/reset"> Reset your password.</Link></span>
                 <span >Do not have an account? <Link to="/register">Register Here.</Link></span>
             </div>
+        </LoaderHOC>
         </div>
+
     </form>
 
     )

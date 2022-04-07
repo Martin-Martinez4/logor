@@ -21,19 +21,7 @@ import Refresh from "./components/Refresh/Refresh"
 import PersistLogin from './components/PersistLogin/PersistLogin';
 
 import Fileupload from './testcomponents/Fileupload';
-// import LoadingUser from './components/LoadingUser/LoadingUser';
 
-
-// function RequireAuth({ children, redirectTo }) {
-//   let isAuthenticated = useAuth();
-
-//   // console.log(isAuthenticated);
-  
-//   return isAuthenticated.authed ? children : <Navigate to="/" replace />;
-// }
-
-// Avoid prop drilling of loggedInUser
-// let context = React.createContext(null);
 
 function App() {
 

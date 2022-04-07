@@ -9,7 +9,7 @@ import MiniProfile from "../MiniProfile/MiniProfile"
 
         // console.log("for loop ssuggestedProfiles[i][id]: ", suggestedProfiles[i]["id"])
 
-        profilesArray.push( <MiniProfile user_id={suggestedProfiles[i]["id"]} ></MiniProfile>)
+        profilesArray.push( <MiniProfile key={`${new Date()}_${suggestedProfiles[i]["id"]}`} user_id={suggestedProfiles[i]["id"]} ></MiniProfile>)
 
     }
 

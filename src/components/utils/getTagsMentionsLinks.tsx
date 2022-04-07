@@ -5,8 +5,6 @@
         text_string = "";
     }
 
-    // console.log("triuggered")
-
     //eslint-disable-next-line
     const pattern = /(#|@)[a-zA-Z]{1}[\-a-zA-Z0-9]{1,20}|((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g;
 
@@ -29,13 +27,9 @@
 
     if(tempPrevIndex !== text_string.length){
 
-        // console.log("last index:",  tempPrevIndex)
-
         
         tempArray.push([text_string.substring(tempPrevIndex, text_string.length)])
     }
-
-    // console.log(tempArray)
 
     return tempArray;
 }

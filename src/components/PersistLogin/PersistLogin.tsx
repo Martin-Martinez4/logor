@@ -4,6 +4,7 @@ import {  useState, useEffect, useContext } from "react";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
 import UserInfoContext from "../context/UserInfoProvider";
+import Loader1 from "../svg/Loader1/Loader1";
 
 
 const PersistLogin = () => {
@@ -78,7 +79,7 @@ const PersistLogin = () => {
     return (
         <>
             {isLoading
-            ? <p>Loading...</p>
+            ? <Loader1></Loader1>
             : auth?.access_token
             ? <Outlet/>
             : <Outlet/>

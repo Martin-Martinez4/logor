@@ -45,8 +45,11 @@
 
 .card.register_card{
 
-    width:45vw;
+    width:auto;
+    padding: 1rem;
     height: auto;
+
+    overflow: auto;
 }
 
 .card.coverPage{
@@ -64,7 +67,9 @@
     
     .card.register_card{
     
-        width:90vw;
+        /* width:90vw; */
+        width:auto;
+        padding: 1rem;
         height:97vh;
     }
 }
@@ -72,7 +77,9 @@
     
     .card.register_card{
     
-        width:97vw;
+        /* width:97vw; */
+        width:auto;
+        padding: 1rem;
         height:97vh;
     }
 }
@@ -80,7 +87,9 @@
 @media only screen and (width:1024px) {
     .card.register_card{
     
-        width:60vw;
+        /* width:60vw; */
+        width:auto;
+        padding: 1rem;
         height:97vh;
     }
 }
@@ -95,7 +104,9 @@ and (-webkit-min-device-pixel-ratio: 1.5) {
 
     .card.register_card{
     
-        width:75vw;
+        /* width:75vw; */
+        width:auto;
+        padding: 1rem;
         height:70vh;
     }
 }

@@ -91,13 +91,11 @@ const Register:FC = () => {
     const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
 
-        console.log(e.target.files)
         if(e.target.files === null){
             return
         }
         if(e.target.files[0]) {
             const file = e?.target.files[0]
-            console.log("file: ", URL.createObjectURL(file))
 
             const fileName = e?.target?.files[0].name? e?.target?.files[0].name : ""
 
@@ -108,10 +106,6 @@ const Register:FC = () => {
                 alt: fileName
             }}));
 
-
-            console.log(targetName)
-            
-            console.log(file.type)
             
             setUser(user => ({ ...user, [targetName]: e.target.files === null? Monkey1:file }))
         }   
@@ -163,7 +157,7 @@ const Register:FC = () => {
     
 
     const numberOfSteps:number = 4;
-    const labelsArray:string[] = ["Login Information", "User Information", "Profile Picture", "Background Pricture"]
+    const labelsArray:string[] = ["Login Information", "User Information", "Profile Picture", "Background Picture"]
     
 
     const barWidth1:number = 80;
@@ -373,7 +367,6 @@ const Register:FC = () => {
             }
     
 
-            console.log("gets to login call")
             await fetch(`http://localhost:3001/loggedin/user/info/`, {
     
                 method: "get",
@@ -386,15 +379,11 @@ const Register:FC = () => {
             })
             .then(res => res.json())
             .then(user => {
-                console.log("user:",user[0])
 
                 try{
 
                     loadUser(user[0]) 
                     
-                    // const from = location.state?.from?.pathname || `/home/${user[0].id}`;
-
-                    // console.log(showModal)
 
                     if(showModal){
 
@@ -505,12 +494,6 @@ const Register:FC = () => {
 
         const passwordsMatch = user.password === user.password2
 
-        // console.log("email:", emailValidate)
-        // console.log("username:", usernameValidate)
-        // console.log("nickanme:", nicknameValidate)
-        // console.log("passowrd:", passwordValidate)
-        // console.log("passowrdMatch:", passwordsMatch)
-
         if(emailValidate && usernameValidate && nicknameValidate && passwordValidate && passwordsMatch && usernameAvailable && nicknameAvailable){
 
             setTopVaild()
@@ -519,7 +502,6 @@ const Register:FC = () => {
         }
         else{
 
-            // console.log("false")
             // set error message on top
 
             setTopVaild(genericErrorMessage)
@@ -551,7 +533,7 @@ const Register:FC = () => {
             <div className="progressBar registeration_progress">
            
 
-            <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
+            <ProgressBarSingle barHeight={barHeight} barWidth1={"auto"} barWidth2={"auto"} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />
                 
             </div>
            

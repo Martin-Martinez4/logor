@@ -15,10 +15,14 @@ import { deleteLike, createLike, getLikesCount } from '../../../components/utils
 
 import UserInfoContext from "../../context/UserInfoProvider";
 
+import LoaderHOC from '../../LoaderHOC/LoaderHOC';
+
 
 export const HeartIcon2 = ({ comment_id }) => {
 
     const { toggleModal } = useSigninModal();
+
+    const [likeIsLoading, setLikeIsLoading] = useState();
 
     const { auth, setAuth } = useAuth();
 
@@ -43,11 +47,15 @@ export const HeartIcon2 = ({ comment_id }) => {
 
     const handleAnimateClick = async () => {
 
+        setLikeIsLoading(true)
+
         try{
 
             if(await refreshTokenBool(auth, setAuth)){
 
                 if(loggedInId === undefined){
+
+                    setLikeIsLoading(false)
         
                     return
                 }
@@ -82,10 +90,16 @@ export const HeartIcon2 = ({ comment_id }) => {
 
                 toggleModal();
             }
+
+            setLikeIsLoading(false)
         }
         catch{
 
             toggleModal();
+        }
+        finally{
+            setLikeIsLoading(false)
+
         }
 
     
@@ -179,6 +193,7 @@ export const HeartIcon2 = ({ comment_id }) => {
 
     return (
         <div className='flexRowContainer2 fitContent'>
+            <LoaderHOC loading={likeIsLoading}>
 
             <svg onClick={handleAnimateClick} className={animateClass?"pointer svgHeart":"pointer"} width="28" height="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_d_237_118)">
@@ -206,6 +221,7 @@ export const HeartIcon2 = ({ comment_id }) => {
 
 
             <p className='icon__number'>{formatNumber(numberOfLikes)}</p>
+            </LoaderHOC>
 
             
         </div>

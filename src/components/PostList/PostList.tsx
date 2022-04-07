@@ -19,8 +19,6 @@ import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
 import Loader1 from "../svg/Loader1/Loader1"
 
-import useAuth from "../hooks/useAuth";
-
 import "./postlist.css"
 
 const FollowersPage = lazy(() => import("../FollowersPage/FollowersPage"));
@@ -29,18 +27,16 @@ const FeedPage = lazy(() => import("../FeedPage/FeedPage"));
 
 const PostList: FC = () => {
 
-    // let posts = []
-    const { auth, setAuth } = useAuth();
-
     const [ postlistLoading, setPostlistLoading ] = useState();
 
     const [ tabState, setTabState ] = useState("posts")
+
+    const [seeMoreLoading, setSeeMoreLoading] = useState();
 
 
     // eslint-disable-next-line
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
     const { loggedInUser } = useContext( UserInfoContext);
-
 
     const [userPosts, setUserPosts] = useState();
 
@@ -61,7 +57,7 @@ const PostList: FC = () => {
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
 
-                posts.push( <Post key={comment_id} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
+                posts.push( <Post key={`post_${comment_id}`} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
 
                 
             }
@@ -116,15 +112,6 @@ const PostList: FC = () => {
     
     let posts = userPosts
 
-    // useEffect(() => {
-
-    //     setPostlistLoading(true)
-
-    //     return (() => { setPostlistLoading(false)})
-
-
-    // }, [auth.user_id])
-
     const [ suggestedProfiles, setSuggestedProfiles ] = useState();
 
     let miniprofilesArray = [];
@@ -155,6 +142,8 @@ const PostList: FC = () => {
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
     const seeMorePosts = async () => {
+
+        setSeeMoreLoading(true)
 
         await fetch(`http://localhost:3001/home/`, {
             method: "get",
@@ -190,6 +179,9 @@ const PostList: FC = () => {
             setPostlistLoading(false)
         })
 
+        setSeeMoreLoading(false)
+
+
         
 
 
@@ -198,7 +190,6 @@ const PostList: FC = () => {
 
     useEffect(() => {
 
-        console.log("postsArray: ",postsArray)
         setUserPosts(postsArray?.slice(0,lastPostShown))
 
 
@@ -267,7 +258,10 @@ const PostList: FC = () => {
                         {tabState === "posts"? 
                             <>
                                 {userPosts}
-                                <div onClick={seeMorePosts}className={lastPostShown >= postsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
+                                <LoaderHOC loading={seeMoreLoading}>
+
+                                    <div onClick={seeMorePosts}className={lastPostShown >= postsArray?.length? "hidden" : "posts-see_more"}>See More &#8658;</div>
+                                </LoaderHOC>
 
                             </>
                             :tabState === "mentions"

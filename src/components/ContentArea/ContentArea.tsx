@@ -1,11 +1,10 @@
 
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
 
 import SideCard from "../SideCards/SideCard";
 import PostList from "../PostList/PostList";
-import MiniProfile from "../MiniProfile/MiniProfile";
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
 import ProfileIcon from "../../assets/ProfileIcon.svg";
 import GearIcon from "../../assets/GearIcon.svg";
@@ -28,34 +27,23 @@ const ContentArea:FC = () => {
 
             const featuredUsers = await getRandomUserIDs(3);
 
-            // console.log("featueredUsers: ", featuredUsers)
-
             setSuggestedProfiles(featuredUsers)
 
-            // console.log("setSuggestedProfiles: ", suggestedProfiles)
             
         })(setSuggestedProfiles)
         
-        // console.log("setSuggestedProfiles: ", suggestedProfiles)
         
     }, [])
     
     useEffect(() => {
-        
-        // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
 
         miniprofilesArray = createMiniProfiles(suggestedProfiles);
-
-        // console.log("miniprofilesArray2: ", miniprofilesArray)
-
 
 
     }, [suggestedProfiles])
 
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
-
-    // console.log("miniprofilesArray: ", miniprofilesArray)
 
     return (
         <div className="contentArea">
@@ -105,8 +93,7 @@ const ContentArea:FC = () => {
 
                
                 <div className="rightSide_content featured_content">
-                    {/* <MiniProfile></MiniProfile>
-                    <MiniProfile></MiniProfile> */}
+              
                     {miniprofilesArray}
                 </div>
                        

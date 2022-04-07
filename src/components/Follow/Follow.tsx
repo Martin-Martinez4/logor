@@ -60,8 +60,6 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
             const isFollower = await loggedIsFollower(visiteeUser?.id);
 
-            // console.log("isFollower: ",isFollower)
-
             setIsFollower(isFollower)
 
             const followersCount =  await getFollowersCount(visiteeUser?.id)
@@ -71,8 +69,6 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
             const followersCountloggedIn =  await getFollowersCount(loggedInUser.id)
             const followingCountloggedIn =  await getFollowingCount(loggedInUser.id)
-
-                // console.log("followers: ", followersCount, " Following: ", followingCount)
 
                 setloggedInUser((prev) => 
                         ({...prev, 
@@ -126,9 +122,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
             const isFollower = await loggedIsFollower(visiteeUser?.id);
 
-            
-            // console.log("isFollower: ",isFollower)
-            
+                        
             setIsFollower(isFollower)
 
             const followersCount =  await getFollowersCount(visiteeUser?.id)
@@ -138,8 +132,6 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
             const followersCountloggedIn =  await getFollowersCount(loggedInUser.id)
             const followingCountloggedIn =  await getFollowingCount(loggedInUser.id)
-
-                // console.log("followers: ", followersCount, " Following: ", followingCount)
 
                 setloggedInUser((prev) => 
                         ({...prev, 
@@ -167,13 +159,9 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
     
                 setFollowerCount(prev => ({...prev, followers: followersCount, following: followingCount}))
     
-    
-                // console.log("Follower id: ",visiteeUser.id)
-                // console.log("Follower loggedInUser.username: ",loggedInUser.username)
-    
                 if(user_id && !(loggedInUser.username === "")){
     
-                    // const isFollower = await loggedIsFollower(user_id);
+                    // const isFollower = await loggedIsFollower(user_id)
 
                     loggedIsFollower(user_id).then( checkIsFollower => {
 
@@ -184,12 +172,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
                     })
                     .catch(err => console.error(err))
         
-                    // console.log("isFollower: ",isFollower)
-        
-                    // console.log("isFollower: ",isFollower)
-        
-                    // setIsFollower(isFollower)
-    
+            
                 }else{
     
                     // console.error("error getting follow status")
@@ -219,13 +202,6 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
         const checkIsFollower = async (user_id, setIsFollower) => {
 
-            // let isMounted = true
-
-
-            // console.log("Follower id: ",visiteeUser.id)
-            // console.log("Follower loggedInUser.username: ",loggedInUser.username)
-
-            // if(isMounted){
 
                 if(user_id && !(loggedInUser.username === "")){
     
@@ -240,7 +216,6 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
                     })
                     .catch(err => console.error(err))
         
-                    console.log("isFollower: ",isFollower)
     
                 }else{
     

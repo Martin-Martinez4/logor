@@ -25,7 +25,6 @@ const RequireAuth = () => {
              })
              .then(res => res.json())
              .then(user => {
-                 console.log("user:",user[0])
      
                  try{
      

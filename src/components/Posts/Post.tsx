@@ -22,6 +22,8 @@ import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 import useSigninModal from "../hooks/useModal";
 import UserInfoContext from "../context/UserInfoProvider";
 
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
+
 
 
 const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
@@ -59,9 +61,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     // }, [postInformation.status, postInformation.text_content])
 
 
-    
-
-    // const readableDate:String = (new Date(date_posted).toString());
 
     let lastEditedReadable: String;
     
@@ -69,7 +68,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         lastEditedReadable = "";
     }
     else{
-        // lastEditedReadable = new Date(status[1]).toString();
         lastEditedReadable = formatDate(postInformation.status[1]);
     }
 
@@ -77,6 +75,10 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     const cancelButton = React.createRef();
     
     const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    const [dropDownLoading, setDropDownLoading] = useState()
+    const [cancelButtonPress, setCancelButtonPress] = useState()
+    const [editButtonPress, setEditButtonPress] = useState()
 
     const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 
@@ -94,6 +96,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const toggleDeleteConfirmationVisible = async () => {
 
+        setDropDownLoading(true)
+
         try{
 
             if(await refreshTokenBool(auth, setAuth)){
@@ -105,6 +109,9 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                     let tempVisible:boolean = false;
             
                     setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
+
+                
+
         
                 }
             }
@@ -114,11 +121,19 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                 
                 
             }
+
+            setDropDownLoading(false)
+
         }
         catch{
             
             toggleModal()
+            setDropDownLoading(false)
+
         }
+
+        setDropDownLoading(false)
+
 
 
     }
@@ -127,7 +142,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const toggleEditMode = async () => {
 
-        
+        setDropDownLoading(true)
+
         try{
             
             if(await refreshTokenBool(auth, setAuth)){
@@ -149,9 +165,13 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         
                 toggleModal()
             }
+
+            setDropDownLoading(false)
+
 }
         catch{
 
+            setDropDownLoading(false)
             toggleModal()
                     
         }
@@ -194,8 +214,9 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     }, [dropdownVisible, deleteConfirmationVisible, editMode, status,  cancelButton, dropdownContainer]);
 
     const handleDelete =async (e) => {
-
+        
         e.preventDefault();
+        setDropDownLoading(true)
 
         await fetch(`http://localhost:3001/home/delete/${uuid}`, {
     
@@ -214,8 +235,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
           
             setPostInfomration(prev => ({...prev, status: comment["status"], text_content: comment["text_content"]}))
+
         })
         .catch(console.log)
+
+        setDropDownLoading(false)
+
 
 
 
@@ -273,13 +298,19 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const exitEditMode = (e) => {
 
+        setCancelButtonPress(true)
+
+        e.preventDefault()
+
         toggleEditMode();
 
         setEdiMode(prev => ({ ...prev, "textContent": `${postInformation.text_content}` }))
 
         setCharsLeft(maxChars- postInformation.text_content.length);
 
-        e.preventDefault()
+        setCancelButtonPress(false)
+
+
 
 
     }
@@ -292,6 +323,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
             <>
 
+            <LoaderHOC loading={dropDownLoading}>
                 <SigininModal
                     showModal={showModal}
                     hide={toggleModal}
@@ -308,6 +340,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
         
             <Card classes="content post">
+
+
 
                 {
                 status[0] === "Deleted"
@@ -332,6 +366,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                                 <div className="dot"></div>
                                 <div className="dot"></div>
                                 <div className="dot"></div>
+
                                 <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
 
                                     <p>Embed</p>
@@ -352,12 +387,15 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
                         {editMode.visible? 
                             (
+                                
                                 <div>
                                     <textarea id="commentBox" name="textContent" value={editMode.textContent} onChange={oninputChange} className="commentBox__commentInput" placeholder="Have something to say?" maxLength={maxChars} cols={92} rows={10}></textarea>
 
                                     <div className="commentBox__buttonArea">
+                                    <LoaderHOC loading={cancelButtonPress}>
                                         
                                         <em className="buttonArea__charsLeft">Characters Left: {charsLeft}</em>
+                                    </LoaderHOC>
                                         <div className="buttonArea__buttons">
                                             <button className="button primary" onClick={handleEdit}>Submit</button>
                                             <button className="button red" onClick={exitEditMode} >Cancel</button>
@@ -417,6 +455,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
          }
             </Card>
         }
+        </LoaderHOC>
             </>
         );
 }

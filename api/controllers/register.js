@@ -69,7 +69,6 @@ export const handleRegister = (req, res ,db) => {
                 .where('users.username', '=', username)
                 .then((user) => {
                     
-                    console.log(user[0])
                     res.json(user[0])
                 })
                 .catch((err) => console.log(err))

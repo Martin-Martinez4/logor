@@ -69,8 +69,6 @@ export const getFollowingCount = async (user_id) => {
 
 export const getFollowees = async (user_id) => {
 
-    console.log("getFollowees: ",user_id)
-
     const followees = await fetch(`http://localhost:3001/user/following?user_id=${user_id}`, {
 
         method: "get",

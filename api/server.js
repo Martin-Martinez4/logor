@@ -53,7 +53,6 @@ const secret = process.env.ACCESS_SECRET;
 
 app.use(express.static(path.join(__dirname,'temp')));
 
-// console.log(path.join(__dirname,'temp'))
 
 
 
@@ -136,9 +135,6 @@ app.get('/temp/', async (req, res) => {
   
     const fileName = req.query.filepath.split("/").pop()
 
-    // console.log("filepath: ", fileName)
-  
-    // console.log("fileQuery: ", fileQuery)
   
     const options = {
       root: path.join(__dirname, 'temp')
@@ -310,8 +306,6 @@ app.get("/token/refresh/", (req, res) => {
 
 })
 
-
-// app.get('/', res  => console.log("this is working"))
 
 
 app.listen(3001, () => {

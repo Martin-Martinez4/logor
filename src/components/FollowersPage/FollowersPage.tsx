@@ -55,22 +55,7 @@ const FollowersPage: FC = ({ user_id }) => {
     return (
 
         <div className="postlist_horizontal" >
-        {/* <Scroll> */}
-            
-            {/* <Card classes="content med_suggestion">
-                <p>Suggestions</p>
-                <div className="suggestions">
 
-                    <p>#DonkeyKong</p>
-                    <p>#ApeEscape</p>
-                    <p>#MelGibbonson</p>
-                </div>
-                <p>Featured</p>
-                <div className="features">
-              
-
-                </div>
-            </Card> */}
                 
             <LoaderHOC loading={followersPageIsLoading}>
 
