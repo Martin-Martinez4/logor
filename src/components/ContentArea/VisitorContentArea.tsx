@@ -10,9 +10,11 @@ import {
 
 import SideCard from "../SideCards/SideCard";
 import VisitorPostList from "../PostList/VisitorPostList";
-import MiniProfile from "../MiniProfile/MiniProfile";
+
+import HomeIcon from "../svg/HomeIcon/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon.svg";
 import GearIcon from "../../assets/GearIcon.svg";
+import Signout from "../svg/Signout/Signout";
 import ShareIcon from "../../assets/ShareIcon.svg";
 import PoundSign from "../../assets/PoundSign.svg";
 import HeartIcon from "../../assets/HeartIcon.svg";
@@ -70,6 +72,11 @@ const VisitorContentArea:FC = ({ userOrTagID }) => {
             {console.log(userOrTagID)}
   
             <SideCard side="leftSide">
+
+                <div className="side_icon">
+                    <HomeIcon></HomeIcon>
+                  
+                </div>
                 <div className="side_icon">
                     <img 
                         src={ProfileIcon} alt="profile" className="sidebar_icon">
@@ -84,10 +91,7 @@ const VisitorContentArea:FC = ({ userOrTagID }) => {
                 </div>
 
                 <div className="side_icon">
-                    <img 
-                        src={ShareIcon} alt="profile" className="sidebar_icon">
-                    </img>
-                    <span className="sidebar_text"><strong>Lists</strong></span>
+                   <Signout></Signout>
                 </div>
 
                 <div className="side_icon">

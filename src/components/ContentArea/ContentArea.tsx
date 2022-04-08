@@ -6,7 +6,10 @@ import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
 import SideCard from "../SideCards/SideCard";
 import PostList from "../PostList/PostList";
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
+
+import HomeIcon from "../svg/HomeIcon/HomeIcon";
 import ProfileIcon from "../../assets/ProfileIcon.svg";
+import Signout from "../svg/Signout/Signout"
 import GearIcon from "../../assets/GearIcon.svg";
 import ShareIcon from "../../assets/ShareIcon.svg";
 import PoundSign from "../../assets/PoundSign.svg";
@@ -48,6 +51,12 @@ const ContentArea:FC = () => {
     return (
         <div className="contentArea">
             <SideCard side="leftSide">
+
+                <div className="side_icon">
+                    <HomeIcon></HomeIcon>
+                  
+                </div>
+
                 <div className="side_icon">
                     <img 
                         src={ProfileIcon} alt="profile" className="sidebar_icon">
@@ -60,14 +69,17 @@ const ContentArea:FC = () => {
                     </img>
                     <span className="sidebar_text"><strong>Settings</strong></span>
                 </div>
-
+{/* 
                 <div className="side_icon">
                     <img 
                         src={ShareIcon} alt="profile" className="sidebar_icon">
                     </img>
                     <span className="sidebar_text"><strong>Lists</strong></span>
-                </div>
+                </div> */}
 
+                <div className="side_icon">
+                   <Signout></Signout>
+                </div>
                 <div className="side_icon">
                     <img 
                         src={PoundSign} alt="profile " className="sidebar_icon">

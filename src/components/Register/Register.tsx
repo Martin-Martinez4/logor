@@ -38,7 +38,12 @@ const Register:FC = () => {
     const Monkey2 = "../../users/default/Monkey_2.svg";
     const Monkey3 = "../../users/default/Monkey_3.svg";
     const Monkey4 = "../../users/default/Monkey_4.svg";
-    const header1 = "../../users/default/ryunosuke-kikuno-RKwivgSTXVI-unsplash.jpg";
+    // const header1 = "../../users/default/ryunosuke-kikuno-RKwivgSTXVI-unsplash.jpg";
+    const header1 = "../../users/default/unsplash_GBEHjsPQbEQ.jpg";
+    const header2 = "../../users/default/ganapathy-kumar-L75D18aVal8-unsplash.jpg";
+    const header3 = "../../users/default/tj-holowaychuk-iGrsa9rL11o-unsplash.jpg";
+    const header4 = "../../users/default/tobias-keller-73F4pKoUkM0-unsplash.jpg";
+    const header5 = "../../users/default/wengang-zhai-fa3mwqbW1XQ-unsplash.jpg";
 
     const { showModal, toggleModal } = useSigninModal();
 
@@ -783,11 +788,11 @@ const Register:FC = () => {
                     </div>
 
                     <div className="flexRowContainer profile_image_container">
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey1} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey2} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey3} alt="Monkey" />
-                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={Monkey4} alt="Monkey" />
-                        <img onClick={ onPickImage } src={header1} className="round profileImage"pic-type="header_img_url" alt="Profile Preveiw" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={header1} alt="header" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={header2} alt="header" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={header3} alt="header" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={header4} alt="header" />
+                        <img onClick={ onPickImage } className="round profileImage" pic-type="header_img_url" src={header5} alt="header Preveiw" />
                     
                     </div>
 

@@ -15,28 +15,44 @@ const RequireAuth = () => {
 
         const fetchLoadUSer  = async (user_id, loadUser) => {
 
-            await fetch(`http://localhost:3001/usersInfo/${user_id}`, {
-            
-                 method: "get",
-                 headers: {
-                     
-                     'Content-Type': 'application/json',
-                   },
-             })
-             .then(res => res.json())
-             .then(user => {
-     
-                 try{
-     
+            try{
+
+                if(user_id){
+
+                }
+
+                await fetch(`http://localhost:3001/usersInfo/${user_id}`, {
+                
+                    method: "get",
+                    headers: {
+                        
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(res => res.json())
+                .then(user => {
+        
+                    try{
+        
                     loadUser(user[0]) 
-                     
-                 }
-                 catch(err){
-     
-                     console.error(err)
-                 }
-             }
-             )
+                        
+                    }
+                    catch(err){
+        
+                        console.error(err)
+                    }
+                })
+                .catch(
+                    
+                    
+                )
+
+            }catch(err){
+
+                console.error(err)
+
+            }
+
                  
              
         }

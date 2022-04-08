@@ -97,4 +97,23 @@ export const handleSignin2 = (req, res, db) => {
 
 }
 
+export const removeToken = (req, res) => {
+    
+    try{
+        
+        res.clearCookie('refresh_token', { httpOnly: true, sameSite: 'None', secure: true  })
+        res.json("")
+        
+
+    }
+    catch(err){
+
+        console.error(err)
+    }
+
+
+
+
+}
+
 

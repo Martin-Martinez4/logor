@@ -53,11 +53,33 @@ export const UserInfoProvider = ({ children }) => {
     
       }
 
+    const unloadUser = async () => {
+
+        console.log("unloading")
+
+        setloggedInUser(prev => ({ ...prev,
+                    
+            id:"",
+            username: "",
+            joined_date: "",
+            nickname: "",
+            profile_pic_url: "",
+            description: "",
+            header_img_url: "",
+            location: "",
+            links: "",
+            followers: "",
+            following: ""
+        }))
+
+
+    }
+
 
   
 
     return (
-        <UserInfoContext.Provider value={{loggedInUser, setloggedInUser, loadUser}}>
+        <UserInfoContext.Provider value={{loggedInUser, setloggedInUser, loadUser, unloadUser}}>
             { children }
         </UserInfoContext.Provider>
 

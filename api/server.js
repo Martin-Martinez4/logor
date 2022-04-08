@@ -1,4 +1,6 @@
-
+// function escapeRegExp(string){
+//   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+// }
 
 import 'dotenv/config';
 // const signin = require('./controllers/signin');
@@ -32,7 +34,7 @@ import simpleSearch from "./simpleSearch.js"
 
 import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetGetMiniProfileInfo, handleGetLoggedinUserInfo } from './controllers/getUserInfo.js';
 import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/getIDs.js';
-import { handleSignin, handleSignin2} from './controllers/signin.js';
+import { handleSignin, handleSignin2, removeToken } from './controllers/signin.js';
 import { handleRegister, handleNicknameExists, handleUsernameExists } from './controllers/register.js';
 
 import {  handleUploadImage } from "./controllers/images/uploadImage.js";
@@ -169,6 +171,12 @@ app.post("/signin", (req, res) => {
 app.post("/signin2", (req, res) => {
 
   handleSignin2(req, res, db);
+
+});
+
+app.get("/signout", (req, res) => {
+
+  removeToken(req, res);
 
 });
 

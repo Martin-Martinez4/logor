@@ -1,6 +1,4 @@
 
-
-
 .topBar{
 
     /* background-color: #002233; */
@@ -14,6 +12,7 @@
     box-sizing: border-box;
 
     align-items: center;
+    justify-content: space-between;
 }
 
 .topBar__search{
@@ -83,6 +82,11 @@
     border: 1px solid black;
     display: flex;
 
+}
+
+.topBar2{
+
+    height: auto;;
 }
 
 
