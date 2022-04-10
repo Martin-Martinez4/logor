@@ -77,11 +77,11 @@ const EditProfile = () => {
     });
 
 
-    const [editUsername, setEditUsername] = useState(false)
-    const [editNickname, setEditNickname] = useState(false)
-    const [editDescription, setEditDescription] = useState(false)
-    const [editLocation, setEditLocation] = useState(false)
-    const [editLinks, setEditLinks] = useState(false)
+    // const [editUsername, setEditUsername] = useState(false)
+    // const [editNickname, setEditNickname] = useState(false)
+    // const [editDescription, setEditDescription] = useState(false)
+    // const [editLocation, setEditLocation] = useState(false)
+    // const [editLinks, setEditLinks] = useState(false)
 
     const[editState, setEditState] = useState({
 
@@ -217,7 +217,7 @@ const EditProfile = () => {
 
     }
 
-    const {editHeader, editProfile} = editState
+    const {editHeader, editProfile, editUsername, editNickname, editDescription, editLocation, editLinks} = editState
 
 
 
@@ -389,13 +389,13 @@ const EditProfile = () => {
                     <br/><span className="form_warning">{usernameValid}</span>
                     <div className="flexRowContainer margin1">
 
-                        <button onClick={() => toggleEditMode(editUsername, setEditUsername)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                        <button onClick={() =>  toggleEditMode(editUsername, setEditUsername)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                        <button onClick={() => toggleEditMode("editUsername", editUsername, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                        <button onClick={() =>  toggleEditMode("editUsername", editUsername, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
                     </div>
 
                 </div>
                 :
-                <h3 className="profile_name pointer onHover_border--Primary" onClick={() => toggleEditMode(editUsername, setEditUsername)}>{loggedInUser["username"]}</h3>
+                <h3 className="profile_name pointer onHover_border--Primary" onClick={() => toggleEditMode("editUsername", editUsername, setEditState)}>{loggedInUser["username"]}</h3>
                 }
 
                 {editNickname
@@ -417,12 +417,12 @@ const EditProfile = () => {
                         <br/><span className="form_warning">{nicknameValid}</span>
                         <div className="flexRowContainer margin1">
 
-                            <button onClick={() => toggleEditMode(editNickname, setEditNickname)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                            <button onClick={() =>  toggleEditMode(editNickname, setEditNickname)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                            <button onClick={() => toggleEditMode("editNickname", editNickname, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                            <button onClick={() =>  toggleEditMode("editNickname", editNickname, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
                         </div>
                     </div>
                 :
-                <h4 className="profile_tag pointer onHover_border--Primary" onClick={() => toggleEditMode(editNickname, setEditNickname)}><em>{loggedInUser["nickname"]}</em></h4>
+                <h4 className="profile_tag pointer onHover_border--Primary" onClick={() => toggleEditMode("editNickname", editNickname, setEditState)}><em>{loggedInUser["nickname"]}</em></h4>
 
                 }
 
@@ -442,12 +442,12 @@ const EditProfile = () => {
                         </label>
                         <div className="flexRowContainer margin1">
 
-                            <button onClick={() => toggleEditMode(editDescription, setEditDescription)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                            <button onClick={() =>  toggleEditMode(editDescription, setEditDescription)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                            <button onClick={() => toggleEditMode("editDescription", editDescription, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                            <button onClick={() =>  toggleEditMode("editDescription", editDescription, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
                         </div>
                     </div>
                     :
-                    <p className="profile_description pointer onHover_border--Primary"  onClick={() => toggleEditMode(editDescription, setEditDescription)}>{loggedInUser["description"]}</p>
+                    <p className="profile_description pointer onHover_border--Primary"  onClick={() => toggleEditMode("editDescription", editDescription, setEditState)}>{loggedInUser["description"]}</p>
 
                 }
 
@@ -466,14 +466,14 @@ const EditProfile = () => {
                             </label>
                             <div className="flexRowContainer margin1">
 
-                                <button onClick={() => toggleEditMode(editLocation, setEditLocation)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                                <button onClick={() =>  toggleEditMode(editLocation, setEditLocation)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                                <button onClick={() => toggleEditMode("editLocation", editLocation, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                                <button onClick={() =>  toggleEditMode("editLocation", editLocation, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
                             </div>
                         </div>
 
                   
                         :
-                        <p className="pointer onHover_border--Primary" onClick={() => toggleEditMode(editLocation, setEditLocation)}><img src={LocationIcon} alt="profile" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p>
+                        <p className="pointer onHover_border--Primary" onClick={() => toggleEditMode("editLocation", editLocation, setEditState)}><img src={LocationIcon} alt="profile" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p>
                     }
 
                     {
@@ -490,12 +490,12 @@ const EditProfile = () => {
                             </label>
                             <div className="flexRowContainer margin1">
 
-                                <button onClick={() => toggleEditMode(editLinks, setEditLinks)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                                <button onClick={() =>  toggleEditMode(editLinks, setEditLinks)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                                <button onClick={() => toggleEditMode("editLinks", editLinks, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                                <button onClick={() => toggleEditMode("editLinks", editLinks, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
                             </div>
                         </div>
                         :
-                        <p className="pointer onHover_border--Primary"  onClick={() => toggleEditMode(editLinks, setEditLinks)}><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><span><em>{loggedInUser["links"]}</em></span></p>
+                        <p className="pointer onHover_border--Primary"  onClick={() => toggleEditMode("editLinks", editLinks, setEditState)}><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><span><em>{loggedInUser["links"]}</em></span></p>
                     }
 
                  
