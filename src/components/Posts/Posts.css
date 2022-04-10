@@ -226,6 +226,24 @@
     z-index: 2;
 }
 
+.dropdown{
+    position: absolute;
+    left: -6rem;
+    top: 0px;
+
+    border: solid 1px var(--Primary1);
+    border-radius: 5%;
+    background: var(--UIWhite);
+
+    
+    width: 8rem;
+    height: fit-content;
+    
+    text-align: center;
+    
+    z-index: 2;
+}
+
 .invisible{
     display: none;
 }

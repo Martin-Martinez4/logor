@@ -68,12 +68,27 @@
 
 }
 
+*:hover>.sidebar_icon.svg_hoverable{
+
+    fill: var(--UIGrey1);
+
+    
+
+}
+
 
 /* Add hover effects */
 .sidebar_icon{
     width: 2rem;
     cursor: pointer;
     margin-bottom: 1rem;
+}
+
+.sidebar_icon:hover{
+    width: 2rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
 }
 
 @media screen and (max-width: 950px){

@@ -9,6 +9,8 @@ import UserInfoContext from "../context/UserInfoProvider";
 import { getMiniProfileInfo } from "../utils/fetchMiniprofileInfo";
 import { loggedIsFollower } from "../utils/fetchFollowers";
 
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
+
 import Follow from "../Follow/Follow";
 
 
@@ -18,6 +20,8 @@ const MiniProfile:FC = ({ user_id }) => {
 
     const [ miniProfileUser, setMiniProfileUser] = useState()
 
+    const [followStatusLoading, setFollowStatus] = useState();
+
     const { loggedInUser } = useContext( UserInfoContext);
 
     const [ isFollower, setIsFollower ] = useState();
@@ -26,9 +30,14 @@ const MiniProfile:FC = ({ user_id }) => {
 
         (async (user_id, setIsFollower) => {
 
+            setFollowStatus(true)
+
             const isFollower = await loggedIsFollower(user_id);
 
             setIsFollower(isFollower)
+
+            setFollowStatus(false)
+
 
         })(user_id, setIsFollower)
         
@@ -40,6 +49,9 @@ const MiniProfile:FC = ({ user_id }) => {
 
         
         (async (setMiniProfileUser, user_id) => {
+
+            setFollowStatus(true)
+
 
             if(mountedRef.current){
 
@@ -53,6 +65,9 @@ const MiniProfile:FC = ({ user_id }) => {
 
                 return
             }
+
+            setFollowStatus(false)
+
 
 
         //    setMiniProfileUser(prev => ({...prev, toLink: "/users/nickname/" + userMiniprofileInfo[0]?.nickname})) 
@@ -75,14 +90,11 @@ const MiniProfile:FC = ({ user_id }) => {
                     <p><strong>{miniProfileUser?.username}</strong></p>
                     <p><em>{miniProfileUser?.nickname}</em></p>
                 </a>
-                {/* {isFollower
-                    ?
-                    < button type="button" className="button red" title="Click to follow">Unfollow</button>
-                    : 
-                    < button type="button" className="button primary" title="Click to follow">Follow</button>
-                } */}
 
-                <Follow visiteeUser={{id: user_id}} buttonClasses={"profileName__button"} followCountClass={"hidden"}/>
+                <LoaderHOC loading={followStatusLoading}>
+
+                    <Follow visiteeUser={{id: user_id}} buttonClasses={"profileName__button"} followCountClass={"hidden"}/>
+                </LoaderHOC>
             </div>
             {/* < button type="button" className="button" title="Click to move to next Step">Follow</button> */}
         </div>

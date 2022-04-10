@@ -12,7 +12,7 @@
     box-sizing: border-box;
 
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .topBar__search{
@@ -25,7 +25,7 @@
 
 .topBar__logo{
 
-    margin: .5rem 8vw .2rem 2rem;
+    margin: .5rem 0rem .2rem 0rem;
     width: auto;
 }
 
@@ -34,7 +34,7 @@
     .topBar__logo{
 
         width: 3.5rem;
-        margin: .5rem 8vw .2rem 1rem;
+        margin: .5rem 0rem .2rem 0rem;;
 
     }
 
@@ -49,7 +49,7 @@
 
     .topBar__logo{
 
-        width: 3rem;
+        width: 2.5rem;
         margin: .5rem 4vw .5rem .5rem;
     }
 
@@ -64,13 +64,13 @@
 
     .topBar__logo{
 
-        margin: .5rem;
-        width: 2.5rem;
+        margin: .25rem;
+        width: 2rem;
     }
 
     .topBar__search{
         
-        width: 68vw
+        width: 65vw
     }
 }
 
@@ -87,6 +87,55 @@
 .topBar2{
 
     height: auto;;
+}
+
+.dot_container{
+
+    display: flex;
+}
+
+.dot_container{
+
+    margin: .25rem;
+    width: auto;
+
+    cursor: pointer;
+
+
+}
+
+.sandwhich_container{
+
+    margin: .25rem;
+    width: auto;
+
+    cursor: pointer;
+
+    position: relative;
+
+
+}
+
+.topBar_dot{
+
+    background-color: var(--UIWhite);
+
+    margin: .1rem;
+    width: .35rem;
+    height: .35rem;
+
+    border-radius: 100%;
+
+    cursor: pointer;
+}
+
+.topBar_sandwhich{
+
+    background-color: var(--UIWhite);
+
+    margin: .25rem;
+    width: 1.5rem;
+    height: .15rem;
 }
 
 

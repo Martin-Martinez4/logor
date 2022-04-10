@@ -110,9 +110,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
             
                     setEdiMode(prevEditMode => ({ ...prevEditMode, "visible":tempVisible }))
 
-                
-
-        
                 }
             }
             else{
@@ -159,9 +156,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                 }
             }else{
         
-                // alert("please sign in to Edit post")
-                
-                // navigate("/", { replace: true });
         
                 toggleModal()
             }
@@ -177,10 +171,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
         }
     }
 
-
-
-
-        
     useEffect(() => {
 
         const handleClickOutside = (e) => {

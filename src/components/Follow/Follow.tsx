@@ -11,7 +11,7 @@ import { createFollow, deleteFollow } from "../utils/fetchCreateDeleteFollow";
 
 import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
-import FollowersPage from "../FollowersPage/FollowersPage";
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
 import useAuth from "../hooks/useAuth";
 
@@ -23,6 +23,8 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
     const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
     const { auth, setAuth } = useAuth();
+
+    const [followLoading, setFollowLoading] = useState();
 
 
     const [ followerCount, setFollowerCount ] = useState({
@@ -37,6 +39,8 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
     const [ isFollower, setIsFollower ] = useState();
 
     const handleFollow = async () => {
+
+        setFollowLoading(true);
 
         try{
 
@@ -95,10 +99,18 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
 
         }
+        finally{
+
+            setFollowLoading(false);
+
+        }
 
     }
 
     const handleUnfollow = async () => {
+
+        setFollowLoading(true);
+
 
         try{
     
@@ -144,6 +156,11 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
             console.error(err)
 
         }
+        finally{
+
+            setFollowLoading(false);
+
+        }
 
 
     }
@@ -152,6 +169,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
         const checkIfFollower = async (user_id, setIsFollower) => {
 
+            setFollowLoading(true);
 
 
                 const followersCount =  await getFollowersCount(user_id)
@@ -177,9 +195,14 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
     
                     // console.error("error getting follow status")
                     // setIsFollower(false)
+                    setFollowLoading(false);
+
                     return
     
                 }
+
+                setFollowLoading(false);
+
             }
            
             
@@ -247,7 +270,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
             ?  
             " "
             :
-
+            <LoaderHOC loading={followLoading}>
             <div className="follow-button__container"> 
                 {isFollower
                     ?
@@ -256,6 +279,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
                     < button type="button" className={`button primary ${buttonClasses}`} title="Click to follow" onClick={handleFollow}>Follow</button>
                 }
             </div>
+            </LoaderHOC>
             
                 
             }

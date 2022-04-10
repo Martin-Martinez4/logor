@@ -1,39 +1,80 @@
 
-import { FC } from "react";
+import { FC, useEffect, createRef, useState } from "react";
 import Logo from "../../assets/Logo3.svg";
 import SearchBar from "../SearchBar/SearchBar";
 
-import Signout from "../svg/Signout/Signout";
-
+import LeftsideCard from "../LeftsideCard/LeftsideCard";
 
 import "./Nav.css";
 
 const TopBar: FC = () => {
 
-
+    const dropdownContainer = createRef()
     
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    const toggleDropDownVisible = () => {
+
+        if(!dropdownVisible){
+
+            setDropdownVisible(true)
+        }
+        else{
+
+            setDropdownVisible(false)
+        }
+
+    }
+
+            
+    useEffect(() => {
+
+        const handleClickOutside = (e) => {
+        
+            if (
+                dropdownContainer.current &&
+                !dropdownContainer?.current?.contains(e.target)
+                ) {
+                    setDropdownVisible(false);
+                }
+                
+                      
+        };
+
+        document.addEventListener("mouseup", handleClickOutside);
+
+
+        return () => {
+
+            document.removeEventListener("mouseup", handleClickOutside);
+        }
+      
+
+    }, [dropdownVisible, dropdownContainer]);
+
 
     return(
         <>
         <nav className="topBar topBar2">
             <img src={Logo} className="topBar__logo"  alt="site logo"></img>
 
-           <SearchBar></SearchBar>  
-
-           {/* <span className="option_dots on_750px" onClick={toggleDropDownVisible} > */}
-          
+           <SearchBar></SearchBar>            
             
+            <span className="sandwhich_container" onClick={toggleDropDownVisible}>
+                <div className="dot topBar_sandwhich"></div>
+                <div className="dot topBar_sandwhich"></div>
+                <div className="dot topBar_sandwhich"></div>
+                
+                <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
+
+                    <LeftsideCard></LeftsideCard>
+
+                </span>
+
+        
+            </span>        
         </nav>
 
-        {/* dropdown menu under the  top nav bar 600 Height 770 width */}
-        {/* dots .5rem width and height background color uiBlack */}
-         <span>
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-
-       
-        </span>        
         </>
         
     );

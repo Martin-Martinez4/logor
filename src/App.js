@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import RequireAuth from "./components/requireAuth";
+
+import EditProfile from './components/EditProfile/EditProfile';
 // import useAuth from "./components/useAuth/useAuth";
 // import { UserInfoContext } from './components/context/userContext';
 import Home from './components/Pages/Home';
@@ -48,6 +50,7 @@ function App() {
                 <Route  path="/home/" element={<Home />} />
                 {/* <Route path="/loading/user/:id" element={<LoadingUser loadUser={loadUser}/>} /> */}
                 <Route path="/home/*" element={<Navigate replace to="/home/" />} />
+                <Route path="/profile/edit/" element={<EditProfile />} />
 
 
 

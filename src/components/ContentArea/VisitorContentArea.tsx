@@ -1,26 +1,13 @@
 
-import React, { FC, useEffect, useState } from "react";
-
-import {
-    Routes,
-    Route,
-    Navigate,
-    useParams
-  } from "react-router-dom";
+import { FC, useEffect, useState } from "react";
 
 import SideCard from "../SideCards/SideCard";
 import VisitorPostList from "../PostList/VisitorPostList";
 
-import HomeIcon from "../svg/HomeIcon/HomeIcon";
-import ProfileIcon from "../../assets/ProfileIcon.svg";
-import GearIcon from "../../assets/GearIcon.svg";
-import Signout from "../svg/Signout/Signout";
-import ShareIcon from "../../assets/ShareIcon.svg";
-import PoundSign from "../../assets/PoundSign.svg";
-import HeartIcon from "../../assets/HeartIcon.svg";
-
 import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
+
+import LeftsideCard from "../LeftsideCard/LeftsideCard";
 
 import"./contentArea.css";
 
@@ -37,26 +24,18 @@ const VisitorContentArea:FC = ({ userOrTagID }) => {
 
             const featuredUsers = await getRandomUserIDs(3);
 
-            // console.log("featueredUsers: ", featuredUsers)
-
             setSuggestedProfiles(featuredUsers)
 
-            // console.log("setSuggestedProfiles: ", suggestedProfiles)
             
         })(setSuggestedProfiles)
         
-        // console.log("setSuggestedProfiles: ", suggestedProfiles)
         
     }, [])
     
     useEffect(() => {
         
-        // console.log("setSuggestedProfiles 2: ", suggestedProfiles)
 
         miniprofilesArray = createMiniProfiles(suggestedProfiles);
-
-        // console.log("miniprofilesArray2: ", miniprofilesArray)
-
 
 
     }, [suggestedProfiles])
@@ -66,46 +45,14 @@ const VisitorContentArea:FC = ({ userOrTagID }) => {
 
 
     return (
+        
 
         <div className="contentArea">
-
-            {console.log(userOrTagID)}
+            
   
             <SideCard side="leftSide">
+                <LeftsideCard></LeftsideCard>
 
-                <div className="side_icon">
-                    <HomeIcon></HomeIcon>
-                  
-                </div>
-                <div className="side_icon">
-                    <img 
-                        src={ProfileIcon} alt="profile" className="sidebar_icon">
-                    </img>
-                    <span className="sidebar_text"><strong>Profile</strong></span>
-                </div>
-                <div className="side_icon">
-                    <img 
-                        src={GearIcon} alt="profile" className="sidebar_icon">
-                    </img>
-                    <span className="sidebar_text"><strong>Settings</strong></span>
-                </div>
-
-                <div className="side_icon">
-                   <Signout></Signout>
-                </div>
-
-                <div className="side_icon">
-                    <img 
-                        src={PoundSign} alt="profile " className="sidebar_icon">
-                    </img>
-                    <span className="sidebar_text"><strong>Trends</strong></span>
-                </div>
-                <div className="side_icon">
-                    <img 
-                        src={HeartIcon} alt="profile" className="sidebar_icon">
-                    </img>
-                    <span className="sidebar_text"><strong>Favorites</strong></span>
-                </div>
             </SideCard>
             <div>
                 <VisitorPostList userOrTagID={ userOrTagID }/>

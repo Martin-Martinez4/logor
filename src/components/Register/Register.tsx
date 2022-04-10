@@ -89,9 +89,7 @@ const Register:FC = () => {
         alt: 'Upload an Image'
     });
 
-    const [previewBlobs, setPreviewBlobs] = useState({
-
-    })
+    const [previewBlobs, setPreviewBlobs] = useState({})
 
     const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
