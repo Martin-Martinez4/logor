@@ -3,6 +3,8 @@ import fs from 'fs-extra';
 import sharp from 'sharp';
 import path from 'path';
 
+import { defaultHeaders, defaultProfiles } from '../../utils/defaultImage.js';
+
 export const handleUpdateProfileWithDefault = async (req, res, db) => {
 
     const id = req.user_id;
@@ -139,6 +141,48 @@ export const handleUploadProfileImage = async (req, res, db) => {
 
 }
 
+export const handleDeleteProfileImage = async (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    const newProfile = req.body.newProfile
+
+    console.log("newProfile: ",newProfile)
+
+        db.select("profile_pic_url")
+        .from("users")
+        .where({
+
+            id: user_id
+        })
+        .returning("profile_pic_url")
+        .then((oldProfileURL) => {
+
+            const oldProfilePath = `./temp${oldProfileURL[0]["profile_pic_url"]}`;
+
+            if(defaultProfiles.includes(oldProfilePath)){
+
+                console.log("would not have been deleted: ",oldProfilePath)
+            }
+            else{
+
+                console.log("would have been deleted: ",oldProfilePath)
+
+                fs.remove(oldProfilePath)
+            }
+
+            res.json(oldProfileURL)
+
+        })
+        .catch(err => {
+
+            console.log(err)
+            res.json({
+                msg: err
+            })
+        })
+}
+
 export const handleUpdateHeaderImage = async (req, res, db) => {
 
     console.log("gets to header update")
@@ -163,7 +207,7 @@ export const handleUpdateHeaderImage = async (req, res, db) => {
         const resizedHeader = path.resolve(req.file.destination,'temp','headers', headerImageName)
 
         await sharp(req.file.path)
-        .resize(1080 , 360,
+        .resize(1920 , 1280,
         {
             kernel: sharp.kernel.nearest,
             fit: 'fill',
@@ -236,8 +280,6 @@ export const handleUpdateHeaderWithDefault = async (req, res, db) => {
 
         const headerFilepathString = '/headers/'+ headerImageNameString
 
-        console.log(req.body.profile_pic_url)
-
         db("user_headers").where({
             user_id: id
         })
@@ -265,3 +307,197 @@ export const handleUpdateHeaderWithDefault = async (req, res, db) => {
         res.json("error")
     }
 }
+
+export const handleDeleteHeaderImage = async (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    db.select("header_img_url")
+    .from("user_headers")
+    .where({
+
+        user_id: user_id
+    })
+    .returning("header_img_url")
+    .then((oldHeaderURL) => {
+
+        const oldHeaderpath = `./temp${oldHeaderURL[0]["header_img_url"]}`;
+
+        if(defaultHeaders.includes(oldHeaderpath)){
+
+            console.log("would not have been deleted: ",oldHeaderpath)
+        }
+        else{
+
+            console.log("would have been deleted: ",oldHeaderpath)
+
+            fs.remove(oldHeaderpath)
+        }
+
+        res.json(oldHeaderURL)
+
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json({
+            msg: err
+        })
+    })
+}
+
+
+export const handleUpdateUsername = (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    const username = req.body.username
+
+    db("users").where({
+
+        id: user_id
+    })
+    .update({
+
+        username: username,
+
+    })
+    .then(data => {
+
+        res.json(data)
+
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json({
+            msg: err
+        })
+    })
+
+
+}
+  
+export const handleUpdateNickname = (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    const nickname = req.body.nickname
+
+    db("users").where({
+
+        id: user_id
+    })
+    .update({
+
+        nickname: nickname,
+
+    })
+    .then(data => {
+
+        res.json(data)
+
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json({
+            msg: err
+        })
+    })
+
+}
+  
+export const handleUpdateDescription = (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    const description = req.body.description
+
+    db("user_headers").where({
+
+        user_id: user_id
+    })
+    .update({
+
+        description: description,
+
+    })
+    .then(data => {
+
+        res.json(data)
+
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json({
+            msg: err
+        })
+    })
+
+}
+  
+  
+export const handleUpdateLocation = (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    const location = req.body.location
+
+    db("user_headers").where({
+
+        user_id: user_id
+    })
+    .update({
+
+        location: location,
+
+    })
+    .then(data => {
+
+        res.json(data)
+
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json({
+            msg: err
+        })
+    })
+
+}
+  
+export const handleUpdateLinks = (req, res, db) => {
+
+    const user_id = req.user_id;
+
+    const links = req.body.links
+
+    db("user_headers").where({
+
+        user_id: user_id
+    })
+    .update({
+
+        links: links,
+
+    })
+    .then(data => {
+
+        res.json(data)
+
+    })
+    .catch(err => {
+
+        console.log(err)
+        res.json({
+            msg: err
+        })
+    })
+
+}
+  
+  
+

@@ -38,7 +38,19 @@ import { handleSignin, handleSignin2, removeToken } from './controllers/signin.j
 import { handleRegister, handleNicknameExists, handleUsernameExists } from './controllers/register.js';
 
 import {  handleUploadImage } from "./controllers/images/uploadImage.js";
-import {  handleUpdateHeaderWithDefault, handleUpdateProfileWithDefault, handleUpdateHeaderImage, handleUploadProfileImage } from "./controllers/profileAndHeader/profileAndHeader.js"
+import {  
+  handleUpdateHeaderWithDefault, 
+  handleUpdateProfileWithDefault, 
+  handleUpdateHeaderImage,
+  handleUploadProfileImage, 
+  handleDeleteHeaderImage,
+  handleDeleteProfileImage,
+  handleUpdateUsername,
+  handleUpdateNickname,
+  handleUpdateDescription,
+  handleUpdateLocation,
+  handleUpdateLinks 
+  } from "./controllers/profileAndHeader/profileAndHeader.js"
 
 import { authenticateToken } from './middleware/authorization.js';
 
@@ -274,11 +286,11 @@ app.use(simpleSearch)
 //=================Image Upload=================
 
 // Need to add authenication middleware
-app.post("/api/image/", upload.single('image'), (req, res) => {
+// app.post("/api/image/", upload.single('image'), (req, res) => {
 
-  handleUploadImage(req, res, db)
+//   handleUploadImage(req, res, db)
 
-})
+// })
 
 
 app.post("/profile/update/default/", authenticateToken,(req, res) => {
@@ -288,8 +300,14 @@ app.post("/profile/update/default/", authenticateToken,(req, res) => {
 })
 
 app.post("/profile/update/", [ authenticateToken, upload.single('image')],(req, res) => {
-
+  
   handleUploadProfileImage(req, res, db)
+  
+})
+
+app.post("/profile/delete/", authenticateToken, (req, res) => {
+
+  handleDeleteProfileImage(req, res, db)
 
 })
 
@@ -304,6 +322,42 @@ app.post("/header/update/", [ authenticateToken, upload.single('image')], (req,r
   handleUpdateHeaderImage(req, res, db)
 
 })
+
+app.post("/header/delete/", authenticateToken, (req, res) => {
+
+  handleDeleteHeaderImage(req, res, db)
+
+})
+
+app.post("/update/username/", authenticateToken, (req, res) => {
+
+  handleUpdateUsername(req, res, db)
+
+});
+
+app.post("/update/nickname/", authenticateToken, (req, res) => {
+
+  handleUpdateNickname(req, res, db)
+
+});
+
+app.post("/update/description/", authenticateToken, (req, res) => {
+
+  handleUpdateDescription(req, res, db)
+
+});
+
+app.post("/update/location/", authenticateToken, (req, res) => {
+
+  handleUpdateLocation(req, res, db)
+
+});
+
+app.post("/update/links/", authenticateToken, (req, res) => {
+
+  handleUpdateLinks(req, res, db)
+
+});
 
 
 //=================Tokens=================

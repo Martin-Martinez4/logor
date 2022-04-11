@@ -11,7 +11,11 @@ import SideCard from "../SideCards/SideCard";
 import LocationIcon from "../../assets/LocationIcon.svg"
 import LinkIcon from "../../assets/LinkIcon.svg"
 
-import { validateEmail, validatePassword, validateUsername } from "../utils/validation";
+import LoaderHOC from "../LoaderHOC/LoaderHOC";
+
+import TopBar from "../TopandBottom/TopBar";
+
+import { validateUsername } from "../utils/validation";
 import { checkIfUsernameExists, checkIfNicknameExists } from "../utils/fetchDoesUsernameNicknameExist";
 
 import Scroll from "../Scroll/Scroll";
@@ -31,27 +35,17 @@ const EditProfile = () => {
     const Monkey4 = "../../users/default/Monkey_4.svg";
 
     const usernameErrorMessage = "Username must be at least 4 cahracters long and only contain letters numbers and -._"
-    const usernameAvailabe = "Username has been taken"
+    const usernameAvailableMessage = "Username has been taken"
     const nicknameErrorMessage = "Nickname must be at least 4 cahracters long and only contain letters numbers and -._"
-    const nicknameAvailable = "Nickname has been taken"
-    const passwordErrorMessage = "Password be at least 8 characters and must include at least one: lowercase letter, uppercase letter,number, and special character(@#$%^&+=)"
-    const password2ErrorMessafe = "Passwords must match"
-    const emailErrorMessage = "Please input a valid email address"
-
-    const genericErrorMessage = "Please fix issues to continue"
+    const nicknameAvailableMessage = "Nickname has been taken"
     
     const [usernameValid, setUsernameValid] = useState();
     const [nicknameValid, setNicknameValid] = useState();
-    const [emailValid, setEmailValid] = useState();
-    const [passwordValid, setPasswordValid] = useState();
-    const [password2Valid, setPassword2Valid] = useState();
-    const [topValid, setTopVaild] = useState();
-
+ 
     const { loggedInUser } = useContext(UserInfoContext);
 
     const [user, setUser] = useState({
 
-        id:"",
         username:"",
         joined_date:"",
         nickname:"",
@@ -59,16 +53,21 @@ const EditProfile = () => {
         description:"",
         header_img_url: "",
         location:"",
-        links:"",
-
-        name:"",
-        email:"",
-        password:"",
-        password2:"",
-        gender:"",
-        other:""
+        links:""
 
     });
+
+    
+    const {
+        username,
+        nickname,
+        profile_pic_url,
+        description,
+        header_img_url,
+        location,
+        links,
+    } = user
+
 
       // eslint-disable-next-line 
       const [{alt, src}, setImg] = useState({
@@ -76,12 +75,7 @@ const EditProfile = () => {
         alt: 'Upload an Image'
     });
 
-
-    // const [editUsername, setEditUsername] = useState(false)
-    // const [editNickname, setEditNickname] = useState(false)
-    // const [editDescription, setEditDescription] = useState(false)
-    // const [editLocation, setEditLocation] = useState(false)
-    // const [editLinks, setEditLinks] = useState(false)
+    const[ buttonPressedLoading, setButtonPressedLaoding  ] = useState(false)
 
     const[editState, setEditState] = useState({
 
@@ -210,9 +204,375 @@ const EditProfile = () => {
 
     const toggleEditMode = (stateName, stateValue, setStateFunction) => {
 
-        console.log(stateValue)
+        // console.log(stateValue)
 
         setStateFunction(prev => ({...prev, [stateName]:!stateValue}))
+
+
+    }
+
+    // Sets all editStates to false, which closes the view
+    const closeAll = (e, stateObject, setFunction) => {
+
+        e?.preventDefault()
+
+        Object.keys(stateObject).forEach(key => {
+
+            setFunction(prev => ({...prev, [key]:false}))
+
+        });
+
+    }
+
+    const editHeaderFunction = async () => {
+
+        setButtonPressedLaoding(true);
+
+        await fetch(`http://localhost:3001/header/delete/`, {
+
+            method: "post",
+            credentials:'include',
+            cache:'no-cache',
+            headers: {
+                
+                'Content-Type': 'application/json',
+              },
+        })
+        .then(res => res.json())
+        .then(res => console.log(res))
+
+        if(typeof header_img_url === "string"){
+
+            await fetch(`http://localhost:3001/header/update/default/`, {
+     
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    
+                    header_img_url: header_img_url,
+                
+                })
+             })
+             .then(res => res.json())
+             .then(resonse => {
+     
+                // setUploadStatus(res.msg)
+                
+
+            })
+             .catch( err => console.error(err))
+        }
+        else if(typeof header_img_url === "object"){
+
+            const formDataHeader = new FormData()
+
+            formDataHeader.append('image', header_img_url)
+
+            await fetch(`http://localhost:3001/header/update/`, {
+     
+                method: "post",
+                credentials:'include',
+                // cache:'no-cache',
+                // headers: {
+                
+                //     'Content-Type': 'form-data',
+                // },
+                body: formDataHeader,
+            })
+             .then(res => res.json())
+             .then(resonse => {
+     
+                // setUploadStatus(res.msg)
+                
+               return resonse
+
+            })
+             .catch( err => console.error(err))
+        }
+        
+        setButtonPressedLaoding(false);
+        setEditState(prev => ({...prev, ["editHeader"]:false}))
+
+    }
+
+    const editProfileFunction = async () => {
+
+        setButtonPressedLaoding(true);
+
+        await fetch(`http://localhost:3001/profile/delete/`, {
+
+            method: "post",
+            credentials:'include',
+            cache:'no-cache',
+            headers: {
+                
+                'Content-Type': 'application/json',
+              },
+          
+        })
+        .then(res => res.json())
+        .then(res => console.log(res))
+
+        if(typeof profile_pic_url === "string"){
+
+            await fetch(`http://localhost:3001/profile/update/default/`, {
+     
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    
+                    profile_pic_url: profile_pic_url,
+                
+                    })
+             })
+             .then(res => res.json())
+             .then(resonse => {
+     
+                 // setUploadStatus(res.msg)
+                 
+
+             })
+             .catch( err => console.error(err))
+        }
+        else if(typeof profile_pic_url === "object"){
+
+            const formDataProfile = new FormData()
+
+            formDataProfile.append('image', profile_pic_url)
+
+            await fetch(`http://localhost:3001/profile/update/`, {
+     
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                // headers: {
+                
+                //     'Content-Type': 'form-data',
+                // },
+                body: formDataProfile
+            })
+             .then(res => res.json())
+             .then(resonse => {
+     
+                // setUploadStatus(res.msg)
+                
+               return resonse
+
+            })
+             .catch( err => console.error(err))
+        }
+
+        setEditState(prev => ({...prev, ["editProfile"]:false}))
+        setButtonPressedLaoding(false);
+
+
+    }
+
+    const editUsernameFunction = async () => {
+
+        setButtonPressedLaoding(true);
+
+        const usernameValidate = validateUsername(user.username);
+        const usernameAvailable = !(await checkIfUsernameExists(user.username));
+
+        if(usernameValidate && usernameAvailable){
+
+            await fetch(`http://localhost:3001/update/username/`, {
+        
+            method: "post",
+            credentials:'include',
+            cache:'no-cache',
+            headers: {
+            
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                
+                username: username,
+            
+            })
+            })
+            .then(res => res.json())
+            .then(resonse => {
+                    
+
+            })
+            .catch( err => console.error(err)) 
+        }
+        else if(usernameValidate && !usernameAvailable){
+
+            setUsernameValid(usernameAvailableMessage)
+
+        }
+        else{
+
+            setUsernameValid(usernameErrorMessage)
+
+        }
+
+        setEditState(prev => ({...prev, ["editUsername"]:false}))
+        setButtonPressedLaoding(false);
+
+
+
+    }
+
+    const editNicknameFunction = async () => {
+
+        setButtonPressedLaoding(true);
+
+        const nicknameValidate = validateUsername(user.nickname);
+        const nicknameAvailable = !(await checkIfNicknameExists(user.nickname));
+
+        if(nicknameValidate && nicknameAvailable){
+
+        await fetch(`http://localhost:3001"/update/nickname/`, {
+     
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    
+                    nickname: nickname,
+                
+                })
+             })
+             .then(res => res.json())
+             .then(resonse => {
+                      
+                return resonse
+
+             })
+             .catch( err => console.error(err))
+        }
+        else if(nicknameValidate && !nicknameAvailable){
+
+            setNicknameValid(nicknameAvailableMessage)
+
+        }
+        else{
+
+            setNicknameValid(nicknameErrorMessage)
+
+        } 
+
+        setEditState(prev => ({...prev, ["editNickname"]:false}))
+        setButtonPressedLaoding(false);
+
+
+    }
+
+    const editDescriptionFunction = async () => {
+
+        setButtonPressedLaoding(true);
+
+        await fetch(`http://localhost:3001/update/description/`, {
+     
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    
+                    description: description,
+                
+                })
+             })
+             .then(res => res.json())
+             .then(resonse => {
+                      
+                return resonse
+
+             })
+             .catch( err => console.error(err)) 
+
+             setEditState(prev => ({...prev, ["editDescription"]:false}))
+             setButtonPressedLaoding(false);
+
+
+    }
+
+    const editLocationFunction = async () => {
+
+        setButtonPressedLaoding(true);
+
+        await fetch(`http://localhost:3001/update/location/`, {
+     
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    
+                    location: location,
+                
+                })
+             })
+             .then(res => res.json())
+             .then(resonse => {
+                      
+                return resonse
+
+             })
+             .catch( err => console.error(err)) 
+
+             setEditState(prev => ({...prev, ["editLocation"]:false}))
+
+             setButtonPressedLaoding(false);
+
+
+    }
+
+    const editLinksFunction = async () => {
+
+        setButtonPressedLaoding(true);
+
+        await fetch(`http://localhost:3001/update/links/`, {
+     
+                method: "post",
+                credentials:'include',
+                cache:'no-cache',
+                headers: {
+                
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    
+                    links: links,
+                
+                })
+             })
+             .then(res => res.json())
+             .then(resonse => {
+                      
+                return resonse
+
+             })
+             .catch( err => console.error(err)) 
+            
+             setEditState(prev => ({...prev, ["editLinks"]:false}))
+
+             setButtonPressedLaoding(false);
 
 
     }
@@ -222,7 +582,8 @@ const EditProfile = () => {
 
 
     return(
-
+        <>
+        <TopBar></TopBar>
         <div className="contentArea">
 
 
@@ -230,8 +591,14 @@ const EditProfile = () => {
 
             <LeftsideCard></LeftsideCard>
         </SideCard>
-         <Card>
-            <h3>Click to edit</h3>
+         <Card classes="width80vw">
+            {
+                editHeader|| editProfile|| editUsername|| editNickname|| editDescription|| editLocation|| editLinks
+                ?
+                <button onClick={(e) => closeAll(e, editState, setEditState)} type="button"className="button red" title="Click to cancel Header Image change">Close All</button>
+                :
+                <h3>Click to edit, refresh to see changes</h3>
+            }
             <Scroll>
 
             {editHeader
@@ -283,8 +650,13 @@ const EditProfile = () => {
 
                             <div className="flexRowContainer margin1">
 
-                                <button onClick={() => toggleEditMode("editHeader",editHeader, setEditState)} type="button"className="button red" title="Click to cancel Header Image change">Cancel</button>
-                                <button onClick={() =>  toggleEditMode("editHeader", editHeader, setEditState)} type="button" className="button primary" title="Confirm New Header Image">Confirm</button>
+
+                                <LoaderHOC loading={buttonPressedLoading}>
+
+                                    <button onClick={() => toggleEditMode("editHeader",editHeader, setEditState)} type="button"className="button red" title="Click to cancel Header Image change">Cancel</button>
+                               
+                                    <button onClick={() =>  editHeaderFunction()} type="button" className="button primary" title="Confirm New Header Image">Confirm</button>
+                                </LoaderHOC>
                             </div>
                         </div>
 
@@ -354,8 +726,12 @@ const EditProfile = () => {
 
                             <div className="flexRowContainer margin1">
 
-                                <button onClick={() => toggleEditMode("editProfile",editProfile, setEditState)} type="button"className="button red" title="Click to cancel Profile Image change">Cancel</button>
-                                <button onClick={() => toggleEditMode("editProfile",editProfile, setEditState)} type="button" className="button primary" title="Confirm New Profile Image">Confirm</button>
+                                <LoaderHOC loading={buttonPressedLoading}>
+
+                                    <button onClick={() => toggleEditMode("editProfile",editProfile, setEditState)} type="button"className="button red" title="Click to cancel Profile Image change">Cancel</button>
+                                
+                                    <button onClick={() => editProfileFunction()} type="button" className="button primary" title="Confirm New Profile Image">Confirm</button>
+                                </LoaderHOC>
                             </div>
         
                             
@@ -369,7 +745,7 @@ const EditProfile = () => {
                 <img src={ `${serverAddressString}${loggedInUser["profile_pic_url"]}`}  onClick={() => toggleEditMode("editProfile",editProfile, setEditState)} alt="profile" className="profile_header_image pointer onHover_border--Primary" style={{marginTop:"1rem"}}></img>
             }
 
-            <div className="profile_header_container">
+            <div className="profile_header_container padding-bottom__8rem">
 
                 {editUsername
                 ?
@@ -389,8 +765,12 @@ const EditProfile = () => {
                     <br/><span className="form_warning">{usernameValid}</span>
                     <div className="flexRowContainer margin1">
 
-                        <button onClick={() => toggleEditMode("editUsername", editUsername, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                        <button onClick={() =>  toggleEditMode("editUsername", editUsername, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                        <LoaderHOC loading={buttonPressedLoading}>
+
+
+                            <button onClick={() => toggleEditMode("editUsername", editUsername, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                            <button onClick={() => editUsernameFunction()} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                        </LoaderHOC>
                     </div>
 
                 </div>
@@ -417,8 +797,11 @@ const EditProfile = () => {
                         <br/><span className="form_warning">{nicknameValid}</span>
                         <div className="flexRowContainer margin1">
 
-                            <button onClick={() => toggleEditMode("editNickname", editNickname, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                            <button onClick={() =>  toggleEditMode("editNickname", editNickname, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                            <LoaderHOC loading={buttonPressedLoading}>
+
+                                <button onClick={() => toggleEditMode("editNickname", editNickname, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                                <button onClick={() => editNicknameFunction()} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                            </LoaderHOC>
                         </div>
                     </div>
                 :
@@ -442,8 +825,11 @@ const EditProfile = () => {
                         </label>
                         <div className="flexRowContainer margin1">
 
-                            <button onClick={() => toggleEditMode("editDescription", editDescription, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                            <button onClick={() =>  toggleEditMode("editDescription", editDescription, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                            <LoaderHOC loading={buttonPressedLoading}>
+                                
+                                <button onClick={() => toggleEditMode("editDescription", editDescription, setEditState)} type="button"className="button red" title="Click to cancel usernaem    change">Cancel</button>
+                                <button onClick={() => editDescriptionFunction()} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                            </LoaderHOC>
                         </div>
                     </div>
                     :
@@ -466,8 +852,11 @@ const EditProfile = () => {
                             </label>
                             <div className="flexRowContainer margin1">
 
-                                <button onClick={() => toggleEditMode("editLocation", editLocation, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                                <button onClick={() =>  toggleEditMode("editLocation", editLocation, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                                <LoaderHOC loading={buttonPressedLoading}>
+
+                                    <button onClick={() => toggleEditMode("editLocation", editLocation, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                                    <button onClick={() => editLocationFunction()} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                                </LoaderHOC>
                             </div>
                         </div>
 
@@ -489,17 +878,18 @@ const EditProfile = () => {
                                 <input type="links" placeholder="Enter Links" name="links" onChange={oninputChange} value={user.links} required />
                             </label>
                             <div className="flexRowContainer margin1">
+                                
+                                <LoaderHOC loading={buttonPressedLoading}>
 
-                                <button onClick={() => toggleEditMode("editLinks", editLinks, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
-                                <button onClick={() => toggleEditMode("editLinks", editLinks, setEditState)} type="button" className="button primary" title="Confirm New username">Confirm</button>
+
+                                    <button onClick={() => toggleEditMode("editLinks", editLinks, setEditState)} type="button"className="button red" title="Click to cancel usernaem change">Cancel</button>
+                                    <button onClick={() => editLinksFunction()} type="button" className="button primary" title="Confirm New username">Confirm</button>
+                                </LoaderHOC>
                             </div>
                         </div>
                         :
                         <p className="pointer onHover_border--Primary"  onClick={() => toggleEditMode("editLinks", editLinks, setEditState)}><img src={LinkIcon} alt="profile" className="profile_icon link_icon"></img><span><em>{loggedInUser["links"]}</em></span></p>
                     }
-
-                 
-                  
 
 
                 </div>
@@ -510,6 +900,7 @@ const EditProfile = () => {
             </Scroll>
         </Card>
         </div>
+        </>
     )
 }
 
