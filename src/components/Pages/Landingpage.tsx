@@ -3,8 +3,7 @@ import React, { ReactElement }from "react";
 import TopBar2 from "../TopandBottom/TopBar2";
 import BottomBar from "../TopandBottom/BottomBar";
 import Signin from "../Siginin/Signin";
-import userContext from "../context/UserInfoProvider"
-import { navigateHome } from "../utils/navigateOnSignin";
+
 import "./landingPage.css";
 
 

@@ -21,7 +21,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
       const componentIsMounted = useRef(true);
 
-    const { loadUser, loggedInUser, setloggedInUser } = useContext( UserInfoContext);
+    const { loggedInUser, setloggedInUser } = useContext( UserInfoContext);
     const { auth, setAuth } = useAuth();
 
     const [followLoading, setFollowLoading] = useState();
@@ -33,7 +33,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
         following:""
     })
 
-    const { showModal, toggleModal, hideModal,  } = useSigninModal();
+    const { showModal, toggleModal } = useSigninModal();
 
 
     const [ isFollower, setIsFollower ] = useState();
@@ -255,7 +255,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
         checkIsFollower(visiteeUser?.id, setIsFollower)
 
         
-
+    // eslint-disable-next-line   react-hooks/exhaustive-deps
     },[])
 
     useEffect(() => {}, [isFollower])
@@ -263,14 +263,14 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
     return(
 
         <>
-            <p className={followCountClass}><a href="">Followers:</a><em>{ followerCount?.followers? " " +followerCount?.followers: " Error"}</em></p> 
-            <p className={followCountClass}><a href="">Following:</a><em>{followerCount?.following? " " +followerCount?.following: " Error"}</em></p>
+            <p className={followCountClass}>Followers:<em>{ followerCount?.followers? " " +followerCount?.followers: " Error"}</em></p> 
+            <p className={followCountClass}>Following:<em>{followerCount?.following? " " +followerCount?.following: " Error"}</em></p>
 
             {visiteeUser.username === loggedInUser.username
             ?  
             " "
             :
-            <LoaderHOC loading={followLoading}>
+            <LoaderHOC loading={followLoading} loader={2}>
             <div className="follow-button__container"> 
                 {isFollower
                     ?

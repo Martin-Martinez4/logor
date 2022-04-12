@@ -296,7 +296,7 @@ const EditProfile = () => {
         }
         
         setButtonPressedLaoding(false);
-        setEditState(prev => ({...prev, ["editHeader"]:false}))
+        setEditState(prev => ({...prev, "editHeader":false}))
 
     }
 
@@ -372,7 +372,7 @@ const EditProfile = () => {
              .catch( err => console.error(err))
         }
 
-        setEditState(prev => ({...prev, ["editProfile"]:false}))
+        setEditState(prev => ({...prev, "editProfile":false}))
         setButtonPressedLaoding(false);
 
 
@@ -420,7 +420,7 @@ const EditProfile = () => {
 
         }
 
-        setEditState(prev => ({...prev, ["editUsername"]:false}))
+        setEditState(prev => ({...prev, "editUsername":false}))
         setButtonPressedLaoding(false);
 
 
@@ -470,7 +470,7 @@ const EditProfile = () => {
 
         } 
 
-        setEditState(prev => ({...prev, ["editNickname"]:false}))
+        setEditState(prev => ({...prev, "editNickname":false}))
         setButtonPressedLaoding(false);
 
 
@@ -503,7 +503,7 @@ const EditProfile = () => {
              })
              .catch( err => console.error(err)) 
 
-             setEditState(prev => ({...prev, ["editDescription"]:false}))
+             setEditState(prev => ({...prev, "editDescription":false}))
              setButtonPressedLaoding(false);
 
 
@@ -536,7 +536,7 @@ const EditProfile = () => {
              })
              .catch( err => console.error(err)) 
 
-             setEditState(prev => ({...prev, ["editLocation"]:false}))
+             setEditState(prev => ({...prev, "editLocation":false}))
 
              setButtonPressedLaoding(false);
 
@@ -570,7 +570,7 @@ const EditProfile = () => {
              })
              .catch( err => console.error(err)) 
             
-             setEditState(prev => ({...prev, ["editLinks"]:false}))
+             setEditState(prev => ({...prev, "editLinks":false}))
 
              setButtonPressedLaoding(false);
 

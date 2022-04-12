@@ -53,7 +53,7 @@ const PostList: FC = () => {
 
             let loggedInComments = commentsArray[i] 
             
-            const {comment_id, text_content, created_at, status, likes, user_id, username, nickname, profile_pic_url} = loggedInComments;                
+            const {comment_id, text_content, created_at, status, likes, username, nickname, profile_pic_url} = loggedInComments;                
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
 
@@ -106,7 +106,7 @@ const PostList: FC = () => {
 
         setInitPosts()
 
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUser.id])
 
     
@@ -131,13 +131,7 @@ const PostList: FC = () => {
         
     }, [])
     
-    useEffect(() => {
-        
-        // create the miniProfile  element list here
 
-        miniprofilesArray = createMiniProfiles(suggestedProfiles);
-
-    }, [suggestedProfiles])
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
 
@@ -192,7 +186,7 @@ const PostList: FC = () => {
 
         setUserPosts(postsArray?.slice(0,lastPostShown))
 
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postsArray])
 
  

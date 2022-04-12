@@ -8,12 +8,13 @@ import LoaderHOC from '../LoaderHOC/LoaderHOC';
 import Loader1 from '../svg/Loader1/Loader1';
 
 import VisitorPost from '../Posts/VisitorPost';
-const MentionsPage:FC = ({ user }) => {
+const MentionsPage:FC = () => {
 
     const [mentionsArray, setMentionsArray] = useState();
 
     const { loggedInUser } = useContext( UserInfoContext);
     
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     const [ postlistLoading, setPostlistLoading ] = useState();
     const [seeMoreLoading,  setSeeMoreLoading] = useState();
 
@@ -32,7 +33,7 @@ const MentionsPage:FC = ({ user }) => {
 
             let loggedInComments = commentsArray[i] 
             
-            const {comment_id, text_content, created_at, status, likes, user_id, username, nickname, profile_pic_url} = loggedInComments;                
+            const {comment_id, text_content, created_at, status, likes, username, nickname, profile_pic_url} = loggedInComments;                
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
 
@@ -81,6 +82,7 @@ const MentionsPage:FC = ({ user }) => {
 
         getMentionPost()
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUser.id])
 
     
@@ -132,7 +134,7 @@ const MentionsPage:FC = ({ user }) => {
 
         setUserMentions(mentionsArray?.slice(0,lastMentionShown))
 
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mentionsArray])
 
 

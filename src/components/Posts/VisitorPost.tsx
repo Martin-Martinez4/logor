@@ -9,7 +9,6 @@ import "./Posts.css";
 
 import formatDate, { formatDateAgo } from "../utils/formatDate";
 
-import useAuth from "../hooks/useAuth";
 import useModal from "../hooks/useModal";
 import SigininModal from "../SigninModal/SigninModal";
 
@@ -24,20 +23,17 @@ import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 
 const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
 
-    const maxChars = 920;
-
     const { showModal, toggleModal } = useModal();
 
 
     const { loggedInUser } = useContext( UserInfoContext);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [postInformation, setPostInfomration] = useState({
 
         text_content: text_content,
         status: status
     });
-
-    const [charsLeft, setCharsLeft] = useState(maxChars - postInformation.text_content.length);
 
 
     let lastEditedReadable: String;
@@ -57,6 +53,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [editMode, setEdiMode] = useState({
 
         visible: false,

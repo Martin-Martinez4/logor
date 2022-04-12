@@ -8,18 +8,14 @@ import Card from "../Card/Card";
 
 import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
-import useAuth from "../hooks/useAuth";
-
 import useSigninModal from "../hooks/useModal";
 
-
 import { tagsMentionsCreate } from "../utils/tagMentions";
-import useUserInfo from "../hooks/useUserInfo";
 import UserInfoContext from "../context/UserInfoProvider";
 
 
 
-const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComments, setPostsArray }) => {
+const PostBox:FC = ({ createPosts, setPostsArray }) => {
 
     const { loggedInUser } = useContext( UserInfoContext);
 
@@ -30,9 +26,7 @@ const PostBox:FC = ({ userPosts, setUserPosts, posts, createPosts, loggedInComme
 
     const maxChars = 920;
 
-    const { auth, setAuth } = useAuth();
-
-    const { showModal, toggleModal } = useSigninModal();
+    const { toggleModal } = useSigninModal();
 
     // const { showModal, toggleModal } = useModal();
     

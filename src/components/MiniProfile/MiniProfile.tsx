@@ -24,6 +24,7 @@ const MiniProfile:FC = ({ user_id }) => {
 
     const { loggedInUser } = useContext( UserInfoContext);
 
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     const [ isFollower, setIsFollower ] = useState();
 
     useEffect(() => {
@@ -42,8 +43,8 @@ const MiniProfile:FC = ({ user_id }) => {
         })(user_id, setIsFollower)
         
 
-        
-    },[,loggedInUser])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[loggedInUser])
 
     useEffect(() => {
 
@@ -91,7 +92,7 @@ const MiniProfile:FC = ({ user_id }) => {
                     <p><em>{miniProfileUser?.nickname}</em></p>
                 </a>
 
-                <LoaderHOC loading={followStatusLoading}>
+                <LoaderHOC loading={followStatusLoading} loader={2}>
 
                     <Follow visiteeUser={{id: user_id}} buttonClasses={"profileName__button"} followCountClass={"hidden"}/>
                 </LoaderHOC>

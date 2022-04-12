@@ -1,11 +1,9 @@
 
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
 import Loader1 from "../svg/Loader1/Loader1";
-
-import UserInfoContext from "../context/UserInfoProvider";
 
 import VisitorPost from "../Posts/VisitorPost";
 
@@ -14,9 +12,8 @@ const FeedPage = () => {
 
     
     const [feedArray, setFeedArray] = useState();
-
-    const { loggedInUser } = useContext( UserInfoContext);
     
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     const [ postlistLoading, setPostlistLoading ] = useState();
 
     const [seeMoreLoading,  setSeeMoreLoading] = useState();
@@ -35,7 +32,7 @@ const FeedPage = () => {
 
             let loggedInComments = commentsArray[i] 
             
-            const {comment_id, text_content, created_at, status, likes, user_id, username, nickname, profile_pic_url} = loggedInComments;                
+            const {comment_id, text_content, created_at, status, likes, username, nickname, profile_pic_url} = loggedInComments;                
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
 
@@ -88,6 +85,7 @@ const FeedPage = () => {
         
         setInitFeed()
 
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
     }, [])
 
     const seeMorePosts = async () => {
@@ -142,7 +140,7 @@ const FeedPage = () => {
         setUserFeed(feedArray?.slice(0,lastFeedShown))
         setPostlistLoading(false)
 
-
+    // eslint-disable-next-line  react-hooks/exhaustive-deps
     }, [feedArray])
 
     return(

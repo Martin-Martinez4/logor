@@ -1,6 +1,5 @@
 
 import React, { FC, useEffect, useState, useContext } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getImageString } from "../utils/exportGetImage";
 import Card from "../Card/Card";
@@ -54,11 +53,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }, [user_profile, postInformation])
 
-    // useEffect(() => {
-
-    //     treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
-
-    // }, [postInformation.status, postInformation.text_content])
 
 
 
@@ -78,7 +72,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     const [dropDownLoading, setDropDownLoading] = useState()
     const [cancelButtonPress, setCancelButtonPress] = useState()
-    const [editButtonPress, setEditButtonPress] = useState()
 
     const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
 

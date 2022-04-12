@@ -165,8 +165,6 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
             const followersCount =  await getFollowersCount(userOrTagID)
             const followingCount =  await getFollowingCount(userOrTagID)
 
-            // console.log("followers: ", followersCount, " Following: ", followingCount)
-
             setVisiteeUser((prev) => 
                     ({...prev, 
                   followers: followersCount,
@@ -203,7 +201,6 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                     <p className="profile_description">{ visiteeUser.description }</p>
 
                     <div className="profile_other">
-                        {/* <p><img src={LocationIcon} alt="profile" className="profile_icon location_icon"></img> <em>{loggedInUser["location"]}</em></p> */}
 
 
                         {visiteeUser.location === ""
@@ -222,12 +219,8 @@ const VisitorProfileHeader:FC = ({ userOrTagID }) =>{
                     </div>
 
                     <div className="profile_other profile_following">
-                        {/* <p><a href="">Followers: </a><em>{visiteeUser.followers}</em></p> <p><a href="">Followers: </a><em>{visiteeUser.following}</em></p>
-                        <div> 
-                            <button type="button" className="button primary" title="Follow Status">Follow</button>
-                            <button type="button" className="button red" title="Follow Status">Unfollow</button>
-                        </div> */}
-                        <Follow visiteeUser={visiteeUser} />
+                        
+                        <Follow visiteeUser={visiteeUser}  buttonClasses={"profileName__button"} />
                     </div>
 
 

@@ -193,7 +193,7 @@ export const HeartIcon2 = ({ comment_id }) => {
 
     return (
         <div className='flexRowContainer2 fitContent'>
-            <LoaderHOC loading={likeIsLoading}>
+            <LoaderHOC loading={likeIsLoading} loader={2}>
 
             <svg onClick={handleAnimateClick} className={animateClass?"pointer svgHeart":"pointer"} width="28" height="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_d_237_118)">

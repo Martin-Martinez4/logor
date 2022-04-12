@@ -7,12 +7,6 @@ import SideCard from "../SideCards/SideCard";
 import PostList from "../PostList/PostList";
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
 
-import HomeIcon from "../svg/HomeIcon/HomeIcon";
-import ProfileIcon from "../../assets/ProfileIcon.svg";
-import Signout from "../svg/Signout/Signout"
-import GearIcon from "../../assets/GearIcon.svg";
-import PoundSign from "../../assets/PoundSign.svg";
-import HeartIcon from "../../assets/HeartIcon.svg";
 
 import LeftsideCard from "../LeftsideCard/LeftsideCard";
 
@@ -39,13 +33,6 @@ const ContentArea:FC = () => {
         
     }, [])
     
-    useEffect(() => {
-
-        miniprofilesArray = createMiniProfiles(suggestedProfiles);
-
-
-    }, [suggestedProfiles])
-
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
 

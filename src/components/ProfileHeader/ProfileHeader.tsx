@@ -71,10 +71,8 @@ const ProfileHeader:FC = () =>{
                 </div>
 
                 <div className="profile_other profile_following">
-                    {/* <p>Followers: <em>{loggedInUser.followers}</em></p> 
-                    <p>Following: <em>{loggedInUser.following}</em></p> */}
+                  
                     <Follow visiteeUser={loggedInUser} buttonClasses={"hidden"} ></Follow>
-                    {/* <FollowersPage user_id={loggedInUser["id"]} /> */}
                 </div>
 
             </div>

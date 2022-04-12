@@ -1,7 +1,7 @@
 
 export const validateUsername = (username:string) => {
 
-    const patternUsername = /^[a-zA-Z]{2}[\-._a-zA-Z0-9]{2,38}$/;
+    const patternUsername = /^[a-zA-Z]{2}[-._a-zA-Z0-9]{2,38}$/;
 
     return patternUsername.test(username);
 

@@ -25,9 +25,7 @@ const Register:FC = () => {
     // const Monkey1 = "../../users/default/Monkey_1.svg";
 
     const usernameErrorMessage = "Username must be at least 4 cahracters long and only contain letters numbers and -._"
-    const usernameAvailabe = "Username has been taken"
     const nicknameErrorMessage = "Nickname must be at least 4 cahracters long and only contain letters numbers and -._"
-    const nicknameAvailable = "Nickname has been taken"
     const passwordErrorMessage = "Password be at least 8 characters and must include at least one: lowercase letter, uppercase letter,number, and special character(@#$%^&+=)"
     const password2ErrorMessafe = "Passwords must match"
     const emailErrorMessage = "Please input a valid email address"
@@ -185,7 +183,7 @@ const Register:FC = () => {
       
         if(password === password2){
 
-            const testid = await fetch('http://localhost:3001/register', {
+            await fetch('http://localhost:3001/register', {
     
                 method: "post",
                 headers: { "Content-Type": "application/json"},

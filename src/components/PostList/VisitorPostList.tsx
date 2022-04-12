@@ -1,7 +1,7 @@
 
 import { FC, useContext, useState, useEffect } from "react";
 
-import { Location, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
 import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
@@ -93,11 +93,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
 
     }, [loggedInUser])
 
- 
-     const {username, nickname, id, profile_pic_url}: {username:string; nickname:string; id:string; profile_pic_url:string } = loggedInUser;
- 
- 
- 
+
      // Get user comments
      const createPosts = (commentsArray) => {
          
@@ -109,7 +105,7 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
              let loggedInComments = commentsArray[i]
              
              
-             const {username, comment_id, text_content, created_at, status, likes, nickname, profile_pic_url} = loggedInComments
+             const {username, comment_id, text_content, created_at, status, nickname, profile_pic_url} = loggedInComments
 
                  
                  
@@ -218,7 +214,8 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
         
         setVisitorPosts()
         return () => { isMounted = false };
- 
+    
+        // eslint-disable-next-line react-hooks/exhaustive-deps
      }, [userOrTagID])
 
      useEffect(() => {
@@ -226,11 +223,10 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
     
         // setUserPosts(postsArray?.slice(0,lastPostShown))
 
-        console.log("postsArray: ",postsArray)
         setUserPosts(postsArray?.slice(0,lastPostShown))
 
 
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postsArray])
 
      const [ suggestedProfiles, setSuggestedProfiles ] = useState();
@@ -318,16 +314,6 @@ const VisitorPostList: FC = ({ userOrTagID }) => {
          
      }, [])
      
-     useEffect(() => {
-         
-         // create the miniProfile  element list here
- 
-         miniprofilesArray = createMiniProfiles(suggestedProfiles);
- 
- 
- 
- 
-     }, [suggestedProfiles])
 
      useEffect(() => {
 

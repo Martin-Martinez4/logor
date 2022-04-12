@@ -1,12 +1,7 @@
 
-import SideCard from "../SideCards/SideCard";
-
 import HomeIcon from "../svg/HomeIcon/HomeIcon";
 import ProfileIcon from "../svg/ProfileIcon/ProfileIcon"
-import GearIcon from "../../assets/GearIcon.svg";
 import Signout from "../svg/Signout/Signout";
-import PoundSign from "../../assets/PoundSign.svg";
-import HeartIcon from "../../assets/HeartIcon.svg";
 
 const LeftsideCard  = () =>  {
 

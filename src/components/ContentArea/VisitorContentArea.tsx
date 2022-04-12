@@ -31,14 +31,6 @@ const VisitorContentArea:FC = ({ userOrTagID }) => {
         
         
     }, [])
-    
-    useEffect(() => {
-        
-
-        miniprofilesArray = createMiniProfiles(suggestedProfiles);
-
-
-    }, [suggestedProfiles])
 
 
     miniprofilesArray = createMiniProfiles(suggestedProfiles);
