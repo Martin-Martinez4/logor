@@ -14,6 +14,7 @@ import EditProfile from './components/EditProfile/EditProfile';
 // import { UserInfoContext } from './components/context/userContext';
 import Home from './components/Pages/Home';
 import Landingpage from './components/Pages/Landingpage';
+import ThreadView from './components/ThreadView/ThreadView';
 import Register from './components/Register/Register';
 import SuccessPage from './components/SuccessPage/SuccessPage';
 import VisitorPage from './components/VisitorPage/VisitorPage';
@@ -58,7 +59,7 @@ function App() {
       
                     
           
-            
+            <Route path="/thread/:comment_id" element={<ThreadView></ThreadView>}></Route>
             <Route path="/users/:id" element={
               <ErrorBoundary>
 

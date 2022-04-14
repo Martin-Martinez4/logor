@@ -15,7 +15,7 @@ import UserInfoContext from "../context/UserInfoProvider";
 
 
 
-const PostBox:FC = ({ createPosts, setPostsArray }) => {
+const PostBox:FC = ({ createPosts, setPostsArray, parent_id}) => {
 
     const { loggedInUser } = useContext( UserInfoContext);
 
@@ -27,8 +27,6 @@ const PostBox:FC = ({ createPosts, setPostsArray }) => {
     const maxChars = 920;
 
     const { toggleModal } = useSigninModal();
-
-    // const { showModal, toggleModal } = useModal();
     
     const [ newPost, setNewPost ] = useState({
 
@@ -98,7 +96,9 @@ const PostBox:FC = ({ createPosts, setPostsArray }) => {
             body: JSON.stringify({
                 user_id: id,
                 text_content: newPost.commentBox,
-                newComment_id: comment_id
+                newComment_id: comment_id,
+                parent_id: parent_id,
+
             })
         })
         .then((comment) => {
@@ -131,9 +131,8 @@ const PostBox:FC = ({ createPosts, setPostsArray }) => {
         setButtonLoading(false)
 
         
-
-
     }
+
 
     const handleCancelCommentBox = () => {
 
@@ -162,7 +161,7 @@ const PostBox:FC = ({ createPosts, setPostsArray }) => {
                     <LoaderHOC  loading={buttonLoading}>
 
                         <button className="button primary" onClick={() => addPostToList()}>Submit</button>
-                    <button className="button red" onClick={() => handleCancelCommentBox()}>Cancel</button>
+                        <button className="button red" onClick={() => handleCancelCommentBox()}>Cancel</button>
                     </LoaderHOC>
 
                 </div>

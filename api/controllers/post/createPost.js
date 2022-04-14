@@ -9,36 +9,57 @@ export const handleCreatePost = (req, res, db) => {
 
         // console.log("create_id: ", req.user_id)
 
-        const {text_content, newComment_id} = req.body;
+        const {text_content, newComment_id, parent_id} = req.body;
 
-        // console.log(user_id)
+        console.log(newComment_id)
+        console.log("parent_id: ",parent_id)
 
         const created_at = new Date((new Date().getTime())).toUTCString();
         const status = ['', ''];
         const likes = 0;
 
-        db.insert({
-            comment_id: `${newComment_id}`,
-            text_content: text_content,
-            created_at: created_at,
-            status: status,
-            likes: likes,
-            user_id: user_id
+        db.transaction(trx => {
 
-        })
-        .into('comments')
-        .then(() => {
-
-            db.select('*').from('comments')
-            .join("users", "comments.user_id", "users.id")
-                .where('comments.user_id', '=', user_id).orderBy('created_at', 'desc')
-                .then((comments) => {
-                    
-                    res.json(comments)
+            trx.insert({
+                comment_id: `${newComment_id}`,
+                text_content: text_content,
+                created_at: created_at,
+                status: status,
+                likes: likes,
+                user_id: user_id
+    
+            })
+            .into('comments')
+            .then(() => {
+    
+               return trx.insert({
+    
+                    parent_id: parent_id,
+                    comment_id: `${newComment_id}`
                 })
-                .catch((err) => console.log(err))
+                .into('responses')
+                .then(() => {
+    
+                    return trx.select('*').from('comments')
+                    .join("users", "comments.user_id", "users.id")
+                        .where('comments.user_id', '=', user_id).orderBy('created_at', 'desc')
+                        .then((comments) => {
+                            
+                            res.json(comments)
+                        })
+                        .catch((err) => console.log(err))
+    
+                })
+                .catch((err) => {
+
+                    res.json("error")
+                })
+    
+            })
+            .then(trx.commit)
+            .catch(trx.rollback)
         })
-        .catch(err => console.log(err));
+
 
 
 

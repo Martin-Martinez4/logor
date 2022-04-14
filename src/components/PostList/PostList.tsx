@@ -57,7 +57,7 @@ const PostList: FC = () => {
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
 
-                posts.push( <Post key={`post_${comment_id}`} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} createPosts={createPosts} posts={posts} status={ status} likes={likes} /> );
+                posts.push( <Post key={`post_${comment_id}`} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userPosts} setUserPosts={setUserPosts} loggedInComments={commentsArray} status={ status} likes={likes} /> );
 
                 
             }
@@ -233,7 +233,8 @@ const PostList: FC = () => {
                 
                 <SigninModalHOC>
 
-                    <CommentBox userPosts={userPosts} setUserPosts={setUserPosts} posts={posts} createPosts={createPosts} setPostsArray={setPostsArray} ></CommentBox>
+                    <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} parent_id={null} ></CommentBox>
+                    {/* <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} parent_id={null} ></CommentBox> */}
                 </SigninModalHOC>
          
                     

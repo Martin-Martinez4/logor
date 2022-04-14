@@ -17,6 +17,7 @@ import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
+import ResponsesIcon from "../svg/ResponsesIcon/ResponsesIcon";
 import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 import useSigninModal from "../hooks/useModal";
 import UserInfoContext from "../context/UserInfoProvider";
@@ -395,7 +396,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                             }
                     </div>
 
-                    <span className={`dropdown ${deleteConfirmationVisible?"visible":"invisible"}`} >
+                    <span className={`${deleteConfirmationVisible?"visible":"invisible"}`} >
                         <p>Are you sure you want to delete this post</p>
                         <div>
                             <button className="button red" onClick={toggleDeleteConfirmationVisible} ref={cancelButton}>No</button>
@@ -411,8 +412,8 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                             <React.Fragment>
                                <div className="post__icons">
                                 <HeartIcon comment_id={uuid} loggedInId={loggedInUser.id}></HeartIcon>
-                                <CheckmarkIcon></CheckmarkIcon>
-                                <ShareIcon2></ShareIcon2>
+                                <CheckmarkIcon ></CheckmarkIcon>
+                                <ResponsesIcon comment_id={uuid}></ResponsesIcon>
                                 {/* <ShareIcon2></ShareIcon2> */}
                             </div>
                             <div className="post__lastEdited">

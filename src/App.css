@@ -12,6 +12,10 @@
   --UIGrey1: rgba(0, 34, 51, .50);
   --UIGrey2: rgba(0, 34, 51, .25);
   --UIGrey3: rgba(0, 34, 51, 0.1);
+  --UIGray: rgba(0, 34, 51, .75);
+  --UIGray1: rgba(0, 34, 51, .50);
+  --UIGray2: rgba(0, 34, 51, .25);
+  --UIGray3: rgba(0, 34, 51, 0.1);
 
   /* White */
   --UIWhite:  rgba(255,255,255,1);

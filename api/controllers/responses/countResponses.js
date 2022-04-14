@@ -1,12 +1,14 @@
 
 export const handleCountResponses = (req, res, db) => {
 
-    const { comment_id } = req.params;
+    const { parent_id } = req.params;
 
     db("responses")
     .count("*")
-    .where("comment_id", "=", `${comment_id}`)
+    .where("parent_id", "=", `${parent_id}`)
     .then(count => {
+
+        // console.log(count)
 
         res.json(count[0]["count"])
     })

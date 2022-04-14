@@ -196,6 +196,8 @@ export const HeartIcon2 = ({ comment_id }) => {
             <LoaderHOC loading={likeIsLoading} loader={2}>
 
             <svg onClick={handleAnimateClick} className={animateClass?"pointer svgHeart":"pointer"} width="28" height="24" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <title>{animateClass?"Unlike":"Like"}</title>
+
                 <g filter="url(#filter0_d_237_118)">
                     <path d="M24 3.56303C24 8.46927 18.2849 16 13.8667 16C9.44839 16 4 8.46927 4 3.56302C4 -1.34322 10.6667 -1.02955 13.8667 3.56305C17.3333 -0.582605 24 -1.34322 24 3.56303Z" fill="white"/>
 

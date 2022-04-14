@@ -52,11 +52,13 @@ CREATE TABLE mentions(
 
 CREATE TABLE responses(
 
-    parent_id UUID,
+    parent_id UUID DEFAULT NULL,
+    FOREIGN KEY(parent_id) REFERENCES comments(comment_id),
 
     comment_id UUID NOT NULL,
+    FOREIGN KEY(comment_id) REFERENCES comments(comment_id)
 
-    PRIMARY KEY (parent_id, comment_id)
+    -- PRIMARY KEY (parent_id, comment_id)
 );
 
 CREATE TABLE images(

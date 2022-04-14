@@ -20,6 +20,7 @@ import UserInfoContext from "../context/UserInfoProvider";
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
+import ResponsesIcon from "../svg/ResponsesIcon/ResponsesIcon";
 
 const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
 
@@ -179,7 +180,8 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
                                 <div className="post__icons">
                                     <HeartIcon comment_id={uuid} loggedInUserId={loggedInUser.id}></HeartIcon>
                                     <CheckmarkIcon></CheckmarkIcon>
-                                    <ShareIcon2></ShareIcon2>
+                                    <ResponsesIcon comment_id={uuid} ></ResponsesIcon>
+                                    {/* <ShareIcon2></ShareIcon2> */}
                                     {/* <ShareIcon2></ShareIcon2> */}
                                 </div>
                                 <div className="post__lastEdited">

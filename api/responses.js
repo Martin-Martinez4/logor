@@ -1,5 +1,7 @@
 
 import { handleAddResponse } from './controllers/responses/addResponse.js';
+import { handleCountResponses } from './controllers/responses/countResponses.js';
+import { handleGetResponses } from './controllers/responses/getResponses.js';
 
 import { authenticateToken } from './middleware/authorization.js';
 
@@ -30,9 +32,15 @@ router.post("/responses/create/", (req, res) => {
   
 })
   
-router.get("/responses/count/:comment_id", (req, res) => {
+router.get("/responses/count/:parent_id", (req, res) => {
   
     handleCountResponses(req, res, db)
+  
+})
+
+router.get("/responses/:parent_id", (req, res) => {
+
+  handleGetResponses(req, res, db)
   
 })
 

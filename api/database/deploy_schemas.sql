@@ -17,6 +17,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 \i './database/seed/comments.sql'
 \i './database/seed/tag_comment.sql'
 \i './database/seed/updateComment.sql'
+\i './database/seed/responses.sql'
 -- \i '/docker-entrypoint-initdb.d/seed/seed.sql'
 -- For testing purposes only. This file will add dummy data
 
