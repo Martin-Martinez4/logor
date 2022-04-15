@@ -15,6 +15,8 @@ import useAuth from "../hooks/useAuth";
 import SigininModal from "../SigninModal/SigninModal";
 import { refreshTokenBool } from "../utils/tokenRefreshedBool";
 
+import CommnetBox from "../CommentBox/CommentBox";
+
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
 import ResponsesIcon from "../svg/ResponsesIcon/ResponsesIcon";
@@ -34,8 +36,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
     // const { showModal, toggleModal } = useModal();
     const { showModal, toggleModal } = useSigninModal();
 
-  
-
+    const [replyMode, setReplyMode] = useState();
     
     // const [loggedInUser, setloggedInUser] = useContext(UserInfoContext);
     const { loggedInUser } = useContext( UserInfoContext);
@@ -299,6 +300,12 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }
 
+    const toggleReplyMode = () => {
+
+        setReplyMode(!replyMode)
+
+    }
+
     let treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
 
  
@@ -394,6 +401,17 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                                 {treatedText}
                             </p>
                             }
+
+{
+                                replyMode
+                                ?
+                                <p className="post_body_text">
+
+                                    <CommnetBox parent_id={uuid} toggleFunction={() => toggleReplyMode()}></CommnetBox>
+                                </p> 
+                                :
+                                ""
+                            }
                     </div>
 
                     <span className={`${deleteConfirmationVisible?"visible":"invisible"}`} >
@@ -430,9 +448,11 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                     <div className="dot"></div>
                     <div className="dot"></div>
                     <span className={`dropdown ${dropdownVisible?"visible":"invisible"}`} ref={dropdownContainer}>
-                        <p>Embed</p>
+                    
                         <p onClick={toggleEditMode}>Edit</p>
                         <p onClick={toggleDeleteConfirmationVisible}>Delete</p>
+                        <p onClick={() => toggleReplyMode()}>Reply</p>
+
                     </span>
                 </span> 
                 </>

@@ -11,6 +11,7 @@ import CommentBox from "../CommentBox/CommentBox";
 import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
 
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
+import { getHomePosts } from "../utils/fetchPostsPromise";
 
 import SigninModalHOC from "../SigninModal/SigninModalHOC";
 import UserInfoContext from "../context/UserInfoProvider";
@@ -233,7 +234,7 @@ const PostList: FC = () => {
                 
                 <SigninModalHOC>
 
-                    <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} parent_id={null} ></CommentBox>
+                    <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} postListFetchFunction={() => getHomePosts()} parent_id={null} ></CommentBox>
                     {/* <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} parent_id={null} ></CommentBox> */}
                 </SigninModalHOC>
          

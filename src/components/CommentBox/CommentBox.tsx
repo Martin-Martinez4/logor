@@ -15,7 +15,7 @@ import UserInfoContext from "../context/UserInfoProvider";
 
 
 
-const PostBox:FC = ({ createPosts, setPostsArray, parent_id}) => {
+const PostBox:FC = ({ createPosts, setPostsArray, postListFetchFunction, parent_id, toggleFunction}) => {
 
     const { loggedInUser } = useContext( UserInfoContext);
 
@@ -106,18 +106,37 @@ const PostBox:FC = ({ createPosts, setPostsArray, parent_id}) => {
             return comment.json()
             
         })
-        .then(com => {
-                
-                tagsMentionsCreate(comment_id, newPost["commentBox"])
+        .then(() => {
+            
+
+            // setPostsArray(createPosts(com))
+            
+            tagsMentionsCreate(comment_id, newPost["commentBox"])
+
+            clearInput("commentBox", setNewPost);
+            
+            setCharsLeft(maxChars);
+
+            setButtonLoading(false);
+
+            if(postListFetchFunction){
+
+                return postListFetchFunction()
+                .then((com) => {
+                    setPostsArray(createPosts(com))
+                })
+                .catch((err) => {
+                    console.error(err);
     
-                setPostsArray(createPosts(com))
-                clearInput("commentBox", setNewPost);
-        
-                setCharsLeft(maxChars);
+                })
+            }
 
-                setButtonLoading(false);
+            if(toggleFunction){
 
-            })
+                toggleFunction()
+            }
+
+        })
         .catch((error) => {
 
             setButtonLoading(false)
@@ -140,6 +159,11 @@ const PostBox:FC = ({ createPosts, setPostsArray, parent_id}) => {
 
         clearInput("commentBox", setNewPost);
         setCharsLeft(maxChars);
+
+        if(toggleFunction){
+
+            toggleFunction()
+        }
 
         setButtonLoading(false)
 

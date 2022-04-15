@@ -1,12 +1,14 @@
 
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { getResponsesPosts } from "../utils/fetchPostsPromise";
+
 import UserInfoContext from "../context/UserInfoProvider";
-import SideCard from "../SideCards/SideCard";
+import TopBar from "../TopandBottom/TopBar";
 import Card from "../Card/Card";
+import SideCard from "../SideCards/SideCard";
 import CommnetBox from "../CommentBox/CommentBox";
 import Scroll from "../Scroll/Scroll";
-import TopBar from "../TopandBottom/TopBar";
 import { getRandomUserIDs } from "../utils/fetchRandomUserIDs";
 import { createMiniProfiles } from "../utils/createMiniprofilesArray";
 
@@ -132,7 +134,7 @@ const ThreadView = () => {
 
         getPostInformation(comment_id)
 
-    }, [])
+    }, [comment_id])
 
 
 
@@ -178,7 +180,7 @@ const ThreadView = () => {
             <Scroll>
 
             <Card classes="h_auto content profile_header">
-            <CommnetBox createPosts={createPosts} setPostsArray={setResponsesArray} parent_id={comment_id}></CommnetBox>
+            <CommnetBox createPosts={createPosts} setPostsArray={setResponsesArray} postListFetchFunction={() => getResponsesPosts(comment_id)} parent_id={comment_id}></CommnetBox>
                 </Card>
                     
                 <Card classes="content med_suggestion">

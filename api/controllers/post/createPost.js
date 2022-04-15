@@ -39,15 +39,17 @@ export const handleCreatePost = (req, res, db) => {
                 })
                 .into('responses')
                 .then(() => {
+
+                    res.json("done")
     
-                    return trx.select('*').from('comments')
-                    .join("users", "comments.user_id", "users.id")
-                        .where('comments.user_id', '=', user_id).orderBy('created_at', 'desc')
-                        .then((comments) => {
+                    // return trx.select('*').from('comments')
+                    // .join("users", "comments.user_id", "users.id")
+                    //     .where('comments.user_id', '=', user_id).orderBy('created_at', 'desc')
+                    //     .then((comments) => {
                             
-                            res.json(comments)
-                        })
-                        .catch((err) => console.log(err))
+                    //         res.json(comments)
+                    //     })
+                    //     .catch((err) => console.log(err))
     
                 })
                 .catch((err) => {
