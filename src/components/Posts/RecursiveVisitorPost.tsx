@@ -23,7 +23,15 @@ import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
 import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 import ResponsesIcon from "../svg/ResponsesIcon/ResponsesIcon";
 
-const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status }) => {
+const RecursiveVisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_content, status, allComments, padding }) => {
+
+    console.log({allComments}) 
+
+    let childComments = () => allComments? allComments.filter(c => c.parent_id === uuid) : [];
+
+    const [childReplies, setChildReplies] = useState();
+
+    const [seeMore, setSeeMore] = useState(true);
 
     const { showModal, toggleModal } = useModal();
 
@@ -108,13 +116,27 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
 
     }, [dropdownVisible, deleteConfirmationVisible, editMode, status,  cancelButton, dropdownContainer]);
 
+    useEffect(() => {
+        setChildReplies(
+
+            childComments().map(c => (
+                            
+            
+                <RecursiveVisitorPost key={`post_${c.comment_id}`} uuid={c.comment_id} userName={c.username} nickname={c.nickname} date_posted = {c.created_at} user_profile={c.profile_pic_url} text_content={c.text_content === null? 0: c.text_content} status={c.status} likes={c.likes} allComments={allComments} padding={padding <= 1? padding +.1 : padding} />
+                
+                
+                ))
+        )
+
+    }, [])
+
 
     let treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
 
 
     return(
 
-        <>
+        <div className="flexColContainer2" style={{marginLeft:`${padding}rem`}}>
 
             <SigininModal
                 showModal={showModal}
@@ -131,7 +153,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
         :
 
     
-        <Card classes="content post">
+        <Card classes="content post"> 
 
             {
                 status[0] === "Deleted"
@@ -141,9 +163,13 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
                 </> 
             :
                 <>
+                    <div></div>
+
                     <div className="post user_image">
                         <img src={`${serverAddressString}${user_profile}`} alt="profile" className="post_user_image "></img>
                     
+                        <div></div>
+                        {/* <div style="width: 3px;flex-basis: 100px;background: var(--UIBlack);margin-top: .2rem;"></div> */}
                     </div>
                     <div className="post user_content">
                         <div className="post user_info">
@@ -222,14 +248,33 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
                         </span>
                     </span> 
                 </>
+
      }
         </Card>
     }
-        </>
+    {
+        seeMore?
+                <>
+
+
+                {
+                    // childComments().map(c => (
+                        
+                    //     <>
+                    //     <RecursiveVisitorPost key={`post_${c.comment_id}`} uuid={c.comment_id} userName={c.username} nickname={c.nickname} date_posted = {c.created_at} user_profile={c.profile_pic_url} text_content={c.text_content === null? 0: c.text_content} status={c.status} likes={c.likes} allComments={allComments} padding={padding <= 1? padding +.2 : padding} />
+                    //     </>
+                        
+                    //     ))
+                    [childReplies]
+                    }
+                </>
+            :<p>see more</p>
+    }
+        </div>
     );
 }
 
 
-export default VisitorPost;
+export default RecursiveVisitorPost;
 
 

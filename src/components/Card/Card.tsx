@@ -6,11 +6,11 @@ type Props = PropsWithChildren<{
     classes: string
   }>
 
-const Card:FC <Props> = ({ children, classes="" }) => {
+const Card:FC <Props> = ({ children, classes="", cardStyle }) => {
 
     return (
 
-        <div className={"card " + classes} >
+        <div className={"card " + classes} style={cardStyle}>
                 {children}
         </div>
     );

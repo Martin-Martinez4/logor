@@ -2,6 +2,7 @@
 import { handleAddResponse } from './controllers/responses/addResponse.js';
 import { handleCountResponses } from './controllers/responses/countResponses.js';
 import { handleGetResponses } from './controllers/responses/getResponses.js';
+import { handleGetResponsesRecusive } from './controllers/responses/recusiveReponses.js';
 
 import { authenticateToken } from './middleware/authorization.js';
 
@@ -42,6 +43,12 @@ router.get("/responses/:parent_id", (req, res) => {
 
   handleGetResponses(req, res, db)
   
+})
+
+router.get("/responses/recursive/:parent_id", (req, res) => {
+
+  handleGetResponsesRecusive(req, res, db)
+
 })
 
 export default router;

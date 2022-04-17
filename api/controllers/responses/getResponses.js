@@ -1,7 +1,7 @@
 
 export const handleGetResponses = (req, res, db) => {
 
-    const{ parent_id}  = req.params;
+    const{ parent_id }  = req.params;
 
     db.select("*")
     .from("responses")

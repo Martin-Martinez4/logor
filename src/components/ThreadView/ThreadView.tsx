@@ -15,6 +15,8 @@ import { createMiniProfiles } from "../utils/createMiniprofilesArray";
 import LeftsideCard from "../LeftsideCard/LeftsideCard";
 
 import VisitorPost from "../Posts/VisitorPost";
+import RecursiveVisitorPost from "../Posts/RecursiveVisitorPost";
+
 const ThreadView = () => {
 
     const { comment_id } = useParams();
@@ -31,13 +33,15 @@ const ThreadView = () => {
     const [ postlistLoading, setPostlistLoading ] = useState();
 
     const [seeMoreLoading, setSeeMoreLoading] = useState();
+
+    const [allComments, setAllComments] = useState();
     
     
     // eslint-disable-next-line
     const { loggedInUser } = useContext( UserInfoContext);
 
     // Get user comments
-    const createPosts = (commentsArray) => {
+    const createPosts = (commentsArray, allComments) => {
         
         let posts = []
 
@@ -49,7 +53,7 @@ const ThreadView = () => {
                 
             if(loggedInComments.hasOwnProperty("comment_id")){
 
-                posts.push( <VisitorPost key={`post_${comment_id}`} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userResponses} setUserPosts={setUserResponses} loggedInComments={responsesArray} status={status} likes={likes} /> );
+                posts.push( <RecursiveVisitorPost key={`post_${comment_id}`} uuid={comment_id} userName={username} nickname={nickname} date_posted = {created_at} user_profile={profile_pic_url} text_content={text_content === null? 0: text_content} userPosts={userResponses} setUserPosts={setUserResponses} loggedInComments={responsesArray} status={status} likes={likes} allComments={allComments} padding={0}/> );
 
                 
             }
@@ -62,43 +66,71 @@ const ThreadView = () => {
 
     useEffect(() => {
 
+        const makePostlist = async (allComments) => {
+
+            await fetch(`http://localhost:3001/responses/${comment_id}`, {
+                        method: "get",
+                        credentials:'include',
+                            cache:'no-cache',
+                            headers: {
+                                
+                                'Content-Type': 'application/json',
+                              },
+                    }).then(response => response.json())
+                    .then(comments => {
+                        
+        
+                        setResponsesArray(createPosts(comments, allComments))
+    
+        
+                        let start = 0;
+                        let howMany = 10;
+        
+                        let extractedArr = responsesArray?.filter((item, index)=>{
+                            return index >= start && index < howMany + start ;
+                        })
+    
+        
+                        setUserResponses(extractedArr)
+                        setLastResponseShown(10)
+        
+                        setPostlistLoading(false)
+                    })
+                   
+                
+        }
+
         const setInitPosts = async() => {
 
-            setPostlistLoading(true)
-    
-            await fetch(`http://localhost:3001/responses/${comment_id}`, {
+                setPostlistLoading(true)
+
+                await fetch(`http://localhost:3001/responses/recursive/${comment_id}`, {
                     method: "get",
                     credentials:'include',
                         cache:'no-cache',
                         headers: {
                             
                             'Content-Type': 'application/json',
-                          },
+                        },
                 }).then(response => response.json())
-                .then(comments => {
-    
-                    setResponsesArray(createPosts(comments))
+                .then(async comments => {
 
-    
-                    let start = 0;
-                    let howMany = 10;
-    
-                    let extractedArr = responsesArray?.filter((item, index)=>{
-                        return index >= start && index < howMany + start ;
-                    })
+                    console.log({comments})
+                    
+                    setAllComments(comments)
 
-    
-                    setUserResponses(extractedArr)
-                    setLastResponseShown(10)
-    
-                    setPostlistLoading(false)
-                })
+                    return makePostlist(comments)
+            })
         }
+        
+
 
         setInitPosts()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loggedInUser.id, comment_id])
+
+ 
 
 
     useEffect(() => {

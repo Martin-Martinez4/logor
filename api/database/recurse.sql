@@ -40,16 +40,16 @@ WITH RECURSIVE ResponsesCTE AS (
 FROM
     ResponsesCTE;
 
-knex.withRecursive('ancestors', (qb) => {
-  qb.select('*')
-  .from('people')
-  .where('people.id', 1)
+knex.withRecursive('ResponsesCTE', (qb) => {
+  qb.select('parent_id', 'comment_id')
+  .from('responses')
+  .where('responses.parent_id', 1)
   .union((qb) => {
     qb.select('*')
-    .from('people')
-    .join('ancestors', 'ancestors.parentId', 'people.id')
+    .from('responses')
+    .join('ResponsesCTE', 'ResponsesCTE.comment_id', 'responses.parent_id')
   })
-}).select('*').from('ancestors')
+}).select('*').from('ResponsesCTE')
 
 
 
