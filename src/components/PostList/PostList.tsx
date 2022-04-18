@@ -235,7 +235,7 @@ const PostList: FC = () => {
                 <SigninModalHOC>
 
                     <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} postListFetchFunction={() => getHomePosts()} parent_id={null} ></CommentBox>
-                    {/* <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} parent_id={null} ></CommentBox> */}
+                    
                 </SigninModalHOC>
          
                     

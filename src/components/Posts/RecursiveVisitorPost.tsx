@@ -269,7 +269,7 @@ const RecursiveVisitorPost: FC = ({ uuid, userName, nickname, user_profile, date
                 </>
         :childReplies?.length === 0
         ? ""
-        :<p className="pointer" onClick={() => toggleSeeMore()}>see replies</p>
+        :<p className="posts-see_more" onClick={() => toggleSeeMore()}>See Replies &#8658;</p>
     }
         </div>
     );
