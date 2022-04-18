@@ -1,14 +1,12 @@
 
 import { jwtTokens } from "../utils/createTokens.js";
+import bcrypt from "bcrypt";
 
 
 export const handleSignin = (req, res, db) => {
 
     // get username and password from body request
     const {username, password} = req.body
-
-    // console.log(username)
-    // console.log(password)
 
     // Check if both username and password are present
     if(!username || !password){
@@ -19,10 +17,6 @@ export const handleSignin = (req, res, db) => {
     db.select('username', 'password').from('login')
         .where('username', '=', username)
         .then((data) => {
-
-            // console.log(data);
-
-            // console.log(data[0].password === password)
 
             if(data[0].password === password){
 
@@ -50,8 +44,6 @@ export const handleSignin2 = (req, res, db) => {
     // get username and password from body request
     const {username, password} = req.body
 
-    // console.log(username)
-    // console.log(password)
 
     // Check if both username and password are present
     if(!username || !password){
@@ -59,15 +51,17 @@ export const handleSignin2 = (req, res, db) => {
         return res.status(400).json("Incorrect form submission");
     }
 
+    
     db.select('username', 'password').from('login')
-        .where('username', '=', username)
-        .then((data) => {
+    .where('username', '=', username)
+    .then((data) => {
+        
+        bcrypt.compare(password, data[0].password).then((result) => {
 
-            // console.log(data);
-
-            // console.log(data[0].password === password)
-
-            if(data[0].password === password){
+            console.log(result)
+    
+            if(result){
+            // if(data[0].password === password){
 
                 db.select('id').from('users')
                 .where('users.username', '=', data[0].username)
@@ -82,8 +76,6 @@ export const handleSignin2 = (req, res, db) => {
 
                     tokens.user_id = user[0].id
 
-                    // console.log("tokens: ", tokens)
-
                     res.json(tokens);
                 })
                     .catch((err) => console.log(err))
@@ -92,6 +84,7 @@ export const handleSignin2 = (req, res, db) => {
 
                 res.status(400).json("Trouble loggining in")
             }
+        })
         })
         .catch(() => res.status(400).json("Trouble loggining in"))
 

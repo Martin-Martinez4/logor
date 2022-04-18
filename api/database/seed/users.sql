@@ -1,3 +1,4 @@
+
 BEGIN TRANSACTION;
  INSERT INTO users(id, username, nickname, profile_pic_url)
 VALUES 

@@ -25,7 +25,7 @@ CREATE TABLE user_headers(
 CREATE TABLE login(
 
     username VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(30) NOT NULL,
+    password VARCHAR(72) NOT NULL,
     user_id UUID,
     FOREIGN KEY(user_id) REFERENCES users(id)
 );

@@ -5,8 +5,6 @@
 import 'dotenv/config';
 // const signin = require('./controllers/signin');
 
-import jwt from "express-jwt";
-
 import path from "path";
 
 
@@ -37,7 +35,6 @@ import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/ge
 import { handleSignin, handleSignin2, removeToken } from './controllers/signin.js';
 import { handleRegister, handleNicknameExists, handleUsernameExists } from './controllers/register.js';
 
-import {  handleUploadImage } from "./controllers/images/uploadImage.js";
 import {  
   handleUpdateHeaderWithDefault, 
   handleUpdateProfileWithDefault, 
