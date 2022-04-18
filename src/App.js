@@ -35,7 +35,6 @@ function App() {
 
         <Route path="/refresh" element={<Refresh/>} />
 
-        {/* <Route path="/" element={<Landingpage loadUser={loadUser} />} /> */}
         <Route path="/" element={<Landingpage />} />
 
         {/* <Route path="/register" element={<Register loadUser={loadUser} />} /> */}

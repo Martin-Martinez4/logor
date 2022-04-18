@@ -211,7 +211,8 @@ const ThreadView = () => {
             <div className="postlist_horizontal" >
             <Scroll>
 
-            <div className=" hidden hiddenOnPortraitScreen914px">
+            {/* hidden hiddenOnPortraitScreen914px have to be in this order for the desired effect */}
+            <div className="hidden hiddenOnPortraitScreen914px">
                 {headerComment}
             </div>
 
