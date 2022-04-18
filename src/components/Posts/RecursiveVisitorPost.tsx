@@ -31,7 +31,7 @@ const RecursiveVisitorPost: FC = ({ uuid, userName, nickname, user_profile, date
 
     const [childReplies, setChildReplies] = useState();
 
-    const [seeMore, setSeeMore] = useState(true);
+    const [seeMore, setSeeMore] = useState(false);
 
     const { showModal, toggleModal } = useModal();
 
@@ -83,6 +83,11 @@ const RecursiveVisitorPost: FC = ({ uuid, userName, nickname, user_profile, date
         setReplyMode(!replyMode)
 
     }
+
+    const toggleSeeMore = () => {
+
+        setSeeMore(!seeMore)
+    }
  
     useEffect(() => {
 
@@ -122,7 +127,7 @@ const RecursiveVisitorPost: FC = ({ uuid, userName, nickname, user_profile, date
             childComments().map(c => (
                             
             
-                <RecursiveVisitorPost key={`post_${c.comment_id}`} uuid={c.comment_id} userName={c.username} nickname={c.nickname} date_posted = {c.created_at} user_profile={c.profile_pic_url} text_content={c.text_content === null? 0: c.text_content} status={c.status} likes={c.likes} allComments={allComments} padding={padding <= 1? padding +.1 : padding} />
+                <RecursiveVisitorPost key={`post_${c.comment_id}`} uuid={c.comment_id} userName={c.username} nickname={c.nickname} date_posted = {c.created_at} user_profile={c.profile_pic_url} text_content={c.text_content === null? 0: c.text_content} status={c.status} likes={c.likes} allComments={allComments} padding={padding <= .8? padding +.05 : 0} />
                 
                 
                 ))
@@ -252,23 +257,19 @@ const RecursiveVisitorPost: FC = ({ uuid, userName, nickname, user_profile, date
      }
         </Card>
     }
+
+    {console.log({text_content},childReplies?.length)}
     {
         seeMore?
                 <>
 
-
-                {
-                    // childComments().map(c => (
-                        
-                    //     <>
-                    //     <RecursiveVisitorPost key={`post_${c.comment_id}`} uuid={c.comment_id} userName={c.username} nickname={c.nickname} date_posted = {c.created_at} user_profile={c.profile_pic_url} text_content={c.text_content === null? 0: c.text_content} status={c.status} likes={c.likes} allComments={allComments} padding={padding <= 1? padding +.2 : padding} />
-                    //     </>
-                        
-                    //     ))
-                    [childReplies]
+                    {
+                        [childReplies]
                     }
                 </>
-            :<p>see more</p>
+        :childReplies?.length === 0
+        ? ""
+        :<p className="pointer" onClick={() => toggleSeeMore()}>see replies</p>
     }
         </div>
     );

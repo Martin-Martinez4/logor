@@ -204,12 +204,16 @@ const ThreadView = () => {
             </SideCard>
             <div>
 
-            <div>
+            <div className="hiddenOnLandscapeScreen914px">
                 {headerComment}
             </div>
             {/* <CommnetBox createPosts={createPosts} setPostsArray={setPostsArray} parent_id={comment_id}></CommnetBox> */}
             <div className="postlist_horizontal" >
             <Scroll>
+
+            <div className=" hidden hiddenOnPortraitScreen914px">
+                {headerComment}
+            </div>
 
             <Card classes="h_auto content profile_header">
             <CommnetBox createPosts={createPosts} setPostsArray={setResponsesArray} postListFetchFunction={() => getResponsesPosts(comment_id)} parent_id={comment_id}></CommnetBox>
