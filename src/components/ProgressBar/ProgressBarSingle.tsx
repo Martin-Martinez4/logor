@@ -46,7 +46,7 @@ const ProgressBarSingle: FC<BarProps> = ({ barHeight, barWidth1, barWidth2, numb
             {mQuery && !mQuery.matches ? (
                 <>
                     <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth1} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                    <div className="flexRowContainer single_bar" style={{width:barWidth1.toString() + "vw", height:barHeight.toString()+"vh"}}>
+                    <div className="flexRowContainer single_bar" style={{width:"auto".toString() + "vw", height:barHeight.toString()+"vh"}}>
                     <div className="bar" style={{width: currentProgress.toString() +"%"}}></div>
                     </div>
                 </>
@@ -55,7 +55,7 @@ const ProgressBarSingle: FC<BarProps> = ({ barHeight, barWidth1, barWidth2, numb
                     
                     <>
                         <ProgressBarLabeling barHeight={barHeight} barWidth={barWidth2} numberOfSteps={numberOfSteps} labelsArray={labelsArray} />
-                        <div className="flexRowContainer single_bar" style={{width:barWidth2.toString() + "vw", height:barHeight.toString()+"vh"}}>
+                        <div className="flexRowContainer single_bar" style={{width:"auto".toString() + "vw", height:barHeight.toString()+"vh"}}>
                         <div className="bar" style={{width: currentProgress.toString() +"%"}}></div>
                         </div>
                     </>
