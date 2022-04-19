@@ -54,7 +54,7 @@ export const handleRegister = (req, res ,db) => {
                     
                     .insert({
             
-                                description:description,
+                                decription:description,
                                 header_img_url: header_img_url,
                                 location: location,
                                 links: links,
@@ -81,7 +81,10 @@ export const handleRegister = (req, res ,db) => {
             .catch(trx.rollback)
                  
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log(err)
+            if (err) return res.sendStatus(400);
+        });
     });
 
 

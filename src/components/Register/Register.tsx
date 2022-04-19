@@ -31,6 +31,8 @@ const Register:FC = () => {
     const emailErrorMessage = "Please input a valid email address"
 
     const genericErrorMessage = "Please fix issues to continue"
+    const registerErrorMessage = "A problem occured when trying to register account"
+    const signinErrorMessage = "The account was created but a problem occured when trying to signin account to account. Redirecting to home page"
 
     const Monkey1 = `${serverAddressString}/profiles/Monkey_1.svg`;
     const Monkey2 = "../../users/default/Monkey_2.svg";
@@ -200,7 +202,10 @@ const Register:FC = () => {
                 })
     
             })
-            .then((response) => response.json())
+            .then((response) => {
+                if(!response.ok) throw response.status;
+                else return response.json();
+            })
             .then((user) => {
     
     
@@ -215,7 +220,23 @@ const Register:FC = () => {
                     console.log("error");
                 }
     
-            }).catch((err)=> console.log(err))
+            }).catch((err)=> {
+                
+
+                if(err === 400){
+
+                    setTopVaild(registerErrorMessage)
+
+                    setTimeout(() => {
+        
+                        setTopVaild()
+        
+                    }, 2000)
+                    
+                    
+                }
+                return       
+            })
 
             await fetch('http://localhost:3001/signin2', {
 
@@ -231,7 +252,10 @@ const Register:FC = () => {
                     password: password
                 })
             })
-            .then((response) => response.json())
+            .then((response) => {
+                if(!response.ok) throw response.status;
+                else return response.json();
+            })
             .then((user) => {
                 
                 if(user.access_token){
@@ -250,10 +274,51 @@ const Register:FC = () => {
                 }
                 else{
     
-                    console.log("login Error");
+                    console.log(topValid === undefined);
+
+
+
+                    if(topValid === undefined){
+
+                        setTopVaild(registerErrorMessage)
+    
+                        setTimeout(() => {
+            
+                            setTopVaild()
+            
+                        }, 2000)
+    
+                        navigateHome()
+    
+                        return
+                    }
+
+    
                 }
     
-            }).catch((err)=> console.log(err))
+            }).catch((err)=> {
+                console.log({topValid});
+
+                if(topValid === undefined){
+
+                    console.log({err})
+                    if(err === 400){
+
+                        setTopVaild(registerErrorMessage)
+
+                        setTimeout(() => {
+            
+                            setTopVaild()
+
+            
+                        }, 2000)
+
+
+                        return
+
+                    }
+                }
+            })
 
   
             if(typeof profile_pic_url === "string"){
@@ -754,6 +819,12 @@ const Register:FC = () => {
         ?
             
         <div className="flexColContainer">
+
+            {   
+                <>
+                    <br/><span className="form_warning">{topValid}</span>
+                </>
+            }
             <div className="progressBar registeration_progress">
                 
             <ProgressBarSingle barHeight={barHeight} barWidth1={barWidth1} barWidth2={barWidth2} numberOfSteps={numberOfSteps} currentStep={currentStep} labelsArray={labelsArray} />

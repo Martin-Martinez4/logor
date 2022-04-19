@@ -14,7 +14,7 @@ const LeftsideCard  = () =>  {
             </div>
             <div className="side_icon">
                 <ProfileIcon></ProfileIcon>
-                <span className="sidebar_text"><strong>Profile</strong></span>
+                {/* <span className="sidebar_text"><strong>Profile</strong></span> */}
             </div>
             {/* <div className="side_icon">
                 <img 

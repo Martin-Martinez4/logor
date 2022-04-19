@@ -78,15 +78,22 @@ export const handleSignin2 = (req, res, db) => {
 
                     res.json(tokens);
                 })
-                    .catch((err) => console.log(err))
+                .catch((err) => {
+                    console.log(err)
+                    if (err) return res.sendStatus(400);
+                })
             }
             else{
 
-                res.status(400).json("Trouble loggining in")
+                // res.status(400).json("Trouble loggining in")
+                return res.sendStatus(400);
             }
         })
         })
-        .catch(() => res.status(400).json("Trouble loggining in"))
+        .catch((err) => {
+            console.log(err)
+            if (err) return res.sendStatus(400);
+        })
 
 }
 
