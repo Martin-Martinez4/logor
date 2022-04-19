@@ -15,7 +15,6 @@ export const getFollowersCount = async (user_id) => {
     }) 
     .catch(err => {
 
-        console.log(err)
         return "NA"
 
     });
@@ -58,7 +57,6 @@ export const getFollowingCount = async (user_id) => {
     })
     .catch(err => {
 
-        console.log(err)
         return "NA"
 
     });
@@ -107,7 +105,6 @@ export const isAFollowerOfB = async (follower_id, followee_id) => {
         })
         .catch(err => {
 
-            console.log(err)
             return false
         });
 
@@ -138,7 +135,6 @@ export const loggedIsFollower = async (followee_id) => {
         })
         .catch(err => {
 
-            console.log(err)
             return false
         });
 
@@ -167,7 +163,6 @@ export const loggedIsFollowee = async (follower_id) => {
         })
         .catch(err => {
 
-            console.log(err)
             return false
         });
 

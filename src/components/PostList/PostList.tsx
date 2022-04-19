@@ -18,7 +18,9 @@ import UserInfoContext from "../context/UserInfoProvider";
 
 import LoaderHOC from "../LoaderHOC/LoaderHOC";
 
-import Loader1 from "../svg/Loader1/Loader1"
+import Loader1 from "../svg/Loader1/Loader1";
+import useSigninModal from "../hooks/useModal";
+
 
 import "./postlist.css"
 
@@ -28,9 +30,12 @@ const FeedPage = lazy(() => import("../FeedPage/FeedPage"));
 
 const PostList: FC = () => {
 
+    const { toggleModal } = useSigninModal();
+
+
     const [ postlistLoading, setPostlistLoading ] = useState();
 
-    const [ tabState, setTabState ] = useState("posts")
+    const [tabState, setTabState ] = useState("posts")
 
     const [seeMoreLoading, setSeeMoreLoading] = useState();
 
@@ -83,7 +88,10 @@ const PostList: FC = () => {
                             
                             'Content-Type': 'application/json',
                           },
-                }).then(response => response.json())
+                }).then(response => {
+                    if(!response.ok) throw response.status;
+                    else return response.json();
+                })
                 .then(comments => {
     
     
@@ -103,6 +111,14 @@ const PostList: FC = () => {
     
                     setPostlistLoading(false)
                 })
+                .catch(error => {
+                
+                    if(error === 403){
+    
+                        toggleModal()
+                    }
+    
+                })
         }
 
         setInitPosts()
@@ -111,8 +127,6 @@ const PostList: FC = () => {
     }, [loggedInUser.id])
 
     
-    let posts = userPosts
-
     const [ suggestedProfiles, setSuggestedProfiles ] = useState();
 
     let miniprofilesArray = [];
@@ -148,7 +162,10 @@ const PostList: FC = () => {
                     
                     'Content-Type': 'application/json',
                   },
-        }).then(response => response.json())
+        }).then(response => {
+            if(!response.ok) throw response.status;
+            else return response.json();
+        })
         .then(comments => {
 
             setPostsArray(createPosts(comments))
@@ -163,7 +180,6 @@ const PostList: FC = () => {
                 setLastPostShown(lastNewPostIndex)
         
                 setUserPosts(postsArray?.slice(0,lastNewPostIndex))
-
             
         }
             else{
@@ -172,6 +188,14 @@ const PostList: FC = () => {
                 
             }
             setPostlistLoading(false)
+        })
+        .catch(error => {
+                
+            if(error === 403){
+
+                toggleModal()
+            }
+
         })
 
         setSeeMoreLoading(false)
@@ -235,7 +259,7 @@ const PostList: FC = () => {
                 <SigninModalHOC>
 
                     <CommentBox createPosts={createPosts} setPostsArray={setPostsArray} postListFetchFunction={() => getHomePosts()} parent_id={null} ></CommentBox>
-                    
+
                 </SigninModalHOC>
          
                     

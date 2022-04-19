@@ -18,19 +18,27 @@ const ResponsesIcon = ({ comment_id }) =>  {
         // fetch number responses
         // /responses/count/:parent_id
 
-        const functionThatRuns = async (parent_id) => {
+        let isMounted = true; 
 
-            console.log(parent_id)
+        const functionThatRuns = async (parent_id) => {
 
             const numResponses = await getResponsesCount(parent_id);
 
-            console.log(numResponses)
+            if(isMounted){
 
-            setNumberOfResponses(numResponses);
+                setNumberOfResponses(numResponses);
+            }
+            else{
+
+                return 
+            }
+
             
         }
         
         functionThatRuns(comment_id)
+
+        return () => { isMounted = false };
 
 
 

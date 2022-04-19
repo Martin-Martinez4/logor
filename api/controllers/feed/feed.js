@@ -22,7 +22,7 @@ export const handleGetFeed = (req ,res, db) => {
     })
     .catch(err => {
 
-        res.json("Error")
+        res.status(err.code || 500)
     })
 
 

@@ -167,15 +167,21 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
     useEffect(() => {
 
+        let isMounted = true; 
+
+
         const checkIfFollower = async (user_id, setIsFollower) => {
 
             setFollowLoading(true);
 
-
+              
                 const followersCount =  await getFollowersCount(user_id)
                 const followingCount =  await getFollowingCount(user_id)
-    
-                setFollowerCount(prev => ({...prev, followers: followersCount, following: followingCount}))
+
+                if(isMounted){
+                    
+                    setFollowerCount(prev => ({...prev, followers: followersCount, following: followingCount}))
+                }
     
                 if(user_id && !(loggedInUser.username === "")){
     
@@ -183,8 +189,10 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
                     loggedIsFollower(user_id).then( checkIsFollower => {
 
-
+                        if(isMounted){
+                    
                             setIsFollower(checkIsFollower)
+                        }
 
 
                     })
@@ -193,15 +201,19 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
             
                 }else{
     
-                    // console.error("error getting follow status")
-                    // setIsFollower(false)
-                    setFollowLoading(false);
+                    if(isMounted){
+
+                        setFollowLoading(false);
+                    }
 
                     return
     
                 }
 
-                setFollowLoading(false);
+                if(isMounted){
+
+                    setFollowLoading(false);
+                }
 
             }
            
@@ -212,6 +224,9 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
         checkIfFollower(visiteeUser?.id, setIsFollower)
 
         // return () =>  {componentIsMounted.current = false}
+
+        return () => { isMounted = false };
+
         
         
 
@@ -219,8 +234,7 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
 
     useEffect(() => {
 
-        // let abortController = new AbortController();
-        // let isSubscribed = true;
+        let isMounted = true; 
 
 
         const checkIsFollower = async (user_id, setIsFollower) => {
@@ -231,8 +245,12 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
                     loggedIsFollower(user_id).then( checkIsFollower => {
 
                         if(componentIsMounted.current){
+                            
+                            if(isMounted){
 
-                            setIsFollower(checkIsFollower)
+                                setIsFollower(checkIsFollower)
+                            }
+
                         }
 
 
@@ -253,6 +271,9 @@ const Follow:FC = ({ visiteeUser, buttonClasses, followCountClass }) => {
         }
         
         checkIsFollower(visiteeUser?.id, setIsFollower)
+
+        return () => { isMounted = false };
+
 
         
     // eslint-disable-next-line   react-hooks/exhaustive-deps

@@ -7,10 +7,14 @@ import Loader1 from "../svg/Loader1/Loader1";
 
 import VisitorPost from "../Posts/VisitorPost";
 
+import useSigninModal from "../hooks/useModal";
+
+
 const FeedPage = () => {
     // Use logged in user through jwt verification
 
-    
+    const { toggleModal } = useSigninModal();
+
     const [feedArray, setFeedArray] = useState();
     
     // eslint-disable-next-line  @typescript-eslint/no-unused-vars
@@ -61,7 +65,10 @@ const FeedPage = () => {
                         
                         'Content-Type': 'application/json',
                       },
-            }).then(response => response.json())
+            }).then(response => {
+                if(!response.ok) throw response.status;
+                else return response.json();
+            })
             .then(comments => {
 
                 setFeedArray(createPosts(comments))
@@ -79,7 +86,14 @@ const FeedPage = () => {
 
                 // setPostlistLoading(false)
             })
-            
+            .catch(error => {
+                
+                if(error === 403){
+
+                    toggleModal()
+                }
+
+            })
             setPostlistLoading(false)
         }
         
@@ -146,6 +160,7 @@ const FeedPage = () => {
     return(
 
         <>
+        
                 {
                     userFeed === undefined
                     ? <Loader1></Loader1>

@@ -53,6 +53,10 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     useEffect(() => {
 
+        return () => {
+            // this now gets called when the component unmounts
+          };
+
     }, [user_profile, postInformation])
 
 

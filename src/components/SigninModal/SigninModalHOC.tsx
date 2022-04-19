@@ -5,7 +5,6 @@ import useSigninModal from "../hooks/useModal";
 
 const SigninModalHOC = ({ children }) => {
 
-    // const { showModal, toggleModal } = useModal();
     const { showModal, toggleModal } = useSigninModal();
 
     return (

@@ -48,31 +48,42 @@ const MiniProfile:FC = ({ user_id }) => {
 
     useEffect(() => {
 
+        let isMounted = true;
         
-        (async (setMiniProfileUser, user_id) => {
+        const initMinprofile = async (setMiniProfileUser, user_id) => {
 
-            setFollowStatus(true)
+            if(isMounted){
+
+                setFollowStatus(true)
+            }
 
 
             if(mountedRef.current){
 
                 const userMiniprofileInfo  = await getMiniProfileInfo(user_id)
     
-                // console.log("userMiniprofileInfo22222222: ", userMiniprofileInfo )
+                if(isMounted){
+
+                    setMiniProfileUser(userMiniprofileInfo[0]);
+                }
     
-                setMiniProfileUser(userMiniprofileInfo[0]);
             }
             else{
 
                 return
             }
 
-            setFollowStatus(false)
+            if(isMounted){
+
+                setFollowStatus(false)
+            }
 
 
+        }
+        
+        initMinprofile(setMiniProfileUser, user_id)
 
-        //    setMiniProfileUser(prev => ({...prev, toLink: "/users/nickname/" + userMiniprofileInfo[0]?.nickname})) 
-        })(setMiniProfileUser, user_id)
+        return () => { isMounted = false;};
 
     }, [user_id])
 
@@ -97,7 +108,6 @@ const MiniProfile:FC = ({ user_id }) => {
                     <Follow visiteeUser={{id: user_id}} buttonClasses={"profileName__button"} followCountClass={"hidden"}/>
                 </LoaderHOC>
             </div>
-            {/* < button type="button" className="button" title="Click to move to next Step">Follow</button> */}
         </div>
     )
 }

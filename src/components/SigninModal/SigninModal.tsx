@@ -1,7 +1,5 @@
 
 import React from "react";
-
-
 import Signin from "../Siginin/Signin";
 
 import "./modal.css";

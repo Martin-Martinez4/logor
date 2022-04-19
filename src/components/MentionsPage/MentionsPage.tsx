@@ -8,7 +8,12 @@ import LoaderHOC from '../LoaderHOC/LoaderHOC';
 import Loader1 from '../svg/Loader1/Loader1';
 
 import VisitorPost from '../Posts/VisitorPost';
+import useSigninModal from "../hooks/useModal";
+
+
 const MentionsPage:FC = () => {
+
+    const { toggleModal } = useSigninModal();
 
     const [mentionsArray, setMentionsArray] = useState();
 
@@ -60,7 +65,10 @@ const MentionsPage:FC = () => {
                         
                         'Content-Type': 'application/json',
                       },
-            }).then(response => response.json())
+            }).then(response => {
+                if(!response.ok) throw response.status;
+                else return response.json();
+            })
             .then(comments => {
 
                 setMentionsArray(createPosts(comments))
@@ -77,6 +85,14 @@ const MentionsPage:FC = () => {
                 setLastMentionShown(10)
 
                 setPostlistLoading(false)
+            })
+            .catch(error => {
+                
+                if(error === 403){
+
+                    toggleModal()
+                }
+
             })
         }
 
