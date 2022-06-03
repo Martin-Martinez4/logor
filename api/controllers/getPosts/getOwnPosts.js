@@ -1,6 +1,6 @@
 
 
-export const handleGetComments = (req, res, db) => {
+export const handleGetComments = (req, res, next, db) => {
 
     const id = req.user_id
 
@@ -9,9 +9,20 @@ export const handleGetComments = (req, res, db) => {
     .where('user_id', '=', id).orderBy('created_at', 'desc')
     .then(data => {
 
-        res.json(data);
+        res.status(200).json(data);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        // console.log(err)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting your comments."
+
+        next(err);
+        res.json([])
+    });
 
 }
 

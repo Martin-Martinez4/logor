@@ -2,7 +2,7 @@
 // Followee = being followed
 // logged in user = follower, visited = followee: check if user logged in follows
 // visited = follower, logged in user = followee: check if user logged in is being followed
-export const handleCheckIfFollower = (req, res ,db) => {
+export const handleCheckIfFollower = (req, res, next ,db) => {
 
     const { followee_id} = req.body
     const follower_id = req.user_id
@@ -20,23 +20,31 @@ export const handleCheckIfFollower = (req, res ,db) => {
         // console.log(count)
         if(count[0]["count"] >= 1){
             
-            res.json(true)
+            res.status(200).json(true);
+
         }else{
             
-            res.json(false)
+            res.status(200).json(false);
         }
         
     })
     .catch(err => {
 
-        console.log(err)
-        res.json(false)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error checking if follower."
+
+        next(err);
+        // res.json(false)
     })
 
 
 }
 
-export const handleCheckIfLoggedInFollower = (req, res ,db) => {
+export const handleCheckIfLoggedInFollower = (req, res, next ,db) => {
 
     const {followee_id} = req.body
 
@@ -57,23 +65,32 @@ export const handleCheckIfLoggedInFollower = (req, res ,db) => {
         // console.log(count)
         if(count[0]["count"] >= 1){
             
-            res.json(true)
+            res.status(200).json(true);
+            
         }else{
             
-            res.json(false)
+            res.status(200).json(false);
+            
         }
         
     })
     .catch(err => {
 
-        console.log(err)
-        res.json(false)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error checking if you are follower."
+
+        next(err);
+        // res.json(false)
     })
 
 
 }
 
-export const handleCheckIfLoggedInFollowee = (req, res ,db) => {
+export const handleCheckIfLoggedInFollowee = (req, res, next ,db) => {
 
     const { followee_id } = req.user_id
     const follower_id  = req.body
@@ -91,17 +108,26 @@ export const handleCheckIfLoggedInFollowee = (req, res ,db) => {
         // console.log(count)
         if(count[0]["count"] >= 1){
             
-            res.json(true)
+            res.status(200).json(true);
+            
         }else{
             
-            res.json(false)
+            res.status(200).json(false);
+
         }
         
     })
     .catch(err => {
 
-        console.log(err)
-        res.json(false)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error checking if you are following."
+
+        next(err);
+        // res.json(false)
     })
 
 

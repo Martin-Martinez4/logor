@@ -1,5 +1,5 @@
 
-export const handleGetTagNamesFromCommentID = (req, res,  db) => {
+export const handleGetTagNamesFromCommentID = (req, res, next, db) => {
 
     const {id } = req.params
 
@@ -9,10 +9,18 @@ export const handleGetTagNamesFromCommentID = (req, res,  db) => {
     .then((tagInfo) => {
 
         // console.log(tagInfo)
-        res.json(tagInfo);
+        res.status(200).json(tagInfo);
     })
     .catch(err => {
-        console.log(err)
+
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting tag name from comments";
+
+        next(err);
         res.json("")
     });
 }

@@ -1,6 +1,6 @@
 
 
-export const handleAddMentionToComment = (req, res ,db) => {
+export const handleAddMentionToComment = (req, res, next, db) => {
 
 const {nickname, comment_id} = req.body
 
@@ -29,18 +29,31 @@ const {nickname, comment_id} = req.body
             .where("nickname", "=", nickname)
             .then((nickName) => {
                         
-                res.json(nickName)
+                res.status(201).json(nickName)
             })
      
         ).then(trx.commit)
         .catch(trx.rollback)
     )
+    .catch(err => {
 
+        if(!err.statusCode){
 
+            err.statusCode = 500;
+        }
+
+        err.message = "Error creating mention to comment";
+
+        next(err);
+
+        res.json("NA")
+    })
 }
 
 
-export const handleDeleteMentionToComment = (req, res, db) => {
+
+
+export const handleDeleteMentionToComment = (req, res, next, db) => {
 
     const {comment_id, nickname} = req.body;
 
@@ -65,13 +78,26 @@ export const handleDeleteMentionToComment = (req, res, db) => {
             })
             .del()
             .returning("user_id")
-            .then(res => res)
+            .then(res => res.status(200).json({message: "Mention deleted"}))
             })
         
         
             .then(trx.commit)
             .catch(trx.rollback)
         )
+        .catch(err => {
+
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error creating mention to comment";
+    
+            next(err);
+    
+            res.json("NA")
+        })
     
 
 

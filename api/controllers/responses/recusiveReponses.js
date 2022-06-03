@@ -1,5 +1,5 @@
 
-export const handleGetResponsesRecusive = (req, res, db) => {
+export const handleGetResponsesRecusive = (req, res, next, db) => {
 
     const { parent_id } = req.params;
 
@@ -21,10 +21,17 @@ export const handleGetResponsesRecusive = (req, res, db) => {
           res.json(data);
       })
       .then(comments => {
-          res.json(comments)
+          res.status(200).json(comments)
         })
       .catch(err => {
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting replies";
+
+        next(err);
     });
 
 }

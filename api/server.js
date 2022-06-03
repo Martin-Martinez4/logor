@@ -16,40 +16,31 @@ import bodyParser from 'body-parser';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import home from "./home.js"
+import home from "./routes/home.js"
 
-import followers from "./followers.js"
+import followers from "./routes/followers.js"
 
-import likes from "./likes.js";
+import likes from "./routes/likes.js";
 
-import tags from "./tags.js";
+import tags from "./routes/tags.js";
 
-import mentions from "./mentions.js";
+import mentions from "./routes/mentions.js";
 
-import responses from "./responses.js";
+import responses from "./routes/responses.js";
 
-import simpleSearch from "./simpleSearch.js"
+import simpleSearch from "./routes/simpleSearch.js"
 
-import { handleGetUserInfo, handleGetUserInfoByNickname, handleGetGetMiniProfileInfo, handleGetLoggedinUserInfo } from './controllers/getUserInfo.js';
-import { handleGetUserID, handleGetRandomUserIDs } from './controllers/getIds/getIDs.js';
-import { handleSignin, handleSignin2, removeToken } from './controllers/signin.js';
-import { handleRegister, handleNicknameExists, handleUsernameExists } from './controllers/register.js';
+import auth from "./routes/auth.js";
 
-import {  
-  handleUpdateHeaderWithDefault, 
-  handleUpdateProfileWithDefault, 
-  handleUpdateHeaderImage,
-  handleUploadProfileImage, 
-  handleDeleteHeaderImage,
-  handleDeleteProfileImage,
-  handleUpdateUsername,
-  handleUpdateNickname,
-  handleUpdateDescription,
-  handleUpdateLocation,
-  handleUpdateLinks 
-  } from "./controllers/profileAndHeader/profileAndHeader.js"
+import userInformation from "./routes/userInformation.js";
+
+import updateProfile from "./routes/updateProfile.js";
+
 
 import { authenticateToken } from './middleware/authorization.js';
+
+
+const acceptableImageMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml"]
 
 
 // const express = require('express');
@@ -76,9 +67,9 @@ import cors from 'cors';
 import knex from 'knex';
 import { env } from 'process';
 import { refreshCookie } from './utils/createTokens.js';
-import comments from './comments.js';
+import comments from './routes/comments.js';
 
-const db = knex({
+export const db = knex({
     client: 'pg',
     connection: {
       host : process.env.POSTGRES_HOST,
@@ -104,7 +95,9 @@ app.use(express.json({limit:'4mb'}));
 app.use(cors(options));
 app.use(cookieParser())
 
-const storage = multer.diskStorage({
+
+export function upload(req, res, next){
+  const storage = multer.diskStorage({
 
   destination: (req, file, cb) => {
 
@@ -119,15 +112,36 @@ const storage = multer.diskStorage({
     // Stores the file in temp as the origiginal filename-dat.filetype
     // Could maybe get the user_id from the req later on
     cb(null, `temp/${originalname}-${Date.now()}.${ext}`)
-  }
+  },
 
+  
 });
 
-const upload = multer({
+  const fileFilter = (req, res, file) => {
 
-  storage: storage,
-  limits: { fileSize: 1 * 1024 * 1024 }
-})
+    mimeType = file.mimetype;
+
+    if(acceptableImageMimeTypes.includes(mimeType)){
+
+      cb(null, true);
+
+    }
+    else{
+
+      cb(null, false);
+
+    }
+
+  }
+
+  const upload = multer({
+
+    storage: storage,
+    limits: { fileSize: 1 * 1024 * 1024 }
+  })
+
+  return upload;
+}
 
 //=================Image Get=================
 
@@ -155,12 +169,12 @@ app.get('/temp/', async (req, res) => {
     // send a png file
     // res.sendFile(p);
   
-      res.sendFile(fileQuery, options, function (err) {
-        if (err) {
-          // console.error(err)
-        } else {
-            console.log('Sent:', fileName);
-        }
+    res.sendFile(fileQuery, options, function (err) {
+      if (err) {
+        // console.error(err)
+      } else {
+          console.log('Sent:', fileName);
+      }
     });
   }catch{
 
@@ -171,42 +185,9 @@ app.get('/temp/', async (req, res) => {
 
 //=================Register/Signin=================
 
-app.post("/signin", (req, res) => {
+app.use(auth);
 
-  handleSignin(req, res, db);
-
-});
-
-app.post("/signin2", (req, res) => {
-
-  handleSignin2(req, res, db);
-
-});
-
-app.get("/signout", (req, res) => {
-
-  removeToken(req, res);
-
-});
-
-app.post('/register', (req, res) => { 
-  handleRegister(req, res, db ) 
-
-});
-
-app.get('/available/username/', (req, res) => {
-
-  handleUsernameExists(req, res, db)
-
-})
-
-app.get('/available/nickname/', (req, res) => {
-
-  handleNicknameExists(req, res, db)
-
-})
-
-//=================Signed In User=================
+//=================Signed In User Home Page=================
 
 app.use(home);
 
@@ -217,41 +198,7 @@ app.use(tags);
 
 //=================User Info=================
 
-app.get("/userID/:nickname", (req, res) => {
-
-  handleGetUserID(req, res, db);
-})
-
-app.get("/usersInfo/:id", (req, res) => {
-
-  handleGetUserInfo(req, res, db)
-  
-})
-
-app.get("/loggedin/user/info/", authenticateToken, (req, res) => {
-
-  handleGetLoggedinUserInfo(req, res, db)
-  
-})
-
-app.get("/usersInfo/byNickname/:nickname", (req, res) => {
-
-  handleGetUserInfoByNickname(req, res, db);
-
-})
-
-app.get("/users/info/random/:number", (req, res) => {
-
-  handleGetRandomUserIDs(req, res, db);
-
-})
-
-app.get("/users/info/miniprofile/:id", (req, res) => {
-
-  handleGetGetMiniProfileInfo(req, res, db);
-
-})
-
+app.use(userInformation);
 
 //=================Comments=================
 
@@ -282,80 +229,7 @@ app.use(simpleSearch)
 
 //=================Image Upload=================
 
-// Need to add authenication middleware
-// app.post("/api/image/", upload.single('image'), (req, res) => {
-
-//   handleUploadImage(req, res, db)
-
-// })
-
-
-app.post("/profile/update/default/", authenticateToken,(req, res) => {
-
-  handleUpdateProfileWithDefault(req, res, db)
-
-})
-
-app.post("/profile/update/", [ authenticateToken, upload.single('image')],(req, res) => {
-  
-  handleUploadProfileImage(req, res, db)
-  
-})
-
-app.post("/profile/delete/", authenticateToken, (req, res) => {
-
-  handleDeleteProfileImage(req, res, db)
-
-})
-
-app.post("/header/update/default/", authenticateToken, (req,res) => {
-
-  handleUpdateHeaderWithDefault(req, res, db)
-
-})
-
-app.post("/header/update/", [ authenticateToken, upload.single('image')], (req,res) => {
-
-  handleUpdateHeaderImage(req, res, db)
-
-})
-
-app.post("/header/delete/", authenticateToken, (req, res) => {
-
-  handleDeleteHeaderImage(req, res, db)
-
-})
-
-app.post("/update/username/", authenticateToken, (req, res) => {
-
-  handleUpdateUsername(req, res, db)
-
-});
-
-app.post("/update/nickname/", authenticateToken, (req, res) => {
-
-  handleUpdateNickname(req, res, db)
-
-});
-
-app.post("/update/description/", authenticateToken, (req, res) => {
-
-  handleUpdateDescription(req, res, db)
-
-});
-
-app.post("/update/location/", authenticateToken, (req, res) => {
-
-  handleUpdateLocation(req, res, db)
-
-});
-
-app.post("/update/links/", authenticateToken, (req, res) => {
-
-  handleUpdateLinks(req, res, db)
-
-});
-
+app.use(updateProfile);
 
 //=================Tokens=================
 
@@ -365,6 +239,16 @@ app.get("/token/refresh/", (req, res) => {
 
 })
 
+// Erro handling middleware
+app.use((error, req ,res, next) => {
+  const status = error.statusCode || 500;
+  const message = error.message;
+
+  console.log(error);
+
+  res.status(status).json({message: message})
+
+})
 
 
 app.listen(3001, () => {

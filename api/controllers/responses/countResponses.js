@@ -1,5 +1,5 @@
 
-export const handleCountResponses = (req, res, db) => {
+export const handleCountResponses = (req, res, next, db) => {
 
     const { parent_id } = req.params;
 
@@ -10,10 +10,17 @@ export const handleCountResponses = (req, res, db) => {
 
         // console.log(count)
 
-        res.json(count[0]["count"])
+        res.status(200).json(count[0]["count"])
     })
     .catch(err => {
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error counting responses";
+
+        next(err);
         res.json("NA")
     })
 

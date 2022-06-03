@@ -1,5 +1,5 @@
 
-export const handleAddLike = (req, res,  db) => {
+export const handleAddLike = (req, res, next, db) => {
 
     try{
 
@@ -15,21 +15,36 @@ export const handleAddLike = (req, res,  db) => {
         .onConflict(["user_id", "comment_id"])
         .ignore()
         .returning("comment_id")
-        .then(resp => res.json(resp))
+        .then(resp =>  res.status(201).json(resp))
         .catch(err => {
-            console.log(err)
     
-            res.json("Error")
+            if(!err.statusCode){
+
+                err.statusCode = 500;
+            }
+    
+            err.message = err
+    
+            next(err);
         })
     }
     catch{
+
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = err
+
+        next(err);
 
         res.json({})
     }
 
 }
 
-export const handleDeleteLike = (req, res,  db) => {
+export const handleDeleteLike = (req, res, next, db) => {
 
     const { comment_id } = req.body;
 
@@ -45,9 +60,17 @@ export const handleDeleteLike = (req, res,  db) => {
     .onConflict(["user_id", "comment_id"])
     .ignore()
     .returning("comment_id")
-    .then(resp => res.json(resp))
+    .then(resp => res.status(200).json(resp))
     .catch(err => {
-        console.log(err)
+
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = err
+
+        next(err);
 
         res.json("Error")
     })

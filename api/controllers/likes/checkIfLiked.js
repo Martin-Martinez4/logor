@@ -1,5 +1,5 @@
 
-export const handleCheckIfLiked = (req, res ,db) => {
+export const handleCheckIfLiked = (req, res, next, db) => {
 
     if(req.user_id){
 
@@ -21,22 +21,31 @@ export const handleCheckIfLiked = (req, res ,db) => {
             // console.log(count)
             if(count[0]["count"] >= 1){
                 
-                res.json(true)
+                res.status(200).json(true)
+
             }else{
                 
-                res.json(false)
+                 res.status(200).json(false)
             }
             
         })
         .catch(err => {
     
-            console.log(err)
+            if(!err.statusCode){
+
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error checking if you liked comment";
+    
+            next(err);
+
             res.json(false)
         })
     }
     else{
 
-        res.json(false)
+        res.status(200).json(false)
 
     }
 

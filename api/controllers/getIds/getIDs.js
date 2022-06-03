@@ -1,5 +1,5 @@
 
-export const handleGetTagID = (req, res, db) => {
+export const handleGetTagID = (req, res, next, db) => {
 
     const { name } = req.params
 
@@ -8,13 +8,23 @@ export const handleGetTagID = (req, res, db) => {
     db.select("tag_id").from("tags")
     .where("tag_name", "=", tagName)
     .then((id) => {
-        res.json(id)
+        res.status(200).json(id)
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting tag id."
+
+        next(err);
+    })
 
 }
 
-export const handleGetUserID = (req, res, db) => {
+export const handleGetUserID = (req, res, next, db) => {
 
     const { nickname } = req.params
 
@@ -25,13 +35,22 @@ export const handleGetUserID = (req, res, db) => {
     .then((id) => {
 
         // console.log(id[0].id)
-        res.json(id[0])
+       res.status(200).json(id[0])
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting user id."
+
+        next(err);
+    })
 
 }
 
-export const handleGetTagIDName = (req, res, db) => {
+export const handleGetTagIDName = (req, res, next, db) => {
 
     const { comment_id } = req.params
 
@@ -41,13 +60,22 @@ export const handleGetTagIDName = (req, res, db) => {
     .join("tags", "tags.tag_id", "tag_comment.tag_id")
     .where("tag_comment.comment_id", "=", `${comment_id}`)
     .then((tags) => {
-        res.json(tags)
+        res.status(200).json(tags)
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting id name."
+
+        next(err);
+    })
 
 }
 
-export const handleGetRandomUserIDs = (req,res, db) => {
+export const handleGetRandomUserIDs = (req,res, next, db) => {
 
     const { number } =  req.params;
 
@@ -56,9 +84,18 @@ export const handleGetRandomUserIDs = (req,res, db) => {
     .limit(parseInt(number))
     .then((user_ids) => {
 
-        res.json(user_ids);
+        res.status(200).json(user_ids);
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting random users."
+
+        next(err);
+    })
 
 }
 

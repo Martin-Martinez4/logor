@@ -1,6 +1,6 @@
 // SELECT * FROM users  WHERE username like 'N%' or username like 'n%' or nickname like 'n%' or nickname like 'N%';
 
-export const handleGetUsersLike = (req, res ,db ) => {
+export const handleGetUsersLike = (req, res, next, db ) => {
 
     const queryString = req.body.query;
 
@@ -21,25 +21,41 @@ export const handleGetUsersLike = (req, res ,db ) => {
     .limit(parseInt(queryLimit))
     .then( users => {
 
-        res.json(users)
+        res.status(200).json(users)
     }
     )
     .catch(err => {
 
-        console.error(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting user likes";
+
+        next(err);
     })
 
 
 } 
 
-export const handleGetTagsLike = (req, res, db) => {
+export const handleGetTagsLike = (req, res, next, db) => {
 
     const queryString = req.body.query;
 
     db.select("tag_name").from("tags")
     .whereILike("tag_name", `#${queryString}%`)
     .then(tagnames => {
-        res.json(tagnames)
+        res.status(200).json(tagnames)
     })
-    .catch(err => console.error(err))
+    .catch(err => {
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting tag likes";
+
+        next(err);
+    })
 }

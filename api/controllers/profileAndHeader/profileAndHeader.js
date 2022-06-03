@@ -5,26 +5,26 @@ import path from 'path';
 
 import { defaultHeaders, defaultProfiles } from '../../utils/defaultImage.js';
 
-export const handleUpdateProfileWithDefault = async (req, res, db) => {
+export const handleUpdateProfileWithDefault = async (req, res, next, db) => {
 
     const id = req.user_id;
 
-    console.log("req.body: ",req.body)
+    // console.log("req.body: ",req.body)
 
     
     if(typeof req?.body?.profile_pic_url === "string"){
 
         const profileImageNameArray = req.body.profile_pic_url.split("/")
 
-        console.log(profileImageNameArray)
+        // console.log(profileImageNameArray)
 
         const profileImageNameString = profileImageNameArray.pop()
 
-        console.log(profileImageNameString)
+        // console.log(profileImageNameString)
 
         const profileFilepathString = '/profiles/'+ profileImageNameString
 
-        console.log(profileFilepathString)
+        // console.log(profileFilepathString)
 
         db("users").where({
             id: id
@@ -36,15 +36,20 @@ export const handleUpdateProfileWithDefault = async (req, res, db) => {
         })
         .then(data => {
 
-            res.json(id)
+            res.status(200).json(id)
 
         })
         .catch(err => {
-
-            console.log(err)
-            res.json({
-                msg: err
-            })
+        
+            if(!err.statusCode){
+        
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error updating profile.";
+    
+            next(err);
+    
         });
 
 
@@ -53,18 +58,26 @@ export const handleUpdateProfileWithDefault = async (req, res, db) => {
 
 }
 
-export const handleUploadProfileImage = async (req, res, db) => {
+export const handleUploadProfileImage = async (req, res, next, db) => {
 
-    console.log("gets to profile update")
+    // console.log("gets to profile update")
 
     const fileTypeRegexp = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/;
 
-    console.log("profile req.file: ", req?.file)
+    // console.log("profile req.file: ", req?.file)
     // console.log("header req: ", req)
 
     if(!req?.file?.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/)){
 
-        res.send({msg: 'Only png, gif, jpeg, and svg ar allowed!'})
+        const error = new Error('Only png, gif, jpeg, and svg ar allowed!');
+
+        error.statusCode = 415;
+
+        error.message = 'Only png, gif, jpeg, and svg ar allowed!';
+
+        next(error);
+
+        // res.send({msg: 'Only png, gif, jpeg, and svg ar allowed!'})
 
     }else{
 
@@ -72,7 +85,7 @@ export const handleUploadProfileImage = async (req, res, db) => {
 
         const profileImageName = path.basename(req.file.filename)
 
-        console.log("top imageImage: ",profileImageName)
+        // console.log("top imageImage: ",profileImageName)
 
         const resizedprofile = path.resolve(req.file.destination,'temp','profiles', profileImageName)
 
@@ -91,7 +104,15 @@ export const handleUploadProfileImage = async (req, res, db) => {
             resizedprofile
         ).catch(err => {
             
-            console.log("sharp error")
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error resizing profile image";
+    
+            next(err);
+
             console.error(err)
         })
 
@@ -108,9 +129,9 @@ export const handleUploadProfileImage = async (req, res, db) => {
 
         const newFilepath = '/' + 'profiles/'+profileImageName;
 
-        console.log("newFilePath: ",newFilepath)
+        // console.log("newFilePath: ",newFilepath)
         
-        console.log("id upload: ", id)
+        // console.log("id upload: ", id)
     
         db("users").where({
             id: id
@@ -123,14 +144,22 @@ export const handleUploadProfileImage = async (req, res, db) => {
         .then(data => {
 
 
-            res.json({
+            res.status(200).json({
                 data: data,
                 msg: "Image has been updated"
             })
         })
         .catch(err => {
 
-            console.log(err)
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error updating profile image";
+    
+            next(err);
+
             res.json({
                 msg: err
             })
@@ -141,13 +170,13 @@ export const handleUploadProfileImage = async (req, res, db) => {
 
 }
 
-export const handleDeleteProfileImage = async (req, res, db) => {
+export const handleDeleteProfileImage = async (req, res, next, db) => {
 
     const user_id = req.user_id;
 
     const newProfile = req.body.newProfile
 
-    console.log("newProfile: ",newProfile)
+    // console.log("newProfile: ",newProfile)
 
         db.select("profile_pic_url")
         .from("users")
@@ -166,43 +195,66 @@ export const handleDeleteProfileImage = async (req, res, db) => {
             }
             else{
 
-                console.log("would have been deleted: ",oldProfilePath)
+                // console.log("would have been deleted: ",oldProfilePath)
 
-                fs.remove(oldProfilePath)
+                try{
+
+                    fs.remove(oldProfilePath)
+                }
+                catch{
+
+                    res.status(200).json(oldProfileURL)
+                }
+
             }
 
-            res.json(oldProfileURL)
+            console.log("here")
+
+            // res.status(200).json(oldProfileURL)
+            // res.json(oldProfileURL)
+
+            res.status(200).json(oldProfileURL)
 
         })
         .catch(err => {
 
-            console.log(err)
-            res.json({
-                msg: err
-            })
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error deleting profile image";
+    
+            next(err);
+           
         })
 }
 
-export const handleUpdateHeaderImage = async (req, res, db) => {
+export const handleUpdateHeaderImage = async (req, res, next, db) => {
 
     console.log("gets to header update")
 
     const fileTypeRegexp = /\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/;
 
-    console.log("header req.file: ", req?.file)
+    // console.log("header req.file: ", req?.file)
     // console.log("header req: ", req)
 
     if(!req?.file?.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|svg|SVG)$/)){
 
-        res.send({msg: 'Only png, gif, jpeg, and svg ar allowed!'})
+        const error = new Error('Only png, gif, jpeg, and svg ar allowed!');
 
+        error.statusCode = 415;
+
+        error.message = 'Only png, gif, jpeg, and svg ar allowed!';
+
+        next(error);
     }else{
 
         const headerImageArray = req.file.filename.split("/");
 
         const headerImageName = path.basename(req.file.filename)
 
-        console.log("top imageImage: ",headerImageName)
+        // console.log("top imageImage: ",headerImageName)
 
         const resizedHeader = path.resolve(req.file.destination,'temp','headers', headerImageName)
 
@@ -220,8 +272,16 @@ export const handleUpdateHeaderImage = async (req, res, db) => {
             resizedHeader
         ).catch(err => {
             
-            console.log("sharp error")
-            console.error(err)
+            // console.log("sharp error")
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error resizing header image";
+    
+            next(err);
+
         })
 
         const oldHeaderpath = path.resolve('.','temp', headerImageName);
@@ -233,9 +293,9 @@ export const handleUpdateHeaderImage = async (req, res, db) => {
 
         const newFilepath = '/' + 'headers/'+headerImageName;
 
-        console.log("newFilePath: ",newFilepath)
+        // console.log("newFilePath: ",newFilepath)
 
-            console.log("id upload: ", id)
+            // console.log("id upload: ", id)
             
                 await db("user_headers").where({
                     user_id: id
@@ -248,18 +308,36 @@ export const handleUpdateHeaderImage = async (req, res, db) => {
                 .then(data => {
         
         
-                    res.json({
+                    res.status(200).json({
                         data: data,
                         msg: "Image has been updated"
                     })
                 })
                 .catch(err => {
         
-                    console.log(err)
-                    res.json({
+                    if(!err.statusCode){
+    
+                        err.statusCode = 500;
+                    }
+            
+                    err.message = "Error updating header image";
+            
+                    next(err);
+                    res.status(200).json({
                         msg: err
                     })
-                }).catch(err => console.error(err))
+                })
+                .catch(err => {
+
+                    if(!err.statusCode){
+    
+                        err.statusCode = 500;
+                    }
+            
+                    err.message = "Error updating header image";
+            
+                    next(err);
+                })
         // });
     
 
@@ -267,7 +345,7 @@ export const handleUpdateHeaderImage = async (req, res, db) => {
 
 }
 
-export const handleUpdateHeaderWithDefault = async (req, res, db) => {
+export const handleUpdateHeaderWithDefault = async (req, res, next, db) => {
 
     const id = req.user_id;
 
@@ -290,25 +368,35 @@ export const handleUpdateHeaderWithDefault = async (req, res, db) => {
         })
         .then(data => {
 
-            res.json(id)
+            res.status(200).json(id)
 
         })
         .catch(err => {
 
-            console.log(err)
-            res.json({
-                msg: err
-            })
+            if(!err.statusCode){
+
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error updating header";
+    
+            next(err);
         })
 
     }
     else{
 
-        res.json("error")
+        const error = new Error('Error updating header');
+
+        error.statusCode = 415;
+
+        error.message = 'Error updating header';
+
+        next(error);
     }
 }
 
-export const handleDeleteHeaderImage = async (req, res, db) => {
+export const handleDeleteHeaderImage = async (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -329,17 +417,25 @@ export const handleDeleteHeaderImage = async (req, res, db) => {
         }
         else{
 
-            console.log("would have been deleted: ",oldHeaderpath)
+            // console.log("would have been deleted: ",oldHeaderpath)
 
             fs.remove(oldHeaderpath)
         }
 
-        res.json(oldHeaderURL)
+        res.status(200).json(oldHeaderURL)
 
     })
     .catch(err => {
 
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error deleting header image";
+
+        next(err);
+
         res.json({
             msg: err
         })
@@ -347,7 +443,7 @@ export const handleDeleteHeaderImage = async (req, res, db) => {
 }
 
 
-export const handleUpdateUsername = (req, res, db) => {
+export const handleUpdateUsername = (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -364,12 +460,20 @@ export const handleUpdateUsername = (req, res, db) => {
     })
     .then(data => {
 
-        res.json(data)
+        res.status(200).json(data)
 
     })
     .catch(err => {
 
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error updating header username";
+
+        next(err);
+
         res.json({
             msg: err
         })
@@ -378,7 +482,7 @@ export const handleUpdateUsername = (req, res, db) => {
 
 }
   
-export const handleUpdateNickname = (req, res, db) => {
+export const handleUpdateNickname = (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -395,12 +499,20 @@ export const handleUpdateNickname = (req, res, db) => {
     })
     .then(data => {
 
-        res.json(data)
+        res.status(200).json(data)
 
     })
     .catch(err => {
 
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error updating header nickname";
+
+        next(err);
+
         res.json({
             msg: err
         })
@@ -408,7 +520,7 @@ export const handleUpdateNickname = (req, res, db) => {
 
 }
   
-export const handleUpdateDescription = (req, res, db) => {
+export const handleUpdateDescription = (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -425,12 +537,19 @@ export const handleUpdateDescription = (req, res, db) => {
     })
     .then(data => {
 
-        res.json(data)
+        res.status(200).json(data)
 
     })
     .catch(err => {
 
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error updating header description";
+
+        next(err);
         res.json({
             msg: err
         })
@@ -439,7 +558,7 @@ export const handleUpdateDescription = (req, res, db) => {
 }
   
   
-export const handleUpdateLocation = (req, res, db) => {
+export const handleUpdateLocation = (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -456,12 +575,20 @@ export const handleUpdateLocation = (req, res, db) => {
     })
     .then(data => {
 
-        res.json(data)
+        res.status(200).json(data)
 
     })
     .catch(err => {
 
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error updating header location";
+
+        next(err);
+
         res.json({
             msg: err
         })
@@ -469,7 +596,7 @@ export const handleUpdateLocation = (req, res, db) => {
 
 }
   
-export const handleUpdateLinks = (req, res, db) => {
+export const handleUpdateLinks = (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -486,12 +613,20 @@ export const handleUpdateLinks = (req, res, db) => {
     })
     .then(data => {
 
-        res.json(data)
+        res.status(200).json(data)
 
     })
     .catch(err => {
 
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error updating header links";
+
+        next(err);
+
         res.json({
             msg: err
         })

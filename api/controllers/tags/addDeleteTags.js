@@ -1,7 +1,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-export const handleAddTagToComment = (req, res ,db) => {
+export const handleAddTagToComment = (req, res, next, db) => {
 
 const {tag_name, comment_id} = req.body
 
@@ -29,19 +29,29 @@ const {tag_name, comment_id} = req.body
             .where("tag_name", "=", tag_name)
             .then((comments) => {
                         
-                res.json(comments)
+                res.json(comments);
             })
      
         ).then(trx.commit)
         .catch(trx.rollback)
     )
-    .catch(err => console.log(err));
+    .catch(err => {
+
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error adding tag to comment";
+
+        next(err);
+    });
 
 
 }
 
 
-export const handleDeleteTagToComment = (req, res, db) => {
+export const handleDeleteTagToComment = (req, res, next, db) => {
 
     const {comment_id, tag_name} = req.body;
 
@@ -66,20 +76,36 @@ export const handleDeleteTagToComment = (req, res, db) => {
             })
             .del()
             .returning("tag_id")
-            .then(res => res)
+            .then(comments =>{ 
+
+                console.log("comments", comments)
+                res.json(comments)
+            })
             })
         
         
             .then(trx.commit)
             .catch(trx.rollback)
         )
-        .catch(err => console.log(err));
+        .catch(err => {
+
+            console.log(err)
+
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error deleting tag from comment";
+    
+            next(err);
+        });
     
 
 
 }
 
-export const handleCreateTag = (req, res, db) => {
+export const handleCreateTag = (req, res, next, db) => {
 
     const {tag_name} = req.body
 
@@ -101,10 +127,19 @@ export const handleCreateTag = (req, res, db) => {
         .where("tag_name", "=", tag_name)
         .then((comments) => {
                     
-            res.json(comments)
+            res.status(200).json(comments)
         })
     )
-    .catch(err => console.log(err));
+    .catch(err =>{
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error creating tag";
+
+        next(err);
+    });
 
 
 }

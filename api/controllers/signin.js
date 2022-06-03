@@ -3,7 +3,7 @@ import { jwtTokens } from "../utils/createTokens.js";
 import bcrypt from "bcrypt";
 
 
-export const handleSignin = (req, res, db) => {
+export const handleSignin = (req, res, next, db) => {
 
     // get username and password from body request
     const {username, password} = req.body
@@ -11,7 +11,13 @@ export const handleSignin = (req, res, db) => {
     // Check if both username and password are present
     if(!username || !password){
 
-        return res.status(400).json("Incorrect form submission");
+        const error = new Error("Incorrect form submission");
+
+        error.statusCode = 400;
+
+        error.message = "Incorrect form submission";
+
+        next(error);
     }
 
     db.select('username', 'password').from('login')
@@ -35,11 +41,22 @@ export const handleSignin = (req, res, db) => {
                 res.status(400).json("Trouble loggining in")
             }
         })
-        .catch(() => res.status(400).json("Trouble loggining in"))
+        .catch(err => {
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error logging in";
+    
+            next(err);
+            res.json({})
+        
+        })
 
 }
 
-export const handleSignin2 = (req, res, db) => {
+export const handleSignin2 = (req, res, next, db) => {
 
     // get username and password from body request
     const {username, password} = req.body
@@ -48,7 +65,13 @@ export const handleSignin2 = (req, res, db) => {
     // Check if both username and password are present
     if(!username || !password){
 
-        return res.status(400).json("Incorrect form submission");
+        const error = new Error("Incorrect form submission");
+
+        error.statusCode = 401;
+
+        error.message = "Incorrect form submission";
+
+        next(error);
     }
 
     
@@ -78,37 +101,65 @@ export const handleSignin2 = (req, res, db) => {
 
                     res.json(tokens);
                 })
-                .catch((err) => {
-                    console.log(err)
-                    if (err) return res.sendStatus(400);
+                .catch(err => {
+                    if(!err.statusCode){
+            
+                        err.statusCode = 500;
+                    }
+            
+                    err.message = "Error logging in";
+            
+                    next(err);
+                    res.json({})
+                
                 })
             }
             else{
 
                 // res.status(400).json("Trouble loggining in")
-                return res.sendStatus(400);
+                const error = new Error("Error logging in");
+
+                error.statusCode = 401;
+
+                error.message = "Error logging in";
+
+                next(error);
             }
         })
         })
-        .catch((err) => {
-            console.log(err)
-            if (err) return res.sendStatus(400);
+        .catch(err => {
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error logging in";
+    
+            next(err);
+            res.json({})
+        
         })
 
 }
 
-export const removeToken = (req, res) => {
+export const removeToken = (req, res, next) => {
     
     try{
         
         res.clearCookie('refresh_token', { httpOnly: true, sameSite: 'None', secure: true  })
-        res.json("")
+        res.status(201).json("")
         
 
     }
     catch(err){
 
-        console.error(err)
+        const error = new Error("Error");
+
+        error.statusCode = 401;
+
+        error.message = "Error";
+
+        next(error);
     }
 
 

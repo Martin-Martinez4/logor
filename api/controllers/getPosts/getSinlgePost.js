@@ -1,6 +1,6 @@
 
 
-export const handleGetSinglePost = (req, res, db) => {
+export const handleGetSinglePost = (req, res, next, db) => {
 
     const {id } = req.params
 
@@ -9,8 +9,19 @@ export const handleGetSinglePost = (req, res, db) => {
     .where('comment_id', '=', id).orderBy('created_at', 'desc')
     .then(data => {
 
-        res.json(data);
+        res.status(200).json(data);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        // console.log(err)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting requested comment."
+
+        next(err);
+        res.json([])
+    });
 
 }

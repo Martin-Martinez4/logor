@@ -339,6 +339,7 @@ const EditProfile = () => {
              .then(resonse => {
      
                  // setUploadStatus(res.msg)
+                 console.log(resonse);
                  
 
              })

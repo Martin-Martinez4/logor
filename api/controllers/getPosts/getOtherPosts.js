@@ -2,7 +2,7 @@
 
  //  SELECT * FROM comments jOIN user_headers ON comments.user_id = user_headers.user_id WHERE tag_id = '849998ef-e4b6-48ce-aa0d-7bbef2ee1995' ORDER BY comments.created_at;
 
-export const handleGetCommentsByUserID = (req, res, db) => {
+export const handleGetCommentsByUserID = (req, res, next, db) => {
 
     const {id } = req.params
 
@@ -15,17 +15,25 @@ export const handleGetCommentsByUserID = (req, res, db) => {
         .then((comments) => {
 
             // console.log(comments);
-            res.json(comments);
+            res.status(200).json(comments);
         })
         .catch(err => {
             // console.log(err)
+            if(!err.statusCode){
+
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error getting user comments."
+    
+            next(err);
             res.json([])
         });
 
 
 }
 
-export const handleGetCommentsByUserNickname = (req, res, db) => {
+export const handleGetCommentsByUserNickname = (req, res, next, db) => {
 
     const { nickname } = req.params
 
@@ -41,13 +49,24 @@ export const handleGetCommentsByUserNickname = (req, res, db) => {
 
             // console.log(comments)
 
-            res.json(comments);
+            res.status(200).json(comments);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // console.log(err)
+            if(!err.statusCode){
+
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error getting user comments by nickname."
+    
+            next(err);
+            res.json([])
+        });
 
 }
 
-export const handleGetCommentsByTag = (req, res, db) => {
+export const handleGetCommentsByTag = (req, res, next, db) => {
 
     // INSERT INTO tag_comment( tag_id, comment_id )
 
@@ -60,13 +79,25 @@ export const handleGetCommentsByTag = (req, res, db) => {
     .orderBy('created_at', 'desc')
     .then(data => {
 
-        res.json(data);
+        res.status(200).json(data);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        // console.log(err)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting comments by tag."
+
+        next(err);
+        res.json([])
+    });
+
 
 }
 
-export const handleGetTagByName = (req, res, db) => {
+export const handleGetTagByName = (req, res, next, db) => {
 
     const { name } = req.params
 
@@ -83,9 +114,20 @@ export const handleGetTagByName = (req, res, db) => {
     .then(data => {
 
         // console.log(data)
-        res.json(data);
+        res.status(200).json(data);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        // console.log(err)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting comments by tag name."
+
+        next(err);
+        res.json([])
+    });
 }
 
 

@@ -1,6 +1,6 @@
 
 
-export const handleGetUserInfo = (req, res , db) => {
+export const handleGetUserInfo = (req, res, next, db) => {
 
     const { id } = req.params;
 
@@ -9,17 +9,23 @@ export const handleGetUserInfo = (req, res , db) => {
     .where("users.id", "=", `${id}`)
     .then((user) => {
         
-        res.json(user)
+        res.status(200).json(user)
     })
     .catch(err => {
-        console.log(err)
-        res.json([])
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting user information";
+
+        next(err)
     })
 
 
 }
 
-export const handleGetUserInfoByNickname = (req, res , db) => {
+export const handleGetUserInfoByNickname = (req, res, next, db) => {
 
     const { nickname } = req.params;
 
@@ -32,13 +38,22 @@ export const handleGetUserInfoByNickname = (req, res , db) => {
 
         // console.log(user)
         
-        res.json(user)
+        res.status(200).json(user)
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting user information";
+
+        next(err);
+    })
 
 }
 
-export const handleGetGetMiniProfileInfo = (req, res, db) => {
+export const handleGetGetMiniProfileInfo = (req, res, next, db) => {
 
     try{
 
@@ -53,25 +68,37 @@ export const handleGetGetMiniProfileInfo = (req, res, db) => {
         })
         .then(userInfo => {
     
-            res.json(userInfo)
+            res.status(200).json(userInfo)
         })
         .catch(err => {
-            console.log("error handleGetGetMiniProfileInfo ")
-            console.log(err)
-            res.json({})
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error getting miniprofile information";
+    
+            next(err);
+            // res.json({})
         
         })
 
     }catch{
-        console.log("error handleGetGetMiniProfileInfo ")
-        res.json({})
+        const error = new Error("Error getting miniprofile information");
+
+        error.statusCode = 500;
+
+        error.message = "Error getting miniprofile information";
+
+        next(error);
+        // res.json({})
 
     }
 
 
 }
 
-export const  handleGetLoggedinUserInfo = (req, res, db) => {
+export const  handleGetLoggedinUserInfo = (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -80,12 +107,18 @@ export const  handleGetLoggedinUserInfo = (req, res, db) => {
     .where("users.id", "=", `${user_id}`)
     .then((user) => {
         
-        res.json(user)
+        res.status(200).json(user)
     })
     .catch(err => {
-        console.log("get info error")
-        console.log(err)
-        res.json([])
+
+        const error = new Error("Error getting miniprofile information");
+
+        error.statusCode = 500;
+
+        error.message = "Error getting miniprofile information";
+
+        next(error);
+        // res.json([])
     })
 
 

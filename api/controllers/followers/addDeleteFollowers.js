@@ -1,5 +1,5 @@
 
-export const handleAddFollower = (req, res, db) => {
+export const handleAddFollower = (req, res, next, db) => {
 
     const follower_id = req.user_id
 
@@ -16,16 +16,22 @@ export const handleAddFollower = (req, res, db) => {
     .onConflict(["followee_id", "follower_id"])
     .ignore()
     .returning("follower_id")
-    .then(data => res.json("success"))
+    .then(data => res.status(201).json(comments))
     .catch(err => {
 
-        console.log(err)
-        res.json("Error")
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error Adding Follower."
+
+        next(err);
     })
     
 }
 
-export const handleDeleteFollower = (req, res, db) => {
+export const handleDeleteFollower = (req, res, next, db) => {
 
     const follower_id = req.user_id
 
@@ -41,11 +47,17 @@ export const handleDeleteFollower = (req, res, db) => {
     .onConflict()
     .ignore()
     .returning("follower_id")
-    .then(data => res.json("success"))
+    .then(data => res.status(201).json(comments))
     .catch(err => {
 
-        console.log(err)
-        res.json("Error")
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error Deleting Follower."
+
+        next(err);
     })
 
 }

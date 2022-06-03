@@ -1,5 +1,5 @@
 
-export const handleGetFeed = (req ,res, db) => {
+export const handleGetFeed = (req ,res, next, db) => {
 
     // The query: 
     // SELECT user_id, comments.text_content FROM follower_followee JOIN users on users.id = followee_id JOIN comments ON follower_followee.followee_id = comments.user_id WHERE follower_followee.follower_id = '9f09c196-f66b-4ee7-a172-53eb39f0d349' ORDER BY comments.created_at DESC LIMIT 100;
@@ -18,11 +18,18 @@ export const handleGetFeed = (req ,res, db) => {
     .limit(200)
     .then(comments => {
 
-        res.json(comments)
+        res.status(200).json(comments)
     })
     .catch(err => {
 
-        res.status(err.code || 500)
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting feed."
+
+        next(err);
     })
 
 

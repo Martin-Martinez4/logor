@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from "bcrypt";
 
-export const handleRegister = (req, res ,db) => {
+export const handleRegister = (req, res, next, db) => {
 
     const { username, 
         nickname,
@@ -21,7 +21,13 @@ export const handleRegister = (req, res ,db) => {
 
     if(!id || !username || !nickname || !password || !profile_pic_url || !header_img_url || password !== password2){
 
-        return res.status(400).json("Incorrect form submission");
+        const error = new Error('Missing required field, registration falied');
+
+        error.statusCode = 400;
+
+        error.message = 'Missing required field, registration falied';
+
+        next(error);
     }
 
     bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS)).then(function(hash) {
@@ -71,9 +77,20 @@ export const handleRegister = (req, res ,db) => {
                     .where('users.username', '=', username)
                     .then((user) => {
                         
-                        res.json(user[0])
+                        res.status(201).json(user[0])
                     })
-                    .catch((err) => console.log(err))
+                    .catch(err => {
+                        if(!err.statusCode){
+                
+                            err.statusCode = 500;
+                        }
+                
+                        err.message = "Error creating user";
+                
+                        next(err);
+                        res.json({})
+                    
+                    })
             })
     
             
@@ -82,15 +99,35 @@ export const handleRegister = (req, res ,db) => {
                  
         })
         .catch(err => {
-            console.log(err)
-            if (err) return res.sendStatus(400);
-        });
+            if(!err.statusCode){
+    
+                err.statusCode = 500;
+            }
+    
+            err.message =  "Error creating user";
+    
+            next(err);
+            res.json({})
+        
+        })
+    })
+    .catch(err => {
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message =  "Error creating user";
+
+        next(err);
+        res.json({})
+    
     });
 
 
 }
 
-export const handleUsernameExists = (req, res, db) => {
+export const handleUsernameExists = (req, res, next, db) => {
 
     const username = req.query.username
 
@@ -105,22 +142,30 @@ export const handleUsernameExists = (req, res, db) => {
 
         if(count >= 1){
 
-            res.json(true)
+            res.status(200).json(true)
 
         }
         else{
 
-            res.json(false)
+            res.status(200).json(false)
         }
     })
-    .catch( err => {
+    .catch(err => {
+        if(!err.statusCode){
 
-        console.log(err)
+            err.statusCode = 500;
+        }
+
+        err.message =  "Error creating user";
+
+        next(err);
+        res.json({})
+    
     })
 
 } 
 
-export const handleNicknameExists = (req, res, db) => {
+export const handleNicknameExists = (req, res, next, db) => {
 
     const nickname = '@'+req.query.nickname
 
@@ -136,17 +181,25 @@ export const handleNicknameExists = (req, res, db) => {
 
         if(count >= 1){
 
-            res.json(true)
+            res.status(200).json(true)
 
         }
         else{
 
-            res.json(false)
+            res.status(200).json(false)
         }
     })
-    .catch( err => {
+    .catch(err => {
+        if(!err.statusCode){
 
-        console.log(err)
+            err.statusCode = 500;
+        }
+
+        err.message =  "Error creating user";
+
+        next(err);
+        res.json({})
+    
     })
 
 

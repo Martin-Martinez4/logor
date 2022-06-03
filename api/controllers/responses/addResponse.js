@@ -1,5 +1,5 @@
 
-export const handleAddResponse = (req, res, db) => {
+export const handleAddResponse = (req, res, next, db) => {
 
     const {parent_id, comment_id}  = req.body
 
@@ -23,10 +23,17 @@ export const handleAddResponse = (req, res, db) => {
     .onConflict(["parent_id", "comment_id"])
     .ignore()
     .returning("comment_id")
-    .then(data => res.json(data))
+    .then(data => res.status(200).json(data))
     .catch(err => {
 
-        console.log(err)
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error adding response";
+
+        next(err);
         res.json("Error")
     })
 

@@ -1,5 +1,5 @@
 
-export const handleUpdatePost = (req, res, db) => {
+export const handleUpdatePost = (req, res, next, db) => {
 
     // INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id )
 
@@ -27,16 +27,29 @@ export const handleUpdatePost = (req, res, db) => {
         })
         .then(comment => {
 
-            res.json(comment[0])
+            res.status(200).json(comment[0])
         })
         .then(trx.commit)
         .catch(trx.rollback)
-    }).catch(err => console.log(err))
+    })
+    .catch(err => {
+        
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error updating post.";
+
+        next(err);
+
+        res.json("Error")
+    });
 
 
 }
 
-export const handleSlateForDeletion = (req, res, db) => {
+export const handleSlateForDeletion = (req, res, next, db) => {
 
     const { comment_id } = req.params;
 
@@ -61,14 +74,26 @@ export const handleSlateForDeletion = (req, res, db) => {
         })
         .then((comment) => {
         
-            res.json(comment[0])
+            res.status(200).json(comment[0])
         })
                
 
         .then(trx.commit)
         .catch(trx.rollback)
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error deleting post.";
+
+        next(err);
+
+        res.json("Error")
+    });
 
 
 }

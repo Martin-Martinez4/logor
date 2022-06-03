@@ -1,5 +1,5 @@
 
-export const handleGetResponses = (req, res, db) => {
+export const handleGetResponses = (req, res, next, db) => {
 
     const{ parent_id }  = req.params;
 
@@ -11,10 +11,18 @@ export const handleGetResponses = (req, res, db) => {
     .then((comments) => {
 
         // console.log(comments);
-        res.json(comments);
+        res.status(200).json(comments);
     })
     .catch(err => {
-        console.log(err)
+        
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting responses";
+
+        next(err);
     });
 }
 

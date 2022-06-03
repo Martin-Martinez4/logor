@@ -1,5 +1,5 @@
 
-export const handleGetPostsThatMentionUser = (req, res, db) => {
+export const handleGetPostsThatMentionUser = (req, res, next, db) => {
 
     const user_id = req.user_id
 
@@ -13,13 +13,21 @@ export const handleGetPostsThatMentionUser = (req, res, db) => {
     .orderBy('created_at', 'desc')
     .then(comments => {
 
-        res.json(comments)
+        res.status(200).json(comments);
     })
-    .catch(error => {
+    .catch(err => {
+        
+        if(!err.statusCode){
+    
+            err.statusCode = 500;
+        }
 
-        console.error(error)
+        err.message = "Error getting user mentions";
 
-    })
+        next(err);
+
+        res.json("")
+    });
 
 
 }

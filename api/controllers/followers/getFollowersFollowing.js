@@ -1,6 +1,6 @@
 
 
-export const handleGetFollowers = (req, res, db) => {
+export const handleGetFollowers = (req, res, next, db) => {
 
     const user_id = req.query.user_id;
 
@@ -13,17 +13,24 @@ export const handleGetFollowers = (req, res, db) => {
     })
     .then(users => {
 
-        res.json(users)
+        res.status(200).json(users);
     })
     .catch(err => {
 
-        res.json("Error")
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting followers."
+
+        next(err);
     })
     
 
 }
 
-export const handleGetFollowing = (req, res, db) => {
+export const handleGetFollowing = (req, res, next, db) => {
 
     const user_id = req.query.user_id;
 
@@ -36,11 +43,18 @@ export const handleGetFollowing = (req, res, db) => {
     })
     .then(users => {
 
-        res.json(users)
+        res.status(200).json(users);
     })
     .catch(err => {
 
-        res.json("Error")
+        if(!err.statusCode){
+
+            err.statusCode = 500;
+        }
+
+        err.message = "Error getting following."
+
+        next(err);
     })
     
 

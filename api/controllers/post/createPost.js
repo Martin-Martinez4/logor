@@ -1,6 +1,6 @@
 
 
-export const handleCreatePost = (req, res, db) => {
+export const handleCreatePost = (req, res, next, db) => {
 
         //  Like register, create comment, return comments list, run through make posts, setUserPost to result, postlist will rerender
         // INSERT INTO comments( comment_id, text_content, created_at, status, likes, user_id )
@@ -11,8 +11,8 @@ export const handleCreatePost = (req, res, db) => {
 
         const {text_content, newComment_id, parent_id} = req.body;
 
-        console.log(newComment_id)
-        console.log("parent_id: ",parent_id)
+        // console.log(newComment_id)
+        // console.log("parent_id: ",parent_id)
 
         const created_at = new Date((new Date().getTime())).toUTCString();
         const status = ['', ''];
@@ -40,7 +40,7 @@ export const handleCreatePost = (req, res, db) => {
                 .into('responses')
                 .then(() => {
 
-                    res.json("done")
+                    res.status(201).json("done");
     
                     // return trx.select('*').from('comments')
                     // .join("users", "comments.user_id", "users.id")
@@ -52,15 +52,37 @@ export const handleCreatePost = (req, res, db) => {
                     //     .catch((err) => console.log(err))
     
                 })
-                .catch((err) => {
-
-                    res.json("error")
-                })
+                .catch(err => {
+        
+                    if(!err.statusCode){
+                
+                        err.statusCode = 500;
+                    }
+            
+                    err.message = "Error getting user mentions";
+            
+                    next(err);
+            
+                    res.json("Error")
+                });
     
             })
             .then(trx.commit)
             .catch(trx.rollback)
         })
+        .catch(err => {
+        
+            if(!err.statusCode){
+        
+                err.statusCode = 500;
+            }
+    
+            err.message = "Error creating post";
+    
+            next(err);
+    
+            res.json("")
+        });
 
 
 
