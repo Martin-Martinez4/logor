@@ -5,6 +5,8 @@
 import 'dotenv/config';
 // const signin = require('./controllers/signin');
 
+import helmet from "helmet";
+
 import path from "path";
 
 
@@ -52,6 +54,15 @@ import multer from "multer";
 const app = express();
 
 const secret = process.env.ACCESS_SECRET;
+
+// app.use(helmet());
+// app.use(helmet.crossOriginOpenerPolicy({ policy: "same-origin-allow-popups" }));
+
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+)
 
 app.use(express.static(path.join(__dirname,'temp')));
 
@@ -117,7 +128,7 @@ export function upload(req, res, next){
   
 });
 
-  const fileFilter = (req, res, file) => {
+  const fileFilter = (req, file, cb) => {
 
     mimeType = file.mimetype;
 
@@ -137,6 +148,7 @@ export function upload(req, res, next){
   const upload = multer({
 
     storage: storage,
+    fileFilter: fileFilter,
     limits: { fileSize: 1 * 1024 * 1024 }
   })
 
