@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, { FC, useEffect, useState, useContext, useMemo } from "react";
 
 import { serverAddressString } from "../utils/exportGetImage"; 
 
@@ -109,7 +109,7 @@ const VisitorPost: FC = ({ uuid, userName, nickname, user_profile, date_posted, 
     }, [dropdownVisible, deleteConfirmationVisible, editMode, status,  cancelButton, dropdownContainer]);
 
 
-    let treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
+    let treatedText = useMemo(() => addLinkTags(getTagsMentionsLinks(postInformation.text_content)), [postInformation.text_content])
 
 
     return(

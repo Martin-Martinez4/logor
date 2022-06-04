@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, { FC, useEffect, useState, useContext, useMemo } from "react";
 
 import { serverAddressString } from "../utils/exportGetImage"; 
 
@@ -136,7 +136,7 @@ const RecursiveVisitorPost: FC = ({ uuid, userName, nickname, user_profile, date
     }, [])
 
 
-    let treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
+    let treatedText = useMemo(() => addLinkTags(getTagsMentionsLinks(postInformation.text_content)), [postInformation.text_content])
 
 
     return(

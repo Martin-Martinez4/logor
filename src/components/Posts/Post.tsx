@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, { FC, useEffect, useState, useContext, useMemo } from "react";
 
 import { getImageString } from "../utils/exportGetImage";
 import Card from "../Card/Card";
@@ -20,7 +20,6 @@ import CommnetBox from "../CommentBox/CommentBox";
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
 import ResponsesIcon from "../svg/ResponsesIcon/ResponsesIcon";
-import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 import useSigninModal from "../hooks/useModal";
 import UserInfoContext from "../context/UserInfoProvider";
 
@@ -310,7 +309,7 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
 
     }
 
-    let treatedText = addLinkTags(getTagsMentionsLinks(postInformation.text_content))
+    let treatedText = useMemo(() => addLinkTags(getTagsMentionsLinks(postInformation.text_content)), [postInformation.text_content])
 
  
 
@@ -436,7 +435,6 @@ const Post: FC = ({ uuid, userName, nickname, user_profile, date_posted, text_co
                                 <HeartIcon comment_id={uuid} loggedInId={loggedInUser.id}></HeartIcon>
                                 <CheckmarkIcon ></CheckmarkIcon>
                                 <ResponsesIcon comment_id={uuid}></ResponsesIcon>
-                                {/* <ShareIcon2></ShareIcon2> */}
                             </div>
                             <div className="post__lastEdited">
                             {postInformation.status[0] === "Edited"? (<React.Fragment><p>Lasted Edited on: </p><p> {lastEditedReadable}</p></React.Fragment>):<p></p>}
