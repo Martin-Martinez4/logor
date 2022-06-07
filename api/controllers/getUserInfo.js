@@ -79,7 +79,6 @@ export const handleGetGetMiniProfileInfo = (req, res, next, db) => {
             err.message = "Error getting miniprofile information";
     
             next(err);
-            // res.json({})
         
         })
 
@@ -91,14 +90,13 @@ export const handleGetGetMiniProfileInfo = (req, res, next, db) => {
         error.message = "Error getting miniprofile information";
 
         next(error);
-        // res.json({})
 
     }
 
 
 }
 
-export const  handleGetLoggedinUserInfo = (req, res, next, db) => {
+export const handleGetLoggedinUserInfo = (req, res, next, db) => {
 
     const user_id = req.user_id;
 
@@ -118,7 +116,6 @@ export const  handleGetLoggedinUserInfo = (req, res, next, db) => {
         error.message = "Error getting miniprofile information";
 
         next(error);
-        // res.json([])
     })
 
 

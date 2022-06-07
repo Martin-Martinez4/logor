@@ -21,7 +21,6 @@ export const handleCountResponses = (req, res, next, db) => {
         err.message = "Error counting responses";
 
         next(err);
-        res.json("NA")
     })
 
 }

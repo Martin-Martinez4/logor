@@ -24,7 +24,6 @@ export const handleGetMentionsFromCommentID = (req, res, next, db) => {
 
         next(err);
 
-        res.json({})
     });
 }
 

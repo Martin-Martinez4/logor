@@ -39,7 +39,6 @@ export const handleAddLike = (req, res, next, db) => {
 
         next(err);
 
-        res.json({})
     }
 
 }
@@ -72,7 +71,6 @@ export const handleDeleteLike = (req, res, next, db) => {
 
         next(err);
 
-        res.json("Error")
     })
 
 }

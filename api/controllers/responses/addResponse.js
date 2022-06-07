@@ -34,7 +34,6 @@ export const handleAddResponse = (req, res, next, db) => {
         err.message = "Error adding response";
 
         next(err);
-        res.json("Error")
     })
 
 }

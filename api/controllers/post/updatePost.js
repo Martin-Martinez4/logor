@@ -43,7 +43,6 @@ export const handleUpdatePost = (req, res, next, db) => {
 
         next(err);
 
-        res.json("Error")
     });
 
 
@@ -92,7 +91,6 @@ export const handleSlateForDeletion = (req, res, next, db) => {
 
         next(err);
 
-        res.json("Error")
     });
 
 

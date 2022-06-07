@@ -26,7 +26,6 @@ export const handleGetPostsThatMentionUser = (req, res, next, db) => {
 
         next(err);
 
-        res.json("")
     });
 
 

@@ -50,7 +50,6 @@ export const handleSignin = (req, res, next, db) => {
             err.message = "Error logging in";
     
             next(err);
-            res.json({})
         
         })
 
@@ -110,7 +109,6 @@ export const handleSignin2 = (req, res, next, db) => {
                     err.message = "Error logging in";
             
                     next(err);
-                    res.json({})
                 
                 })
             }
@@ -136,7 +134,6 @@ export const handleSignin2 = (req, res, next, db) => {
             err.message = "Error logging in";
     
             next(err);
-            res.json({})
         
         })
 

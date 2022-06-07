@@ -46,7 +46,6 @@ const {nickname, comment_id} = req.body
 
         next(err);
 
-        res.json("NA")
     })
 }
 
@@ -96,7 +95,6 @@ export const handleDeleteMentionToComment = (req, res, next, db) => {
     
             next(err);
     
-            res.json("NA")
         })
     
 

@@ -24,7 +24,6 @@ export const handleCountLikes = (req, res, next, db) => {
 
         next(err);
 
-        res.json("NA")
     })
 }
 

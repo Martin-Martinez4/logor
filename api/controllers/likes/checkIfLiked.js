@@ -40,7 +40,6 @@ export const handleCheckIfLiked = (req, res, next, db) => {
     
             next(err);
 
-            res.json(false)
         })
     }
     else{

@@ -58,11 +58,11 @@ const secret = process.env.ACCESS_SECRET;
 // app.use(helmet());
 // app.use(helmet.crossOriginOpenerPolicy({ policy: "same-origin-allow-popups" }));
 
-app.use(
-  helmet({
-    crossOriginResourcePolicy: false,
-  })
-)
+// app.use(
+//   helmet({
+//     crossOriginResourcePolicy: false,
+//   })
+// )
 
 app.use(express.static(path.join(__dirname,'temp')));
 
@@ -80,14 +80,21 @@ import { env } from 'process';
 import { refreshCookie } from './utils/createTokens.js';
 import comments from './routes/comments.js';
 
+// export const db = knex({
+//     client: 'pg',
+//     connection: {
+//       host : process.env.POSTGRES_HOST,
+//       port :  process.env.POSTGRES_PORT,
+//       user :  process.env.POSTGRES_USER,
+//       password :  process.env.POSTGRES_PASSWORD,
+//       database :  process.env.POSTGRES_DB
+//     }
+//   });
 export const db = knex({
     client: 'pg',
     connection: {
-      host : process.env.POSTGRES_HOST,
-      port :  process.env.POSTGRES_PORT,
-      user :  process.env.POSTGRES_USER,
-      password :  process.env.POSTGRES_PASSWORD,
-      database :  process.env.POSTGRES_DB
+      connectionString: process.env.DATABASE_URL,
+      // ssl: { require: false, rejectUnauthorized: false }
     }
   });
 
@@ -263,8 +270,8 @@ app.use((error, req ,res, next) => {
 })
 
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
 
-    console.log("server is running on port 3001")
+    console.log(`server is running on port ${process.env.PORT || 3001}`)
 })
 

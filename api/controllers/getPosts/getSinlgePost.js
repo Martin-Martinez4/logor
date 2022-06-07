@@ -21,7 +21,6 @@ export const handleGetSinglePost = (req, res, next, db) => {
         err.message = "Error getting requested comment."
 
         next(err);
-        res.json([])
     });
 
 }

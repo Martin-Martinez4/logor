@@ -21,7 +21,6 @@ export const handleGetTagNamesFromCommentID = (req, res, next, db) => {
         err.message = "Error getting tag name from comments";
 
         next(err);
-        res.json("")
     });
 }
 

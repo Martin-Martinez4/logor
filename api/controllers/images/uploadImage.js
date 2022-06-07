@@ -45,7 +45,6 @@ export const handleUploadImage = (req, res, next, db) => {
                 next(err);
             }
     
-            // res.json({});
             
                 db.insert({
         

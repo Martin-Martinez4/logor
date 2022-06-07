@@ -11,6 +11,8 @@ export const handleCreatePost = (req, res, next, db) => {
 
         const {text_content, newComment_id, parent_id} = req.body;
 
+        console.log({text_content, newComment_id, parent_id, user_id})
+
         // console.log(newComment_id)
         // console.log("parent_id: ",parent_id)
 
@@ -19,6 +21,8 @@ export const handleCreatePost = (req, res, next, db) => {
         const likes = 0;
 
         db.transaction(trx => {
+
+            console.log("start")
 
             trx.insert({
                 comment_id: `${newComment_id}`,
@@ -31,14 +35,20 @@ export const handleCreatePost = (req, res, next, db) => {
             })
             .into('comments')
             .then(() => {
+
+                console.log("insert", parent_id === "")
+                console.log("newComment", newComment_id)
     
                return trx.insert({
     
-                    parent_id: parent_id,
+                    parent_id: parent_id === "" ? null : parent_id,
                     comment_id: `${newComment_id}`
                 })
                 .into('responses')
                 .then(() => {
+
+                    console.log("Res")
+
 
                     res.status(201).json("done");
     
@@ -63,7 +73,6 @@ export const handleCreatePost = (req, res, next, db) => {
             
                     next(err);
             
-                    res.json("Error")
                 });
     
             })
@@ -81,7 +90,6 @@ export const handleCreatePost = (req, res, next, db) => {
     
             next(err);
     
-            res.json("")
         });
 
 

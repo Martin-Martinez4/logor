@@ -21,7 +21,6 @@ export const handleGetComments = (req, res, next, db) => {
         err.message = "Error getting your comments."
 
         next(err);
-        res.json([])
     });
 
 }

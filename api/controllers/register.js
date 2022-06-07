@@ -32,6 +32,8 @@ export const handleRegister = (req, res, next, db) => {
 
     bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS)).then(function(hash) {
 
+        console.log("bcrypt")
+
         db.transaction(trx => {
             trx.insert({
                 id: id,
@@ -42,6 +44,9 @@ export const handleRegister = (req, res, next, db) => {
             .into('users')
     
             .then(() =>{
+
+                console.log("Into users")
+
     
                 return trx('users')
                 .returning('user_id')
@@ -54,13 +59,17 @@ export const handleRegister = (req, res, next, db) => {
     
             .then(
                 (user_id) => {
-                    return trx('users')
+
+                    console.log("Into login")
+
+
+                    trx('users')
                     // knex built in method .returning
                     .returning('user_id')
                     
                     .insert({
             
-                                decription:description,
+                                description:description,
                                 header_img_url: header_img_url,
                                 location: location,
                                 links: links,
@@ -68,29 +77,32 @@ export const handleRegister = (req, res, next, db) => {
                                 user_id: id
                             })
                             .into('user_headers')
-                }
-            )
-            .then(() => {
-    
-                db.select('*').from('users')
-                .join('user_headers', 'users.id', 'user_headers.user_id')
-                    .where('users.username', '=', username)
-                    .then((user) => {
-                        
-                        res.status(201).json(user[0])
-                    })
-                    .catch(err => {
-                        if(!err.statusCode){
+                            .then((res) => {
                 
-                            err.statusCode = 500;
-                        }
+                                console.log("Into headers")
                 
-                        err.message = "Error creating user";
-                
-                        next(err);
-                        res.json({})
                     
-                    })
+                                return trx.select('*').from('users')
+                                .join('user_headers', 'users.id', 'user_headers.user_id')
+                                    .where('users.username', '=', username)
+                                    .then((user) => {
+                
+                                        console.log(user)
+                                        
+                                        res.status(201).json(user[0])
+                                    })
+                                    .catch(err => {
+                                        if(!err.statusCode){
+                                
+                                            err.statusCode = 500;
+                                        }
+                                
+                                        err.message = "Error creating user";
+                                
+                                        next(err);
+                                    
+                                    })
+                            })
             })
     
             
@@ -107,7 +119,6 @@ export const handleRegister = (req, res, next, db) => {
             err.message =  "Error creating user";
     
             next(err);
-            res.json({})
         
         })
     })
@@ -120,7 +131,6 @@ export const handleRegister = (req, res, next, db) => {
         err.message =  "Error creating user";
 
         next(err);
-        res.json({})
     
     });
 
@@ -159,7 +169,6 @@ export const handleUsernameExists = (req, res, next, db) => {
         err.message =  "Error creating user";
 
         next(err);
-        res.json({})
     
     })
 
@@ -198,7 +207,6 @@ export const handleNicknameExists = (req, res, next, db) => {
         err.message =  "Error creating user";
 
         next(err);
-        res.json({})
     
     })
 

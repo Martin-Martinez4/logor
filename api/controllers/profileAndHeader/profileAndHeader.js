@@ -160,9 +160,6 @@ export const handleUploadProfileImage = async (req, res, next, db) => {
     
             next(err);
 
-            res.json({
-                msg: err
-            })
         })
     
 
@@ -436,9 +433,7 @@ export const handleDeleteHeaderImage = async (req, res, next, db) => {
 
         next(err);
 
-        res.json({
-            msg: err
-        })
+       
     })
 }
 
@@ -474,9 +469,7 @@ export const handleUpdateUsername = (req, res, next, db) => {
 
         next(err);
 
-        res.json({
-            msg: err
-        })
+       
     })
 
 
@@ -513,9 +506,7 @@ export const handleUpdateNickname = (req, res, next, db) => {
 
         next(err);
 
-        res.json({
-            msg: err
-        })
+       
     })
 
 }
@@ -550,9 +541,7 @@ export const handleUpdateDescription = (req, res, next, db) => {
         err.message = "Error updating header description";
 
         next(err);
-        res.json({
-            msg: err
-        })
+        
     })
 
 }
@@ -589,9 +578,7 @@ export const handleUpdateLocation = (req, res, next, db) => {
 
         next(err);
 
-        res.json({
-            msg: err
-        })
+       
     })
 
 }
@@ -627,9 +614,7 @@ export const handleUpdateLinks = (req, res, next, db) => {
 
         next(err);
 
-        res.json({
-            msg: err
-        })
+       
     })
 
 }

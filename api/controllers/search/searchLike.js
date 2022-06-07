@@ -21,6 +21,8 @@ export const handleGetUsersLike = (req, res, next, db ) => {
     .limit(parseInt(queryLimit))
     .then( users => {
 
+        console.log(users)
+
         res.status(200).json(users)
     }
     )
