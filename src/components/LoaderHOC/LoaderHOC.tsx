@@ -1,5 +1,5 @@
 
-import { FC, ReactNode } from "react";
+import { FC, ReactElement, ReactNode } from "react";
 
 import Loader1 from "../svg/Loader1/Loader1"
 import Loader2 from "../svg/Loader1/Loader2";

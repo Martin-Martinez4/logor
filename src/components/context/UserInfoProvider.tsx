@@ -18,14 +18,14 @@ interface UserInformation {
 
 }
 
-interface UserInfoContextInterface {
+interface UserInfoContext {
     loggedInUser?: UserInformation; 
     setloggedInUser?: Dispatch<SetStateAction<UserInformation>>; 
     loadUser?: (data: UserInformation) => Promise<void>;
     unloadUser?: () => void;
 }
 
-const UserInfoContext = createContext<UserInfoContextInterface>({});
+const UserInfoContext = createContext<UserInfoContext>({});
 
 export const UserInfoProvider:FC = ({ children }) => {
 

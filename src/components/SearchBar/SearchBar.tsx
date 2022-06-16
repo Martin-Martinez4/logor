@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, JSXElementConstructor, useEffect, useState } from "react";
 import MiniProfile from "../MiniProfile/MiniProfile";
 
 import { userSearch, tagSearch } from "../utils/fetchSearchQuery";

@@ -20,6 +20,7 @@ import UserInfoContext from "../context/UserInfoProvider";
 
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
+import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 import ResponsesIcon from "../svg/ResponsesIcon/ResponsesIcon";
 
 type allComments = {
@@ -38,7 +39,7 @@ type allComments = {
     username:string;
 }
 
-type RecursiveVisitorPostProps = { 
+type RecursiveVisitorPost = { 
     comment_id: string; 
     username: string; 
     nickname: string; 
@@ -51,7 +52,7 @@ type RecursiveVisitorPostProps = {
     likes: string | number | undefined;
 }
 
-const RecursiveVisitorPost: FC<RecursiveVisitorPostProps> = ({ comment_id, username, nickname, user_profile, created_at, text_content, status, allComments, padding }) => {
+const RecursiveVisitorPost: FC<RecursiveVisitorPost> = ({ comment_id, username, nickname, user_profile, created_at, text_content, status, allComments, padding }) => {
 
     let childComments = () => allComments? allComments.filter(c => c.parent_id === comment_id) : [];
 

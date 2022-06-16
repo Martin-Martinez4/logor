@@ -1,14 +1,14 @@
 
-import { createContext, FC, useState } from "react";
+import { createContext, Dispatch, FC, SetStateAction, useState } from "react";
 
 
-interface SigninModalContextInterface {
+interface SigninModalContext {
     showModal?: boolean; 
     toggleModal?: () => void;
     hideModal?:  () => void;
 }
 
-const SigninModalContext = createContext<SigninModalContextInterface>({});
+const SigninModalContext = createContext<SigninModalContext>({});
 
 export const SigninModalProvider: FC = ({ children }) => {
 

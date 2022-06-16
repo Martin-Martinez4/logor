@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import "./scroll.css";
 
 type ScrollProps = {

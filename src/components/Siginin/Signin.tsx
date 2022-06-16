@@ -77,7 +77,7 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
         
         const {username, password} = userCreds
 
-        await fetch('http://localhost:3001/signin2', {
+        await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/signin2`, {
 
             method: "post",
             credentials:'include',
@@ -111,7 +111,7 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
                 // login().then(() => {
                         
                     // loadUser(user);
-                      return fetch(`http://localhost:3001/loggedin/user/info/`, {
+                      return fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/loggedin/user/info/`, {
 
                         method: "get",
                         credentials:'include',
@@ -124,7 +124,6 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
                     .then(res => res.json())
                     .then(user => {
 
-                        console.log(user[0])
 
                         try{
 
@@ -152,7 +151,6 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
                         }
                         catch(err){
 
-                            console.error(err)
                             setSigninLoading(false)
 
                         }
@@ -174,7 +172,6 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
             
             setSigninLoading(false)
 
-            console.log(err)
         })
 
         setSigninLoading(false)

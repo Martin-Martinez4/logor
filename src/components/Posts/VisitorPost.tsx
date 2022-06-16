@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect, useState, useMemo } from "react";
+import React, { FC, useEffect, useState, useContext, useMemo } from "react";
 
 import { serverAddressString } from "../utils/exportGetImage"; 
 
@@ -16,8 +16,11 @@ import CommnetBox from "../CommentBox/CommentBox";
 import getTagsMentionsLinks from "../utils/getTagsMentionsLinks";
 import addLinkTags from "../utils/addLinkTags";
 
+import UserInfoContext from "../context/UserInfoProvider";
+
 import HeartIcon from "../svg/HeartIcon/HeartIcon2";
 import CheckmarkIcon from "../svg/CheckmarkIcon/CheckmarkIcon";
+import ShareIcon2 from "../svg/ShareIcon2/ShareIcon2";
 import ResponsesIcon from "../svg/ResponsesIcon/ResponsesIcon";
 
 type PostType = { 
@@ -31,14 +34,14 @@ type PostType = {
     likes?: string | number;
 }
 
-// type PostsArray = PostType[]
+type PostsArray = PostType[]
 
 const VisitorPost: FC<PostType> = ({ comment_id, username, nickname, profile_pic_url, created_at, text_content, status }) => {
 
     const { showModal, toggleModal } = useModal();
 
 
-    // const { loggedInUser } = useContext( UserInfoContext);
+    const { loggedInUser } = useContext( UserInfoContext);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [postInformation, setPostInfomration] = useState({

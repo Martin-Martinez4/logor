@@ -1,4 +1,5 @@
 import { createContext, Dispatch, FC, SetStateAction, useState } from "react";
+import { StructuredType } from "typescript";
 
 type Auth = {
     access_token?: string;

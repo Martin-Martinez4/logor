@@ -1,5 +1,5 @@
 
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, ReactNode } from "react";
 
 import "./Loader1.css";
 
