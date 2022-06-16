@@ -124,6 +124,7 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
                     .then(res => res.json())
                     .then(user => {
 
+                        console.log(user[0])
 
                         try{
 
@@ -151,6 +152,7 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
                         }
                         catch(err){
 
+                            console.error(err)
                             setSigninLoading(false)
 
                         }
@@ -172,6 +174,7 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
             
             setSigninLoading(false)
 
+            console.log(err)
         })
 
         setSigninLoading(false)
@@ -187,7 +190,8 @@ const Signin:FC<reDirect> = ({ reDirect }) => {
     return (
         
     <form className="signin flexColContainer">
-
+        {console.log("mode: " +process.env.NODE_ENV)}
+        {console.log("backend: " +process.env.REACT_APP_BACKEND_BASE_URL)}
 
         <h2 className="signin__title"> Welcome!</h2>
         <h3 className="signin__title">Login!</h3>

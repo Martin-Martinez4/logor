@@ -49,7 +49,7 @@ router.post("/header/update/default/", authenticateToken, (req, res, next) => {
 
 })
 
-router.post("/header/update/", [ authenticateToken, upload().single('image')], (req,res) => {
+router.post("/header/update/", [ authenticateToken, upload().single('image')], (req, res, next ) => {
 
     handleUpdateHeaderImage(req, res, next, db)
 

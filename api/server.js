@@ -7,6 +7,8 @@ import 'dotenv/config';
 
 import helmet from "helmet";
 
+import compression from 'compression';
+
 import path from "path";
 
 
@@ -55,14 +57,26 @@ const app = express();
 
 const secret = process.env.ACCESS_SECRET;
 
+app.use(compression({ filter: shouldCompress }))
+ 
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+ 
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
+
 // app.use(helmet());
 // app.use(helmet.crossOriginOpenerPolicy({ policy: "same-origin-allow-popups" }));
 
-// app.use(
-//   helmet({
-//     crossOriginResourcePolicy: false,
-//   })
-// )
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+)
 
 app.use(express.static(path.join(__dirname,'temp')));
 
@@ -90,15 +104,18 @@ import comments from './routes/comments.js';
 //       database :  process.env.POSTGRES_DB
 //     }
 //   });
+
+const sslSettings = process.env.NODE_ENV === 'development' ? '' : { require: false, rejectUnauthorized: false }
+
 export const db = knex({
     client: 'pg',
     connection: {
       connectionString: process.env.DATABASE_URL,
-      // ssl: { require: false, rejectUnauthorized: false }
+      ssl: sslSettings
     }
   });
 
-  const allowedOrigins = ['http://localhost:3000'];
+  const allowedOrigins = [`${process.env.FRONTEND_BASE_URL}`];
 
 const options = {
   origin: allowedOrigins,
@@ -137,7 +154,7 @@ export function upload(req, res, next){
 
   const fileFilter = (req, file, cb) => {
 
-    mimeType = file.mimetype;
+    const mimeType = file.mimetype;
 
     if(acceptableImageMimeTypes.includes(mimeType)){
 

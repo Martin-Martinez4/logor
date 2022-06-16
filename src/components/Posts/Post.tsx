@@ -1,5 +1,5 @@
 
-import React, { FC, useEffect, useState, useMemo, useCallback } from "react";
+import React, { FC, useEffect, useState, useMemo } from "react";
 
 import { getImageString } from "../utils/exportGetImage";
 import Card from "../Card/Card";
@@ -169,7 +169,7 @@ const Post: FC<PostComponent> = ({ uuid, username, nickname, profile_pic_url, da
 
             setDropDownLoading(false)
 
-    }
+}
         catch{
 
             setDropDownLoading(false)
